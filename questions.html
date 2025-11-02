@@ -5,195 +5,317 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Книга о тебе — Вопросы</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;}
+*{box-sizing:border-box;margin:0;padding:0;}
 
 body {
-  margin: 0;
   font-family: Inter, sans-serif;
-  background: #0d0b0c url('https://images.unsplash.com/photo-1543573852-1a71a6ce19d5?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat fixed;
-  color: #ece4ea;
+  background: #0b0a0a url('https://images.unsplash.com/photo-1543573852-1a71a6ce19d5?auto=format&fit=crop&w=1600&q=80') center/cover fixed no-repeat;
+  color: #eee;
+  overflow-x: hidden;
 }
 
+/* dreamy overlay */
 .overlay {
-  backdrop-filter: blur(6px);
-  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.55);
   min-height: 100vh;
-  padding: 60px 20px 80px;
+  padding: 60px 20px 120px;
 }
 
+/* soft glow light */
+.overlay:before {
+  content:"";
+  position: fixed; inset:0;
+  background: radial-gradient(circle at 50% 0%, rgba(255,224,244,0.32), transparent 60%);
+  pointer-events:none;
+}
+
+/* falling petals */
+.petal {
+  position: fixed;
+  width: 18px; height: 18px;
+  background: rgba(255,200,220,0.75);
+  border-radius: 50%;
+  filter: blur(1px);
+  opacity: 0.65;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  0% { transform: translateY(-20px) rotate(0deg); }
+  100% { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* Title */
 h1 {
   font-family: "Playfair Display";
-  font-size: 44px;
-  text-align: center;
-  margin-bottom: 8px;
-  color: #f4d8e7;
+  font-size: 42px;
+  text-align:center;
+  margin-bottom:6px;
+  color:#f3d8e9;
 }
+.subtitle {text-align:center;margin-bottom:30px;opacity:.85;}
 
-.subtitle {
-  text-align: center;
-  margin-bottom: 30px;
-  opacity: .85;
-  font-size: 18px;
-}
-
+/* card */
 .card {
   max-width: 760px;
-  margin: 0 auto;
-  background: rgba(25, 18, 28, 0.6);
-  padding: 28px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.07);
-  box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+  margin: auto;
+  background: rgba(20,15,22,0.6);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 35px rgba(0,0,0,0.35);
 }
 
-.progress {
-  height: 10px;
-  background: #593045;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-.progress i {
-  display: block;
-  height: 100%;
-  width: 0%;
-  background: #c66a8b;
-  transition: .4s ease;
-}
+/* progress */
+.progress {height:10px;background:#5b334a;border-radius:8px;margin-bottom:20px;}
+.progress i {display:block;height:100%;background:#c8658d;width:0%;transition:.4s;}
 
+/* Q block */
 .q-title {
-  font-family: "Playfair Display";
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #f2d4e3;
+  font-family:"Playfair Display";font-size:20px;font-weight:600;margin-bottom:4px;color:#f1d1e2;
 }
-
-.hint {
-  font-size: 14px;
-  opacity: .7;
-  margin-bottom: 6px;
-  font-style: italic;
-}
+.hint {font-size:13px;opacity:.7;margin-bottom:6px;font-style:italic;}
 
 textarea {
-  width: 100%;
-  min-height: 90px;
-  padding: 12px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #fff;
-  font-family: Inter;
-  margin-bottom: 18px;
+  width:100%;min-height:90px;padding:12px;border-radius:10px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  color:#fff;margin-bottom:18px;
 }
 
+/* buttons */
 button {
-  padding: 12px 22px;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 15px;
+  padding:12px 24px;border-radius:10px;font-weight:600;cursor:pointer;font-size:16px;
+}
+.next {background:#b03a64;color:white;border:none;}
+.back {background:transparent;color:#b03a64;border:1px solid #b03a64;}
+
+/* finish */
+.finish-text {
+  font-size:19px;text-align:center;padding:10px;opacity:.9;font-family:"Playfair Display";
 }
 
-.next {
-  background: #b03a64;
-  color: white;
-  border: none;
-}
-.back {
-  background: transparent;
-  border: 1px solid #b03a64;
-  color: #b03a64;
-}
-
-footer {
-  text-align: center;
-  opacity: .6;
-  font-size: 13px;
-  margin-top: 40px;
-}
+/* footer */
+footer {text-align:center;opacity:.5;margin-top:35px;}
 </style>
 </head>
 
 <body>
 <div class="overlay">
-
-<h1>Глава 1. Знакомство</h1>
-<div class="subtitle">Расскажи, как всё началось 💫</div>
+<h1 id="chapterTitle"></h1>
+<div class="subtitle" id="chapterSub"></div>
 
 <div class="card">
   <div class="progress"><i id="progress"></i></div>
   <form id="form"></form>
 
-  <div style="display:flex; justify-content:space-between; margin-top:15px;">
+  <div style="display:flex;justify-content:space-between;margin-top:15px;">
     <button type="button" class="back" id="prevBtn">Назад</button>
     <button type="button" class="next" id="nextBtn">Далее</button>
   </div>
 </div>
-
 <footer>Создано с любовью 🌸</footer>
 </div>
 
 <script>
-const questions = [
- {title:"1. Где вы впервые встретились?", hint:"Место, атмосфера, что делали?", answer:""},
- {title:"2. Что вы подумали при первой встрече?", hint:"Эмоции, впечатления", answer:""},
- {title:"3. Кто сделал первый шаг?", hint:"Как это произошло", answer:""},
- {title:"4. Что больше всего запомнилось в тот день?", hint:"", answer:""},
- {title:"5. Каким был первый разговор или сообщение?", hint:"", answer:""},
- {title:"6. Что сразу привлекло в человеке?", hint:"", answer:""},
- {title:"7. Какая деталь запомнилась — улыбка, голос, взгляд?", hint:"", answer:""},
- {title:"8. Кто первым написал?", hint:"", answer:""},
- {title:"9. Когда вы поняли, что это не просто знакомство?", hint:"", answer:""},
- {title:"10. Был ли «знак судьбы»?", hint:"", answer:""}
+/* all 100 Qs */
+const chapters = [
+{
+title:"💕 Глава 1. Знакомство",
+sub:"Как всё началось",
+qs:[
+"Где вы впервые встретились?",
+"Что вы подумали при первой встрече?",
+"Кто сделал первый шаг?",
+"Что больше всего запомнилось?",
+"Каким был первый разговор?",
+"Что сразу притянуло?",
+"Какая деталь запомнилась?",
+"Кто первым написал?",
+"Когда поняли, что это не просто знакомство?",
+"Был ли знак судьбы?"
+]},
+{
+title:"💕 Глава 2. Первые свидания",
+sub:"Волнение и открытия",
+qs:[
+"Где прошло первое свидание?",
+"Что чувствовали перед встречей?",
+"Кто выбирал место?",
+"Что пошло не по плану, но стало милым?",
+"Что запомнилось навсегда?",
+"Кто признался в симпатии первым?",
+"Какая песня/фильм ассоциируются?",
+"Какая фраза тронула тогда?",
+"Когда поняли, что влюблены?",
+"Какой запах/звук напоминает о начале?"
+]},
+{
+title:"🌹 Глава 3. Первые чувства",
+sub:"Как рождается любовь",
+qs:[
+"Как поняли, что это любовь?",
+"Что вдохновляет друг в друге?",
+"Что изменилось в вас?",
+"Какое качество цените больше всего?",
+"Что делает вас счастливыми рядом?",
+"Что удивило?",
+"Как вы называете друг друга?",
+"Какая мелочь показывает любовь без слов?",
+"Какой поступок доказал серьёзность?",
+"Какая песня описывает отношения?"
+]},
+{
+title:"🏡 Глава 4. Повседневность",
+sub:"Простые, но ваши моменты",
+qs:[
+"Что делаете вместе дома?",
+"Кто готовит вкуснее?",
+"Как проводите выходные?",
+"Какой сериал/фильм пересматривали?",
+"Какие мелочи стали традициями?",
+"Кто дольше спит?",
+"Кто чаще теряет вещи?",
+"Какие у вас ритуалы?",
+"Как поддерживаете друг друга?",
+"Какая обычная вещь приносит радость?"
+]},
+{
+title:"💬 Глава 5. Разговоры",
+sub:"Сердце к сердцу",
+qs:[
+"О чём можете говорить часами?",
+"Какие темы самые тёплые?",
+"Что узнали о себе через партнёра?",
+"Какой совет запомнился?",
+"Какие разговоры сблизили?",
+"Как решаете споры?",
+"Что помогает понимать друг друга?",
+"Как сохраняете романтику?",
+"Какие слова любви звучат чаще?",
+"Как утешаете друг друга?"
+]},
+{
+title:"✨ Глава 6. Мечты",
+sub:"Будущее и вдохновение",
+qs:[
+"Какая у вас общая мечта?",
+"Где хотите побывать?",
+"Какой дом хотите?",
+"Какая идея вдохновляет?",
+"Какая детская мечта должна сбыться?",
+"Что бы сделали впервые?",
+"Как идеальный совместный день?",
+"Что обязательно в вашем будущем?",
+"Какая мелочь делает мечты реальнее?",
+"Какие 3 слова описывают ваше будущее?"
+]},
+{
+title:"🌍 Глава 7. Путешествия",
+sub:"Про дороги и приключения",
+qs:[
+"Куда было первое путешествие?",
+"Что пошло не по плану?",
+"Какая поездка — самая памятная?",
+"Где мечтаете встретить рассвет?",
+"Какое место стало вашим?",
+"Что берёте в дорогу?",
+"Кто за маршрут, кто за еду?",
+"Какая случайность рассмешила?",
+"Что хочется повторить?",
+"Где отпуск мечты?"
+]},
+{
+title:"🧩 Глава 8. Различия и сходства",
+sub:"Как вы дополняете друг друга",
+qs:[
+"Чем вы похожи?",
+"В чём разные?",
+"Что всё равно объединяет?",
+"Кто эмоциональнее?",
+"Кто рассудительней?",
+"Как находите баланс?",
+"Какое качество хотите перенять?",
+"Что делаете по-разному, но с любовью?",
+"Какая привычка стала милой?",
+"Как справляетесь с трудностями?"
+]},
+{
+title:"💍 Глава 9. Любовь и обещания",
+sub:"Самое личное",
+qs:[
+"Что значит любовь?",
+"В чём сила отношений?",
+"Как сохраняете доверие?",
+"Как переживаете ссоры?",
+"Что помогает мириться?",
+"Какие слова поддержки звучат?",
+"Что обещаете друг другу всегда?",
+"Как отмечаете даты?",
+"Что чувствуете, глядя на любимого?",
+"Какая деталь символизирует отношения?"
+]},
+{
+title:"🌿 Глава 10. Будущее",
+sub:"О том, что впереди",
+qs:[
+"Будущее через 5 лет?",
+"Главное в семье?",
+"Какие традиции сохранить?",
+"Какие создать?",
+"Чему хотите научить детей?",
+"Какими родителями быть?",
+"Какие семейные вечера?",
+"Какая мечта должна сбыться?",
+"Как хотите встречать старость?",
+"Что значит «навсегда»?"
+]}
 ];
 
-let page = 0;
-const pageSize = 5;
-const progress = document.getElementById("progress");
-const form = document.getElementById("form");
-
-function saveAnswers(){
-  localStorage.setItem("bookAnswers", JSON.stringify(questions));
-}
-
-function loadAnswers(){
-  const saved = JSON.parse(localStorage.getItem("bookAnswers"));
-  if(saved){ saved.forEach((a,i)=>{questions[i].answer=a.answer}); }
-}
-loadAnswers();
+let ch=0,i=0;
+const form=document.getElementById("form"),prog=document.getElementById("progress"),CT=document.getElementById("chapterTitle"),CS=document.getElementById("chapterSub");
+let answers = JSON.parse(localStorage.getItem("loveBook")) || {};
 
 function render(){
-  form.innerHTML = "";
-  const start = page * pageSize;
-  const end = Math.min(start + pageSize, questions.length);
-
-  for(let i=start;i<end;i++){
-    form.innerHTML += `
-      <div>
-        <div class="q-title">${questions[i].title}</div>
-        <div class="hint">${questions[i].hint}</div>
-        <textarea oninput="questions[${i}].answer=this.value; saveAnswers();">${questions[i].answer||""}</textarea>
-      </div>`;
-  }
-
-  progress.style.width = ((page+1)/Math.ceil(questions.length/pageSize))*100+"%";
+  CT.textContent=chapters[ch].title;
+  CS.textContent=chapters[ch].sub;
+  form.innerHTML = `
+  <div class="q-title">${i+1}. ${chapters[ch].qs[i]}</div>
+  <textarea oninput="save(this.value)">${answers[ch+'-'+i]||""}</textarea>
+  `;
+  prog.style.width = ((ch*10+i+1)/100*100)+"%";
 }
+function save(v){ answers[ch+'-'+i]=v; localStorage.setItem("loveBook",JSON.stringify(answers));}
+
 render();
 
-prevBtn.onclick=()=>{ if(page>0){page--; render();}};
-nextBtn.onclick=()=>{
-  if(page < Math.ceil(questions.length/pageSize)-1){
-    page++; render();
-  } else {
-    alert("Глава завершена! 🌹 Скоро появятся следующие вопросы.");
-  }
+document.getElementById("nextBtn").onclick=()=>{
+ if(i<9){i++;render();}
+ else if(ch<9){ch++;i=0;fade();render();}
+ else window.location="success.html";
 };
+document.getElementById("prevBtn").onclick=()=>{
+ if(i>0){i--;render();}
+ else if(ch>0){ch--;i=9;render();}
+};
+
+function fade(){document.body.style.opacity="0.7";setTimeout(()=>document.body.style.opacity="1",200);}
+
+/* petals */
+for(let j=0;j<10;j++){
+ let p=document.createElement('div');
+ p.className='petal';
+ p.style.left=Math.random()*100+"vw";
+ p.style.animationDuration=(5+Math.random()*7)+"s";
+ p.style.animationDelay=Math.random()*5+"s";
+ document.body.appendChild(p);
+}
 </script>
 </body>
 </html>
+
+
 
