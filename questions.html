@@ -1,1 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Книга о тебе — Вопросы</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;}
+
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background: #0d0b0c url('https://images.unsplash.com/photo-1543573852-1a71a6ce19d5?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat fixed;
+  color: #ece4ea;
+}
+
+.overlay {
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.55);
+  min-height: 100vh;
+  padding: 60px 20px 80px;
+}
+
+h1 {
+  font-family: "Playfair Display";
+  font-size: 44px;
+  text-align: center;
+  margin-bottom: 8px;
+  color: #f4d8e7;
+}
+
+.subtitle {
+  text-align: center;
+  margin-bottom: 30px;
+  opacity: .85;
+  font-size: 18px;
+}
+
+.card {
+  max-width: 760px;
+  margin: 0 auto;
+  background: rgba(25, 18, 28, 0.6);
+  padding: 28px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+}
+
+.progress {
+  height: 10px;
+  background: #593045;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.progress i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: #c66a8b;
+  transition: .4s ease;
+}
+
+.q-title {
+  font-family: "Playfair Display";
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #f2d4e3;
+}
+
+.hint {
+  font-size: 14px;
+  opacity: .7;
+  margin-bottom: 6px;
+  font-style: italic;
+}
+
+textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  font-family: Inter;
+  margin-bottom: 18px;
+}
+
+button {
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.next {
+  background: #b03a64;
+  color: white;
+  border: none;
+}
+.back {
+  background: transparent;
+  border: 1px solid #b03a64;
+  color: #b03a64;
+}
+
+footer {
+  text-align: center;
+  opacity: .6;
+  font-size: 13px;
+  margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+<div class="overlay">
+
+<h1>Глава 1. Знакомство</h1>
+<div class="subtitle">Расскажи, как всё началось 💫</div>
+
+<div class="card">
+  <div class="progress"><i id="progress"></i></div>
+  <form id="form"></form>
+
+  <div style="display:flex; justify-content:space-between; margin-top:15px;">
+    <button type="button" class="back" id="prevBtn">Назад</button>
+    <button type="button" class="next" id="nextBtn">Далее</button>
+  </div>
+</div>
+
+<footer>Создано с любовью 🌸</footer>
+</div>
+
+<script>
+const questions = [
+ {title:"1. Где вы впервые встретились?", hint:"Место, атмосфера, что делали?", answer:""},
+ {title:"2. Что вы подумали при первой встрече?", hint:"Эмоции, впечатления", answer:""},
+ {title:"3. Кто сделал первый шаг?", hint:"Как это произошло", answer:""},
+ {title:"4. Что больше всего запомнилось в тот день?", hint:"", answer:""},
+ {title:"5. Каким был первый разговор или сообщение?", hint:"", answer:""},
+ {title:"6. Что сразу привлекло в человеке?", hint:"", answer:""},
+ {title:"7. Какая деталь запомнилась — улыбка, голос, взгляд?", hint:"", answer:""},
+ {title:"8. Кто первым написал?", hint:"", answer:""},
+ {title:"9. Когда вы поняли, что это не просто знакомство?", hint:"", answer:""},
+ {title:"10. Был ли «знак судьбы»?", hint:"", answer:""}
+];
+
+let page = 0;
+const pageSize = 5;
+const progress = document.getElementById("progress");
+const form = document.getElementById("form");
+
+function saveAnswers(){
+  localStorage.setItem("bookAnswers", JSON.stringify(questions));
+}
+
+function loadAnswers(){
+  const saved = JSON.parse(localStorage.getItem("bookAnswers"));
+  if(saved){ saved.forEach((a,i)=>{questions[i].answer=a.answer}); }
+}
+loadAnswers();
+
+function render(){
+  form.innerHTML = "";
+  const start = page * pageSize;
+  const end = Math.min(start + pageSize, questions.length);
+
+  for(let i=start;i<end;i++){
+    form.innerHTML += `
+      <div>
+        <div class="q-title">${questions[i].title}</div>
+        <div class="hint">${questions[i].hint}</div>
+        <textarea oninput="questions[${i}].answer=this.value; saveAnswers();">${questions[i].answer||""}</textarea>
+      </div>`;
+  }
+
+  progress.style.width = ((page+1)/Math.ceil(questions.length/pageSize))*100+"%";
+}
+render();
+
+prevBtn.onclick=()=>{ if(page>0){page--; render();}};
+nextBtn.onclick=()=>{
+  if(page < Math.ceil(questions.length/pageSize)-1){
+    page++; render();
+  } else {
+    alert("Глава завершена! 🌹 Скоро появятся следующие вопросы.");
+  }
+};
+</script>
+</body>
+</html>
 
