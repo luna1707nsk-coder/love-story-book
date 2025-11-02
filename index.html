@@ -44,4 +44,162 @@
 
   .card {
     max-width: 700px;
+    margin: 30px auto;
+    background: rgba(255,255,255,0.8);
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border: 1px solid rgba(255,255,255,0.9);
+  }
+
+  .progress {
+    height: 10px;
+    background: #ead3dd;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+
+  .progress i {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: #8a2e55;
+    transition: .3s ease;
+  }
+
+  .question {
+    margin-bottom: 20px;
+  }
+
+  .q-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 18px;
+    color: #6a2544;
+  }
+
+  .hint {
+    font-size: 13px;
+    opacity: .7;
+    margin-bottom: 6px;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d7b7c6;
+    background: #fff8fb;
+    font-family: 'Inter';
+  }
+
+  button {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  .next {
+    background: #8a2e55;
+    color: white;
+  }
+
+  .back {
+    background: transparent;
+    border: 1px solid #8a2e55;
+    color: #8a2e55;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    opacity: .6;
+    font-size: 13px;
+  }
+</style>
+</head>
+
+<body>
+<div class="overlay">
+
+<header>
+  <h1>Книга о тебе</h1>
+  <div class="subtitle">Ответь на вопросы — и мы создадим уникальную историю любви 💌</div>
+</header>
+
+<div class="card">
+  <div class="progress"><i id="progress"></i></div>
+  <form id="form"></form>
+
+  <div style="display:flex; justify-content:space-between; margin-top:10px;">
+    <button class="back" id="prevBtn">Назад</button>
+    <button class="next" id="nextBtn">Далее</button>
+  </div>
+</div>
+
+<footer>Создано с любовью 🌸</footer>
+</div>
+
+<script>
+// first chapter questions
+const questions = [
+ {title:"Глава 1. Знакомство", hint:"Как всё началось?", isTitle:true},
+
+ {title:"1. Где вы впервые встретились?", hint:"Место, атмосфера, что делали?", answer:""},
+ {title:"2. Что вы подумали при первой встрече?", hint:"Эмоции, впечатления", answer:""},
+ {title:"3. Кто сделал первый шаг?", hint:"Как это произошло", answer:""},
+ {title:"4. Что больше всего запомнилось в тот день?", hint:"", answer:""},
+ {title:"5. Каким был первый разговор или сообщение?", hint:"", answer:""},
+ {title:"6. Что сразу притянуло в человеке?", hint:"", answer:""},
+ {title:"7. Какая деталь запомнилась — улыбка, голос, взгляд?", hint:"", answer:""},
+ {title:"8. Кто первым написал или добавил соцсети?", hint:"", answer:""},
+ {title:"9. Когда вы поняли, что это не просто знакомство?", hint:"", answer:""},
+ {title:"10. Был ли «знак судьбы»?", hint:"", answer:""}
+];
+
+let page = 0;
+const pageSize = 5;
+const progress = document.getElementById("progress");
+const form = document.getElementById("form");
+
+function render(){
+  form.innerHTML = "";
+  const start = page * pageSize;
+  const end = Math.min(start + pageSize, questions.length);
+
+  for(let i=start;i<end;i++){
+    let q = questions[i];
+    if(q.isTitle) {
+      form.innerHTML += `<h3>${q.title}</h3><div class="hint">${q.hint}</div>`;
+      continue;
+    }
+    form.innerHTML += `
+      <div class="question">
+        <div class="q-title">${q.title}</div>
+        <div class="hint">${q.hint}</div>
+        <textarea oninput="questions[${i}].answer=this.value">${q.answer||""}</textarea>
+      </div>`;
+  }
+  progress.style.width = ((page+1)/Math.ceil(questions.length/pageSize))*100+"%";
+}
+render();
+
+document.getElementById("prevBtn").onclick=()=>{ if(page>0){page--; render();}};
+document.getElementById("nextBtn").onclick=()=>{
+  if(page < Math.ceil(questions.length/pageSize)-1){
+    page++; render();
+  } else {
+    alert("Завершение первой главы 😊\n(скоро добавим отправку в Telegram)");
+  }
+};
+</script>
+
+</body>
+</html>
 
