@@ -1,134 +1,127 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Книга о тебе</title>
 
-<!-- Шрифты -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-  body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: #f6f0f4 url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEhUQEBAWFhUVFRQUFRYWFRcWGBcQFxUYFxcVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICYtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAAAAQUGAwIBB//EADsQAAIBAwMCBAMGBQMDBQAAAAICEQADIRMxQQRRYSJxgZEygbHwEzNSwdHhFSNiksIVM2Lh8RUz/8QAGwEBAQEBAQEBAAAAAAAAAAAAAAIDBAEFBgf/xAAuEQEBAAICAgICAgICAwAAAAAAAAAQIRAxEiEEQVETMWEycYGR8HGBof/aAAwDAQACEQMRAD8A+40REQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREH//Z
-') no-repeat center;
-    background-size: cover;
-    color: #2b2b2b;
-  }
+*{box-sizing:border-box;}
 
-  .overlay {
-    backdrop-filter: blur(6px);
-    background: rgba(255, 255, 255, 0.7);
-    min-height: 100vh;
-    padding: 0;
-  }
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f8f3f7 url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEhUQEBAWFhUVFRQUFRYWFRcWGBcQFxUYFxcVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICYtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAAAAQUGAwIBB//EADsQAAIBAwMCBAMGBQMDBQAAAAICEQADIRMxQQRRYSJxgZEygbHwEzNSwdHhFSNiksIVM2Lh8RUz/8QAGwEBAQEBAQEBAAAAAAAAAAAAAAIDBAEFBgf/xAAuEQEBAAICAgICAgICAwAAAAAAAAAQIRAxEiEEQVETMWEycYGR8HGBof/aAAwDAQACEQMRAD8A+40REQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREH//Z') no-repeat center/cover;
+}
 
-  header {
-    text-align: center;
-    padding: 60px 20px 30px;
-  }
+/* overlay effect */
+.page-bg {
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.65);
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
 
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 48px;
-    font-weight: 600;
-    color: #8a2e55;
-    margin-bottom: 10px;
-  }
+/* header */
+header {
+  text-align: center;
+  padding: 60px 20px 30px;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  font-weight: 600;
+  color: #8a2e55;
+  margin-bottom: 10px;
+}
+.subtitle {
+  font-size: 18px;
+  opacity: 0.8;
+}
 
-  .subtitle {
-    font-size: 18px;
-    opacity: 0.8;
-  }
+/* card */
+.card {
+  max-width: 760px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.85);
+  padding: 25px 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.1);
+}
 
-  .card {
-    max-width: 700px;
-    margin: 30px auto;
-    background: rgba(255,255,255,0.8);
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    border: 1px solid rgba(255,255,255,0.9);
-  }
+/* progress bar */
+.progress {
+  height: 10px;
+  background: #e7cbd6;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.progress i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: #8a2e55;
+  transition: .4s ease;
+}
 
-  .progress {
-    height: 10px;
-    background: #ead3dd;
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: 18px;
-  }
+/* questions */
+.q-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: #7a2547;
+  margin-bottom: 5px;
+}
+.hint {
+  font-size: 13px;
+  opacity: .7;
+  margin-bottom: 7px;
+}
+textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff8fc;
+  border: 1px solid #d8b5c8;
+  font-family: Inter;
+}
 
-  .progress i {
-    display: block;
-    height: 100%;
-    width: 0%;
-    background: #8a2e55;
-    transition: .3s ease;
-  }
+/* buttons */
+button {
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+}
+.next {
+  background: #8a2e55;
+  color: #fff;
+  border: none;
+}
+.back {
+  background: transparent;
+  border: 1px solid #8a2e55;
+  color: #8a2e55;
+}
 
-  .question {
-    margin-bottom: 20px;
-  }
-
-  .q-title {
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
-    margin-bottom: 6px;
-    font-size: 18px;
-    color: #6a2544;
-  }
-
-  .hint {
-    font-size: 13px;
-    opacity: .7;
-    margin-bottom: 6px;
-  }
-
-  textarea {
-    width: 100%;
-    min-height: 80px;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #d7b7c6;
-    background: #fff8fb;
-    font-family: 'Inter';
-  }
-
-  button {
-    border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 15px;
-  }
-
-  .next {
-    background: #8a2e55;
-    color: white;
-  }
-
-  .back {
-    background: transparent;
-    border: 1px solid #8a2e55;
-    color: #8a2e55;
-  }
-
-  footer {
-    text-align: center;
-    padding: 20px;
-    opacity: .6;
-    font-size: 13px;
-  }
+/* footer */
+footer {
+  text-align: center;
+  padding: 30px 0;
+  font-size: 13px;
+  opacity: .6;
+}
 </style>
 </head>
 
 <body>
-<div class="overlay">
-
+<div class="page-bg">
 <header>
   <h1>Книга о тебе</h1>
   <div class="subtitle">Ответь на вопросы — и мы создадим уникальную историю любви 💌</div>
@@ -138,9 +131,9 @@
   <div class="progress"><i id="progress"></i></div>
   <form id="form"></form>
 
-  <div style="display:flex; justify-content:space-between; margin-top:10px;">
-    <button class="back" id="prevBtn">Назад</button>
-    <button class="next" id="nextBtn">Далее</button>
+  <div style="display:flex; justify-content:space-between; margin-top:15px;">
+    <button type="button" class="back" id="prevBtn">Назад</button>
+    <button type="button" class="next" id="nextBtn">Далее</button>
   </div>
 </div>
 
@@ -148,7 +141,6 @@
 </div>
 
 <script>
-// first chapter questions
 const questions = [
  {title:"Глава 1. Знакомство", hint:"Как всё началось?", isTitle:true},
 
@@ -166,18 +158,18 @@ const questions = [
 
 let page = 0;
 const pageSize = 5;
-const progress = document.getElementById("progress");
 const form = document.getElementById("form");
+const progress = document.getElementById("progress");
 
 function render(){
   form.innerHTML = "";
   const start = page * pageSize;
   const end = Math.min(start + pageSize, questions.length);
 
-  for(let i=start;i<end;i++){
+  for (let i=start;i<end;i++){
     let q = questions[i];
-    if(q.isTitle) {
-      form.innerHTML += `<h3>${q.title}</h3><div class="hint">${q.hint}</div>`;
+    if(q.isTitle){
+      form.innerHTML += `<h3 style="font-family:'Playfair Display';font-size:24px;color:#7a2547;margin-bottom:4px">${q.title}</h3><div class="hint">${q.hint}</div>`;
       continue;
     }
     form.innerHTML += `
@@ -187,16 +179,17 @@ function render(){
         <textarea oninput="questions[${i}].answer=this.value">${q.answer||""}</textarea>
       </div>`;
   }
+
   progress.style.width = ((page+1)/Math.ceil(questions.length/pageSize))*100+"%";
 }
 render();
 
-document.getElementById("prevBtn").onclick=()=>{ if(page>0){page--; render();}};
-document.getElementById("nextBtn").onclick=()=>{
+prevBtn.onclick = ()=>{ if(page>0){ page--; render(); }};
+nextBtn.onclick = ()=>{
   if(page < Math.ceil(questions.length/pageSize)-1){
     page++; render();
   } else {
-    alert("Завершение первой главы 😊\n(скоро добавим отправку в Telegram)");
+    alert("Глава 1 завершена! 🌸\nСкоро добавим отправку ответов в Telegram и следующую главу ❤️");
   }
 };
 </script>
