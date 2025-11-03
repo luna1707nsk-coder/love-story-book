@@ -5,45 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>История, написанная сердцем — Love-Book</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=Cormorant+Garamond:wght@300;400;500;600&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=Cormorant+Garamond:wght@300;400;600&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet" />
 
 <style>
 :root{
-  --ink:#47363f; --plum:#4e2f40; --rose:#c49aa6; --rose2:#b47c8b; --gold:#c9b07a;
+  --ink:#47363f; --plum:#4e2f40; --rose:#c49aa6; --rose2:#b47c8b;
+  --gold1:#f7e8c9; --gold2:#e7d19b; --gold3:#d0b46a; /* Dior creamy gold */
   --glass:rgba(255,255,255,.72); --bg:#f7ecef;
 }
 
-/* ===== Base ===== */
+/* Base */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0; background:var(--bg); color:var(--ink);
-  font-family:"Mulish",sans-serif; overflow-x:hidden; padding-bottom:86px; /* под sticky CTA */
+  font-family:"Mulish",sans-serif; overflow-x:hidden; padding-bottom:86px;
 }
 
-/* ===== Backgrounds ===== */
+/* Backgrounds */
 body::before{
   content:""; position:fixed; inset:0; z-index:-2;
   background:url("assets/roses.jpg") center/cover no-repeat;
   animation:heroMove 28s ease-in-out infinite alternate;
 }
 @keyframes heroMove{from{transform:scale(1)}to{transform:scale(1.06)}}
-
 body::after{
   content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
   background:url("assets/butterflies.jpg") center/cover no-repeat;
   mix-blend-mode:screen; opacity:.18;
 }
 
-/* ===== Nav ===== */
+/* Gold foil text */
+.foil{
+  background:linear-gradient(98deg,var(--gold1) 0%, var(--gold2) 45%, var(--gold3) 60%, var(--gold1) 100%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; text-shadow:0 0 0 rgba(0,0,0,0);
+}
+
+/* Nav */
 nav{
   position:fixed; top:0; left:0; right:0; z-index:50;
-  background:rgba(255,255,255,.68); backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(0,0,0,.06);
+  background:rgba(255,255,255,.68); backdrop-filter:blur(12px); border-bottom:1px solid rgba(0,0,0,.06);
 }
 .nav-inner{max-width:1180px; margin:0 auto; padding:14px 18px; display:flex; align-items:center; gap:16px}
 .logo{
-  font-family:"Bodoni Moda",serif; font-size:18px; font-weight:600; color:var(--plum); letter-spacing:.2px;
+  font-family:"Bodoni Moda",serif; font-size:18px; font-weight:600; color:var(--plum);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .menu{display:flex; gap:22px; margin-left:auto}
@@ -51,22 +57,29 @@ nav{
   color:var(--ink); text-decoration:none; font-size:14px; position:relative; padding-bottom:4px;
 }
 .menu a::after{
-  content:""; position:absolute; left:0; bottom:0; width:100%; height:1px;
+  content:""; position:absolute; inset:auto 0 -1px 0; height:1px;
   background:var(--rose2); transform:scaleX(0); transform-origin:left; transition:.28s;
 }
 .menu a:hover::after{transform:scaleX(1)}
-.burger{display:none; margin-left:auto; font-size:26px; cursor:pointer; line-height:1}
+.burger{display:none; margin-left:auto; font-size:26px; cursor:pointer}
 
 /* Mobile drawer */
 .mobile-menu{
   position:fixed; top:0; right:-100%; width:76%; height:100vh; z-index:60;
   background:rgba(255,255,255,.95); backdrop-filter:blur(18px);
-  padding:88px 28px 28px; display:flex; flex-direction:column; gap:18px; transition:.4s;
-  box-shadow:-16px 0 40px rgba(0,0,0,.12);
+  padding:88px 28px; display:flex; flex-direction:column; gap:18px; transition:.4s; box-shadow:-16px 0 40px rgba(0,0,0,.12);
 }
 .mobile-menu a{color:var(--ink); text-decoration:none; font-family:"Cormorant Garamond",serif; font-size:20px}
 
-/* ===== Hero ===== */
+/* Sticky CTA */
+.sticky-cta{position:fixed; left:0; right:0; bottom:12px; display:flex; justify-content:center; z-index:45}
+.sticky-cta a{
+  background:linear-gradient(140deg,var(--rose),var(--rose2));
+  color:#fff; text-decoration:none; padding:14px 26px; border-radius:999px; font-weight:700; font-size:15px;
+  box-shadow:0 12px 28px rgba(0,0,0,.18)
+}
+
+/* Hero */
 .hero{
   min-height:100vh; display:flex; align-items:center; justify-content:center;
   padding:110px 18px 60px; text-align:center;
@@ -74,115 +87,126 @@ nav{
 .hero-card{
   background:var(--glass); backdrop-filter:blur(18px);
   border:1px solid rgba(255,255,255,.52); border-radius:26px;
-  box-shadow:0 30px 60px rgba(0,0,0,.14); max-width:980px; width:100%;
-  padding:60px 42px;
+  box-shadow:0 30px 60px rgba(0,0,0,.14); max-width:980px; padding:60px 42px;
+  animation:fadeIn .7s ease both;
 }
 .hero h1{
   font-family:"Bodoni Moda",serif; color:var(--plum);
-  font-size:clamp(32px,5vw,58px); margin:0 0 10px; text-shadow:0 0 6px rgba(255,255,255,.7);
+  font-size:clamp(32px,5vw,58px); margin:0 0 10px;
 }
-.hero .tag{
-  font-family:"Cormorant Garamond",serif; font-size:22px; color:#6a5561; margin:0 0 26px;
-}
+.hero .tag{font-family:"Cormorant Garamond",serif; font-size:22px; color:#6a5561; margin:0 0 26px}
 .btn{
   display:inline-block; text-decoration:none; color:#fff; font-weight:600;
-  background:linear-gradient(140deg,var(--rose),var(--rose2)); border-radius:50px;
-  padding:16px 34px; box-shadow:0 12px 28px rgba(0,0,0,.18);
+  background:linear-gradient(140deg,var(--rose),var(--rose2));
+  border-radius:50px; padding:16px 34px; box-shadow:0 12px 28px rgba(0,0,0,.18);
 }
 
-/* ===== Sections ===== */
+/* Sections */
 section{padding:90px 18px}
 .wrap{max-width:1100px; margin:0 auto}
 h2{
   font-family:"Bodoni Moda",serif; font-size:38px; color:var(--plum);
   text-align:center; margin:0 0 10px;
 }
-.hr-gold{height:1px; width:140px; margin:14px auto 26px; background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+h2.foil{letter-spacing:.4px}
+.hr-gold{height:1px; width:160px; margin:16px auto 28px;
+  background:linear-gradient(90deg,transparent,var(--gold3),transparent)
+}
 
-/* About */
-.about-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px}
+/* Cards / glass */
 .card{
-  background:var(--glass); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.5);
-  border-radius:22px; padding:34px; box-shadow:0 20px 50px rgba(0,0,0,.13);
+  background:var(--glass); backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.5); border-radius:22px;
+  padding:34px; box-shadow:0 20px 50px rgba(0,0,0,.13);
   font-family:"Cormorant Garamond",serif; font-size:20px; line-height:1.55;
 }
 
-/* Process */
-.step{font-family:"Cormorant Garamond",serif; font-size:20px; margin-bottom:10px}
+/* About */
+.about-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px}
 
-/* Examples */
+/* Process (glass cards + magazine flip) */
+.process-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px}
+.process-card{
+  composes: card; /* логическая пометка */
+  background:var(--glass); backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.5); border-radius:22px; padding:28px;
+  font-family:"Cormorant Garamond",serif; font-size:20px; text-align:center;
+  box-shadow:0 18px 40px rgba(0,0,0,.12); transform-origin:left center;
+  animation:flipIn .7s ease both;
+}
+.process-card:nth-child(2){animation-delay:.06s}
+.process-card:nth-child(3){animation-delay:.12s}
+.process-card:nth-child(4){animation-delay:.18s}
+
+/* Gallery */
 .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 .gallery img{
   width:100%; height:300px; object-fit:cover; border-radius:18px;
-  box-shadow:0 16px 40px rgba(0,0,0,.18)
+  box-shadow:0 16px 40px rgba(0,0,0,.18);
+  animation:flipIn .7s ease both; transform-origin:left center;
 }
+.gallery img:nth-child(2){animation-delay:.06s}
+.gallery img:nth-child(3){animation-delay:.12s}
 
 /* Pricing */
 .pricing{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 .price{
-  background:var(--glass); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.5);
-  border-radius:20px; padding:28px; text-align:center; box-shadow:0 12px 30px rgba(0,0,0,.12)
+  background:var(--glass); backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.5); border-radius:20px;
+  padding:28px; text-align:center; box-shadow:0 12px 30px rgba(0,0,0,.12);
+  animation:flipIn .7s ease both; transform-origin:left center;
 }
-.price h3{font-family:"Bodoni Moda",serif; margin:0 0 6px; color:var(--plum)}
-.price .num{font-family:"Cormorant Garamond",serif; font-size:30px; margin-bottom:10px}
+.price:nth-child(2){animation-delay:.06s}
+.price:nth-child(3){animation-delay:.12s}
+.price h3{font-family:"Bodoni Moda",serif; color:var(--plum); margin:0 0 6px}
+.price .num{font-family:"Cormorant Garamond",serif; font-size:30px}
 
 /* Reviews */
 .reviews{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 .review{
-  background:var(--glass); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.5);
-  border-radius:20px; padding:22px; font-style:italic; font-size:18px
+  background:var(--glass); backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.5); border-radius:20px;
+  padding:22px; font-style:italic; font-size:18px;
+  animation:flipIn .7s ease both; transform-origin:left center;
 }
+.review:nth-child(2){animation-delay:.06s}
+.review:nth-child(3){animation-delay:.12s}
 
 /* FAQ */
 details{
-  background:var(--glass); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.5);
-  border-radius:16px; padding:16px 20px; margin-bottom:10px; font-size:18px
+  background:var(--glass); backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.5); border-radius:16px;
+  padding:16px 20px; margin-bottom:10px; font-size:18px;
 }
 
-/* CTA Section */
-.cta-center{text-align:center}
+/* Animations */
+@keyframes fadeIn{from{opacity:0; transform:translateY(22px)}to{opacity:1; transform:none}}
+@keyframes flipIn{from{transform:rotateY(18deg) translateX(-8px); opacity:0}
+                  to{transform:rotateY(0) translateX(0); opacity:1}}
 
-/* Footer */
-footer{text-align:center; padding:28px; font-size:14px; opacity:.8}
-
-/* Sticky CTA */
-.sticky-cta{
-  position:fixed; left:0; right:0; bottom:12px; z-index:45; display:flex; justify-content:center;
-}
-.sticky-cta a{
-  background:linear-gradient(140deg,var(--rose),var(--rose2)); color:#fff;
-  text-decoration:none; padding:14px 26px; border-radius:999px; font-weight:700; font-size:15px;
-  box-shadow:0 12px 28px rgba(0,0,0,.18)
-}
-
-/* Petals */
+/* 3D petals: layers */
 .petal{
   position:fixed; top:-20px; width:10px; height:10px; border-radius:50%;
   background:radial-gradient(circle at 30% 30%, #ffdce9 0%, #f8a7c6 60%, transparent 75%);
-  box-shadow:0 0 10px rgba(255,182,206,.8),0 0 14px rgba(255,226,238,.6);
-  opacity:.85; pointer-events:none; z-index:2; animation:fall linear forwards
+  opacity:.9; pointer-events:none; z-index:2; animation:fall linear forwards;
+  will-change:transform, opacity, filter;
 }
+.petal[data-d="near"]{filter:blur(0.5px) saturate(115%); transform:translateZ(40px)}
+.petal[data-d="mid"] {filter:blur(1.2px) saturate(110%); transform:translateZ(0)}
+.petal[data-d="far"] {filter:blur(2.2px) saturate(105%); opacity:.7; transform:translateZ(-40px)}
 @keyframes fall{to{transform:translate3d(var(--dx),120vh,0) rotate(var(--rot)); opacity:.2}}
 
-/* Appear anim */
-.fade{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease}
-.fade.in{opacity:1; transform:none}
-
-/* ===== Responsive ===== */
-@media (max-width:1024px){
-  .gallery{grid-template-columns:repeat(2,1fr)}
-  .pricing{grid-template-columns:repeat(2,1fr)}
-  .reviews{grid-template-columns:repeat(2,1fr)}
+/* Responsive */
+@media(max-width:1024px){
+  .gallery,.pricing,.reviews{grid-template-columns:repeat(2,1fr)}
+  .process-grid{grid-template-columns:repeat(2,1fr)}
 }
-@media (max-width:768px){
-  .menu{display:none}
-  .burger{display:block}
-  .logo{font-size:16px; max-width:70%}
-  .hero-card{padding:42px 22px}
+@media(max-width:768px){
+  .menu{display:none} .burger{display:block}
   .about-grid{grid-template-columns:1fr}
-  .gallery{grid-template-columns:1fr}
-  .pricing,.reviews{grid-template-columns:1fr}
-  h2{font-size:30px}
+  .gallery,.pricing,.reviews{grid-template-columns:1fr}
+  .process-grid{grid-template-columns:1fr}
+  h2{font-size:32px}
 }
 </style>
 </head>
@@ -205,7 +229,7 @@ footer{text-align:center; padding:28px; font-size:14px; opacity:.8}
   </div>
 </nav>
 
-<!-- Mobile Drawer -->
+<!-- MOBILE DRAWER -->
 <div id="mobileMenu" class="mobile-menu">
   <a href="#about" onclick="toggleMenu()">О проекте</a>
   <a href="#process" onclick="toggleMenu()">Процесс</a>
@@ -215,13 +239,13 @@ footer{text-align:center; padding:28px; font-size:14px; opacity:.8}
   <a href="#faq" onclick="toggleMenu()">FAQ</a>
 </div>
 
-<!-- Sticky CTA -->
+<!-- STICKY CTA -->
 <div class="sticky-cta"><a href="questions.html">Начать историю ✨</a></div>
 
 <!-- HERO -->
 <header class="hero">
-  <div class="hero-card fade">
-    <h1>Where love becomes a story</h1>
+  <div class="hero-card">
+    <h1 class="foil">Where love becomes a story</h1>
     <p class="tag">100 вопросов, которые превращают память в книгу любви</p>
     <a class="btn" href="questions.html">Начать историю</a>
   </div>
@@ -229,92 +253,73 @@ footer{text-align:center; padding:28px; font-size:14px; opacity:.8}
 
 <!-- ABOUT -->
 <section id="about">
-  <h2>О проекте</h2>
+  <h2 class="foil">О проекте</h2>
   <div class="hr-gold"></div>
   <div class="wrap about-grid">
-    <div class="card fade">
-      Это не анкета — это деликатный путь к вашим чувствам.
-      Мы превращаем историю вашей любви в утончённую книгу.
-      По желанию добавим ваши фотографии.
-    </div>
-    <div class="card fade">
-      Каждая книга создаётся вручную — с редактированием,
-      версткой и мягкой эстетикой свадебного журнала.
-    </div>
+    <div class="card">Это не анкета — это деликатный путь к вашим чувствам. Мы превращаем историю вашей любви в утончённую книгу. По желанию добавим ваши фотографии.</div>
+    <div class="card">Каждая книга создаётся вручную — с художественной версткой и эстетикой свадебных журналов. Тёплая редактура — чтобы сохранить ваш голос.</div>
   </div>
 </section>
 
-<!-- PROCESS -->
+<!-- PROCESS (glass cards + magazine flip) -->
 <section id="process">
-  <h2>Как это работает</h2>
+  <h2 class="foil">Как это работает</h2>
   <div class="hr-gold"></div>
-  <div class="wrap">
-    <div class="step fade">1. Бесплатно отвечаете на первые 5 вопросов</div>
-    <div class="step fade">2. Оплачиваете доступ к оставшимся 95</div>
-    <div class="step fade">3. Отвечаете в удобном темпе, мы всё сохраняем</div>
-    <div class="step fade">4. Получаете готовую Love-Book (цифровую или печатную)</div>
+  <div class="wrap process-grid">
+    <div class="process-card">1. Бесплатно отвечаете на 5 вопросов</div>
+    <div class="process-card">2. Оплачиваете доступ к оставшимся 95</div>
+    <div class="process-card">3. Заполняете историю в комфортном темпе</div>
+    <div class="process-card">4. Мы создаём премиальную Love-Book</div>
   </div>
 </section>
 
 <!-- EXAMPLES -->
 <section id="examples">
-  <h2>Примеры страниц</h2>
+  <h2 class="foil">Примеры</h2>
   <div class="hr-gold"></div>
   <div class="wrap gallery">
-    <img class="fade" src="assets/book1.jpg" onerror="this.src='https://via.placeholder.com/600x600/F7E9EF/6a5b63?text=Love+Book'" alt="">
-    <img class="fade" src="assets/book2.jpg" onerror="this.src='https://via.placeholder.com/600x600/F7E9EF/6a5b63?text=Romantic+Spread'" alt="">
-    <img class="fade" src="assets/book3.jpg" onerror="this.src='https://via.placeholder.com/600x600/F7E9EF/6a5b63?text=Memories'" alt="">
+    <img src="assets/book1.jpg" onerror="this.src='https://via.placeholder.com/600x600/F7E9EF/6a5b63?text=Love+Book'" alt="">
+    <img src="assets/book2.jpg" onerror="this.src='https://via.placeholder.com/600x600/F7E9EF/6a5b63?text=Romantic+Spread'" alt="">
+    <img src="assets/book3.jpg" onerror="this.src='https://via.placeholder.com/600x600/F7E9EF/6a5b63?text=Memories'" alt="">
   </div>
 </section>
 
 <!-- PRICING -->
 <section id="pricing">
-  <h2>Тарифы</h2>
+  <h2 class="foil">Тарифы</h2>
   <div class="hr-gold"></div>
   <div class="wrap pricing">
-    <div class="price fade">
-      <h3>Basic</h3>
-      <div class="num">990₽</div>
-      Цифровая версия (до 100 страниц)
-    </div>
-    <div class="price fade">
-      <h3>Standard</h3>
-      <div class="num">позже</div>
-      Печать + редактура + фото
-    </div>
-    <div class="price fade">
-      <h3>Premium</h3>
-      <div class="num">позже</div>
-      Подарочный комплект, коробка, тиснение
-    </div>
+    <div class="price"><h3>Basic</h3><div class="num">990₽</div>Цифровая версия (до 100 страниц)</div>
+    <div class="price"><h3>Standard</h3><div class="num">позже</div>Редактура + печать + фото</div>
+    <div class="price"><h3>Premium</h3><div class="num">позже</div>Подарочный комплект, коробка, тиснение</div>
   </div>
 </section>
 
 <!-- REVIEWS -->
 <section id="reviews">
-  <h2>Отзывы</h2>
+  <h2 class="foil">Отзывы</h2>
   <div class="hr-gold"></div>
   <div class="wrap reviews">
-    <div class="review fade">«Плакали оба. Самый красивый подарок в жизни.»</div>
-    <div class="review fade">«Это не просто книга. Это наше сердце на бумаге.»</div>
-    <div class="review fade">«Оформление уровня премиальных свадебных журналов.»</div>
+    <div class="review">«Плакали оба. Самый красивый подарок.»</div>
+    <div class="review">«Это наше сердце на бумаге.»</div>
+    <div class="review">«Уровень свадебных журналов.»</div>
   </div>
 </section>
 
 <!-- FAQ -->
 <section id="faq">
-  <h2>FAQ</h2>
+  <h2 class="foil">FAQ</h2>
   <div class="hr-gold"></div>
   <div class="wrap">
-    <details class="fade"><summary>Как получить доступ?</summary>После первых 5 вопросов — оплата и мгновенная разблокировка.</details>
-    <details class="fade"><summary>Можно добавить фото?</summary>Да. Мы деликатно встроим ваши фото в макет книги.</details>
-    <details class="fade"><summary>Срок изготовления?</summary>Обычно 3–7 дней после получения ваших ответов.</details>
+    <details><summary>Как получить доступ?</summary>После 5 вопросов — оплата и мгновенная разблокировка.</details>
+    <details><summary>Можно добавить фото?</summary>Да, мы встроим ваши фото в макет.</details>
+    <details><summary>Срок изготовления?</summary>3–7 дней после ответов.</details>
   </div>
 </section>
 
 <!-- CTA -->
 <section>
-  <div class="wrap cta-center">
+  <div class="wrap" style="text-align:center">
     <a class="btn" href="questions.html">Начать историю</a>
   </div>
 </section>
@@ -322,28 +327,24 @@ footer{text-align:center; padding:28px; font-size:14px; opacity:.8}
 <footer>© История, написанная сердцем</footer>
 
 <script>
-/* burger */
 function toggleMenu(){
   const m=document.getElementById('mobileMenu');
   m.style.right = (m.style.right==='0px') ? '-100%' : '0px';
 }
 
-/* petals */
-function petal(){
-  const p=document.createElement('div'); p.className='petal';
+/* 3D petals spawning with layers */
+function spawnPetal(depth="mid"){
+  const p=document.createElement('div'); p.className='petal'; p.dataset.d=depth;
   p.style.left=Math.random()*100+'vw';
   p.style.setProperty('--dx',(Math.random()*40-20)+'vw');
   p.style.setProperty('--rot',(Math.random()*240-120)+'deg');
   p.style.animationDuration=(8+Math.random()*8)+'s';
   document.body.appendChild(p); setTimeout(()=>p.remove(),16000);
 }
-for(let i=0;i<16;i++) petal(); setInterval(petal,1800);
-
-/* fade-in on view */
-const io=new IntersectionObserver((ents)=>{
-  ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
-},{threshold:.15});
-document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+for(let i=0;i<6;i++) spawnPetal("far");
+for(let i=0;i<6;i++) spawnPetal("mid");
+for(let i=0;i<6;i++) spawnPetal("near");
+setInterval(()=>spawnPetal(["far","mid","near"][Math.floor(Math.random()*3)]), 1600);
 </script>
 
 </body>
