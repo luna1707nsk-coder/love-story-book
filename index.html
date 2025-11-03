@@ -5,152 +5,156 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>История, написанная сердцем</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- Luxury Wedding Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
- --plum:#412836;
- --rose:#c49aa6;
- --rose2:#b47c8b;
- --gold1:#f7e8c9;
- --gold2:#e7d19b;
- --glass:rgba(255,255,255,.82);
+ --plum: #402732;
+ --milk: #fffaf5;
+ --gold: linear-gradient(90deg,#c6a678,#f5e7c6,#d3b27c);
+ --rose: #b87fa3;
+ --rose2: #d8b4c6;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box}
 body{
  font-family:"Cormorant Garamond",serif;
- background:#f5ebf1;
- color:#3a2a35;
+ background:#fffaf5;
+ color:var(--plum);
  overflow-x:hidden;
 }
 
-/* Background slideshow */
+/* Backgrounds (no blur) */
 .bg{
- position:fixed; inset:0;
- background-size:cover; background-position:center;
- filter:blur(10px) brightness(1.1);
- opacity:0; transition:opacity 4s ease;
- z-index:-2;
+ position:fixed;inset:0;z-index:-2;
+ background-size:cover;background-position:center;
+ opacity:0;transition:opacity 4s ease;
 }
 .bg.show{opacity:1}
 .bg1{background-image:url("assets/background1.jpg")}
 .bg2{background-image:url("assets/background2.jpg")}
 
-/* sparkles */
+/* Sparkles */
 .spark{
- position:fixed; width:4px;height:4px;border-radius:50%;
- background:radial-gradient(circle, white, rgba(255,255,255,0));
- animation:fall 5.5s infinite ease-in-out;
- opacity:.8; pointer-events:none; z-index:5;
+ position:fixed;width:4px;height:4px;border-radius:50%;
+ background:radial-gradient(circle,#fff,rgba(255,255,255,.05));
+ animation:fall 5s infinite ease-in-out;
+ opacity:.8;pointer-events:none;z-index:5;
 }
 @keyframes fall{
- 0%{transform:translateY(-10vh) scale(.3);opacity:0}
+ 0%{transform:translateY(-10vh) scale(.4);opacity:0}
  50%{opacity:1}
  100%{transform:translateY(110vh) scale(1);opacity:0}
 }
 
-/* Sections */
-section{padding:90px 18px}
-.wrap{max-width:1100px;margin:0 auto}
-h2{
- font-family:"Bodoni Moda",serif;
- text-align:center;
- font-size:38px;
- color:var(--plum);
- margin-bottom:8px;
-}
-.hr{width:140px;height:2px;margin:14px auto 32px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
-
-/* NAV */
+/* Menu */
 nav{
- position:fixed; top:0; left:0; right:0; z-index:10;
- background:rgba(255,255,255,.7); backdrop-filter:blur(12px);
- padding:16px 22px; font-size:18px;
- display:flex; justify-content:center; gap:32px;
- border-bottom:1px solid rgba(0,0,0,.05);
+ position:fixed;top:0;left:0;width:100%;
+ padding:18px 35px;z-index:10;
+ background:rgba(255,250,245,.7);
+ backdrop-filter:saturate(140%) blur(10px);
+ border-bottom:1px solid rgba(255,255,255,.6);
+ display:flex;justify-content:center;gap:32px;
+ font-size:20px;font-weight:500;
 }
-nav a{text-decoration:none;color:#4d3746;font-weight:600}
+nav a{
+ text-decoration:none;color:var(--plum);
+ position:relative;padding-bottom:4px;
+}
+nav a:after{
+ content:"";position:absolute;left:0;bottom:0;width:0;height:2px;
+ background:var(--gold);transition:.4s;
+}
+nav a:hover:after{width:100%}
 
-/* HERO */
+/* Flourish line */
+.line{
+ width:100%;text-align:center;margin:18px 0;
+}
+.line img{
+ width:160px;opacity:.7;
+}
+
+/* Hero */
 .hero{
- padding-top:110px; padding-bottom:90px;
+ padding-top:140px;padding-bottom:100px;
  text-align:center;
- position:relative;
 }
 .hero-card{
- background:var(--glass); backdrop-filter:blur(18px);
- padding:60px 40px; border-radius:24px;
- max-width:900px;margin:auto;
- border:1px solid rgba(255,255,255,.6);
- box-shadow:0 20px 45px rgba(0,0,0,.14);
+ background:rgba(255,255,255,.82);
+ border:1px solid rgba(255,255,255,.9);
+ border-radius:26px;
+ padding:70px 36px;max-width:900px;margin:auto;
+ box-shadow:0 18px 45px rgba(0,0,0,.12);
 }
-.hero h1{
+h1{
  font-family:"Bodoni Moda",serif;
- font-size:52px;color:var(--plum);
- margin-bottom:8px;
+ font-size:54px;margin-bottom:12px;
+ background:var(--gold);-webkit-background-clip:text;color:transparent;
+ animation:shine 7s ease-in-out infinite;
 }
-.sub{
- font-size:22px; opacity:.85; margin-bottom:26px;
+@keyframes shine{
+ 0%{filter:brightness(1)}
+ 50%{filter:brightness(1.3)}
+ 100%{filter:brightness(1)}
 }
-.btn{
- padding:15px 34px; border-radius:999px;
- background:linear-gradient(140deg,var(--rose),var(--rose2));
- border:none; font-size:20px; cursor:pointer; color:white;font-weight:700;
- box-shadow:0 12px 25px rgba(0,0,0,.18); transition:.25s;
-}
-.btn:hover{transform:translateY(-3px);opacity:.9}
+.sub{font-size:24px;margin-bottom:28px;opacity:.85}
 
-/* grids */
+/* Button */
+.btn{
+ background:linear-gradient(130deg,var(--rose),var(--rose2));
+ border:none;padding:16px 42px;border-radius:50px;
+ font-size:22px;font-weight:600;color:white;
+ box-shadow:0 10px 28px rgba(0,0,0,.18);cursor:pointer;
+ transition:.25s;
+}
+.btn:hover{transform:translateY(-4px);opacity:.92}
+
+/* Sections */
+section{padding:90px 22px}
+.wrap{max-width:1100px;margin:auto}
+
+h2{
+ font-family:"Bodoni Moda",serif;
+ font-size:42px;text-align:center;margin-bottom:8px;
+ background:var(--gold);-webkit-background-clip:text;color:transparent;
+ animation:shine 7s infinite;
+}
+.hr{
+ width:200px;height:2px;margin:10px auto 36px;
+ background:var(--gold);
+}
+
+/* Card */
 .card{
- background:var(--glass); backdrop-filter:blur(16px);
- border:1px solid rgba(255,255,255,.55);
- border-radius:22px; padding:30px;
- box-shadow:0 12px 35px rgba(0,0,0,.12);
- font-size:20px; line-height:1.55;
+ background:rgba(255,255,255,.82);
+ border:1px solid rgba(255,255,255,.92);
+ border-radius:22px;
+ padding:30px;
+ font-size:22px;line-height:1.55;
+ box-shadow:0 10px 35px rgba(0,0,0,.1);
 }
 
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:780px){
- .grid2,.grid3{grid-template-columns:1fr}
-}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr}}
 
-/* pricing */
-.price h3{font-family:"Bodoni Moda",serif;color:var(--plum);font-size:28px;margin-bottom:6px}
-.price .amount{font-size:26px;font-weight:600;color:#3d2a36;margin-bottom:12px}
-
-/* reviews */
-.review{font-style:italic;font-size:20px}
-
-/* FAQ */
-details{
- padding:16px 18px; border-radius:14px;
- background:var(--glass); border:1px solid rgba(255,255,255,.6);
- margin-bottom:10px; backdrop-filter:blur(10px);
-}
-
-/* footer */
-footer{text-align:center;padding:35px;color:#5f4a55;font-size:18px}
-
+footer{text-align:center;padding:32px;font-size:19px;color:#6c4d60}
 </style>
 </head>
 
 <body>
 
-<!-- backgrounds -->
 <div class="bg bg1 show"></div>
 <div class="bg bg2"></div>
 
 <script>
-// background switch
-let bgs=document.querySelectorAll('.bg'); let i=0;
+let bgs=document.querySelectorAll('.bg');let i=0;
 setInterval(()=>{bgs[i].classList.remove('show');i=(i+1)%bgs.length;bgs[i].classList.add('show')},9000);
-
-// sparkles
-for(let x=0;x<60;x++){
- let s=document.createElement('div');
- s.className="spark";
+for(let x=0;x<55;x++){
+ let s=document.createElement('div');s.className="spark";
  s.style.left=Math.random()*100+"vw";
  s.style.animationDelay=Math.random()*5+"s";
  document.body.appendChild(s);
@@ -162,14 +166,13 @@ for(let x=0;x<60;x++){
  <a href="#process">Процесс</a>
  <a href="#examples">Примеры</a>
  <a href="#pricing">Тарифы</a>
- <a href="#reviews">Отзывы</a>
  <a href="#faq">FAQ</a>
 </nav>
 
 <header class="hero">
  <div class="hero-card">
   <h1>История, написанная сердцем</h1>
-  <p class="sub">100 вопросов, создающих книгу любви</p>
+  <p class="sub">100 вопросов, создающих вечную книгу любви</p>
   <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
  </div>
 </header>
@@ -177,81 +180,52 @@ for(let x=0;x<60;x++){
 <section id="about">
 <h2>О проекте</h2><div class="hr"></div>
 <div class="wrap grid2">
- <div class="card">
-Создаём вашу книгу любви — тонко, эстетично, в стиле премиальных свадебных изданий.
-По желанию добавим ваши фотографии.
- </div>
- <div class="card">
-Каждая книга проходит ручную обработку текста, верстку и художественную подготовку.  
-Люксовый подарок, который невозможно забыть.
- </div>
+ <div class="card">Создаю уникальные love-story книги, как свадебные журналы премиум-класса.</div>
+ <div class="card">Добавлю ваши фотографии. Каждая история проходит ручную литературную обработку.</div>
 </div>
 </section>
 
 <section id="process">
-<h2>Как это работает</h2><div class="hr"></div>
+<h2>Процесс</h2><div class="hr"></div>
 <div class="wrap grid2">
- <div class="card">1. Вы проходите 5 бесплатных вопросов</div>
- <div class="card">2. Оплачиваете доступ и открываете остальные 95</div>
- <div class="card">3. Отвечаете в удобном темпе</div>
- <div class="card">4. Получаете премиальную книгу</div>
+ <div class="card">1) 5 бесплатных вопросов</div>
+ <div class="card">2) Оплата — и открываются все 100</div>
+ <div class="card">3) Вы отвечаете в удобном темпе</div>
+ <div class="card">4) Получаете книгу</div>
 </div>
 </section>
 
 <section id="examples">
-<h2>Примеры</h2><div class="hr"></div>
+<h2>Примеры книг</h2><div class="hr"></div>
 <div class="wrap grid3">
- <div class="card">📚 Пример книги №1<br><small>макеты позже</small></div>
- <div class="card">📚 Пример книги №2</div>
- <div class="card">📚 Пример книги №3</div>
+ <div class="card">💍 Пример макета 1</div>
+ <div class="card">📖 Пример макета 2</div>
+ <div class="card">💌 Пример макета 3</div>
 </div>
 </section>
 
 <section id="pricing">
 <h2>Тарифы</h2><div class="hr"></div>
 <div class="wrap grid3">
- <div class="card price">
- <h3>Basic</h3>
- <div class="amount">990₽</div>
- Цифровая версия книги
- </div>
-
- <div class="card price">
- <h3>Standard</h3>
- <div class="amount">Позже</div>
- Печать + оформление
- </div>
-
- <div class="card price">
- <h3>Premium</h3>
- <div class="amount">Позже</div>
- Подарочный набор
- </div>
-</div>
-</section>
-
-<section id="reviews">
-<h2>Отзывы</h2><div class="hr"></div>
-<div class="wrap grid3">
- <div class="card review">«Лучший подарок. Плакали оба.»</div>
- <div class="card review">«Как свадебный журнал. Безумно красиво.»</div>
- <div class="card review">«Эмоции, которые невозможно забыть.»</div>
+ <div class="card">Basic — 990₽<br>Цифровая версия</div>
+ <div class="card">Standard — позже<br>Печать + оформление</div>
+ <div class="card">Premium — позже<br>Подарочный набор</div>
 </div>
 </section>
 
 <section id="faq">
 <h2>FAQ</h2><div class="hr"></div>
 <div class="wrap">
- <details><summary>Сколько времени занимает создание?</summary>3–7 дней после ответов</details>
- <details><summary>Можно добавить фото?</summary>Да, по вашему желанию</details>
- <details><summary>Доступ навсегда?</summary>Да, отвечаете в удобном темпе</details>
+ <div class="card">Можно добавить фото? — Да</div>
+ <div class="card">Как быстро? — 3–7 дней</div>
+ <div class="card">Доступ навсегда? — Да</div>
 </div>
 </section>
 
 <section>
- <div class="wrap" style="text-align:center">
-  <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
- </div>
+<div class="wrap" style="text-align:center">
+ <button class="btn" onclick="location.href='questions.html'">Создать книгу 💫</button>
+</div>
 </section>
 
 <footer>© История, написанная сердцем</footer>
