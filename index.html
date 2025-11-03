@@ -1,142 +1,260 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>История, написанная сердцем</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --text: #3a2a35;
-      --panel: rgba(255,255,255,0.75);
-      --grad: linear-gradient(90deg, #b590bf, #e4c8eb);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>История, написанная сердцем</title>
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
 
-    body {
-      font-family: "Cormorant Garamond", serif;
-      color: var(--text);
-      overflow-x: hidden;
-      background: #f5e9f2;
-    }
+<style>
+:root{
+ --plum:#412836;
+ --rose:#c49aa6;
+ --rose2:#b47c8b;
+ --gold1:#f7e8c9;
+ --gold2:#e7d19b;
+ --glass:rgba(255,255,255,.82);
+}
 
-    /* BG */
-    .hero {
-      position: relative;
-      height: 100vh;
-      overflow: hidden;
-    }
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ font-family:"Cormorant Garamond",serif;
+ background:#f5ebf1;
+ color:#3a2a35;
+ overflow-x:hidden;
+}
 
-    .bg {
-      position: absolute;
-      top:0; left:0;
-      width:100%; height:100%;
-      background-size: cover;
-      background-position: center;
-      filter: blur(8px) brightness(1.1);
-      opacity: 0;
-      transition: opacity 3.5s ease;
-    }
+/* Background slideshow */
+.bg{
+ position:fixed; inset:0;
+ background-size:cover; background-position:center;
+ filter:blur(10px) brightness(1.1);
+ opacity:0; transition:opacity 4s ease;
+ z-index:-2;
+}
+.bg.show{opacity:1}
+.bg1{background-image:url("assets/background1.jpg")}
+.bg2{background-image:url("assets/background2.jpg")}
 
-    .bg.show { opacity: 1; }
-    .bg.bg1 { background-image: url("assets/background1.jpg"); }
-    .bg.bg2 { background-image: url("assets/background2.jpg"); }
+/* sparkles */
+.spark{
+ position:fixed; width:4px;height:4px;border-radius:50%;
+ background:radial-gradient(circle, white, rgba(255,255,255,0));
+ animation:fall 5.5s infinite ease-in-out;
+ opacity:.8; pointer-events:none; z-index:5;
+}
+@keyframes fall{
+ 0%{transform:translateY(-10vh) scale(.3);opacity:0}
+ 50%{opacity:1}
+ 100%{transform:translateY(110vh) scale(1);opacity:0}
+}
 
-    /* Sparkles */
-    .spark {
-      position: absolute;
-      width: 5px; height: 5px;
-      background: radial-gradient(circle, white, rgba(255,255,255,0));
-      border-radius: 50%;
-      animation: fall 5s infinite ease-in-out;
-      opacity: .7;
-    }
+/* Sections */
+section{padding:90px 18px}
+.wrap{max-width:1100px;margin:0 auto}
+h2{
+ font-family:"Bodoni Moda",serif;
+ text-align:center;
+ font-size:38px;
+ color:var(--plum);
+ margin-bottom:8px;
+}
+.hr{width:140px;height:2px;margin:14px auto 32px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
 
-    @keyframes fall {
-      0% { transform: translateY(-10vh) scale(.4); opacity:0; }
-      50% { opacity:1; }
-      100% { transform: translateY(100vh) scale(1); opacity:0; }
-    }
+/* NAV */
+nav{
+ position:fixed; top:0; left:0; right:0; z-index:10;
+ background:rgba(255,255,255,.7); backdrop-filter:blur(12px);
+ padding:16px 22px; font-size:18px;
+ display:flex; justify-content:center; gap:32px;
+ border-bottom:1px solid rgba(0,0,0,.05);
+}
+nav a{text-decoration:none;color:#4d3746;font-weight:600}
 
-    .center {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding-top: 27vh;
-      color: var(--text);
-    }
+/* HERO */
+.hero{
+ padding-top:110px; padding-bottom:90px;
+ text-align:center;
+ position:relative;
+}
+.hero-card{
+ background:var(--glass); backdrop-filter:blur(18px);
+ padding:60px 40px; border-radius:24px;
+ max-width:900px;margin:auto;
+ border:1px solid rgba(255,255,255,.6);
+ box-shadow:0 20px 45px rgba(0,0,0,.14);
+}
+.hero h1{
+ font-family:"Bodoni Moda",serif;
+ font-size:52px;color:var(--plum);
+ margin-bottom:8px;
+}
+.sub{
+ font-size:22px; opacity:.85; margin-bottom:26px;
+}
+.btn{
+ padding:15px 34px; border-radius:999px;
+ background:linear-gradient(140deg,var(--rose),var(--rose2));
+ border:none; font-size:20px; cursor:pointer; color:white;font-weight:700;
+ box-shadow:0 12px 25px rgba(0,0,0,.18); transition:.25s;
+}
+.btn:hover{transform:translateY(-3px);opacity:.9}
 
-    h1 {
-      font-size: 46px;
-      font-weight: 600;
-      margin-bottom: 14px;
-    }
+/* grids */
+.card{
+ background:var(--glass); backdrop-filter:blur(16px);
+ border:1px solid rgba(255,255,255,.55);
+ border-radius:22px; padding:30px;
+ box-shadow:0 12px 35px rgba(0,0,0,.12);
+ font-size:20px; line-height:1.55;
+}
 
-    .sub {
-      font-size: 21px;
-      opacity: .85;
-      margin-bottom: 35px;
-    }
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:780px){
+ .grid2,.grid3{grid-template-columns:1fr}
+}
 
-    .btn {
-      background: var(--grad);
-      color: white;
-      border: none;
-      font-size: 22px;
-      padding: 15px 34px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 8px 25px rgba(0,0,0,.15);
-      transition: .25s;
-    }
+/* pricing */
+.price h3{font-family:"Bodoni Moda",serif;color:var(--plum);font-size:28px;margin-bottom:6px}
+.price .amount{font-size:26px;font-weight:600;color:#3d2a36;margin-bottom:12px}
 
-    .btn:hover {
-      transform: translateY(-4px);
-      opacity:.92;
-    }
-  </style>
+/* reviews */
+.review{font-style:italic;font-size:20px}
+
+/* FAQ */
+details{
+ padding:16px 18px; border-radius:14px;
+ background:var(--glass); border:1px solid rgba(255,255,255,.6);
+ margin-bottom:10px; backdrop-filter:blur(10px);
+}
+
+/* footer */
+footer{text-align:center;padding:35px;color:#5f4a55;font-size:18px}
+
+</style>
 </head>
 
 <body>
 
-<div class="hero">
-  <div class="bg bg1 show"></div>
-  <div class="bg bg2"></div>
-
-  <div class="center">
-    <h1>История, написанная сердцем</h1>
-    <div class="sub">100 вопросов, создающих книгу любви</div>
-    <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
-  </div>
-</div>
+<!-- backgrounds -->
+<div class="bg bg1 show"></div>
+<div class="bg bg2"></div>
 
 <script>
-  // смена фоновых фото
-  const bgs = document.querySelectorAll('.bg');
-  let cur = 0;
-  setInterval(() => {
-    bgs[cur].classList.remove('show');
-    cur = (cur + 1) % bgs.length;
-    bgs[cur].classList.add('show');
-  }, 9000);
+// background switch
+let bgs=document.querySelectorAll('.bg'); let i=0;
+setInterval(()=>{bgs[i].classList.remove('show');i=(i+1)%bgs.length;bgs[i].classList.add('show')},9000);
 
-  // sparkles
-  for (let i=0;i<50;i++){
-    let s=document.createElement('div');
-    s.className="spark";
-    s.style.left=Math.random()*100+"vw";
-    s.style.animationDelay=Math.random()*4+"s";
-    document.body.appendChild(s);
-  }
+// sparkles
+for(let x=0;x<60;x++){
+ let s=document.createElement('div');
+ s.className="spark";
+ s.style.left=Math.random()*100+"vw";
+ s.style.animationDelay=Math.random()*5+"s";
+ document.body.appendChild(s);
+}
 </script>
+
+<nav>
+ <a href="#about">О проекте</a>
+ <a href="#process">Процесс</a>
+ <a href="#examples">Примеры</a>
+ <a href="#pricing">Тарифы</a>
+ <a href="#reviews">Отзывы</a>
+ <a href="#faq">FAQ</a>
+</nav>
+
+<header class="hero">
+ <div class="hero-card">
+  <h1>История, написанная сердцем</h1>
+  <p class="sub">100 вопросов, создающих книгу любви</p>
+  <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
+ </div>
+</header>
+
+<section id="about">
+<h2>О проекте</h2><div class="hr"></div>
+<div class="wrap grid2">
+ <div class="card">
+Создаём вашу книгу любви — тонко, эстетично, в стиле премиальных свадебных изданий.
+По желанию добавим ваши фотографии.
+ </div>
+ <div class="card">
+Каждая книга проходит ручную обработку текста, верстку и художественную подготовку.  
+Люксовый подарок, который невозможно забыть.
+ </div>
+</div>
+</section>
+
+<section id="process">
+<h2>Как это работает</h2><div class="hr"></div>
+<div class="wrap grid2">
+ <div class="card">1. Вы проходите 5 бесплатных вопросов</div>
+ <div class="card">2. Оплачиваете доступ и открываете остальные 95</div>
+ <div class="card">3. Отвечаете в удобном темпе</div>
+ <div class="card">4. Получаете премиальную книгу</div>
+</div>
+</section>
+
+<section id="examples">
+<h2>Примеры</h2><div class="hr"></div>
+<div class="wrap grid3">
+ <div class="card">📚 Пример книги №1<br><small>макеты позже</small></div>
+ <div class="card">📚 Пример книги №2</div>
+ <div class="card">📚 Пример книги №3</div>
+</div>
+</section>
+
+<section id="pricing">
+<h2>Тарифы</h2><div class="hr"></div>
+<div class="wrap grid3">
+ <div class="card price">
+ <h3>Basic</h3>
+ <div class="amount">990₽</div>
+ Цифровая версия книги
+ </div>
+
+ <div class="card price">
+ <h3>Standard</h3>
+ <div class="amount">Позже</div>
+ Печать + оформление
+ </div>
+
+ <div class="card price">
+ <h3>Premium</h3>
+ <div class="amount">Позже</div>
+ Подарочный набор
+ </div>
+</div>
+</section>
+
+<section id="reviews">
+<h2>Отзывы</h2><div class="hr"></div>
+<div class="wrap grid3">
+ <div class="card review">«Лучший подарок. Плакали оба.»</div>
+ <div class="card review">«Как свадебный журнал. Безумно красиво.»</div>
+ <div class="card review">«Эмоции, которые невозможно забыть.»</div>
+</div>
+</section>
+
+<section id="faq">
+<h2>FAQ</h2><div class="hr"></div>
+<div class="wrap">
+ <details><summary>Сколько времени занимает создание?</summary>3–7 дней после ответов</details>
+ <details><summary>Можно добавить фото?</summary>Да, по вашему желанию</details>
+ <details><summary>Доступ навсегда?</summary>Да, отвечаете в удобном темпе</details>
+</div>
+</section>
+
+<section>
+ <div class="wrap" style="text-align:center">
+  <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
+ </div>
+</section>
+
+<footer>© История, написанная сердцем</footer>
 
 </body>
 </html>
