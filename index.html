@@ -1,165 +1,189 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>История, написанная сердцем — Ваша Love-Book</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>История, написанная сердцем — Love-Book</title>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=Cormorant+Garamond:wght@300;400;500;600&family=Great+Vibes&family=Mulish:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=Cormorant+Garamond:wght@300;400;500;600&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet" />
 
 <style>
 :root{
- --ink:#47363f; --plum:#4e2f40; --rose:#c49aa6; --rose2:#b47c8b; --gold:#c9b07a;
- --glass:rgba(255,255,255,.72); --bg:#f7ecef;
+  --ink:#47363f; --plum:#4e2f40; --rose:#c49aa6; --rose2:#b47c8b; --gold:#c9b07a;
+  --glass:rgba(255,255,255,.72); --bg:#f7ecef;
 }
 
-/*** GLOBAL ***/
+/* ===== Base ===== */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
- margin:0; background:var(--bg); color:var(--ink);
- font-family:"Mulish",sans-serif; overflow-x:hidden;
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Mulish",sans-serif; overflow-x:hidden; padding-bottom:86px; /* под sticky CTA */
 }
 
-/*** BACKGROUND OVERLAYS ***/
+/* ===== Backgrounds ===== */
 body::before{
- content:""; position:fixed; inset:0; z-index:-2;
- background:url("assets/roses.jpg") center/cover no-repeat;
- filter:brightness(1) saturate(1.03);
- animation:heroMove 30s ease-in-out infinite alternate;
+  content:""; position:fixed; inset:0; z-index:-2;
+  background:url("assets/roses.jpg") center/cover no-repeat;
+  animation:heroMove 28s ease-in-out infinite alternate;
 }
 @keyframes heroMove{from{transform:scale(1)}to{transform:scale(1.06)}}
 
 body::after{
- content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
- background:url("assets/butterflies.jpg") center/cover no-repeat;
- mix-blend-mode:screen; opacity:.18;
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:url("assets/butterflies.jpg") center/cover no-repeat;
+  mix-blend-mode:screen; opacity:.18;
 }
 
-/*** NAV ***/
+/* ===== Nav ===== */
 nav{
- position:fixed; top:0; left:0; right:0; z-index:30;
- padding:16px 20px; backdrop-filter:blur(12px);
- background:rgba(255,255,255,.65); border-bottom:1px solid rgba(0,0,0,.06);
- display:flex; align-items:center; justify-content:space-between;
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  background:rgba(255,255,255,.68); backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(0,0,0,.06);
 }
+.nav-inner{max-width:1180px; margin:0 auto; padding:14px 18px; display:flex; align-items:center; gap:16px}
 .logo{
- font-family:"Bodoni Moda",serif; font-size:20px; font-weight:600; color:var(--plum);
+  font-family:"Bodoni Moda",serif; font-size:18px; font-weight:600; color:var(--plum); letter-spacing:.2px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.menu{display:flex; gap:22px}
+.menu{display:flex; gap:22px; margin-left:auto}
 .menu a{
- font-size:14px; color:var(--ink); text-decoration:none; position:relative; padding-bottom:4px;
+  color:var(--ink); text-decoration:none; font-size:14px; position:relative; padding-bottom:4px;
 }
 .menu a::after{
- content:""; position:absolute; left:0; bottom:0; width:100%; height:1px;
- background:var(--rose2); transform:scaleX(0); transition:.3s;
+  content:""; position:absolute; left:0; bottom:0; width:100%; height:1px;
+  background:var(--rose2); transform:scaleX(0); transform-origin:left; transition:.28s;
 }
 .menu a:hover::after{transform:scaleX(1)}
+.burger{display:none; margin-left:auto; font-size:26px; cursor:pointer; line-height:1}
 
-/*** STICKY CTA ***/
-.sticky-cta{
- position:fixed; bottom:14px; left:0; right:0; display:flex; justify-content:center; z-index:40;
+/* Mobile drawer */
+.mobile-menu{
+  position:fixed; top:0; right:-100%; width:76%; height:100vh; z-index:60;
+  background:rgba(255,255,255,.95); backdrop-filter:blur(18px);
+  padding:88px 28px 28px; display:flex; flex-direction:column; gap:18px; transition:.4s;
+  box-shadow:-16px 0 40px rgba(0,0,0,.12);
 }
-.sticky-cta a{
- background:linear-gradient(140deg,var(--rose),var(--rose2));
- color:#fff; padding:14px 26px; border-radius:999px; text-decoration:none;
- box-shadow:0 12px 30px rgba(0,0,0,.18); font-weight:600; font-size:15px;
-}
+.mobile-menu a{color:var(--ink); text-decoration:none; font-family:"Cormorant Garamond",serif; font-size:20px}
 
-/*** HERO ***/
+/* ===== Hero ===== */
 .hero{
- min-height:100vh; display:flex; align-items:center; justify-content:center;
- padding:120px 20px 60px; text-align:center;
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  padding:110px 18px 60px; text-align:center;
 }
 .hero-card{
- background:var(--glass); backdrop-filter:blur(18px); max-width:900px;
- padding:60px 42px; border-radius:26px; box-shadow:0 30px 60px rgba(0,0,0,.14);
- border:1px solid rgba(255,255,255,.5);
+  background:var(--glass); backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.52); border-radius:26px;
+  box-shadow:0 30px 60px rgba(0,0,0,.14); max-width:980px; width:100%;
+  padding:60px 42px;
 }
 .hero h1{
- font-family:"Bodoni Moda",serif; font-size:clamp(32px,5vw,60px);
- color:var(--plum); margin:0 0 12px; text-shadow:0 0 6px rgba(255,255,255,.7);
+  font-family:"Bodoni Moda",serif; color:var(--plum);
+  font-size:clamp(32px,5vw,58px); margin:0 0 10px; text-shadow:0 0 6px rgba(255,255,255,.7);
 }
-.hero p{
- font-family:"Cormorant Garamond",serif; font-size:22px; opacity:.96;
- margin:0 0 26px; color:#6a5561;
+.hero .tag{
+  font-family:"Cormorant Garamond",serif; font-size:22px; color:#6a5561; margin:0 0 26px;
 }
 .btn{
- display:inline-block; background:linear-gradient(140deg,var(--rose),var(--rose2));
- padding:16px 34px; color:#fff; border-radius:50px; font-weight:600; text-decoration:none;
+  display:inline-block; text-decoration:none; color:#fff; font-weight:600;
+  background:linear-gradient(140deg,var(--rose),var(--rose2)); border-radius:50px;
+  padding:16px 34px; box-shadow:0 12px 28px rgba(0,0,0,.18);
 }
 
-/*** SECTION WRAPPER ***/
-section{padding:90px 20px}
-.wrap{max-width:1050px; margin:0 auto}
-
-/*** TITLES ***/
+/* ===== Sections ===== */
+section{padding:90px 18px}
+.wrap{max-width:1100px; margin:0 auto}
 h2{
- font-family:"Bodoni Moda",serif; font-size:40px; color:var(--plum);
- text-align:center; margin:0 0 10px;
+  font-family:"Bodoni Moda",serif; font-size:38px; color:var(--plum);
+  text-align:center; margin:0 0 10px;
 }
-.hr-gold{
- height:1px; width:140px; margin:14px auto 22px;
- background:linear-gradient(90deg,transparent,var(--gold),transparent);
+.hr-gold{height:1px; width:140px; margin:14px auto 26px; background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+/* About */
+.about-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px}
+.card{
+  background:var(--glass); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.5);
+  border-radius:22px; padding:34px; box-shadow:0 20px 50px rgba(0,0,0,.13);
+  font-family:"Cormorant Garamond",serif; font-size:20px; line-height:1.55;
 }
 
-/*** ABOUT ***/
-.about-grid{
- display:grid; grid-template-columns:1fr 1fr; gap:40px;
-}
-.about-card{
- background:var(--glass); backdrop-filter:blur(16px);
- border-radius:22px; padding:38px; box-shadow:0 20px 50px rgba(0,0,0,.13);
- border:1px solid rgba(255,255,255,.5);
- font-family:"Cormorant Garamond",serif; font-size:20px; line-height:1.55;
-}
+/* Process */
+.step{font-family:"Cormorant Garamond",serif; font-size:20px; margin-bottom:10px}
 
-/*** PROCESS ***/
-.step{margin-bottom:14px; font-size:19px; font-family:"Cormorant Garamond",serif}
-
-/*** GALLERY ***/
-.gallery{display:grid; gap:18px; grid-template-columns:repeat(3,1fr)}
+/* Examples */
+.gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 .gallery img{
- width:100%; height:300px; object-fit:cover; border-radius:18px;
- box-shadow:0 16px 40px rgba(0,0,0,.18);
+  width:100%; height:300px; object-fit:cover; border-radius:18px;
+  box-shadow:0 16px 40px rgba(0,0,0,.18)
 }
 
-/*** PRICING ***/
-.pricing{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+/* Pricing */
+.pricing{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 .price{
- background:var(--glass); backdrop-filter:blur(14px); padding:32px; border-radius:20px;
- text-align:center; border:1px solid rgba(255,255,255,.5);
- box-shadow:0 12px 30px rgba(0,0,0,.12)
+  background:var(--glass); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.5);
+  border-radius:20px; padding:28px; text-align:center; box-shadow:0 12px 30px rgba(0,0,0,.12)
 }
 .price h3{font-family:"Bodoni Moda",serif; margin:0 0 6px; color:var(--plum)}
-.price .num{font-size:32px; font-family:"Cormorant Garamond",serif; margin-bottom:12px}
+.price .num{font-family:"Cormorant Garamond",serif; font-size:30px; margin-bottom:10px}
 
-/*** REVIEWS ***/
+/* Reviews */
 .reviews{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 .review{
- background:var(--glass); padding:24px; border-radius:20px;
- backdrop-filter:blur(14px); font-style:italic; font-size:18px
+  background:var(--glass); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.5);
+  border-radius:20px; padding:22px; font-style:italic; font-size:18px
 }
 
-/*** FAQ ***/
+/* FAQ */
 details{
- background:var(--glass); padding:18px 22px; margin-bottom:10px;
- border-radius:16px; font-size:18px; backdrop-filter:blur(10px)
+  background:var(--glass); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.5);
+  border-radius:16px; padding:16px 20px; margin-bottom:10px; font-size:18px
 }
 
-/*** FOOTER ***/
+/* CTA Section */
+.cta-center{text-align:center}
+
+/* Footer */
 footer{text-align:center; padding:28px; font-size:14px; opacity:.8}
 
-/*** PETALS (Dior glow) ***/
+/* Sticky CTA */
+.sticky-cta{
+  position:fixed; left:0; right:0; bottom:12px; z-index:45; display:flex; justify-content:center;
+}
+.sticky-cta a{
+  background:linear-gradient(140deg,var(--rose),var(--rose2)); color:#fff;
+  text-decoration:none; padding:14px 26px; border-radius:999px; font-weight:700; font-size:15px;
+  box-shadow:0 12px 28px rgba(0,0,0,.18)
+}
+
+/* Petals */
 .petal{
- position:fixed; top:-20px; width:10px; height:10px; border-radius:50%;
- background:radial-gradient(circle at 30% 30%, #ffdce9 0%, #f8a7c6 60%, transparent 75%);
- box-shadow:0 0 10px rgba(255,182,206,.8),0 0 14px rgba(255,226,238,.6);
- opacity:.85; pointer-events:none; z-index:2;
- animation:fall linear forwards;
+  position:fixed; top:-20px; width:10px; height:10px; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #ffdce9 0%, #f8a7c6 60%, transparent 75%);
+  box-shadow:0 0 10px rgba(255,182,206,.8),0 0 14px rgba(255,226,238,.6);
+  opacity:.85; pointer-events:none; z-index:2; animation:fall linear forwards
 }
 @keyframes fall{to{transform:translate3d(var(--dx),120vh,0) rotate(var(--rot)); opacity:.2}}
+
+/* Appear anim */
+.fade{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease}
+.fade.in{opacity:1; transform:none}
+
+/* ===== Responsive ===== */
+@media (max-width:1024px){
+  .gallery{grid-template-columns:repeat(2,1fr)}
+  .pricing{grid-template-columns:repeat(2,1fr)}
+  .reviews{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:768px){
+  .menu{display:none}
+  .burger{display:block}
+  .logo{font-size:16px; max-width:70%}
+  .hero-card{padding:42px 22px}
+  .about-grid{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr}
+  .pricing,.reviews{grid-template-columns:1fr}
+  h2{font-size:30px}
+}
 </style>
 </head>
 
@@ -167,135 +191,159 @@ footer{text-align:center; padding:28px; font-size:14px; opacity:.8}
 
 <!-- NAV -->
 <nav>
- <div class="logo">История, написанная сердцем</div>
- <div class="menu">
-  <a href="#about">О проекте</a>
-  <a href="#process">Процесс</a>
-  <a href="#examples">Примеры</a>
-  <a href="#pricing">Тарифы</a>
-  <a href="#reviews">Отзывы</a>
-  <a href="#faq">FAQ</a>
- </div>
+  <div class="nav-inner">
+    <div class="logo">История, написанная сердцем</div>
+    <div class="menu">
+      <a href="#about">О проекте</a>
+      <a href="#process">Процесс</a>
+      <a href="#examples">Примеры</a>
+      <a href="#pricing">Тарифы</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="burger" onclick="toggleMenu()">☰</div>
+  </div>
 </nav>
 
-<!-- STICKY CTA -->
+<!-- Mobile Drawer -->
+<div id="mobileMenu" class="mobile-menu">
+  <a href="#about" onclick="toggleMenu()">О проекте</a>
+  <a href="#process" onclick="toggleMenu()">Процесс</a>
+  <a href="#examples" onclick="toggleMenu()">Примеры</a>
+  <a href="#pricing" onclick="toggleMenu()">Тарифы</a>
+  <a href="#reviews" onclick="toggleMenu()">Отзывы</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+</div>
+
+<!-- Sticky CTA -->
 <div class="sticky-cta"><a href="questions.html">Начать историю ✨</a></div>
 
 <!-- HERO -->
 <header class="hero">
- <div class="hero-card">
-  <h1>История, написанная&nbsp;сердцем</h1>
-  <p>100 вопросов, которые превращают память в книгу любви.</p>
-  <a class="btn" href="questions.html">Создать книгу</a>
- </div>
+  <div class="hero-card fade">
+    <h1>Where love becomes a story</h1>
+    <p class="tag">100 вопросов, которые превращают память в книгу любви</p>
+    <a class="btn" href="questions.html">Начать историю</a>
+  </div>
 </header>
 
 <!-- ABOUT -->
 <section id="about">
- <h2>О проекте</h2>
- <div class="hr-gold"></div>
- <div class="wrap about-grid">
-  <div class="about-card">
-   Это не анкета — это деликатный путь к вашим чувствам.  
-   Мы превращаем историю вашей любви в утончённую книгу.
+  <h2>О проекте</h2>
+  <div class="hr-gold"></div>
+  <div class="wrap about-grid">
+    <div class="card fade">
+      Это не анкета — это деликатный путь к вашим чувствам.
+      Мы превращаем историю вашей любви в утончённую книгу.
+      По желанию добавим ваши фотографии.
+    </div>
+    <div class="card fade">
+      Каждая книга создаётся вручную — с редактированием,
+      версткой и мягкой эстетикой свадебного журнала.
+    </div>
   </div>
-  <div class="about-card">
-   Добавим ваши фотографии, любимые фразы, детали и атмосферу.  
-   Каждая книга создаётся вручную — как драгоценная память.
-  </div>
- </div>
 </section>
 
 <!-- PROCESS -->
 <section id="process">
- <h2>Как это работает</h2>
- <div class="hr-gold"></div>
- <div class="wrap">
-  <div class="step">1. Бесплатно отвечаете на первые 5 вопросов</div>
-  <div class="step">2. Оплачиваете доступ к остальным 95</div>
-  <div class="step">3. Отвечаете в удобном темпе</div>
-  <div class="step">4. Мы создаём книгу — и отправляем вам</div>
- </div>
+  <h2>Как это работает</h2>
+  <div class="hr-gold"></div>
+  <div class="wrap">
+    <div class="step fade">1. Бесплатно отвечаете на первые 5 вопросов</div>
+    <div class="step fade">2. Оплачиваете доступ к оставшимся 95</div>
+    <div class="step fade">3. Отвечаете в удобном темпе, мы всё сохраняем</div>
+    <div class="step fade">4. Получаете готовую Love-Book (цифровую или печатную)</div>
+  </div>
 </section>
 
 <!-- EXAMPLES -->
 <section id="examples">
- <h2>Примеры страниц</h2>
- <div class="hr-gold"></div>
- <div class="wrap gallery">
-  <img src="assets/book1.jpg" onerror="this.src='https://via.placeholder.com/500x500/F7E9EF/6a5b63?text=Love+Book'">
-  <img src="assets/book2.jpg" onerror="this.src='https://via.placeholder.com/500x500/F7E9EF/6a5b63?text=Romantic+Page'">
-  <img src="assets/book3.jpg" onerror="this.src='https://via.placeholder.com/500x500/F7E9EF/6a5b63?text=Memories'">
- </div>
+  <h2>Примеры страниц</h2>
+  <div class="hr-gold"></div>
+  <div class="wrap gallery">
+    <img class="fade" src="assets/book1.jpg" onerror="this.src='https://via.placeholder.com/600x600/F7E9EF/6a5b63?text=Love+Book'" alt="">
+    <img class="fade" src="assets/book2.jpg" onerror="this.src='https://via.placeholder.com/600x600/F7E9EF/6a5b63?text=Romantic+Spread'" alt="">
+    <img class="fade" src="assets/book3.jpg" onerror="this.src='https://via.placeholder.com/600x600/F7E9EF/6a5b63?text=Memories'" alt="">
+  </div>
 </section>
 
 <!-- PRICING -->
 <section id="pricing">
- <h2>Тарифы</h2>
- <div class="hr-gold"></div>
- <div class="wrap pricing">
-  <div class="price">
-   <h3>Basic</h3>
-   <div class="num">990₽</div>
-   Цифровая книга (до 100 страниц)
+  <h2>Тарифы</h2>
+  <div class="hr-gold"></div>
+  <div class="wrap pricing">
+    <div class="price fade">
+      <h3>Basic</h3>
+      <div class="num">990₽</div>
+      Цифровая версия (до 100 страниц)
+    </div>
+    <div class="price fade">
+      <h3>Standard</h3>
+      <div class="num">позже</div>
+      Печать + редактура + фото
+    </div>
+    <div class="price fade">
+      <h3>Premium</h3>
+      <div class="num">позже</div>
+      Подарочный комплект, коробка, тиснение
+    </div>
   </div>
-  <div class="price">
-   <h3>Standard</h3>
-   <div class="num">Позже</div>
-   Печать + Верстка + Фото
-  </div>
-  <div class="price">
-   <h3>Premium</h3>
-   <div class="num">Позже</div>
-   Подарочный формат + коробка + золотой тиснением
-  </div>
- </div>
 </section>
 
 <!-- REVIEWS -->
 <section id="reviews">
- <h2>Отзывы</h2>
- <div class="hr-gold"></div>
- <div class="wrap reviews">
-  <div class="review">«Плакали оба. Самый красивый подарок в жизни.»</div>
-  <div class="review">«Это не просто книга. Это наше сердце на бумаге.»</div>
-  <div class="review">«Оформление уровня премиальных свадебных журналов.»</div>
- </div>
+  <h2>Отзывы</h2>
+  <div class="hr-gold"></div>
+  <div class="wrap reviews">
+    <div class="review fade">«Плакали оба. Самый красивый подарок в жизни.»</div>
+    <div class="review fade">«Это не просто книга. Это наше сердце на бумаге.»</div>
+    <div class="review fade">«Оформление уровня премиальных свадебных журналов.»</div>
+  </div>
 </section>
 
 <!-- FAQ -->
 <section id="faq">
- <h2>FAQ</h2>
- <div class="hr-gold"></div>
- <div class="wrap">
-  <details><summary>Как получить доступ?</summary>После первых 5 вопросов — оплата в Telegram.</details>
-  <details><summary>Можно добавить фото?</summary>Да, и мы красиво впишем их в книгу.</details>
-  <details><summary>Сколько создаётся книга?</summary>3–7 дней после ответов.</details>
- </div>
+  <h2>FAQ</h2>
+  <div class="hr-gold"></div>
+  <div class="wrap">
+    <details class="fade"><summary>Как получить доступ?</summary>После первых 5 вопросов — оплата и мгновенная разблокировка.</details>
+    <details class="fade"><summary>Можно добавить фото?</summary>Да. Мы деликатно встроим ваши фото в макет книги.</details>
+    <details class="fade"><summary>Срок изготовления?</summary>Обычно 3–7 дней после получения ваших ответов.</details>
+  </div>
 </section>
 
 <!-- CTA -->
 <section>
- <div class="wrap" style="text-align:center">
-  <a class="btn" href="questions.html">Начать свою историю</a>
- </div>
+  <div class="wrap cta-center">
+    <a class="btn" href="questions.html">Начать историю</a>
+  </div>
 </section>
 
 <footer>© История, написанная сердцем</footer>
 
 <script>
-/*** PETALS ***/
-function petal(){
- const p=document.createElement("div"); p.className="petal";
- p.style.left=Math.random()*100+"vw";
- p.style.setProperty("--dx",(Math.random()*40-20)+"vw");
- p.style.setProperty("--rot",(Math.random()*240-120)+"deg");
- p.style.animationDuration=(8+Math.random()*8)+"s";
- document.body.appendChild(p);
- setTimeout(()=>p.remove(),16000);
+/* burger */
+function toggleMenu(){
+  const m=document.getElementById('mobileMenu');
+  m.style.right = (m.style.right==='0px') ? '-100%' : '0px';
 }
-for(let i=0;i<16;i++)petal();
-setInterval(petal,1800);
+
+/* petals */
+function petal(){
+  const p=document.createElement('div'); p.className='petal';
+  p.style.left=Math.random()*100+'vw';
+  p.style.setProperty('--dx',(Math.random()*40-20)+'vw');
+  p.style.setProperty('--rot',(Math.random()*240-120)+'deg');
+  p.style.animationDuration=(8+Math.random()*8)+'s';
+  document.body.appendChild(p); setTimeout(()=>p.remove(),16000);
+}
+for(let i=0;i<16;i++) petal(); setInterval(petal,1800);
+
+/* fade-in on view */
+const io=new IntersectionObserver((ents)=>{
+  ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+},{threshold:.15});
+document.querySelectorAll('.fade').forEach(el=>io.observe(el));
 </script>
 
 </body>
