@@ -1,205 +1,213 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>История любви — вопросы</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вопросы — История любви</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --velvet:#3a1f2d; --milk:#fffaf5;
-  --rose:#cda3b7; --rose2:#b37a91;
-  --card:rgba(255,255,255,.88); --border:rgba(255,255,255,.92);
-  --gold1:#4b2d3b;--gold2:#7a5365;--gold3:#c6a678;--gold4:#7a5365;--gold5:#4b2d3b;
+:root {
+  --rose: #C9A6A3;
+  --ink: #4C3A41;
+  --light: rgba(255,255,255,0.9);
+  --panel: rgba(255,255,255,0.72);
+  --shadow: rgba(0,0,0,0.12);
 }
 
-/* RESET */
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:"Cormorant Garamond",serif;
-  background:url("assets/background3.jpg") center/cover fixed;
-  color:var(--velvet);
-  overflow-x:hidden; min-height:100vh;
+body {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  background: url('./assets/background3.jpg') center/cover fixed no-repeat;
+  color: var(--ink);
+  overflow-x: hidden;
 }
 
-/* HEADER мини (логотип слева, ссылка домой) */
-.header{
-  position:fixed; top:0; left:0; right:0; z-index:5;
-  background:rgba(255,250,245,.75);
-  backdrop-filter:blur(12px) saturate(140%);
-  border-bottom:1px solid rgba(120,85,100,.12);
+/* Glitter */
+.glitter {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 3;
 }
-.header .row{
-  max-width:1100px; margin:0 auto; display:flex; align-items:center;
-  gap:18px; padding:12px 16px;
+.glitter span {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  animation: glitterMove 6s linear infinite;
 }
-.logo{
-  font-family:"Bodoni Moda",serif; font-weight:600; font-size:18px; color:#3a1f2d;
-}
-.logo em{
-  font-style:normal;
-  background:linear-gradient(90deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4),var(--gold5));
-  -webkit-background-clip:text; color:transparent; animation:goldGlow 9s ease-in-out infinite;
-}
-.header a.home{ margin-left:auto; text-decoration:none; color:#3a1f2d; font-weight:600; }
-
-/* STARS */
-#stars{ position:fixed; inset:0; z-index:1; pointer-events:none; }
-.star{
-  position:absolute; width:6px; height:6px; border-radius:50%;
-  background:radial-gradient(circle,#c5c8cc 0%,#7e7f84 42%,rgba(0,0,0,0) 80%);
-  box-shadow:0 0 6px rgba(200,200,200,.35);
-  opacity:.85; filter:blur(.15px);
-  animation:fall linear forwards;
-}
-@keyframes fall{
-  0%{transform:translateY(-8vh) scale(.85);opacity:.2}
-  40%{opacity:.6}
-  80%{opacity:.45}
-  100%{transform:translateY(108vh) scale(1);opacity:0}
+@keyframes glitterMove {
+  0% { transform: translateY(-10vh) scale(0.4); opacity: .6; }
+  100% { transform: translateY(110vh) scale(1); opacity: 0; }
 }
 
-/* APP CONTAINER */
-#app{ position:relative; z-index:2; padding-top:72px; }
-
-/* CARD */
-.container{
-  max-width:680px; margin:100px auto;
-  background:var(--card); border:1px solid var(--border);
-  border-radius:28px; padding: clamp(24px,4.6vw,38px);
-  box-shadow:0 18px 45px rgba(0,0,0,.15);
-  animation:fade .55s ease;
-}
-@keyframes fade{from{opacity:0;transform:translateY(25px)} to{opacity:1;transform:none}}
-
-/* HEADINGS */
-h2{
-  font-family:"Bodoni Moda",serif;
-  font-size:clamp(24px,6vw,38px); margin-bottom:18px;
-  background:linear-gradient(90deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4),var(--gold5));
-  -webkit-background-clip:text;color:transparent;
-  animation:goldGlow 9s ease-in-out infinite;
-  text-shadow:0 2px 5px rgba(255,255,255,.42);
-}
-@keyframes goldGlow{0%{filter:brightness(.92)}50%{filter:brightness(1.22)}100%{filter:brightness(.92)}}
-
-/* FORM */
-textarea{
-  width:100%; min-height:140px; padding:18px;
-  font-family:inherit; font-size:clamp(16px,2.6vw,19px);
-  border-radius:18px; border:1px solid rgba(0,0,0,.18);
-  background:rgba(255,255,255,.9); resize:none; margin-bottom:18px;
-}
-.btn{
-  width:100%; padding:16px 28px;
-  font-size:clamp(17px,2.5vw,20px); font-weight:700;
-  border-radius:50px; border:none; cursor:pointer; color:#fff;
-  background:linear-gradient(130deg,var(--rose),var(--rose2));
-  box-shadow:0 8px 24px rgba(0,0,0,.18); transition:.22s;
-}
-.btn:hover{transform:translateY(-3px);opacity:.94}
-
-/* PROGRESS */
-progress{width:100%; height:8px; margin-bottom:18px; border-radius:8px; overflow:hidden}
-progress::-webkit-progress-bar{background:rgba(255,255,255,.45)}
-progress::-webkit-progress-value{background:#b590bf}
-
-/* PAYWALL */
-.paywall-text{
-  font-size:clamp(18px,2.6vw,21px); text-align:center;
-  margin-bottom:26px; line-height:1.45;
+/* Container */
+.container {
+  max-width: 780px;
+  margin: 120px auto 60px;
+  padding: 20px;
 }
 
-/* MOBILE CTA */
-.bottom-cta{
-  display:none; position:fixed; left:12px; right:12px; bottom:12px; z-index:3;
-  background:linear-gradient(130deg,var(--rose),var(--rose2));
-  border-radius:999px; padding:14px; text-align:center; color:#fff;
-  font-weight:700; font-size:18px; box-shadow:0 6px 20px rgba(0,0,0,.15);
+/* Card */
+.card {
+  background: var(--panel);
+  padding: 35px;
+  border-radius: 28px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px var(--shadow);
+  animation: fade 0.8s ease;
 }
-@media(max-width:768px){
-  .bottom-cta{display:block}
-  .container{margin-top:70px;margin-bottom:140px}
+@keyframes fade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Progress */
+.progress-wrap {
+  margin: 0 0 18px;
+}
+.progress-label {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+.progress {
+  width: 100%;
+  height: 8px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg,#b88fae,#e3d2e6);
+  border-radius: 50px;
+  transition: width .4s ease;
+}
+
+/* Question */
+h2.question {
+  font-size: 30px;
+  margin-bottom: 14px;
+}
+
+textarea {
+  width: 100%;
+  height: 160px;
+  padding: 18px;
+  font-family: inherit;
+  font-size: 20px;
+  border-radius: 22px;
+  border: none;
+  background: rgba(255,255,255,0.88);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Buttons */
+button {
+  padding: 14px 34px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 20px;
+  color: white;
+  background: linear-gradient(90deg,#b88fae,#e3d2e6);
+  box-shadow: 0 8px 22px rgba(0,0,0,.15);
+  transition: 0.3s ease;
+  margin-top: 20px;
+}
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+
+/* Final screen */
+.final {
+  text-align: center;
+}
+.final h2 {
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+.final p {
+  font-size: 20px;
+  opacity: .85;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .card { padding: 24px; }
+  h2.question { font-size: 26px; }
+  textarea { height: 150px; }
+  button { width: 100%; }
 }
 </style>
 </head>
+
 <body>
 
-<!-- Header mini -->
-<header class="header">
-  <div class="row">
-    <div class="logo"><em>A book written with soul</em></div>
-    <a class="home" href="index.html">На главную</a>
-  </div>
-</header>
-
-<!-- Stars layer -->
-<div id="stars"></div>
-
-<!-- App -->
-<div id="app"></div>
+<div class="glitter"></div>
 
 <script>
-/* Stars */
-const starsLayer=document.getElementById('stars');
-function spawnStar(){
-  const s=document.createElement('div');
-  s.className='star';
-  s.style.left=Math.random()*100+'vw';
-  s.style.top='-10vh';
-  s.style.animationDuration=(7+Math.random()*6)+'s';
-  s.style.filter='blur('+(Math.random()*0.4)+'px)';
-  starsLayer.appendChild(s);
-  setTimeout(()=>s.remove(),15000);
+for(let i=0;i<50;i++){
+  const s=document.createElement("span");
+  s.style.left=Math.random()*100+"vw";
+  s.style.animationDelay=Math.random()*5+"s";
+  document.body.querySelector(".glitter").appendChild(s);
 }
-for(let i=0;i<24;i++){ setTimeout(spawnStar, i*140); }
-setInterval(spawnStar, 520);
+</script>
 
-/* Questions App */
+<div class="container">
+  <div id="questionCard" class="card">
+
+    <div class="progress-wrap">
+      <div class="progress-label" id="label">Вопрос 1 из 5</div>
+      <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+    </div>
+
+    <h2 class="question" id="questionText">Где вы впервые встретились?</h2>
+    <textarea id="answer" placeholder="Ваш ответ..."></textarea>
+    <button onclick="nextQuestion()">Далее</button>
+
+  </div>
+</div>
+
+<script>
 const questions = [
- "Где вы впервые встретились?",
- "Что вы почувствовали в тот момент?",
- "Кто сделал первый шаг?",
- "Когда вы поняли, что это — любовь?",
- "Какой момент начала отношений самый ценный?"
+  "Где вы впервые встретились?",
+  "Что вы подумали при первой встрече?",
+  "Кто сделал первый шаг?",
+  "Какой момент стал решающим для вас?",
+  "Что больше всего запомнилось в тот день?"
 ];
-let step=0;
+
+let index = 0;
 
 function render(){
-  const html = `
-    <div class="container">
-      <progress value="${step}" max="5"></progress>
-      <h2>${questions[step]}</h2>
-      <textarea id="answer" placeholder="Ваш ответ..."></textarea>
-      <button class="btn" id="nextBtn">Далее</button>
-    </div>
-    <a href="#" class="bottom-cta" id="mobileNext">Продолжить ✨</a>
-  `;
-  document.getElementById('app').innerHTML = html;
-  document.getElementById('nextBtn').onclick = next;
-  document.getElementById('mobileNext').onclick = (e)=>{e.preventDefault(); next();};
+  document.getElementById("label").innerText = `Вопрос ${index+1} из 5`;
+  document.getElementById("questionText").innerText = questions[index];
+  document.getElementById("progressBar").style.width = ((index)/5)*100 + "%";
 }
 
-function showPaywall(){
-  const html = `
-    <div class="container">
-      <h2>Пробный этап завершён</h2>
-      <div class="paywall-text">
-        Вы прошли 5 вопросов 💫<br><br>
-        Чтобы открыть оставшиеся 95 — оформите доступ
+function nextQuestion(){
+  index++;
+  if(index < 5){
+    render();
+    document.getElementById("answer").value = "";
+  } else {
+    document.getElementById("questionCard").innerHTML = `
+      <div class="final">
+        <h2>✨ Пробная часть завершена ✨</h2>
+        <p>Вы прошли 5 вопросов.  
+        Откройте оставшиеся 95 и создайте книгу вашей любви.</p>
+        <button onclick="alert('Тут будет оплата 💳')">Открыть все вопросы</button>
       </div>
-      <button class="btn" onclick="window.location.href='https://t.me/abookaboutyou'">Открыть все вопросы ✨</button>
-    </div>
-  `;
-  document.getElementById('app').innerHTML = html;
-}
-
-function next(){
-  step++;
-  if(step>=5) showPaywall();
-  else render();
+    `;
+  }
 }
 render();
 </script>
