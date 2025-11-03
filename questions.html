@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Вопросы — История, написанная сердцем</title>
 
+<!-- Premium fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;600&family=Cormorant+Garamond:wght@300;400;500&family=Mulish:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -12,136 +13,186 @@
   --font-display:"Bodoni Moda", serif;
   --font-serif:"Cormorant Garamond", serif;
   --font-sans:"Mulish", sans-serif;
-  --ink:#3f3638; --muted:#7f6c73;
-  --rose:#b47c8b; --panel:rgba(255,255,255,.90);
-  --radius:16px;
+  --rose:#b47c8b;
+  --rose2:#c49aa6;
+  --panel:rgba(255,255,255,.92);
+  --text:#46373b;
 }
 
 *{box-sizing:border-box}
-html,body{margin:0}
 body{
-  font-family:var(--font-sans);
-  color:var(--ink);
+  margin:0;
   background:url("assets/butterflies.jpg") center/cover fixed;
   backdrop-filter:blur(6px);
+  font-family:var(--font-sans);
+  color:var(--text);
+  padding:24px;
 }
 
-.wrap{max-width:880px;margin:0 auto;padding:28px 18px 80px}
-
-h1{
-  font-family:var(--font-display);
-  text-align:center;
-  font-size:clamp(24px,3.2vw,34px);
-  color:#6f4a59; margin:10px 0 6px;
-}
-.subtitle{ text-align:center; color:var(--muted); margin-bottom:16px}
+.wrap{max-width:720px;margin:0 auto}
 
 /* card */
 .card{
   background:var(--panel);
-  border-radius:var(--radius);
-  padding:22px;
-  box-shadow:0 10px 26px rgba(0,0,0,.08);
-  margin-bottom:18px;
-  opacity:0; transform:translateY(16px);
-  transition:opacity .45s ease, transform .45s ease;
+  padding:26px;
+  border-radius:16px;
+  box-shadow:0 14px 28px rgba(0,0,0,.08);
+  animation:fade .4s ease;
 }
-.card.show{opacity:1; transform:none}
 
-label{
-  display:block;
-  font-family:var(--font-serif);
-  font-size:18px;
-  margin-bottom:8px;
+h1{
+  font-family:var(--font-display);
+  text-align:center;
+  font-size:32px;
+  margin:10px 0 8px;
   color:#6f4a59;
 }
+.subtitle{text-align:center;color:#7c6870;margin-bottom:20px;font-family:var(--font-serif)}
+
+.question{
+  font-family:var(--font-serif);
+  font-size:20px;margin-bottom:12px;
+}
 textarea{
-  width:100%; min-height:110px; resize:vertical;
-  padding:12px; border-radius:12px;
-  border:1px solid #d7bdc8; background:#fff;
-  font-family:var(--font-sans); font-size:16px;
+  width:100%;min-height:120px;padding:14px;border-radius:12px;
+  border:1px solid #d5b9c4;background:#fff;
+  font-size:16px;font-family:var(--font-sans);
 }
 
-/* buttons */
-.actions{ display:flex; gap:10px; justify-content:center; margin-top:16px }
 .btn{
-  display:inline-block; padding:12px 22px; border-radius:999px;
-  background:var(--rose); color:#fff; border:0;
-  font-weight:600; cursor:pointer; transition:.25s ease;
+  display:inline-block;
+  padding:12px 24px;
+  border-radius:999px;
+  background:var(--rose);
+  color:#fff;
+  border:none;
+  cursor:pointer;
   text-decoration:none;
+  font-weight:600;
+  transition:.25s;
+  margin-top:10px;
 }
-.btn:hover{ transform:translateY(-1px) }
+.btn:hover{background:var(--rose2);transform:translateY(-1px)}
 
-/* progress */
-.progress{ text-align:center; color:#8a7680; margin:8px 0 18px }
+.btn-ghost{
+  background:transparent;
+  border:1px solid var(--rose);
+  color:var(--rose);
+}
+.btn-ghost:hover{
+  background:var(--rose2);
+  color:#fff;
+  border-color:var(--rose2);
+}
+
+/* fade */
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.progress{text-align:center;color:#7a6670;margin-bottom:16px}
 
 /* floating petals */
 .petal{
-  position:fixed; width:9px; height:9px; border-radius:50%;
-  background:rgba(196,154,166,.30); filter:blur(.6px);
-  pointer-events:none; animation:fall linear infinite;
-  z-index:0;
+  position:fixed;width:10px;height:10px;border-radius:50%;
+  background:rgba(196,154,166,.30);filter:blur(.6px);
+  pointer-events:none;animation:fall linear infinite;z-index:0;
 }
 @keyframes fall{
-  from{ transform:translateY(-10px) translateX(0) rotate(0deg); opacity:.85}
-  to{   transform:translateY(110vh) translateX(20px) rotate(90deg); opacity:.25}
+  from{transform:translateY(-10px) rotate(0deg);opacity:.85}
+  to{transform:translateY(110vh) rotate(90deg);opacity:.25}
 }
-
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <h1>Ваша история любви</h1>
-  <div class="subtitle">Ответьте на несколько вопросов — мы бережно соберём из этого книгу</div>
-  <div class="progress" id="progress">Вопрос 1 из 5</div>
+  <div class="subtitle">Ответьте на вопросы — мы бережно соберём книгу</div>
+  <div id="progress" class="progress"></div>
 
-  <div id="qroot"></div>
-
-  <div class="actions">
-    <a class="btn" href="index.html">На главную</a>
-  </div>
+  <div id="card" class="card"></div>
 </div>
 
 <script>
-// ----- QUESTIONS (первые 5 как демо)
 const questions = [
-  "Где вы впервые встретились?",
-  "Что вы подумали при первой встрече?",
-  "Кто сделал первый шаг?",
-  "Что больше всего запомнилось в тот день?",
-  "Каким было первое сообщение или разговор?"
+ "Где вы впервые встретились?",
+ "Что вы подумали при первой встрече?",
+ "Кто сделал первый шаг?",
+ "Что больше всего запомнилось в тот день?",
+ "Каким было первое сообщение или разговор?"
 ];
 
-const root=document.getElementById('qroot');
-const progress=document.getElementById('progress');
+let step = parseInt(localStorage.getItem("step")||0);
+showQuestion();
 
-function card(q,i){
-  const el=document.createElement('div');
-  el.className='card';
-  el.innerHTML = `
-    <label>${i+1}. ${q}</label>
-    <textarea oninput="localStorage.setItem('ans_${i}', this.value)">${localStorage.getItem('ans_'+i)||''}</textarea>
-  `;
-  root.appendChild(el);
-  setTimeout(()=>el.classList.add('show'), 40 + i*60);
+function showQuestion(){
+ if(step >= questions.length){ return showPaywall(); }
+
+ const card = document.getElementById("card");
+ card.innerHTML = `
+   <div class="question">${step+1}. ${questions[step]}</div>
+   <textarea id="answer">${localStorage.getItem("ans_"+step)||""}</textarea>
+   <button class="btn" onclick="next()">Далее</button>
+   <button class="btn btn-ghost" onclick="saveExit()">Продолжить позже</button>
+ `;
+ document.getElementById("progress").textContent =
+   "Вопрос " + (step+1) + " из " + questions.length;
 }
 
-questions.forEach((q,i)=>card(q,i));
-progress.textContent = `Вопрос 1 из ${questions.length}`;
-
-// ----- floating petals -----
-function spawnPetal(){
-  const p=document.createElement('div');
-  p.className='petal';
-  p.style.left=(Math.random()*100)+'vw';
-  p.style.animationDuration=(8+Math.random()*10)+'s';
-  p.style.animationDelay=(Math.random()*4)+'s';
-  document.body.appendChild(p);
-  setTimeout(()=>p.remove(), 16000);
+function next(){
+ const val = document.getElementById("answer").value.trim();
+ localStorage.setItem("ans_"+step, val);
+ step++;
+ localStorage.setItem("step", step);
+ showQuestion();
 }
-for(let i=0;i<10;i++) spawnPetal();
-setInterval(spawnPetal, 2000);
+
+function saveExit(){
+ alert("Ваши ответы сохранены 💗\nВы сможете продолжить позже.");
+}
+
+function showPaywall(){
+ document.getElementById("card").innerHTML = `
+   <h2 style="font-family:var(--font-display);color:#6f4a59;margin-bottom:10px">
+     Спасибо! 💫
+   </h2>
+
+   <p style="font-family:var(--font-serif);font-size:19px;line-height:1.5;margin-bottom:20px">
+     Вы прошли первые 5 вопросов ❤️<br>
+     Хотите продолжить и открыть оставшиеся 95?
+   </p>
+
+   <div style="background:rgba(255,255,255,.6);padding:18px;border-radius:14px;margin-bottom:20px;backdrop-filter:blur(6px)">
+     <p style="margin:0;font-family:var(--font-serif)">После оплаты вы получите:</p>
+     <ul style="margin:10px 0 0;padding-left:20px;line-height:1.6">
+       <li>100 вопросов</li>
+       <li>Сбор и сохранение ваших ответов</li>
+       <li>Создание вашей собственной Love-Book</li>
+       <li>Доступ к дизайнеру и обратной связи</li>
+     </ul>
+   </div>
+
+   <button class="btn" onclick="pay()">Разблокировать доступ</button><br>
+   <button class="btn btn-ghost" onclick="saveExit()">Продолжить позже</button>
+ `;
+ document.getElementById("progress").textContent = "";
+}
+
+function pay(){
+ window.location.href = "https://t.me/YOUR_BOT_NAME"; // заменим позже
+}
+
+/* floating petals */
+function petal(){
+ let p=document.createElement("div");
+ p.className="petal";
+ p.style.left=(Math.random()*100)+"vw";
+ p.style.animationDuration=(8+Math.random()*7)+"s";
+ p.style.animationDelay=(Math.random()*3)+"s";
+ document.body.appendChild(p);
+ setTimeout(()=>p.remove(),15000);
+}
+for(let i=0;i<10;i++) petal();
+setInterval(petal,1800);
 </script>
 
 </body>
