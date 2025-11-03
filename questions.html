@@ -9,143 +9,129 @@
 
 <style>
 :root{
- --velvet:#3a1f2d;
- --rose:#cda3b7;
- --rose2:#b37a91;
- --card:rgba(255,255,255,.88);
- --border:rgba(255,255,255,.92);
+  --velvet:#3a1f2d;
+  --rose:#cda3b7;
+  --rose2:#b37a91;
+  --card:rgba(255,255,255,.88);
+  --border:rgba(255,255,255,.92);
 }
 
 /* RESET */
 *{margin:0;padding:0;box-sizing:border-box}
 body{
- font-family:"Cormorant Garamond",serif;
- background:url("assets/background3.jpg") center/cover fixed;
- color:var(--velvet);
- overflow-x:hidden;
- min-height:100vh;
+  font-family:"Cormorant Garamond",serif;
+  background:url("assets/background3.jpg") center/cover fixed;
+  color:var(--velvet);
+  overflow-x:hidden; min-height:100vh;
 }
 
-/* MATTE PLATINUM SPARKLES */
-.spark{
- position:fixed;z-index:1;width:6px;height:6px;border-radius:50%;
- background:radial-gradient(circle,#c5c8cc 0%,#7e7f84 42%,rgba(0,0,0,0) 80%);
- box-shadow:0 0 6px rgba(200,200,200,.35);
- opacity:.8;
- animation:fall linear infinite;
- filter:blur(.2px);
- pointer-events:none;
+/* Stars layer */
+#stars{position:fixed; inset:0; z-index:1; pointer-events:none;}
+.star{
+  position:absolute; width:6px; height:6px; border-radius:50%;
+  background:radial-gradient(circle,#c5c8cc 0%,#7e7f84 42%,rgba(0,0,0,0) 80%);
+  box-shadow:0 0 6px rgba(200,200,200,.35);
+  opacity:.85; filter:blur(.15px);
+  animation:fall linear forwards;
 }
 @keyframes fall{
- 0%{transform:translateY(-10vh) scale(.85);opacity:.15}
- 40%{opacity:.55}
- 70%{opacity:.4}
- 100%{transform:translateY(105vh) scale(1);opacity:0}
+  0%{transform:translateY(-8vh) scale(.85);opacity:.2}
+  40%{opacity:.6}
+  80%{opacity:.45}
+  100%{transform:translateY(108vh) scale(1);opacity:0}
 }
 
-/* CARD */
+/* App container (мы меняем только #app, #stars не трогаем) */
+#app{ position:relative; z-index:2; }
+
+/* Card */
 .container{
- max-width:680px;
- margin:110px auto;
- background:var(--card);
- border:1px solid var(--border);
- border-radius:28px;
- padding: clamp(24px,4.6vw,38px);
- box-shadow:0 18px 45px rgba(0,0,0,.15);
- animation:fade .55s ease;
+  max-width:680px; margin:110px auto;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:28px; padding: clamp(24px,4.6vw,38px);
+  box-shadow:0 18px 45px rgba(0,0,0,.15);
+  animation:fade .55s ease;
 }
-@keyframes fade{0%{opacity:0;transform:translateY(25px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes fade{from{opacity:0;transform:translateY(25px)} to{opacity:1;transform:none}}
 
-/* HEADINGS */
+/* Headings */
 h2{
- font-family:"Bodoni Moda",serif;
- font-size:clamp(24px,6vw,38px);
- margin-bottom:18px;
- background:linear-gradient(90deg,#4b2d3b,#7a5365,#c6a678,#7a5365,#4b2d3b);
- -webkit-background-clip:text;color:transparent;
- animation:goldGlow 9s ease-in-out infinite;
- text-shadow:0 2px 5px rgba(255,255,255,0.42);
+  font-family:"Bodoni Moda",serif;
+  font-size:clamp(24px,6vw,38px); margin-bottom:18px;
+  background:linear-gradient(90deg,#4b2d3b,#7a5365,#c6a678,#7a5365,#4b2d3b);
+  -webkit-background-clip:text;color:transparent;
+  animation:goldGlow 9s ease-in-out infinite;
+  text-shadow:0 2px 5px rgba(255,255,255,.42);
 }
 @keyframes goldGlow{0%{filter:brightness(.92)}50%{filter:brightness(1.22)}100%{filter:brightness(.92)}}
 
-/* TEXTAREA */
+/* Form */
 textarea{
- width:100%;
- min-height:140px;
- padding:18px;
- font-family:inherit;
- font-size:clamp(16px,2.6vw,19px);
- border-radius:18px;
- border:1px solid rgba(0,0,0,.18);
- background:rgba(255,255,255,.9);
- resize:none;
- margin-bottom:18px;
+  width:100%; min-height:140px; padding:18px;
+  font-family:inherit; font-size:clamp(16px,2.6vw,19px);
+  border-radius:18px; border:1px solid rgba(0,0,0,.18);
+  background:rgba(255,255,255,.9); resize:none; margin-bottom:18px;
 }
-
-/* BUTTON */
 .btn{
- width:100%;
- padding:16px 28px;
- font-size:clamp(17px,2.5vw,20px);
- font-weight:700;
- border-radius:50px;
- border:none;
- background:linear-gradient(130deg,var(--rose),var(--rose2));
- color:white;
- cursor:pointer;
- box-shadow:0 8px 24px rgba(0,0,0,.18);
- transition:.22s;
+  width:100%; padding:16px 28px;
+  font-size:clamp(17px,2.5vw,20px); font-weight:700;
+  border-radius:50px; border:none; cursor:pointer; color:#fff;
+  background:linear-gradient(130deg,var(--rose),var(--rose2));
+  box-shadow:0 8px 24px rgba(0,0,0,.18); transition:.22s;
 }
 .btn:hover{transform:translateY(-3px);opacity:.94}
 
-/* PROGRESS */
-progress{
- width:100%;height:8px;margin-bottom:18px;border-radius:8px;
- overflow:hidden;
-}
+/* Progress */
+progress{width:100%; height:8px; margin-bottom:18px; border-radius:8px; overflow:hidden}
 progress::-webkit-progress-bar{background:rgba(255,255,255,.45)}
 progress::-webkit-progress-value{background:#b590bf}
 
-/* PAYWALL TEXT */
+/* Paywall */
 .paywall-text{
- font-size:clamp(18px,2.6vw,21px);
- text-align:center;
- margin-bottom:26px;
- line-height:1.45;
+  font-size:clamp(18px,2.6vw,21px); text-align:center;
+  margin-bottom:26px; line-height:1.45;
 }
 
-/* MOBILE CTA */
+/* Mobile CTA */
 .bottom-cta{
- display:none;
- position:fixed;left:12px;right:12px;bottom:12px;z-index:12;
- background:linear-gradient(130deg,var(--rose),var(--rose2));
- border-radius:999px;
- padding:14px;
- text-align:center;
- color:white;font-weight:700;font-size:18px;
- box-shadow:0 6px 20px rgba(0,0,0,.15);
+  display:none; position:fixed; left:12px; right:12px; bottom:12px; z-index:3;
+  background:linear-gradient(130deg,var(--rose),var(--rose2));
+  border-radius:999px; padding:14px; text-align:center; color:#fff;
+  font-weight:700; font-size:18px; box-shadow:0 6px 20px rgba(0,0,0,.15);
 }
 @media(max-width:768px){
- .bottom-cta{display:block}
- .container{margin-top:80px;margin-bottom:140px}
+  .bottom-cta{display:block}
+  .container{margin-top:80px;margin-bottom:140px}
 }
 </style>
 </head>
-
 <body>
 
-<script>
-/* Sparkles */
-for(let i=0;i<34;i++){
- let s=document.createElement("div");
- s.className="spark";
- s.style.left=Math.random()*100+"vw";
- s.style.animationDuration=(7+Math.random()*6)+"s";
- s.style.animationDelay=Math.random()*4+"s";
- document.body.appendChild(s);
-}
+<!-- Stars layer -->
+<div id="stars"></div>
 
-/* QUESTIONS */
+<!-- App content -->
+<div id="app"></div>
+
+<script>
+/* Stars — стабильные, поверх фона, под контентом */
+const starsLayer=document.getElementById('stars');
+function spawnStar(){
+  const s=document.createElement('div');
+  s.className='star';
+  s.style.left=Math.random()*100+'vw';
+  s.style.top='-10vh';
+  s.style.animationDuration=(7+Math.random()*6)+'s';
+  s.style.filter='blur('+ (Math.random()*0.4) +'px)';
+  starsLayer.appendChild(s);
+  setTimeout(()=>s.remove(),15000);
+}
+// стартовая россыпь
+for(let i=0;i<24;i++){ setTimeout(spawnStar, i*140); }
+// редкий «дождь»
+setInterval(spawnStar, 520);
+
+/* Questions app — меняем только #app, не трогаем #stars */
 const questions = [
  "Где вы впервые встретились?",
  "Что вы почувствовали в тот момент?",
@@ -153,43 +139,43 @@ const questions = [
  "Когда вы поняли, что это — любовь?",
  "Какой момент начала отношений самый ценный?",
 ];
+let step=0;
 
-let step = 0;
-
-/* RENDER */
 function render(){
- document.body.innerHTML = `
- <div class="container">
-  <progress value="${step}" max="5"></progress>
-  <h2>${questions[step]}</h2>
-  <textarea placeholder="Ваш ответ..."></textarea>
-  <button class="btn" onclick="next()">Далее</button>
- </div>
- <a href="#" class="bottom-cta" onclick="next()">Продолжить ✨</a>
- `;
+  const html = `
+    <div class="container">
+      <progress value="${step}" max="5"></progress>
+      <h2>${questions[step]}</h2>
+      <textarea id="answer" placeholder="Ваш ответ..."></textarea>
+      <button class="btn" id="nextBtn">Далее</button>
+    </div>
+    <a href="#" class="bottom-cta" id="mobileNext">Продолжить ✨</a>
+  `;
+  document.getElementById('app').innerHTML = html;
+  document.getElementById('nextBtn').onclick = next;
+  document.getElementById('mobileNext').onclick = (e)=>{e.preventDefault(); next();};
 }
 
-/* PAYWALL */
-function paywall(){
- document.body.innerHTML = `
- <div class="container">
-  <h2>Пробный этап завершён</h2>
-  <div class="paywall-text">
-   Вы прошли 5 вопросов 💫<br><br>
-   Чтобы открыть оставшиеся 95 — оформите доступ
-  </div>
-  <button class="btn" onclick="window.location.href='https://t.me/abookaboutyou'">
-   Открыть все вопросы ✨
-  </button>
- </div>
- `;
+function showPaywall(){
+  const html = `
+    <div class="container">
+      <h2>Пробный этап завершён</h2>
+      <div class="paywall-text">
+        Вы прошли 5 вопросов 💫<br><br>
+        Чтобы открыть оставшиеся 95 — оформите доступ
+      </div>
+      <button class="btn" onclick="window.location.href='https://t.me/abookaboutyou'">
+        Открыть все вопросы ✨
+      </button>
+    </div>
+  `;
+  document.getElementById('app').innerHTML = html;
 }
 
-/* NEXT */
 function next(){
- step++;
- if(step >= 5){ paywall(); }
- else{ render(); }
+  step++;
+  if(step>=5) showPaywall();
+  else render();
 }
 
 render();
