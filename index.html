@@ -1,239 +1,107 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>История, написанная сердцем</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&family=Mulish:wght@300;400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
-
+<!-- Premium fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600&family=Cormorant+Garamond:wght@300;400;500&family=Mulish:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#f8ebe9; --ink:#4a3c3c; --rose:#c49aa6; --rose2:#ab7c8b; --panel:rgba(255,255,255,.72);
-  --font-display: "Bodoni Moda", serif;
-  --font-serif: "Cormorant Garamond", serif;
-  --font-sans: "Mulish", sans-serif;
-  --font-signature: "Cinzel Decorative", serif;
-  .hero {
-  height: 95vh;
-  background: url("assets/Фото с розами№1
+  --bg:#f7ecef; 
+  --ink:#4a3c3c;
+  --rose:#c49aa6; 
+  --rose2:#b47c8b;
+  --panel:rgba(255,255,255,.78);
 
+  --font-display:"Bodoni Moda", serif;
+  --font-serif:"Cormorant Garamond", serif;
+  --font-sans:"Mulish", sans-serif;
 }
-*{box-sizing:border-box}
-body
-  <header class="hero">
+
+/* GLOBAL */
+body{
+  margin:0;
+  font-family:var(--font-sans);
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+section{padding:60px 20px;max-width:950px;margin:auto}
+
+/* HERO */
+.hero{
+  height:100vh;
+  background:url("assets/roses.jpg") center/cover no-repeat;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;
+  background:rgba(255,255,255,.35);backdrop-filter:blur(5px);
+}
+.hero-content{
+  position:relative;z-index:2;text-align:center;
+  background:var(--panel);backdrop-filter:blur(8px);
+  padding:40px;border-radius:20px;max-width:80%;
+}
+.hero-title{
+  font-family:var(--font-display);
+  font-size:42px;font-weight:600;margin-bottom:10px;
+}
+.hero-subtitle{opacity:.85;margin-bottom:24px;font-size:20px;font-family:var(--font-serif)}
+.hero-button{
+  display:inline-block;padding:14px 28px;border-radius:50px;
+  background:var(--rose2);color:#fff;text-decoration:none;
+  font-family:var(--font-display);font-size:20px;transition:.3s;
+}
+.hero-button:hover{background:var(--rose);transform:scale(1.03)}
+
+h2{
+  font-family:var(--font-display);
+  font-size:32px;text-align:center;margin-bottom:15px;
+}
+
+/* CTA */
+.cta{text-align:center;padding:50px 0}
+.cta a{
+  padding:12px 26px;background:var(--rose2);
+  color:white;text-decoration:none;font-size:20px;
+  border-radius:40px;transition:.3s;
+}
+.cta a:hover{background:var(--rose);transform:scale(1.04)}
+</style>
+</head>
+
+<body>
+
+<header class="hero">
   <div class="hero-content">
     <h1 class="hero-title">История, написанная сердцем</h1>
-    <p class="hero-subtitle">Сохраняем моменты, созданные сердцем</p>
+    <p class="hero-subtitle">Сохраняем моменты, созданные сердцем ✨</p>
     <a href="questions.html" class="hero-button">Создать книгу</a>
   </div>
 </header>
 
-  {margin:0;font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--ink);overflow-x:hidden}
+<section>
+  <h2>О проекте</h2>
+  <p>Мы превращаем историю вашей любви в книгу — красивую, трогательную и вечную.</p>
+  <p>100 вопросов, ваши ответы, стильный дизайн и фото (по желанию) — и рождается ваша личная Love-Book 📖💞</p>
+</section>
 
-/* ---- HERO (фото слева, текст справа) ---- */
-.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
-.hero{padding:26px 0 0}
-.hero-split{
-  min-height:88vh;display:grid;grid-template-columns:1.15fr .85fr;gap:32px;align-items:center;
-}
-.hero-media{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 30px 60px rgba(196,154,166,.22)}
-.hero-media img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.06) contrast(1.02)}
-.hero-vignette{position:absolute;inset:0;background:
-  radial-gradient(80% 60% at 0% 50%, rgba(248,235,233,0) 0%, rgba(248,235,233,.45) 55%, rgba(248,235,233,.82) 100%)}
-.hero-copy{padding:8px}
-.hero-title{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.2px;font-size:clamp(34px,4.6vw,66px);color:#7a4b63;margin:0 0 10px}
-.hero-sub{font-size:18px;opacity:.95;margin:0 0 22px}
-.btn{
-  display:inline-block;padding:14px 28px;border-radius:999px;background:var(--rose);color:#fff;font-weight:600;text-decoration:none;
-  box-shadow:0 14px 28px rgba(196,154,166,.28);transition:.25s ease
-}
-.btn:hover{transform:translateY(-1px);background:var(--rose2)}
+<section>
+  <h2>Тарифы</h2>
+  <p><b>Basic</b> — цифровая версия книги (PDF) — 990 ₽</p>
+  <p><b>Standard</b> — PDF + печатная версия (цена позже)</p>
+  <p><b>Premium</b> — подарочный комплект (цена позже)</p>
+</section>
 
-/* декоративная полоса */
-.decor-band{height:160px;position:relative;margin:-8px 0 40px;overflow:hidden}
-.decor-band__img{position:absolute;inset:-20px;background:url('assets/butterflies.jpg') left/cover no-repeat;
-  filter:opacity(.62) blur(.3px);animation:band-pan 28s linear infinite alternate}
-@keyframes band-pan{from{transform:translateX(0)}to{transform:translateX(-6%)}}
-
-/* ---- СЕКЦИИ ---- */
-.section{padding:70px 0}
-.section h2{font-family:"Playfair Display",serif;color:#7a4b63;text-align:center;margin:0 0 18px;font-size:40px}
-.section .lead{max-width:760px;margin:0 auto 22px;text-align:center;opacity:.85;font-size:18px}
-.card{background:var(--panel);backdrop-filter:blur(7px);border-radius:18px;box-shadow:0 0 25px rgba(177,156,166,.22);padding:24px}
-
-/* сетки */
-.grid-2{display:grid;gap:22px;grid-template-columns:1.1fr .9fr}
-.grid-3{display:grid;gap:18px;grid-template-columns:repeat(3,1fr)}
-@media (max-width:980px){
-  .hero-split{grid-template-columns:1fr;gap:18px}
-  .grid-2,.grid-3{grid-template-columns:1fr}
-  .decor-band{height:120px}
-  .hero-copy{text-align:center}
-}
-
-/* как это работает — таймлайн */
-.steps{display:grid;gap:16px}
-.step{display:flex;gap:14px;align-items:flex-start}
-.bullet{min-width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.05);display:grid;place-items:center;font-weight:800;color:#7a4b63;box-shadow:0 6px 16px rgba(0,0,0,.06)}
-
-/* примеры */
-.samples{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
-.sample{border-radius:16px;overflow:hidden;position:relative;box-shadow:0 12px 26px rgba(177,156,166,.22)}
-.sample img{width:100%;height:100%;object-fit:cover;display:block}
-.sample::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0) 60%,rgba(248,235,233,.85) 100%)}
-.sample span{position:absolute;left:14px;bottom:10px;font-weight:700;color:#6e4a58}
-
-/* отзывы */
-.quote{font-style:italic;opacity:.9}
-.stars{color:#d7a8ba}
-
-/* CTA */
-.cta-card{text-align:center}
-.subtle{opacity:.65}
-
-/* ---- АНИМАЦИИ ВХОДА (IntersectionObserver) ---- */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
-.reveal.show{opacity:1;transform:none}
-
-/* тонкий “шум” поверх страницы (дорогой эффект печатной бумаги) */
-.grain::before{
-  content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:multiply;
-  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.25"/></svg>');
-}
-</style>
-</head>
-<body class="grain">
-
-<!-- HERO -->
-<div class="wrap hero">
-  <section class="hero-split">
-    <div class="hero-media reveal">
-      <img src="assets/roses.jpg" alt="Пудровые розы">
-      <div class="hero-vignette"></div>
-    </div>
-    <div class="hero-copy reveal">
-      <h1 class="hero-title">История, написанная сердцем</h1>
-      <p class="hero-sub">Сохраняем моменты, созданные сердцем</p>
-      <a class="btn" href="questions.html">Создать книгу</a>
-    </div>
-  </section>
+<div class="cta">
+  <a href="questions.html">Начать</a>
 </div>
-
-<!-- Декор-полоса -->
-<div class="decor-band"><div class="decor-band__img"></div></div>
-
-<!-- О ПРОЕКТЕ -->
-<section class="section">
-  <div class="wrap grid-2">
-    <div class="card reveal">
-      <h2>О проекте</h2>
-      <p class="lead">100 аккуратно составленных вопросов превращают ваши воспоминания в персональную книгу любви — с деликатной редактурой и нежным оформлением.</p>
-      <ul style="line-height:1.9;opacity:.9">
-        <li>Тёплый, интимный формат</li>
-        <li>Глава за главой — как листать альбом</li>
-        <li><b>Добавим ваши фото в книгу (по желанию)</b></li>
-        <li>Цифровая и печатная версии</li>
-      </ul>
-    </div>
-    <div class="card reveal">
-      <h2>Как это работает</h2>
-      <div class="steps">
-        <div class="step"><div class="bullet">1</div><div>Проходите <b>5 бесплатных</b> вопросов и чувствуете формат</div></div>
-        <div class="step"><div class="bullet">2</div><div>Разблокируете все <b>100 вопросов</b> (оплата в Telegram)</div></div>
-        <div class="step"><div class="bullet">3</div><div>Я собираю книгу и присылаю <b>превью</b></div></div>
-        <div class="step"><div class="bullet">4</div><div>Оплачиваете печать → отправляю готовую книгу</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ПРИМЕРЫ -->
-<section class="section">
-  <div class="wrap">
-    <h2 class="reveal">Как выглядит книга</h2>
-    <p class="lead reveal">Здесь будут живые фото разворотов и упаковки. Сейчас — плейсхолдеры (заменим на ваши).</p>
-    <div class="samples">
-      <figure class="sample reveal">
-        <img src="assets/book1.jpg" onerror="this.src='https://via.placeholder.com/640x420/fff1f3/735d67?text=book1.jpg'">
-        <span>Печатная версия</span>
-      </figure>
-      <figure class="sample reveal">
-        <img src="assets/book2.jpg" onerror="this.src='https://via.placeholder.com/640x420/fbf7f5/6c505c?text=book2.jpg'">
-        <span>Оформление</span>
-      </figure>
-      <figure class="sample reveal">
-        <img src="assets/book3.jpg" onerror="this.src='https://via.placeholder.com/640x420/f8eef0/6c505c?text=book3.jpg'">
-        <span>Детали</span>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<!-- ОТЗЫВЫ -->
-<section class="section">
-  <div class="wrap grid-3">
-    <div class="card reveal">
-      <div class="stars">★★★★★</div>
-      <p class="quote">«Очень трогательно. Пролистали вместе — как наше кино.»</p>
-      <div class="subtle">— Аня</div>
-    </div>
-    <div class="card reveal">
-      <div class="stars">★★★★★</div>
-      <p class="quote">«Лучший подарок на годовщину. Оформление — журнал уровня luxury.»</p>
-      <div class="subtle">— Марина</div>
-    </div>
-    <div class="card reveal">
-      <div class="stars">★★★★★</div>
-      <p class="quote">«Тихая магия. Бумага, фото, тексты — хочется перечитывать.»</p>
-      <div class="subtle">— Ольга</div>
-    </div>
-  </div>
-</section>
-
-<!-- ТАРИФЫ -->
-<section class="section">
-  <div class="wrap grid-3">
-    <div class="card reveal" style="text-align:center">
-      <h2 style="margin:0 0 10px">Basic</h2>
-      <p>Цифровая версия до 100 страниц (PDF)</p>
-      <p style="font-size:24px;font-weight:800;margin:8px 0 0">990 ₽</p>
-    </div>
-    <div class="card reveal" style="text-align:center">
-      <h2 style="margin:0 0 10px">Standard</h2>
-      <p>PDF + печатная книга (цена уточняется)</p>
-      <p style="font-size:24px;font-weight:800;margin:8px 0 0">—</p>
-    </div>
-    <div class="card reveal" style="text-align:center">
-      <h2 style="margin:0 0 10px">Premium</h2>
-      <p>Подарочная упаковка, индивидуальная верстка</p>
-      <p style="font-size:24px;font-weight:800;margin:8px 0 0">—</p>
-    </div>
-  </div>
-</section>
-
-<!-- ФИНАЛЬНЫЙ CTA -->
-<section class="section">
-  <div class="wrap">
-    <div class="card cta-card reveal">
-      <h2 style="margin:0 0 8px">Готовы начать?</h2>
-      <p class="lead" style="margin-bottom:16px">Попробуйте бесплатно — первые 5 вопросов открыты. Остальные 95 — после оплаты.</p>
-      <a class="btn" href="questions.html">Перейти к вопросам</a>
-      <div class="subtle" style="margin-top:10px">Ответы отправятся дизайнеру в Telegram (без хранения на сервере)</div>
-    </div>
-  </div>
-</section>
-
-<footer style="padding:28px 0;text-align:center;opacity:.6">© История, написанная сердцем · Сделано с нежностью</footer>
-
-<script>
-/* Анимация появления секций */
-const obs = new IntersectionObserver(es => {
-  es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('show'); obs.unobserve(e.target);} })
-},{threshold:.16});
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-</script>
 
 </body>
 </html>
