@@ -2,182 +2,125 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Вопросы — История любви</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Вопросы — История</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --rose: #C9A6A3;
-  --ink: #4C3A41;
-  --light: rgba(255,255,255,0.9);
-  --panel: rgba(255,255,255,0.72);
-  --shadow: rgba(0,0,0,0.12);
+:root{
+  --cream:#FBF7F2; --ink:#4A3A39;
+  --card:rgba(255,255,255,.78); --veil:rgba(255,255,255,.9);
+  --gold2:#9b7f64; --gold3:#d7c29c; --gold4:#b99673;
+  --shadow:0 14px 38px rgba(0,0,0,.14); --radius:26px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:url("assets/background3.jpg") center/cover fixed no-repeat;
+  color:var(--ink); font-family:"Playfair Display",serif; overflow-x:hidden; min-height:100vh;
 }
 
-body {
-  margin: 0;
-  font-family: "Cormorant Garamond", serif;
-  background: url('./assets/background3.jpg') center/cover fixed no-repeat;
-  color: var(--ink);
-  overflow-x: hidden;
+/* Блёстки */
+#glitter{position:fixed; inset:0; pointer-events:none; z-index:1}
+
+/* Контейнер */
+.container{max-width:780px; margin:120px auto 60px; padding:20px}
+.card{
+  background:var(--card); backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.92); border-radius:var(--radius);
+  padding:32px; box-shadow:var(--shadow); animation:fade .7s ease
+}
+@keyframes fade{from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:none}}
+
+h1{font-family:"Spectral SC",serif; text-align:center; margin-bottom:8px;
+  background:linear-gradient(90deg,#6a5447,#9b7f64,#d7c29c,#b99673,#7a5f4e);
+  -webkit-background-clip:text; color:transparent; text-shadow:0 2px 10px rgba(215,194,156,.18)
 }
 
-/* Glitter */
-.glitter {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  pointer-events: none;
-  z-index: 3;
-}
-.glitter span {
-  position: absolute;
-  width: 4px; height: 4px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  animation: glitterMove 6s linear infinite;
-}
-@keyframes glitterMove {
-  0% { transform: translateY(-10vh) scale(0.4); opacity: .6; }
-  100% { transform: translateY(110vh) scale(1); opacity: 0; }
+/* Прогресс */
+.progress-wrap{margin:10px 0 18px}
+.progress-top{display:flex; justify-content:space-between; font-weight:600}
+.progress{width:100%; height:8px; background:rgba(255,255,255,.6); border-radius:999px; overflow:hidden; margin-top:8px}
+.bar{height:100%; width:0%; background:linear-gradient(90deg,var(--gold2),var(--gold3),var(--gold4)); transition:width .4s ease}
+
+/* Вопрос */
+h2.q{font-family:"Spectral SC",serif; font-size:28px; margin:8px 0 12px}
+textarea{
+  width:100%; height:170px; padding:18px; border:none; border-radius:18px;
+  background:var(--veil); font-family:inherit; font-size:20px;
+  box-shadow:inset 0 2px 8px rgba(0,0,0,.06)
 }
 
-/* Container */
-.container {
-  max-width: 780px;
-  margin: 120px auto 60px;
-  padding: 20px;
+/* Кнопки */
+.btn{
+  border:none; cursor:pointer; color:#fff; font-weight:700;
+  background:linear-gradient(130deg,var(--gold2),var(--gold4));
+  padding:14px 30px; border-radius:999px; font-size:20px;
+  box-shadow:0 12px 32px rgba(0,0,0,.18); transition:.25s; margin-top:18px
 }
+.btn:hover{transform:translateY(-3px);opacity:.96}
 
-/* Card */
-.card {
-  background: var(--panel);
-  padding: 35px;
-  border-radius: 28px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px var(--shadow);
-  animation: fade 0.8s ease;
-}
-@keyframes fade {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+/* Финал */
+.final{text-align:center}
+.final h2{font-family:"Spectral SC",serif; font-size:30px; margin-bottom:8px}
+.final p{opacity:.9; font-size:20px}
 
-/* Progress */
-.progress-wrap {
-  margin: 0 0 18px;
-}
-.progress-label {
-  font-size: 22px;
-  margin-bottom: 6px;
-}
-.progress {
-  width: 100%;
-  height: 8px;
-  background: rgba(255,255,255,0.5);
-  border-radius: 50px;
-  overflow: hidden;
-}
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg,#b88fae,#e3d2e6);
-  border-radius: 50px;
-  transition: width .4s ease;
-}
-
-/* Question */
-h2.question {
-  font-size: 30px;
-  margin-bottom: 14px;
-}
-
-textarea {
-  width: 100%;
-  height: 160px;
-  padding: 18px;
-  font-family: inherit;
-  font-size: 20px;
-  border-radius: 22px;
-  border: none;
-  background: rgba(255,255,255,0.88);
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.06);
-}
-
-/* Buttons */
-button {
-  padding: 14px 34px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 20px;
-  color: white;
-  background: linear-gradient(90deg,#b88fae,#e3d2e6);
-  box-shadow: 0 8px 22px rgba(0,0,0,.15);
-  transition: 0.3s ease;
-  margin-top: 20px;
-}
-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(0,0,0,.25);
-}
-
-/* Final screen */
-.final {
-  text-align: center;
-}
-.final h2 {
-  font-size: 34px;
-  margin-bottom: 12px;
-}
-.final p {
-  font-size: 20px;
-  opacity: .85;
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-  .card { padding: 24px; }
-  h2.question { font-size: 26px; }
-  textarea { height: 150px; }
-  button { width: 100%; }
+@media(max-width:640px){
+  .card{padding:24px}
+  h2.q{font-size:24px}
+  textarea{height:150px}
+  .btn{width:100%}
 }
 </style>
 </head>
-
 <body>
 
-<div class="glitter"></div>
-
-<script>
-for(let i=0;i<50;i++){
-  const s=document.createElement("span");
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDelay=Math.random()*5+"s";
-  document.body.querySelector(".glitter").appendChild(s);
-}
-</script>
+<canvas id="glitter"></canvas>
 
 <div class="container">
-  <div id="questionCard" class="card">
+  <div id="card" class="card">
+    <h1>Пробная часть</h1>
 
     <div class="progress-wrap">
-      <div class="progress-label" id="label">Вопрос 1 из 5</div>
-      <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+      <div class="progress-top"><span id="label">Вопрос 1 из 5</span><span id="perc">0%</span></div>
+      <div class="progress"><div id="bar" class="bar"></div></div>
     </div>
 
-    <h2 class="question" id="questionText">Где вы впервые встретились?</h2>
-    <textarea id="answer" placeholder="Ваш ответ..."></textarea>
-    <button onclick="nextQuestion()">Далее</button>
+    <h2 id="q" class="q">Где вы впервые встретились?</h2>
+    <textarea id="a" placeholder="Ваш ответ..."></textarea>
 
+    <div style="display:flex; gap:12px; flex-wrap:wrap">
+      <button class="btn" id="next">Далее</button>
+    </div>
   </div>
 </div>
 
 <script>
-const questions = [
+/* Glitter mix */
+const cvs=document.getElementById('glitter'), ctx=cvs.getContext('2d');
+let W,H,parts=[];
+function resize(){W=cvs.width=innerWidth; H=cvs.height=innerHeight}
+addEventListener('resize',resize); resize();
+function spawn(n=60){
+  for(let i=0;i<n;i++){
+    parts.push({x:Math.random()*W, y:Math.random()*-H*.2, r:Math.random()<.18?2.2+Math.random()*1.8:.8+Math.random()*1.2, v:1.2+Math.random()*1.2, g:Math.random()<.2})
+  }
+}
+function step(){
+  ctx.clearRect(0,0,W,H); ctx.globalCompositeOperation='lighter';
+  for(const p of parts){
+    p.y+=p.v; p.x+=Math.sin((p.y+p.r)*.01)*.3;
+    const grd=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2.2);
+    if(p.g){grd.addColorStop(0,'rgba(255,240,210,.9)');grd.addColorStop(1,'rgba(255,240,210,0)')}
+    else{grd.addColorStop(0,'rgba(255,255,255,.7)');grd.addColorStop(1,'rgba(255,255,255,0)')}
+    ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+  }
+  parts=parts.filter(p=>p.y<H+20); requestAnimationFrame(step)
+}
+spawn(70); setInterval(()=>spawn(8),600); step();
+
+/* Вопросы (пробные 5) */
+const qs=[
   "Где вы впервые встретились?",
   "Что вы подумали при первой встрече?",
   "Кто сделал первый шаг?",
@@ -185,32 +128,35 @@ const questions = [
   "Что больше всего запомнилось в тот день?"
 ];
 
-let index = 0;
+let i=0;
+const label=document.getElementById('label');
+const q=document.getElementById('q');
+const a=document.getElementById('a');
+const bar=document.getElementById('bar');
+const perc=document.getElementById('perc');
+const card=document.getElementById('card');
 
 function render(){
-  document.getElementById("label").innerText = `Вопрос ${index+1} из 5`;
-  document.getElementById("questionText").innerText = questions[index];
-  document.getElementById("progressBar").style.width = ((index)/5)*100 + "%";
+  label.textContent=`Вопрос ${i+1} из 5`;
+  q.textContent=qs[i];
+  bar.style.width=(i/5)*100+'%';
+  perc.textContent=Math.round((i/5)*100)+'%';
+  a.value='';
 }
-
-function nextQuestion(){
-  index++;
-  if(index < 5){
-    render();
-    document.getElementById("answer").value = "";
-  } else {
-    document.getElementById("questionCard").innerHTML = `
+document.getElementById('next').addEventListener('click',()=>{
+  i++;
+  if(i<5){ render(); }
+  else{
+    bar.style.width='100%'; perc.textContent='100%';
+    card.innerHTML=`
       <div class="final">
-        <h2>✨ Пробная часть завершена ✨</h2>
-        <p>Вы прошли 5 вопросов.  
-        Откройте оставшиеся 95 и создайте книгу вашей любви.</p>
-        <button onclick="alert('Тут будет оплата 💳')">Открыть все вопросы</button>
-      </div>
-    `;
+        <h2>✨ Пробная часть завершена</h2>
+        <p>Вы прошли 5 вопросов. Откройте оставшиеся 95 и создайте нетленную книгу вашей любви.</p>
+        <button class="btn" onclick="alert('Подключим оплату и Telegram-бота на следующем шаге')">Открыть все вопросы</button>
+      </div>`;
   }
-}
+});
 render();
 </script>
-
 </body>
 </html>
