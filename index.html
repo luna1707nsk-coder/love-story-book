@@ -2,212 +2,183 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Книга о тебе — история любви</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>История, написанная сердцем</title>
 <style>
 :root{
-  --bg:#f7f4f6;
-  --panel:#ffffff;
-  --ink:#303133;
-  --muted:#7a7a7a;
-  --rose:#c87a94;   /* пудрово-розовый */
-  --rose-deep:#a55672;
-  --olive:#6b7267;  /* дымчато-оливковый */
-  --ring:rgba(200,122,148,.18);
+  --bg:#f7f4f6; --ink:#2e2e2f; --muted:#7b7b7d;
+  --rose:#c87a94; --rose2:#e2a7b9; --olive:#6f7569;
+  --panel:#ffffff; --ring:rgba(200,122,148,.18);
+  --serif: "Times New Roman", Georgia, serif; /* утончённый editorial serif без внешних шрифтов */
 }
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-img{max-width:100%;display:block}
-a{color:inherit}
 
-/* Акварельный фон (встроенный SVG) */
+/* базовое */
+*{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.section{padding:68px 0;position:relative}
+
+/* акварельный фон */
 body::before{
-  content:""; position:fixed; inset:0; pointer-events:none;
+  content:"";position:fixed;inset:0;pointer-events:none;
   background:
-    radial-gradient(70% 50% at 20% 10%, rgba(255,230,241,.7), transparent 60%),
-    radial-gradient(60% 50% at 90% 0%, rgba(230,245,240,.6), transparent 60%),
-    radial-gradient(80% 60% at 50% 100%, rgba(255,236,235,.7), transparent 60%),
-    url('data:image/svg+xml;utf8,\
-<svg xmlns="http://www.w3.org/2000/svg" width=\"1200\" height=\"800\" viewBox=\"0 0 1200 800\">\
-<defs><linearGradient id=\"g\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#ffdfea\"/><stop offset=\"1\" stop-color=\"#eaf3ef\"/></linearGradient></defs>\
-<g opacity=\"0.18\">\
-<ellipse cx=\"200\" cy=\"180\" rx=\"170\" ry=\"120\" fill=\"url(#g)\"/>\
-<ellipse cx=\"1000\" cy=\"160\" rx=\"220\" ry=\"150\" fill=\"url(#g)\"/>\
-<ellipse cx=\"700\" cy=\"650\" rx=\"250\" ry=\"160\" fill=\"url(#g)\"/>\
-</g>\
-</svg>');
-  background-size:cover,cover,cover,cover;
+    radial-gradient(60% 50% at 20% 5%, rgba(255,232,240,.65), transparent 60%),
+    radial-gradient(60% 50% at 90% 0%, rgba(230,245,240,.55), transparent 60%),
+    radial-gradient(80% 60% at 50% 100%, rgba(255,236,235,.7), transparent 60%);
   mix-blend-mode:multiply;
 }
 
-/* Контейнеры */
-.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-.section{padding:68px 0; position:relative}
-
-/* Баннер */
-.hero{
-  padding:96px 0 64px; text-align:center; position:relative;
+/* HERO */
+.hero{min-height:88vh;display:grid;place-items:center;position:relative;overflow:hidden}
+.hero::after{
+  content:"";position:absolute;inset:-20%;background:
+  radial-gradient(60% 40% at 50% 20%, rgba(255,224,244,.45), transparent 60%),
+  radial-gradient(50% 30% at 80% 0%, rgba(240,230,255,.25), transparent 60%),
+  radial-gradient(70% 50% at 40% 100%, rgba(255,240,240,.5), transparent 70%);
+  filter:blur(12px);
 }
-.hero .title{
-  font-size:54px; letter-spacing:.02em; font-weight:700; color:#5a2d3e;
-}
-.hero .subtitle{margin-top:10px;color:#6d6e71;font-size:18px}
-.hero .cta{
-  display:inline-block; margin-top:26px; padding:14px 22px; border-radius:12px;
-  background:var(--rose); color:#fff; font-weight:700; text-decoration:none;
-  box-shadow:0 12px 30px var(--ring);
-}
-
-/* Карточки */
-.card{
-  background:var(--panel); border:1px solid rgba(0,0,0,.06);
-  border-radius:16px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.06);
+.hero-inner{position:relative;text-align:center;padding:40px 20px}
+.hero-title{font-family:var(--serif);font-weight:300;letter-spacing:.4px;
+  font-size:clamp(34px,4.8vw,72px);color:#4e2e3f;text-shadow:0 6px 30px rgba(200,122,148,.25)}
+.hero-sub{font-family:var(--serif);font-size:clamp(16px,2vw,22px);color:#6b6d71;opacity:.9;margin-top:8px}
+.cta{
+  display:inline-block;margin-top:26px;padding:14px 28px;border-radius:999px;
+  background:#fff;border:1px solid rgba(0,0,0,.08);box-shadow:0 12px 26px var(--ring);
+  font-weight:700
 }
 
-/* Сетки */
-.grid-3{display:grid; gap:18px; grid-template-columns:repeat(3,1fr)}
-.grid-2{display:grid; gap:22px; grid-template-columns:1.2fr .8fr}
-@media (max-width:900px){.grid-3{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr} .hero .title{font-size:40px}}
+/* лепестки */
+.petal{position:absolute;width:12px;height:12px;border-radius:50%;
+  background:rgba(200,122,148,.22);filter:blur(.6px);animation:fall linear infinite}
+@keyframes fall{0%{transform:translateY(-10px)}100%{transform:translateY(110vh)}}
 
-/* Акварельные «цветы» (декор) */
-.flower{
-  position:absolute; filter:blur(.2px) saturate(1.1); opacity:.45; pointer-events:none;
-}
-.f1{top:-20px; left:-20px; width:180px; height:180px; background:
- radial-gradient(circle at 40% 40%, #ffd9e6 0 40%, transparent 42%),
- radial-gradient(circle at 70% 60%, #ffe7ef 0 38%, transparent 40%);}
-.f2{bottom:-10px; right:-10px; width:220px; height:220px; background:
- radial-gradient(circle at 60% 40%, #e6f3ee 0 42%, transparent 44%),
- radial-gradient(circle at 30% 70%, #ffe9f1 0 38%, transparent 40%);}
+/* карточки/сетки */
+.card{background:var(--panel);border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+.grid-2{display:grid;gap:22px;grid-template-columns:1.2fr .8fr}
+.grid-3{display:grid;gap:18px;grid-template-columns:repeat(3,1fr)}
+@media (max-width:980px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.kicker{color:var(--olive);font-weight:700;letter-spacing:.12em;font-size:12px}
 
-/* Анимация появления при скролле (AOS-лайт) */
-.reveal{opacity:0; transform:translateY(18px); transition:.7s ease}
-.reveal.show{opacity:1; transform:none}
+/* примеры */
+.samples{display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+.sample{aspect-ratio:3/2;border-radius:14px;overflow:hidden;position:relative;background:linear-gradient(180deg,#fafafa,#f1f1f1)}
+.sample::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 30% 20%, rgba(200,122,148,.10), transparent 50%),
+  radial-gradient(circle at 80% 80%, rgba(107,114,103,.10), transparent 50%)}
+.sample>div{position:absolute;inset:0;display:grid;place-items:center;color:#7a6e73;font-weight:600}
 
-/* Маленькие чипы */
-.kicker{color:var(--olive); font-weight:700; letter-spacing:.12em; font-size:12px}
+/* прайс */
+.price{font-size:28px;font-weight:800;color:#5a2d3e}
+.btn-outline{display:inline-block;padding:10px 16px;border:1px solid var(--rose);border-radius:12px;color:var(--rose);font-weight:700}
 
-/* Карусель примеров (простая) */
-.samples{display:grid; gap:14px; grid-template-columns:repeat(3,1fr)}
-.sample{aspect-ratio:3/2; border-radius:14px; overflow:hidden; position:relative; background:
- linear-gradient(180deg,#fafafa, #f1f1f1);}
-.sample::after{content:""; position:absolute; inset:0; background:
- radial-gradient(circle at 30% 20%, rgba(200,122,148,.10), transparent 50%),
- radial-gradient(circle at 80% 80%, rgba(107,114,103,.10), transparent 50%);}
-.sample > div{position:absolute; inset:0; display:grid; place-items:center; color:#7a6e73; font-weight:600}
+/* AOS-lite */
+.reveal{opacity:0;transform:translateY(18px);transition:.7s ease}
+.reveal.show{opacity:1;transform:none}
 
-/* Прайс */
-.price{font-size:28px; font-weight:800; color:#5a2d3e}
-.btn-outline{display:inline-block; padding:12px 16px; border:1px solid var(--rose); border-radius:12px; color:var(--rose); text-decoration:none; font-weight:700}
-
-/* Отзывы */
-.quote{font-style:italic; color:#444}
-.stars{color:#d8a3b7}
-
-/* Футер */
-footer{padding:40px 0; text-align:center; color:#8a8a8a; font-size:13px}
+/* футер */
+footer{padding:38px 0;text-align:center;color:#8a8a8a;font-size:13px}
 </style>
 </head>
 <body>
 
 <!-- HERO -->
-<section class="hero wrap">
-  <div class="flower f1"></div>
-  <h1 class="title reveal">Книга о тебе</h1>
-  <p class="subtitle reveal" style="transition-delay:.08s">Нежная история любви, рассказанная вашими словами. 100 вопросов → персональная книга.</p>
-  <a href="questions.html" class="cta reveal" style="transition-delay:.16s">Создать книгу</a>
+<section class="hero">
+  <div class="hero-inner reveal">
+    <h1 class="hero-title">История, написанная сердцем</h1>
+    <p class="hero-sub">Сохраняем моменты, созданные сердцем</p>
+    <a class="cta" href="questions.html">Создать книгу любви</a>
+  </div>
+  <div id="petals"></div>
 </section>
 
 <!-- О ПРОЕКТЕ -->
 <section class="section wrap grid-2">
   <div class="card reveal">
     <div class="kicker">О ПРОЕКТЕ</div>
-    <h2 style="margin:6px 0 10px; font-size:28px; color:#4e4f52">Зачем это?</h2>
-    <p>Вы отвечаете на 100 аккуратно подобранных вопросов. Я превращаю их в красивую книгу с лёгкой редактурой и деликатной версткой. Получается подарок, который остаётся навсегда.</p>
-    <ul style="margin:14px 0 0; padding-left:18px; line-height:1.8">
+    <h2 style="margin:6px 0 10px;font-size:28px;color:#4e4f52">Что это и зачем</h2>
+    <p>100 аккуратно составленных вопросов превращают ваши воспоминания в персональную книгу любви — с деликатной редактурой и нежным оформлением.</p>
+    <ul style="margin:14px 0 0;padding-left:18px;line-height:1.9;color:#525255">
       <li>Тёплый, интимный формат</li>
-      <li>Мини-интервью с вашей историей</li>
-      <li>Печать и цифровая версия (PDF)</li>
+      <li>Мини-интервью и глава за главой</li>
+      <li><b>Добавим ваши фото в книгу (по желанию)</b></li>
+      <li>Цифровая и печатная версии</li>
     </ul>
   </div>
-  <div class="card reveal" style="position:relative">
-    <div class="flower f2"></div>
-    <h3 style="margin-bottom:8px; color:#4e4f52">Как это работает</h3>
-    <ol style="line-height:1.9; margin-left:18px">
-      <li>Заполните анкету (100 вопросов)</li>
-      <li>Я собираю книгу: текст, шрифты, обложка</li>
-      <li>Отправка PDF / печатной версии</li>
+  <div class="card reveal">
+    <h3 style="margin-bottom:8px;color:#4e4f52">Как это работает</h3>
+    <ol style="line-height:1.9;margin-left:18px;color:#555">
+      <li>Ответьте на вопросы (первые 5 доступны бесплатно)</li>
+      <li>После оплаты откроются все 100 вопросов</li>
+      <li>Я соберу книгу и пришлю превью → затем печать/доставка</li>
     </ol>
-    <a class="btn-outline" href="questions.html" style="margin-top:14px">Начать</a>
+    <a class="btn-outline" href="questions.html" style="margin-top:12px">Начать бесплатно</a>
   </div>
 </section>
 
 <!-- ПРИМЕРЫ -->
 <section class="section wrap">
   <div class="kicker reveal">ПРИМЕРЫ</div>
-  <h2 class="reveal" style="margin:6px 0 20px; color:#4e4f52">Как выглядит книга</h2>
+  <h2 class="reveal" style="margin:6px 0 20px;color:#4e4f52">Как выглядит книга</h2>
   <div class="samples reveal">
     <div class="sample"><div>📖 Макет печатной книги</div></div>
     <div class="sample"><div>💌 Открытка + ленточка</div></div>
     <div class="sample"><div>📱 PDF на iPad</div></div>
   </div>
-  <p class="reveal" style="margin-top:10px; color:#6b6b6b">Позже сюда добавим ваши реальные фото-примеры (можно загрузить в /assets).</p>
+  <p class="reveal" style="margin-top:10px;color:#6b6b6b">Позже заменим на реальные фото (загрузишь в /assets).</p>
 </section>
 
 <!-- ОТЗЫВЫ -->
 <section class="section wrap grid-3">
-  <div class="card reveal">
-    <div class="stars">★★★★★</div>
-    <p class="quote">«Получилось очень трогательно. Плакала и улыбалась одновременно.»</p>
-    <div style="margin-top:6px; color:#666">— Аня</div>
-  </div>
-  <div class="card reveal">
-    <div class="stars">★★★★★</div>
-    <p class="quote">«Лучший подарок для мужа — как наше кино в тексте.»</p>
-    <div style="margin-top:6px; color:#666">— Марина</div>
-  </div>
-  <div class="card reveal">
-    <div class="stars">★★★★★</div>
-    <p class="quote">«Сделали к годовщине. Оформление нежное, как журнал.»</p>
-    <div style="margin-top:6px; color:#666">— Ольга</div>
-  </div>
+  <div class="card reveal"><div style="color:#d8a3b7">★★★★★</div><p style="font-style:italic;color:#444">«Очень трогательно. Плакала и улыбалась.»</p><div style="margin-top:6px;color:#666">— Аня</div></div>
+  <div class="card reveal"><div style="color:#d8a3b7">★★★★★</div><p style="font-style:italic;color:#444">«Лучший подарок мужу — как наше кино.»</p><div style="margin-top:6px;color:#666">— Марина</div></div>
+  <div class="card reveal"><div style="color:#d8a3b7">★★★★★</div><p style="font-style:italic;color:#444">«Сделали к годовщине. Оформление — журнал.»</p><div style="margin-top:6px;color:#666">— Ольга</div></div>
 </section>
 
 <!-- ТАРИФЫ -->
 <section class="section wrap grid-3">
   <div class="card reveal">
-    <h3>Mini</h3>
-    <p style="min-height:56px;color:#666">Цифровая версия (PDF), до 40 стр.</p>
+    <h3>Basic</h3>
+    <p style="min-height:56px;color:#666">Цифровая версия до 100 страниц (PDF)</p>
     <div class="price">990 ₽</div>
   </div>
   <div class="card reveal" style="border-color:rgba(200,122,148,.35)">
     <h3>Standard</h3>
-    <p style="min-height:56px;color:#666">PDF + печатная книга, обложка soft touch</p>
-    <div class="price">2 990 ₽</div>
+    <p style="min-height:56px;color:#666">PDF + печатная книга (цена уточняется)</p>
+    <div class="price">—</div>
   </div>
   <div class="card reveal">
     <h3>Premium</h3>
-    <p style="min-height:56px;color:#666">Подарочная коробка, лента, индивидуальная верстка</p>
-    <div class="price">4 990 ₽</div>
+    <p style="min-height:56px;color:#666">Коробка, лента, индивидуальная верстка (цена уточняется)</p>
+    <div class="price">—</div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="section wrap">
   <div class="card reveal" style="text-align:center">
-    <h3 style="margin:0 0 6px; color:#4e4f52">Готовы создать свою историю?</h3>
-    <p style="color:#6b6b6b">На заполнение анкеты уходит 20–40 минут. Можно делать паузы — ответы сохраняются.</p>
-    <a href="questions.html" class="cta" style="margin-top:10px; display:inline-block">Перейти к вопросам</a>
+    <h3 style="margin:0 0 6px;color:#4e4f52">Готовы начать?</h3>
+    <p style="color:#6b6b6b">Попробуйте бесплатно — первые 5 вопросов открыты. Остальные 95 — после оплаты.</p>
+    <a class="cta" href="questions.html" style="margin-top:10px;display:inline-block">Перейти к вопросам</a>
   </div>
 </section>
 
-<footer>© Книга о тебе · Сделано с нежностью</footer>
+<footer>© История, написанная сердцем · Сделано с нежностью</footer>
 
 <script>
-/* AOS-лайт: показать блоки при скролле */
+/* AOS-lite */
 const els=[...document.querySelectorAll('.reveal')];
-const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} }),{threshold:.16});
+const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);} }),{threshold:.16});
 els.forEach(el=>io.observe(el));
+
+/* лепестки (деликатно) */
+const box=document.getElementById('petals');
+for(let i=0;i<10;i++){
+  const p=document.createElement('div'); p.className='petal';
+  p.style.left=Math.random()*100+'vw';
+  p.style.animationDuration=(8+Math.random()*8)+'s';
+  p.style.animationDelay=(Math.random()*6)+'s';
+  box.appendChild(p);
+}
 </script>
 </body>
 </html>
