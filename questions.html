@@ -1,197 +1,189 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Вопросы — История, написанная сердцем</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-:root{
-  --bg:#f7f4f6; --panel:#ffffff; --ink:#2c2c2d; --muted:#7a7a7a;
-  --rose:#c87a94; --rose2:#e2a7b9; --ring:rgba(200,122,148,.18);
-  --serif:"Times New Roman",Georgia,serif;
+body {
+  margin:0;
+  background:#f8ebe9;
+  font-family:Montserrat, sans-serif;
+  color:#4a3c3c;
 }
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-.wrap{max-width:860px;margin:0 auto;padding:30px 18px 80px}
-.header{padding:36px 0 14px;text-align:center}
-.badge{display:inline-block;padding:8px 12px;border-radius:999px;background:#f4e8ed;color:#7c5566;font-weight:700;font-size:12px;margin-bottom:8px}
-h1{margin:0;font-size:38px;color:#5a2d3e;font-family:var(--serif);font-weight:300}
-.sub{color:#6e6e71}
-.card{background:var(--panel); border:1px solid rgba(0,0,0,.06); border-radius:16px; padding:22px; box-shadow:0 12px 28px rgba(0,0,0,.06)}
-.progress{height:10px;background:#f0e1e7;border-radius:10px;overflow:hidden;margin-bottom:16px}
-.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--rose2));transition:.35s ease}
-.qframe{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;box-shadow:0 10px 20px rgba(0,0,0,.03);padding:14px}
-.qtitle{font-family:var(--serif);font-weight:600;margin:.25rem 0 .25rem;color:#5a2d3e}
-.hint{color:#8a8a8a;font-size:13px;margin-bottom:6px;font-style:italic}
-textarea{width:100%;min-height:110px;border:1px solid rgba(0,0,0,.08);border-radius:12px;background:#fff;box-shadow:0 8px 16px rgba(0,0,0,.03) inset;padding:12px;resize:vertical}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
-.btn{padding:12px 18px;border-radius:12px;font-weight:700;cursor:pointer;border:1px solid rgba(0,0,0,.08);background:#fff}
-.primary{background:var(--rose);color:#fff;border:none;box-shadow:0 12px 26px var(--ring)}
-.step{color:#7b7b7d}
 
-/* лепестки на фоне */
-.petal{position:fixed; width:9px; height:9px; border-radius:50%; background:rgba(200,122,148,.20); filter:blur(.5px); pointer-events:none; animation:fall linear infinite}
-@keyframes fall{0%{transform:translateY(-10px)}100%{transform:translateY(110vh)}}
+.wrap { max-width:800px; margin:0 auto; padding:28px 20px; }
 
-/* paywall modal */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:20px}
-.modal > div{max-width:520px;background:#fff;border-radius:16px;padding:22px;border:1px solid rgba(0,0,0,.08);box-shadow:0 20px 50px rgba(0,0,0,.25)}
-.modal h3{margin:6px 0 8px;font-family:var(--serif);font-weight:600;color:#5a2d3e}
-.modal p{color:#555;line-height:1.7}
-.actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
-.tag{display:inline-block;padding:6px 10px;border-radius:999px;background:#f4e8ed;color:#7c5566;font-weight:700;font-size:12px;margin:6px 0 10px}
-.link{padding:12px 16px;border-radius:12px;font-weight:700;border:1px solid var(--rose);color:var(--rose);background:#fff;cursor:pointer}
-.pay{background:var(--rose);color:#fff;border:none;box-shadow:0 12px 26px var(--ring)}
+h1 {
+  font-family:"Playfair Display", serif;
+  font-size:36px;
+  text-align:center;
+  color:#7a4b63;
+  margin-bottom:10px;
+}
+
+.progress {
+  text-align:center;
+  margin-bottom:20px;
+  font-size:18px;
+  opacity:.8;
+}
+
+.card {
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(6px);
+  border-radius:14px;
+  box-shadow:0 4px 16px rgba(177,156,166,.18);
+  padding:24px;
+  margin-bottom:22px;
+  opacity:0;
+  transform:translateY(18px);
+  transition:.45s ease;
+}
+
+.card.show {
+  opacity:1;
+  transform:none;
+}
+
+label {
+  display:block;
+  font-weight:600;
+  margin-bottom:8px;
+  font-size:18px;
+  color:#6e4a58;
+}
+
+textarea {
+  width:100%;
+  height:120px;
+  border:1px solid rgba(0,0,0,.1);
+  border-radius:8px;
+  padding:12px;
+  font-family:inherit;
+  resize:none;
+  font-size:15px;
+}
+
+.btn {
+  display:inline-block;
+  padding:14px 24px;
+  background:#c49aa6;
+  color:#fff;
+  border-radius:40px;
+  text-decoration:none;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+  margin-top:8px;
+  transition:.25s;
+}
+.btn:hover {
+  background:#ab7c8b;
+}
+
+.paywall {
+  text-align:center;
+  padding:40px 30px;
+  background:#fff3f7;
+  border-radius:18px;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+  border:1px solid rgba(0,0,0,.06);
+}
+
+/* fade */
+.fade { animation:fade .7s ease forwards; }
+@keyframes fade { from {opacity:0;} to {opacity:1;} }
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
-  <div class="header">
-    <div class="badge" id="badge">Глава 1</div>
-    <h1 id="title">Знакомство</h1>
-    <div class="sub" id="sub">Как всё началось</div>
-  </div>
+  <h1>Ваша история любви</h1>
+  <div class="progress" id="progress">Вопрос 1 из 100</div>
 
-  <div class="card">
-    <div class="progress"><i id="bar"></i></div>
-    <div class="qframe">
-      <div class="qtitle" id="qtitle"></div>
-      <div class="hint" id="qhint"></div>
-      <textarea id="answer"></textarea>
-    </div>
-    <div class="nav">
-      <button class="btn" id="prev">Назад</button>
-      <div class="step" id="step">0%</div>
-      <button class="btn primary" id="next">Далее</button>
-    </div>
-  </div>
-</div>
-
-<!-- paywall -->
-<div class="modal" id="paywall">
-  <div>
-    <div class="tag">Premium Love Access</div>
-    <h3>Ваша история только начинается…</h3>
-    <p>5 бесплатных вопросов позади. Чтобы открыть все 100 и создать книгу, разблокируйте полный доступ.</p>
-    <p style="margin:.4rem 0 0">Что получите:</p>
-    <ul style="margin:.2rem 0 0 1rem; color:#555; line-height:1.8">
-      <li>Доступ ко всем 10 главам (100 вопросов)</li>
-      <li>Автосохранение и красивый финальный экспорт</li>
-      <li>Сбор книги и <b>превью перед печатью</b></li>
-    </ul>
-    <div class="actions">
-      <button class="pay" id="payBtn">Оплатить в Telegram</button>
-      <button class="link" id="iPaid">Я оплатил — открыть доступ</button>
-      <button class="link" id="later">Позже</button>
-    </div>
-    <p style="font-size:12px;color:#777;margin-top:8px">Оплата Basic: 990 ₽. Поддержка и безопасность: ответы не хранятся на сервере — отправляются напрямую дизайнеру.</p>
-  </div>
+  <div id="questions-container"></div>
 </div>
 
 <script>
-/* главы/вопросы (100) — как согласовано ранее */
-const chapters = [
- {t:"💕 Глава 1. Знакомство", s:"Как всё началось", qs:[
- "Где вы впервые встретились?","Что вы подумали при первой встрече?","Кто сделал первый шаг?","Что больше всего запомнилось?","Каким был первый разговор?",
- "Что сразу притянуло?","Какая деталь запомнилась?","Кто первым написал?","Когда поняли, что это не просто знакомство?","Был ли знак судьбы?"]},
- {t:"💕 Глава 2. Первые свидания", s:"Волнение и открытия", qs:[
- "Где прошло первое свидание?","Что чувствовали перед встречей?","Кто выбирал место?","Что пошло не по плану, но стало милым?","Что запомнилось навсегда?",
- "Кто признался в симпатии первым?","Какая песня или фильм ассоциируются?","Какая фраза тронула тогда?","Когда поняли, что влюблены?","Какой запах, вкус или звук напоминает о начале?"]},
- {t:"🌹 Глава 3. Первые чувства", s:"Как рождается любовь", qs:[
- "Как поняли, что это любовь?","Что вдохновляет друг в друге?","Что изменилось в вас?","Какое качество цените больше всего?","Что делает вас счастливыми рядом?",
- "Что удивило (приятно или забавно)?","Как вы называете друг друга ласково?","Какая мелочь показывает любовь без слов?","Какой поступок доказал серьёзность?","Какая песня описывает отношения лучше всего?"]},
- {t:"🏡 Глава 4. Ваша повседневность", s:"Обыденное, но ваше", qs:[
- "Что вы чаще всего делаете вместе дома?","Кто готовит вкуснее?","Как вы проводите выходные?","Какой фильм или сериал пересматривали вдвоём?","Какие мелочи стали вашими традициями?",
- "Кто дольше спит по утрам?","Кто чаще теряет вещи?","Какие совместные ритуалы у вас есть?","Как вы поддерживаете друг друга в трудные дни?","Какая обычная вещь приносит вам радость?"]},
- {t:"💬 Глава 5. Разговоры по душам", s:"Мысли, мечты, искренность", qs:[
- "О чём вы можете говорить часами?","Какие темы вызывают самые тёплые разговоры?","Что вы узнали нового о себе благодаря партнёру?","Какой совет запомнился навсегда?","Какие разговоры сблизили вас сильнее всего?",
- "Как вы решаете споры?","Что помогает вам сохранять взаимопонимание?","Как вы поддерживаете романтику в общении?","Какие слова любви звучат у вас чаще всего?","Как вы утешаете друг друга, когда грустно?"]},
- {t:"✨ Глава 6. Совместные мечты", s:"Про будущее и вдохновение", qs:[
- "Какая у вас общая мечта?","Где вы мечтаете побывать вместе?","Какой дом хотели бы построить?","Какая идея для совместного дела вдохновляет?","Какая детская мечта каждого из вас должна сбыться?",
- "Что бы вы хотели сделать «впервые» вдвоём?","Как вы представляете идеальный совместный день?","Что обязательно должно быть в вашем будущем?","Какая мелочь делает мечты реальнее?","Какие три слова описывают ваше общее будущее?"]},
- {t:"🌍 Глава 7. Путешествия", s:"Про приключения и дороги", qs:[
- "Куда было ваше первое путешествие?","Что там пошло не по плану?","Какая поездка стала самой запоминающейся?","Где вы мечтаете встретить рассвет?","Какой город (или место) стал «вашим»?",
- "Что вы обязательно берёте в дорогу?","Кто отвечает за маршрут, а кто за еду?","Какая случайность в поездке вас рассмешила?","Какой момент из путешествий хочется повторить?","Где вы хотели бы провести отпуск мечты?"]},
- {t:"🧩 Глава 8. О различиях и сходствах", s:"Что делает вас парой", qs:[
- "Чем вы похожи друг на друга?","В чём вы совершенно разные?","Что вас всё равно объединяет?","Кто из вас более эмоциональный?","Кто более рассудительный?",
- "Как вы находите баланс в разных характерах?","Какое качество в другом вы хотели бы перенять?","Что вы делаете по-разному, но с любовью?","Какая привычка другого сначала удивляла, а теперь мила?","Как вы справляетесь с трудностями вместе?"]},
- {t:"💍 Глава 9. Про любовь и обещания", s:"Самое глубокое и личное", qs:[
- "Что для вас значит слово «любовь»?","В чём сила ваших отношений?","Что помогает вам сохранять доверие?","Как вы переживаете ссоры?","Что помогает мириться?",
- "Какие слова поддержки вы чаще всего говорите?","Что вы обещаете друг другу всегда?","Как вы отмечаете важные даты?","Что вы чувствуете, когда просто смотрите на любимого?","Какая деталь символизирует ваши отношения?"]},
- {t:"🌿 Глава 10. Про будущее", s:"О том, что впереди", qs:[
- "Как вы представляете совместное будущее через 5 лет?","Что будет для вас главным в семье?","Какие традиции хотите сохранить?","Какие — создать?","Чему хотите научить детей (если планируются)?",
- "Какими родителями хотите быть?","Как вы представляете семейные вечера?","Какая мечта обязательно должна сбыться?","Как вы хотите встречать старость?","Что для вас значит «навсегда»?"]}
+const questions = [
+"Где вы впервые встретились?",
+"Что вы подумали при первой встрече?",
+"Кто сделал первый шаг?",
+"Что больше всего запомнилось в тот день?",
+"Каким было первое сообщение/разговор?",
+
+"Что вы чувствовали перед первым свиданием?",
+"Кто выбирал место?",
+"... остальные 94 вопроса потом добавим ..."
 ];
 
-/* состояние доступа */
-const FREE_LIMIT = 5; // 5 бесплатных вопросов
-let userMode = localStorage.getItem('userMode') || 'free'; // free | paid
+let answered = 0;
+const freeLimit = 5;
+const container = document.getElementById("questions-container");
 
-/* прогресс / рендер */
-let ch=0, qi=0;
-const badge=g('badge'), title=g('title'), sub=g('sub'), bar=g('bar'),
-      qtitle=g('qtitle'), qhint=g('qhint'), area=g('answer'), step=g('step'),
-      paywall=g('paywall');
-
-function g(id){return document.getElementById(id)}
-function key(){return `${ch}-${qi}`}
-const answers = JSON.parse(localStorage.getItem('answersBook')||'{}');
-
-function save(v){answers[key()]=v; localStorage.setItem('answersBook',JSON.stringify(answers));}
-function percent(){return Math.round(((ch*10)+qi+1)/100*100)}
-
-function render(){
-  badge.textContent = `Глава ${ch+1}`;
-  title.textContent = chapters[ch].t.replace(/^.*?\.\s*/,'');
-  sub.textContent   = chapters[ch].s;
-  qtitle.textContent = `${qi+1}. ${chapters[ch].qs[qi]}`;
-  qhint.textContent  = chapters[ch].s;
-  area.value = answers[key()]||'';
-  bar.style.width = percent()+'%';
-  step.textContent = percent()+'%';
-}
-render();
-
-/* лепестки */
-for(let k=0;k<8;k++){
-  const p=document.createElement('div'); p.className='petal';
-  p.style.left=(Math.random()*100)+'vw';
-  p.style.animationDuration=(7+Math.random()*9)+'s';
-  p.style.animationDelay=(Math.random()*5)+'s';
-  document.body.appendChild(p);
+function renderQuestion(i){
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <label>${questions[i]}</label>
+    <textarea oninput="saveAnswer(${i}, this.value)">${loadAnswer(i)}</textarea>
+  `;
+  container.appendChild(card);
+  setTimeout(()=>card.classList.add("show"),50);
 }
 
-area.addEventListener('input', e=>save(e.target.value));
-
-g('next').onclick=()=>{
-  // блокировка: если бесплатно и пользователь дошёл до лимита — показываем paywall
-  const idx = ch*10 + qi + 1; // номер вопроса (1..100) после нажатия Далее
-  if(userMode==='free' && idx>=FREE_LIMIT){
-    paywall.style.display='flex';
-    return;
+function saveAnswer(i, val){
+  localStorage.setItem("answer_"+i, val);
+  answered = i+1;
+  updateProgress();
+  if(answered === freeLimit){
+    setTimeout(showPaywall,800);
   }
-  if(qi<9){ qi++; }
-  else if(ch<chapters.length-1){ ch++; qi=0; }
-  else { window.location='success.html'; return; }
-  render();
-};
+}
 
-g('prev').onclick=()=>{ if(qi>0){ qi--; } else if(ch>0){ ch--; qi=9; } render(); };
+function loadAnswer(i){
+  return localStorage.getItem("answer_"+i) || "";
+}
 
-/* paywall кнопки */
-g('later').onclick=()=>{ paywall.style.display='none'; };
-g('payBtn').onclick=()=>{
-  // 👉 ВСТАВЬ СВОЙ username бота вместо YOUR_BOT:
-  window.location.href = 'https://t.me/YOUR_BOT?start=buy_access';
-};
-g('iPaid').onclick=()=>{
-  // временно даём доступ для теста; позже подтвердим через бота автоматически
-  userMode='paid';
-  localStorage.setItem('userMode','paid');
-  paywall.style.display='none';
-  // продолжаем
-  if(qi<9){ qi++; } else if(ch<chapters.length-1){ ch++; qi=0; } else { window.location='success.html'; return; }
-  render();
-};
+function updateProgress(){
+  document.getElementById("progress").textContent =
+    `Вопрос ${Math.min(answered+1,100)} из 100`;
+}
+
+// show first 5
+for(let i=0;i<freeLimit;i++){
+  renderQuestion(i);
+}
+
+function showPaywall(){
+  container.innerHTML += `
+    <div class="paywall fade">
+      <h2 style="font-family:'Playfair Display';color:#7a4b63;margin-bottom:12px">
+      Продолжить историю?</h2>
+      <p style="opacity:.85;margin-bottom:20px">
+        Вы ответили на первые 5 вопросов 💕<br>
+        Чтобы открыть все 100 — оформите доступ.
+      </p>
+
+      <button class="btn" onclick="pay()">Разблокировать 💗</button>
+      <div style="margin-top:10px;font-size:14px;opacity:.7">
+        Оплата через Telegram
+      </div>
+    </div>
+  `;
+}
+
+function pay(){
+  window.location.href = "https://t.me/YOUR_BOT_NAME"; // вставим твой бот позже
+}
+
+updateProgress();
 </script>
+
 </body>
 </html>
