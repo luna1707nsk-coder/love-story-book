@@ -3,34 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Книга о тебе — вопросы</title>
+<title>Вопросы — История, написанная сердцем</title>
 <style>
 :root{
   --bg:#f7f4f6; --panel:#ffffff; --ink:#2c2c2d; --muted:#7a7a7a;
-  --rose:#c87a94; --rose-deep:#a55672; --ring:rgba(200,122,148,.18);
+  --rose:#c87a94; --rose2:#e2a7b9; --ring:rgba(200,122,148,.18);
+  --serif:"Times New Roman",Georgia,serif;
 }
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-.wrap{max-width:820px;margin:0 auto;padding:30px 18px 80px}
-.header{padding:46px 0 18px;text-align:center}
-h1{margin:0;font-size:40px;color:#5a2d3e} .sub{color:#6e6e71}
+.wrap{max-width:860px;margin:0 auto;padding:30px 18px 80px}
+.header{padding:36px 0 14px;text-align:center}
+.badge{display:inline-block;padding:8px 12px;border-radius:999px;background:#f4e8ed;color:#7c5566;font-weight:700;font-size:12px;margin-bottom:8px}
+h1{margin:0;font-size:38px;color:#5a2d3e;font-family:var(--serif);font-weight:300}
+.sub{color:#6e6e71}
 .card{background:var(--panel); border:1px solid rgba(0,0,0,.06); border-radius:16px; padding:22px; box-shadow:0 12px 28px rgba(0,0,0,.06)}
 .progress{height:10px;background:#f0e1e7;border-radius:10px;overflow:hidden;margin-bottom:16px}
-.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),#e2a7b9);transition:.35s ease}
-.qtitle{font-weight:700;margin:.5rem 0 .25rem;color:#5a2d3e}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--rose2));transition:.35s ease}
+.qframe{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;box-shadow:0 10px 20px rgba(0,0,0,.03);padding:14px}
+.qtitle{font-family:var(--serif);font-weight:600;margin:.25rem 0 .25rem;color:#5a2d3e}
 .hint{color:#8a8a8a;font-size:13px;margin-bottom:6px;font-style:italic}
-textarea{width:100%;min-height:96px;border:1px solid rgba(0,0,0,.08);border-radius:12px;background:#fff;box-shadow:0 8px 16px rgba(0,0,0,.03) inset;padding:12px}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px}
+textarea{width:100%;min-height:110px;border:1px solid rgba(0,0,0,.08);border-radius:12px;background:#fff;box-shadow:0 8px 16px rgba(0,0,0,.03) inset;padding:12px;resize:vertical}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
 .btn{padding:12px 18px;border-radius:12px;font-weight:700;cursor:pointer;border:1px solid rgba(0,0,0,.08);background:#fff}
 .primary{background:var(--rose);color:#fff;border:none;box-shadow:0 12px 26px var(--ring)}
-.badge{display:inline-block;padding:8px 12px;border-radius:999px;background:#f4e8ed;color:#7c5566;font-weight:700;font-size:12px;margin-bottom:8px}
+.step{color:#7b7b7d}
 
-/* Анимация переходов вопрос/глава */
-.fade{opacity:0; transform:translateY(8px); transition:.28s ease}
-.fade.show{opacity:1; transform:none}
-
-/* Мини-лепестки */
-.petal{position:fixed; width:10px; height:10px; border-radius:50%; background:rgba(200,122,148,.25); filter:blur(.5px); pointer-events:none; animation:fall linear infinite}
+/* лепестки на фоне */
+.petal{position:fixed; width:9px; height:9px; border-radius:50%; background:rgba(200,122,148,.20); filter:blur(.5px); pointer-events:none; animation:fall linear infinite}
 @keyframes fall{0%{transform:translateY(-10px)}100%{transform:translateY(110vh)}}
+
+/* paywall modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:20px}
+.modal > div{max-width:520px;background:#fff;border-radius:16px;padding:22px;border:1px solid rgba(0,0,0,.08);box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.modal h3{margin:6px 0 8px;font-family:var(--serif);font-weight:600;color:#5a2d3e}
+.modal p{color:#555;line-height:1.7}
+.actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.tag{display:inline-block;padding:6px 10px;border-radius:999px;background:#f4e8ed;color:#7c5566;font-weight:700;font-size:12px;margin:6px 0 10px}
+.link{padding:12px 16px;border-radius:12px;font-weight:700;border:1px solid var(--rose);color:var(--rose);background:#fff;cursor:pointer}
+.pay{background:var(--rose);color:#fff;border:none;box-shadow:0 12px 26px var(--ring)}
 </style>
 </head>
 <body>
@@ -43,17 +53,42 @@ textarea{width:100%;min-height:96px;border:1px solid rgba(0,0,0,.08);border-radi
 
   <div class="card">
     <div class="progress"><i id="bar"></i></div>
-    <div id="stage" class="fade"></div>
+    <div class="qframe">
+      <div class="qtitle" id="qtitle"></div>
+      <div class="hint" id="qhint"></div>
+      <textarea id="answer"></textarea>
+    </div>
     <div class="nav">
       <button class="btn" id="prev">Назад</button>
-      <div id="step" class="sub"></div>
+      <div class="step" id="step">0%</div>
       <button class="btn primary" id="next">Далее</button>
     </div>
   </div>
 </div>
 
+<!-- paywall -->
+<div class="modal" id="paywall">
+  <div>
+    <div class="tag">Premium Love Access</div>
+    <h3>Ваша история только начинается…</h3>
+    <p>5 бесплатных вопросов позади. Чтобы открыть все 100 и создать книгу, разблокируйте полный доступ.</p>
+    <p style="margin:.4rem 0 0">Что получите:</p>
+    <ul style="margin:.2rem 0 0 1rem; color:#555; line-height:1.8">
+      <li>Доступ ко всем 10 главам (100 вопросов)</li>
+      <li>Автосохранение и красивый финальный экспорт</li>
+      <li>Сбор книги и <b>превью перед печатью</b></li>
+    </ul>
+    <div class="actions">
+      <button class="pay" id="payBtn">Оплатить в Telegram</button>
+      <button class="link" id="iPaid">Я оплатил — открыть доступ</button>
+      <button class="link" id="later">Позже</button>
+    </div>
+    <p style="font-size:12px;color:#777;margin-top:8px">Оплата Basic: 990 ₽. Поддержка и безопасность: ответы не хранятся на сервере — отправляются напрямую дизайнеру.</p>
+  </div>
+</div>
+
 <script>
-/* главы и вопросы (100) — как договорились */
+/* главы/вопросы (100) — как согласовано ранее */
 const chapters = [
  {t:"💕 Глава 1. Знакомство", s:"Как всё началось", qs:[
  "Где вы впервые встретились?","Что вы подумали при первой встрече?","Кто сделал первый шаг?","Что больше всего запомнилось?","Каким был первый разговор?",
@@ -87,48 +122,76 @@ const chapters = [
  "Какими родителями хотите быть?","Как вы представляете семейные вечера?","Какая мечта обязательно должна сбыться?","Как вы хотите встречать старость?","Что для вас значит «навсегда»?"]}
 ];
 
+/* состояние доступа */
+const FREE_LIMIT = 5; // 5 бесплатных вопросов
+let userMode = localStorage.getItem('userMode') || 'free'; // free | paid
+
+/* прогресс / рендер */
 let ch=0, qi=0;
-const badge=gid('badge'), title=gid('title'), sub=gid('sub'), bar=gid('bar'), stage=gid('stage'), step=gid('step');
+const badge=g('badge'), title=g('title'), sub=g('sub'), bar=g('bar'),
+      qtitle=g('qtitle'), qhint=g('qhint'), area=g('answer'), step=g('step'),
+      paywall=g('paywall');
+
+function g(id){return document.getElementById(id)}
+function key(){return `${ch}-${qi}`}
 const answers = JSON.parse(localStorage.getItem('answersBook')||'{}');
 
-function gid(id){return document.getElementById(id)}
-function save(v){answers[`${ch}-${qi}`]=v; localStorage.setItem('answersBook', JSON.stringify(answers));}
+function save(v){answers[key()]=v; localStorage.setItem('answersBook',JSON.stringify(answers));}
 function percent(){return Math.round(((ch*10)+qi+1)/100*100)}
 
 function render(){
   badge.textContent = `Глава ${ch+1}`;
   title.textContent = chapters[ch].t.replace(/^.*?\.\s*/,'');
   sub.textContent   = chapters[ch].s;
-  stage.classList.remove('show'); // для fade
-  stage.innerHTML = `
-    <div class="qtitle">${qi+1}. ${chapters[ch].qs[qi]}</div>
-    <div class="hint">${chapters[ch].s}</div>
-    <textarea oninput="save(this.value)">${answers[`${ch}-${qi}`]||''}</textarea>
-  `;
-  requestAnimationFrame(()=>stage.classList.add('show'));
+  qtitle.textContent = `${qi+1}. ${chapters[ch].qs[qi]}`;
+  qhint.textContent  = chapters[ch].s;
+  area.value = answers[key()]||'';
   bar.style.width = percent()+'%';
   step.textContent = percent()+'%';
 }
 render();
 
-gid('next').onclick=()=>{
+/* лепестки */
+for(let k=0;k<8;k++){
+  const p=document.createElement('div'); p.className='petal';
+  p.style.left=(Math.random()*100)+'vw';
+  p.style.animationDuration=(7+Math.random()*9)+'s';
+  p.style.animationDelay=(Math.random()*5)+'s';
+  document.body.appendChild(p);
+}
+
+area.addEventListener('input', e=>save(e.target.value));
+
+g('next').onclick=()=>{
+  // блокировка: если бесплатно и пользователь дошёл до лимита — показываем paywall
+  const idx = ch*10 + qi + 1; // номер вопроса (1..100) после нажатия Далее
+  if(userMode==='free' && idx>=FREE_LIMIT){
+    paywall.style.display='flex';
+    return;
+  }
   if(qi<9){ qi++; }
-  else if(ch<chapters.length-1){ ch++; qi=0; softTransition(); }
+  else if(ch<chapters.length-1){ ch++; qi=0; }
   else { window.location='success.html'; return; }
   render();
 };
-gid('prev').onclick=()=>{ if(qi>0){ qi--; } else if(ch>0){ ch--; qi=9; softTransition(); } render(); };
 
-function softTransition(){
-  // свечной перелив + несколько лепестков
-  for(let k=0;k<6;k++){ const p=document.createElement('div'); p.className='petal';
-    p.style.left=(Math.random()*100)+'vw';
-    p.style.animationDuration=(4+Math.random()*5)+'s';
-    p.style.background='rgba(200,122,148,'+(0.15+Math.random()*0.2)+')';
-    document.body.appendChild(p);
-    setTimeout(()=>p.remove(), 7000);
-  }
-}
+g('prev').onclick=()=>{ if(qi>0){ qi--; } else if(ch>0){ ch--; qi=9; } render(); };
+
+/* paywall кнопки */
+g('later').onclick=()=>{ paywall.style.display='none'; };
+g('payBtn').onclick=()=>{
+  // 👉 ВСТАВЬ СВОЙ username бота вместо YOUR_BOT:
+  window.location.href = 'https://t.me/YOUR_BOT?start=buy_access';
+};
+g('iPaid').onclick=()=>{
+  // временно даём доступ для теста; позже подтвердим через бота автоматически
+  userMode='paid';
+  localStorage.setItem('userMode','paid');
+  paywall.style.display='none';
+  // продолжаем
+  if(qi<9){ qi++; } else if(ch<chapters.length-1){ ch++; qi=0; } else { window.location='success.html'; return; }
+  render();
+};
 </script>
 </body>
 </html>
