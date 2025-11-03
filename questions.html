@@ -88,22 +88,33 @@ body{
   animation:pageTurn .7s ease;
   border:1px solid rgba(255,255,255,.45);
 }
-.card h2{
-  margin:0 0 8px;
-  font-size:20px;
-  font-weight:600;
-  text-shadow:0 1px 3px rgba(255,255,255,.8);
+.card{
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  padding:40px 28px 46px; /* больше воздуха */
+  border-radius:22px;
+  box-shadow:0 12px 32px rgba(0,0,0,.14);
+  margin-bottom:30px;
+  animation:pageTurn .75s ease;
+  border:1px solid rgba(255,255,255,.55);
 }
+
+.card h2{
+  margin-bottom:14px; /* больше пространства над текстом */
+}
+
 textarea{
   width:100%;
-  min-height:120px;
-  border:1px solid rgba(0,0,0,.1);
-  border-radius:14px;
-  padding:12px;
-  font-size:16px;
+  min-height:140px;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:18px;
+  padding:16px 18px;
+  font-size:18px;
+  line-height:1.45;
   font-family:"Inter",sans-serif;
   resize:none;
-  background:rgba(255,255,255,.85);
+  background:rgba(255,255,255,.92);
+  box-shadow:0 4px 16px rgba(0,0,0,.05) inset;
 }
 
 /* buttons */
