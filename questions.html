@@ -9,140 +9,106 @@
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
-  --bg:#f7ecef;
+  --bg:#f8e8ef;
+  --ink:#4a3c3c;
   --rose:#c49aa6;
   --rose2:#ab7c8b;
-  --ink:#4a3c3c;
-  --gold:#d8c59d;
   --panel:rgba(255,255,255,.75);
 }
+
 body{
-  margin:0;
   font-family:"Cormorant Garamond", serif;
   background:url("assets/roses.jpg") center/cover fixed;
+  margin:0;
   color:var(--ink);
-  -webkit-font-smoothing:antialiased;
 }
-.backdrop{
-  position:fixed;
-  inset:0;
-  background:rgba(255,255,255,.25);
-  backdrop-filter:blur(12px);
-  z-index:-1;
-}
-.container{
-  max-width:620px;
-  padding:30px 20px 120px;
+
+.wrapper{
+  max-width:680px;
   margin:auto;
-  animation:fadeIn .9s ease;
+  padding:34px 18px 90px;
 }
 
-/* progress */
 .progress-text{
+  font-size:26px;
+  margin:0 auto 16px;
   text-align:center;
-  font-family:"Bodoni Moda", serif;
-  font-size:24px;
-  font-weight:500;
-  color:var(--ink);
-  margin-bottom:12px;
-  letter-spacing:.3px;
-  text-shadow:0 1px 4px rgba(255,255,255,.85);
-  background:rgba(255,255,255,.4);
-  backdrop-filter:blur(9px);
-  padding:8px 20px;
-  border-radius:12px;
-  display:inline-block;
-}
-.gold-line{
-  width:100px;
-  height:2px;
-  margin:8px auto 16px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  border-radius:2px;
-}
-.progress-bar{
-  width:100%;
-  height:10px;
-  background:rgba(255,255,255,.45);
-  border-radius:12px;
-  overflow:hidden;
-  margin-bottom:24px;
-  backdrop-filter:blur(6px);
-}
-.progress-fill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,var(--rose),var(--rose2),var(--gold));
-  transition:width .45s ease;
+  font-weight:600;
 }
 
-/* card */
-.card{
-  background:var(--panel);
-  backdrop-filter:blur(14px);
-  padding:26px 24px;
-  border-radius:18px;
-  box-shadow:0 8px 25px rgba(0,0,0,.12);
-  margin-bottom:22px;
-  animation:pageTurn .7s ease;
-  border:1px solid rgba(255,255,255,.45);
+.progress-bar{
+  height:8px;
+  background:rgba(255,255,255,.5);
+  border-radius:50px;
+  overflow:hidden;
+  margin-bottom:34px;
 }
+.progress{
+  height:100%;
+  background:#b17b8c;
+  width:0%;
+  transition:.35s;
+}
+
 .card{
   background:var(--panel);
-  backdrop-filter:blur(18px);
-  padding:40px 28px 46px; /* больше воздуха */
-  border-radius:22px;
-  box-shadow:0 12px 32px rgba(0,0,0,.14);
-  margin-bottom:30px;
-  animation:pageTurn .75s ease;
-  border:1px solid rgba(255,255,255,.55);
+  backdrop-filter:blur(25px) saturate(160%);
+  -webkit-backdrop-filter:blur(25px) saturate(160%);
+  padding:50px 38px;
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.16);
+  border:1px solid rgba(255,255,255,.45);
+  animation:fade .6s ease both;
 }
 
 .card h2{
-  margin-bottom:14px; /* больше пространства над текстом */
+  margin:0 0 22px;
+  font-size:32px;
+  line-height:1.3;
 }
 
 textarea{
   width:100%;
-  min-height:140px;
-  border:1px solid rgba(0,0,0,.08);
-  border-radius:18px;
-  padding:16px 18px;
+  min-height:170px;
+  border:1px solid rgba(0,0,0,.07);
+  border-radius:14px;
+  padding:18px 22px;
   font-size:18px;
-  line-height:1.45;
-  font-family:"Inter",sans-serif;
-  resize:none;
-  background:rgba(255,255,255,.92);
-  box-shadow:0 4px 16px rgba(0,0,0,.05) inset;
+  font-family:"Cormorant Garamond", serif;
+  background:rgba(255,255,255,.85);
+  box-shadow:inset 0 4px 20px rgba(0,0,0,.04);
+  outline:none;
+}
+textarea::placeholder{
+  color:#b7a9ab;
+  font-style:italic;
 }
 
-/* buttons */
 .btn{
+  margin-top:26px;
   width:100%;
-  padding:16px;
-  font-size:18px;
+  padding:18px;
   border:none;
-  border-radius:14px;
+  border-radius:50px;
+  background:linear-gradient(145deg,#d7a6b8,#ba798c);
+  color:white;
+  font-size:18px;
+  font-weight:600;
+  font-family:"Cormorant Garamond", serif;
   cursor:pointer;
-  background:linear-gradient(90deg,var(--rose),var(--rose2));
-  color:#fff;
-  font-family:"Bodoni Moda",serif;
-  margin-top:10px;
   transition:.3s;
+  box-shadow:0 10px 28px rgba(0,0,0,.15);
 }
 .btn:hover{
-  filter:brightness(1.12);
+  transform:translateY(-3px);
+  box-shadow:0 16px 34px rgba(0,0,0,.18);
 }
 
-/* page turn animation */
-@keyframes pageTurn{
-  0%{transform:rotateY(-15deg);opacity:0;}
-  100%{transform:rotateY(0);opacity:1;}
-}
-@keyframes fadeIn{
-  from{opacity:0;}
-  to{opacity:1;}
+@keyframes fade{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
 /* sticky bottom CTA */
