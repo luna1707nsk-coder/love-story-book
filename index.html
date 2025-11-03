@@ -10,6 +10,7 @@
 <style>
 :root{
   --velvet:#3a1f2d;
+  --ink:#4a2f3d;
   --milk:#fffaf5;
   --rose:#cda3b7;
   --rose2:#b37a91;
@@ -23,12 +24,11 @@
 body{
   font-family:"Cormorant Garamond",serif;
   background:var(--milk);
-  color:var(--velvet);
-  overflow-x:hidden;
-  min-height:100vh;
+  color:var(--ink);
+  overflow-x:hidden; min-height:100vh;
 }
 
-/* BACKGROUNDS */
+/* BACKGROUNDS (без blur) */
 .bg{
   position:fixed; inset:0; z-index:-3;
   background-size:cover; background-position:center;
@@ -38,10 +38,8 @@ body{
 .bg2{background-image:url("assets/background2.jpg")}
 .bg.show{opacity:1}
 
-/* STARS LAYER (не трогаем при рендерах) */
-#stars{
-  position:fixed; inset:0; z-index:1; pointer-events:none;
-}
+/* STARS FIXED LAYER */
+#stars{ position:fixed; inset:0; z-index:1; pointer-events:none; }
 .star{
   position:absolute; width:6px; height:6px; border-radius:50%;
   background:radial-gradient(circle,#c5c8cc 0%,#7e7f84 45%,rgba(0,0,0,0) 80%);
@@ -51,30 +49,44 @@ body{
 }
 @keyframes fall{
   0%{transform:translateY(-8vh) scale(.85);opacity:.2}
-  40%{opacity:.65}
+  40%{opacity:.6}
   80%{opacity:.45}
   100%{transform:translateY(108vh) scale(1);opacity:0}
 }
 
-/* NAV DESKTOP + MOBILE BOTTOM */
-nav.top{
-  position:fixed;top:0;width:100%;z-index:5;
+/* HEADER (логотип слева) */
+.header{
+  position:fixed; top:0; left:0; right:0; z-index:5;
   background:rgba(255,250,245,.75);
   backdrop-filter:blur(12px) saturate(140%);
   border-bottom:1px solid rgba(120,85,100,.12);
-  display:flex;justify-content:center;gap:28px;padding:16px 30px;
 }
-nav.top a{
-  text-decoration:none;color:#3a1f2d;font-weight:600;
-  font-size:18px;position:relative;padding-bottom:6px;
+.header .row{
+  max-width:1200px; margin:0 auto; display:flex; align-items:center;
+  gap:24px; padding:14px 18px;
 }
-nav.top a:after{
-  content:"";position:absolute;left:0;bottom:0;width:0;height:2px;
+.logo{
+  font-family:"Bodoni Moda",serif; font-weight:600;
+  font-size:20px; letter-spacing:.3px;
+  color:#3a1f2d; white-space:nowrap;
+}
+.logo em{font-style:normal; background:linear-gradient(90deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4),var(--gold5)); -webkit-background-clip:text; color:transparent; animation:goldGlow 9s ease-in-out infinite;}
+@keyframes goldGlow{0%{filter:brightness(.92)}50%{filter:brightness(1.22)}100%{filter:brightness(.92)}}
+
+.nav{
+  margin-left:auto; display:flex; gap:22px; align-items:center;
+}
+.nav a{
+  text-decoration:none; color:#3a1f2d; font-weight:600; font-size:16px; position:relative; padding-bottom:5px;
+}
+.nav a:after{
+  content:""; position:absolute; left:0; bottom:0; height:2px; width:0;
   background:linear-gradient(90deg,#c6a678,#eddcb8,#d2b37d);
   transition:.35s;
 }
-nav.top a:hover:after{width:100%}
+.nav a:hover:after{width:100%}
 
+/* MOBILE BOTTOM NAV */
 nav.bottom{
   display:none; position:fixed; left:12px; right:12px; bottom:12px; z-index:6;
   background:rgba(255,255,255,.9);
@@ -84,79 +96,120 @@ nav.bottom{
 }
 nav.bottom .row{display:flex;justify-content:space-around;align-items:center;gap:6px}
 nav.bottom a{
-  flex:1;text-align:center;text-decoration:none;color:var(--velvet);
-  font-weight:600;font-size:14px;padding:8px;border-radius:50px;
+  flex:1; text-align:center; text-decoration:none; color:var(--velvet);
+  font-weight:600; font-size:13px; padding:8px; border-radius:50px;
 }
 nav.bottom a.cta{
   background:linear-gradient(130deg,var(--rose),var(--rose2));
-  color:#fff;font-weight:700;
+  color:#fff; font-weight:700;
 }
 
-/* HERO */
-.hero{padding:140px 18px 100px;text-align:center; position:relative; z-index:2;}
-.hero-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:28px;padding:60px 30px;max-width:900px;margin:auto;
-  box-shadow:0 18px 45px rgba(0,0,0,.12);
+/* HERO (минимальный, чтобы сразу был About первым блоком) */
+.hero{
+  padding-top:96px;  /* под фикс шапку */
 }
 
-/* LUX HEADERS */
+/* SECTION BASE */
+section{ padding: clamp(60px, 9vw, 90px) 18px; position:relative; z-index:2; }
+.wrap{ max-width:1100px; margin:0 auto; }
+
+/* HEADINGS (Dior velvet gold) */
 h1,h2{
   font-family:"Bodoni Moda",serif;
   background:linear-gradient(90deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4),var(--gold5));
-  -webkit-background-clip:text;color:transparent;
+  -webkit-background-clip:text; color:transparent;
   animation:goldGlow 9s ease-in-out infinite;
+  text-align:center;
+  letter-spacing:.4px;
   text-shadow:0 2px 5px rgba(255,255,255,0.42);
 }
-h1{font-size:52px;margin-bottom:14px}
-h2{font-size:42px;margin-bottom:4px;text-align:center}
-@keyframes goldGlow{0%{filter:brightness(.92)}50%{filter:brightness(1.22)}100%{filter:brightness(.92)}}
-.sub{font-size:22px;margin-bottom:30px;opacity:.9;color:#5c4252}
+h2{ font-size: clamp(26px, 5vw, 42px); margin-bottom:8px; }
+
+/* CAPTION under headings */
+.caption{
+  text-align:center; font-size: clamp(14px, 2.6vw, 18px); color:#5a4050; opacity:.92; margin-bottom:28px;
+}
+
+/* SEPARATOR — стиль E (тонкая зол. линия + лёгкий flourish + водяная акварель) */
+.sep{
+  display:flex; flex-direction:column; align-items:center; gap:10px; margin:12px 0 34px;
+}
+.sep .line{ width: clamp(120px, 22vw, 220px); height:2px; background:linear-gradient(90deg,#c6a678,#f3e2bf,#d2b37d); }
+.sep svg{ width:120px; opacity:.6; }
+.sep .wash{
+  position:absolute; width: 60vw; max-width:620px; height:90px; transform:translateY(-20px);
+  background: radial-gradient(ellipse at center, rgba(228,215,232,.22), rgba(228,215,232,0) 70%);
+  filter: blur(12px);
+}
+
+/* CARDS */
+.card{
+  background:var(--card); border:1px solid var(--border);
+  border-radius:22px; padding: clamp(18px, 2.6vw, 28px);
+  font-size: clamp(16px, 2.4vw, 20px); line-height:1.6;
+  box-shadow:0 10px 35px rgba(0,0,0,.1);
+}
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap: clamp(14px, 2.2vw, 22px); }
+.grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap: clamp(14px, 2.2vw, 22px); }
+@media(max-width:900px){ .grid3{grid-template-columns:1fr 1fr} }
+@media(max-width:640px){ .grid2,.grid3{grid-template-columns:1fr} }
 
 /* BUTTON */
 .btn{
+  appearance:none; border:none; cursor:pointer; color:#fff; font-weight:700;
   background:linear-gradient(130deg,var(--rose),var(--rose2));
-  border:none;border-radius:50px;padding:14px 38px;
-  font-size:20px;font-weight:700;color:#fff;cursor:pointer;
-  box-shadow:0 10px 28px rgba(0,0,0,.17);transition:.25s;
+  padding:14px 30px; border-radius:999px;
+  box-shadow:0 10px 28px rgba(0,0,0,.17); transition:.25s;
+  font-size: clamp(16px, 2.4vw, 20px);
 }
-.btn:hover{transform:translateY(-3px);opacity:.95}
+.btn:hover{ transform:translateY(-3px); opacity:.95 }
 
-/* SECTIONS */
-section{padding:90px 22px; position:relative; z-index:2;}
-.wrap{max-width:1100px;margin:auto}
-.hr{
-  width:200px;height:2px;margin:12px auto 34px;
-  background:linear-gradient(90deg,#c6a678,#f3e2bf,#d2b37d);
+/* COVER GALLERY placeholders */
+.covers{
+  display:grid; grid-template-columns:repeat(3,1fr); gap: clamp(12px, 2vw, 20px);
+}
+.cover{
+  aspect-ratio: 3/4; border-radius:18px;
+  background:linear-gradient(160deg, #efe7f1, #ffffff);
+  border:1px dashed rgba(0,0,0,.15);
+  display:flex; align-items:center; justify-content:center; color:#7c6a78;
+  font-weight:600;
+}
+@media(max-width:800px){ .covers{grid-template-columns:1fr 1fr} }
+
+/* PHOTO UPLOAD — вариант D (слоты) */
+.upload-grid{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:12px;
+}
+@media(max-width:900px){ .upload-grid{grid-template-columns:repeat(3,1fr)} }
+@media(max-width:600px){ .upload-grid{grid-template-columns:repeat(2,1fr)} }
+
+.slot{
+  aspect-ratio:1/1; border-radius:16px; background:rgba(255,255,255,.92);
+  border:1px dashed rgba(0,0,0,.18);
+  display:flex; align-items:center; justify-content:center; color:#6a5864;
+  position:relative; overflow:hidden; font-weight:600;
+}
+.slot input{ display:none; }
+.slot .add{ font-size:40px; line-height:1; }
+.slot img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.slot .name{
+  position:absolute; left:8px; right:8px; bottom:8px;
+  background:rgba(255,255,255,.78); border-radius:10px; padding:4px 8px;
+  font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 
-/* CARD */
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:22px;padding:30px;
-  font-size:21px;line-height:1.55;
-  box-shadow:0 10px 35px rgba(0,0,0,.1);
-}
+.upload-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.small{ font-size:14px; opacity:.8; }
 
-/* GRIDS */
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+/* PRICING & FAQ – минимальная стилизация сохранена */
+footer{ text-align:center; padding:30px; color:#6c4d60; font-size:18px }
 
-/* RESPONSIVE */
-@media(max-width:820px){
-  nav.top{display:none}
-  nav.bottom{display:block}
-  .grid3{grid-template-columns:1fr 1fr}
+/* RESPONSIVE header/nav */
+@media(max-width:860px){
+  .nav{ display:none; }
+  nav.bottom{ display:block; }
 }
-@media(max-width:640px){
-  .grid2,.grid3{grid-template-columns:1fr}
-  h1{font-size:38px}
-  h2{font-size:30px}
-}
-
-footer{text-align:center;padding:30px;color:#6c4d60;font-size:18px; position:relative; z-index:2;}
 </style>
 </head>
 <body>
@@ -168,92 +221,200 @@ footer{text-align:center;padding:30px;color:#6c4d60;font-size:18px; position:rel
 <!-- Stars layer -->
 <div id="stars"></div>
 
-<script>
-/* Scroll bg switch */
-let bg=0;const b1=document.querySelector('.bg1'),b2=document.querySelector('.bg2');
-function updBG(){
-  if(scrollY>innerHeight*0.7&&bg===0){b1.classList.remove('show');b2.classList.add('show');bg=1}
-  else if(scrollY<=innerHeight*0.7&&bg===1){b2.classList.remove('show');b1.classList.add('show');bg=0}
-}
-addEventListener('scroll',updBG);updBG();
-
-/* Matte platinum stars (видимые, не пропадают) */
-const starsLayer = document.getElementById('stars');
-function spawnStar(){
-  const s=document.createElement('div');
-  s.className='star';
-  s.style.left=Math.random()*100+'vw';
-  s.style.top='-10vh';
-  s.style.animationDuration=(7+Math.random()*6)+'s';
-  s.style.filter='blur('+ (Math.random()*0.4) +'px)';
-  starsLayer.appendChild(s);
-  setTimeout(()=>s.remove(),15000);
-}
-// стартовая россыпь
-for(let i=0;i<28;i++){ setTimeout(spawnStar, i*120); }
-// постоянный «редкий дождь»
-setInterval(spawnStar, 450);
-</script>
-
-<!-- Desktop nav -->
-<nav class="top">
-  <a href="#about">О проекте</a>
-  <a href="#process">Процесс</a>
-  <a href="#examples">Примеры</a>
-  <a href="#pricing">Тарифы</a>
-  <a href="#faq">FAQ</a>
-</nav>
-
-<header class="hero">
-  <div class="hero-card">
-    <h1>История, написанная сердцем</h1>
-    <p class="sub">100 вопросов, создающих вечную книгу любви</p>
-    <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
+<!-- Header with logo left -->
+<header class="header">
+  <div class="row">
+    <div class="logo"><em>A book written with soul</em></div>
+    <nav class="nav">
+      <a href="#about">О проекте</a>
+      <a href="#madebyyou">Книга написанная тобою</a>
+      <a href="#covers">Обложки</a>
+      <a href="#upload">Фото</a>
+      <a href="#belief">Вера и память</a>
+      <a href="#why">Зачем каждому</a>
+      <a href="#pricing">Тарифы</a>
+      <a href="#faq">FAQ</a>
+    </nav>
   </div>
 </header>
 
+<!-- Mobile bottom nav -->
+<nav class="bottom">
+  <div class="row">
+    <a href="#about">О проекте</a>
+    <a href="#madebyyou">Книга</a>
+    <a href="#covers">Обложки</a>
+    <a href="#upload">Фото</a>
+    <a class="cta" href="questions.html">Старт</a>
+  </div>
+</nav>
+
+<!-- Minimal hero spacer -->
+<div class="hero"></div>
+
+<!-- ——— БЛОК 1. О ПРОЕКТЕ ——— -->
 <section id="about">
-  <div class="wrap"><h2>О проекте</h2><div class="hr"></div>
+  <div class="wrap">
+    <h2>О проекте</h2>
+    <div class="caption">Почему это уникально</div>
+    <div class="sep">
+      <div class="wash"></div>
+      <div class="line"></div>
+      <svg viewBox="0 0 200 30" fill="none"><path d="M10,20 C60,0 140,40 190,10" stroke="#c6a678" stroke-width="1.2" opacity="0.6"/></svg>
+    </div>
+
     <div class="grid2">
-      <div class="card">Создаю love-story книги в стиле Dior Bridal — эстетично, чувственно, навсегда.</div>
-      <div class="card">Добавим ваши фото, корректный текст, премиальную верстку.</div>
+      <div class="card">
+        «История, написанная сердцем» — это персональная книга о вас двоих.  
+        100 продуманных вопросов превращают воспоминания в живой текст: аккуратно, красиво, с уважением к вашим чувствам.
+      </div>
+      <div class="card">
+        Мы создаём книгу в эстетике премиальных свадебных журналов:  
+        мягкая типографика, деликатные акценты, возможность добавить ваши фотографии и тонкие детали вашей истории.
+      </div>
     </div>
   </div>
 </section>
 
-<section id="process">
-  <div class="wrap"><h2>Процесс</h2><div class="hr"></div>
+<!-- ——— БЛОК 2. КНИГА НАПИСАННАЯ ТОБОЮ ——— -->
+<section id="madebyyou">
+  <div class="wrap">
+    <h2>Книга, написанная тобою</h2>
+    <div class="caption">Стань автором вашей истории, порадуй свою вторую половинку ❤️</div>
+    <div class="sep">
+      <div class="wash"></div>
+      <div class="line"></div>
+      <svg viewBox="0 0 200 30" fill="none"><path d="M10,20 C60,0 140,40 190,10" stroke="#c6a678" stroke-width="1.2" opacity="0.6"/></svg>
+    </div>
+
     <div class="grid2">
-      <div class="card">1) 5 бесплатных вопросов</div>
-      <div class="card">2) Полный доступ после оплаты</div>
-      <div class="card">3) Вы отвечаете в своём темпе</div>
-      <div class="card">4) Получаете книгу</div>
+      <div class="card">
+        Начни с 5 бесплатных вопросов — почувствуй, как легко память складывается в страницы.  
+        После оплаты откроются все 100 вопросов, а мы аккуратно соберём из ответов книгу.
+      </div>
+      <div class="card" style="display:flex;align-items:center;justify-content:center">
+        <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="examples">
-  <div class="wrap"><h2>Примеры</h2><div class="hr"></div>
+<!-- ——— БЛОК 3. ВЫБОР ОБЛОЖКИ ——— -->
+<section id="covers">
+  <div class="wrap">
+    <h2>Выбери обложку вашей будущей книги</h2>
+    <div class="caption">Скоро добавим примеры макетов — ты сможешь выбрать стиль, шрифт и оттенок</div>
+    <div class="sep">
+      <div class="wash"></div>
+      <div class="line"></div>
+      <svg viewBox="0 0 200 30" fill="none"><path d="M10,20 C60,0 140,40 190,10" stroke="#c6a678" stroke-width="1.2" opacity="0.6"/></svg>
+    </div>
+
+    <div class="covers">
+      <div class="cover">Mockup A</div>
+      <div class="cover">Mockup B</div>
+      <div class="cover">Mockup C</div>
+    </div>
+    <div class="small" style="text-align:center;margin-top:10px">* Мокапы — заглушки, позже заменим на реальные примеры</div>
+  </div>
+</section>
+
+<!-- ——— БЛОК 4. ДОБАВИТЕ ВАШЕ ФОТО (вариант D слоты) ——— -->
+<section id="upload">
+  <div class="wrap">
+    <h2>Добавьте ваше фото (по желанию)</h2>
+    <div class="caption">Фотографии прикрепятся к заказу и попадут нам в обработку</div>
+    <div class="sep">
+      <div class="wash"></div>
+      <div class="line"></div>
+      <svg viewBox="0 0 200 30" fill="none"><path d="M10,20 C60,0 140,40 190,10" stroke="#c6a678" stroke-width="1.2" opacity="0.6"/></svg>
+    </div>
+
+    <div class="card">
+      <div class="upload-grid" id="slots">
+        <!-- 8 слотов -->
+      </div>
+      <div class="upload-actions">
+        <button class="btn" id="sendPhotos">Отправить фото в бота</button>
+        <div class="small">Можно до 8 фото; отправятся архивом в Telegram (нужен наш /api/telegram.js)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— БЛОК 5. ВЕРА В ЛЮБОВЬ И ПАМЯТЬ ——— -->
+<section id="belief">
+  <div class="wrap">
+    <h2>Вера в любовь и память</h2>
+    <div class="caption">Книга — это способ сказать «я помню», даже когда слова теряются</div>
+    <div class="sep">
+      <div class="wash"></div>
+      <div class="line"></div>
+      <svg viewBox="0 0 200 30" fill="none"><path d="M10,20 C60,0 140,40 190,10" stroke="#c6a678" stroke-width="1.2" opacity="0.6"/></svg>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        Любовь живёт в деталях: запах кофе из той самой кружки, фраза из фильма, тихий вечер, когда вы просто молчали.  
+        Мы бережно собираем эти детали, чтобы вернуть их вам на страницах книги.
+      </div>
+      <div class="card">
+        Память — не архив фактов, а дыхание отношений.  
+        Эта книга — не только подарок партнёру, но и способ увидеть свою совместную дорогу яснее.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— БЛОК 6. ЗАЧЕМ ЭТА КНИГА НУЖНА КАЖДОМУ? ——— -->
+<section id="why">
+  <div class="wrap">
+    <h2>Зачем эта книга нужна каждому?</h2>
+    <div class="caption">Потому что она превращает моменты в наследие</div>
+    <div class="sep">
+      <div class="wash"></div>
+      <div class="line"></div>
+      <svg viewBox="0 0 200 30" fill="none"><path d="M10,20 C60,0 140,40 190,10" stroke="#c6a678" stroke-width="1.2" opacity="0.6"/></svg>
+    </div>
+
     <div class="grid3">
-      <div class="card">💍 Макет 1</div>
-      <div class="card">📖 Макет 2</div>
-      <div class="card">💌 Макет 3</div>
+      <div class="card"><b>Подарок с смыслом</b><br/>Это не вещь на полке, а ваша общая история, собранная голосом сердца.</div>
+      <div class="card"><b>Сильнее, чем пост</b><br/>То, что невозможно потерять в ленте — книга остаётся с вами.</div>
+      <div class="card"><b>Точка опоры</b><br/>Когда непросто — перечитываете и вспоминаете, ради чего всё начиналось.</div>
     </div>
   </div>
 </section>
 
+<!-- ——— БЛОК 7. ТАРИФЫ (как было) ——— -->
 <section id="pricing">
-  <div class="wrap"><h2>Тарифы</h2><div class="hr"></div>
+  <div class="wrap">
+    <h2>Тарифы</h2>
+    <div class="caption">Выберите формат издания</div>
+    <div class="sep">
+      <div class="wash"></div>
+      <div class="line"></div>
+      <svg viewBox="0 0 200 30" fill="none"><path d="M10,20 C60,0 140,40 190,10" stroke="#c6a678" stroke-width="1.2" opacity="0.6"/></svg>
+    </div>
+
     <div class="grid3">
-      <div class="card"><b>Basic — 990₽</b><br>Цифровая версия</div>
-      <div class="card"><b>Standard — позже</b><br>Печать</div>
-      <div class="card"><b>Premium — позже</b><br>Подарочный формат</div>
+      <div class="card"><b>Basic — 990₽</b><br/>Цифровая версия</div>
+      <div class="card"><b>Standard — позже</b><br/>Печать + оформление</div>
+      <div class="card"><b>Premium — позже</b><br/>Подарочный набор</div>
     </div>
   </div>
 </section>
 
+<!-- ——— БЛОК 8. FAQ (как было) ——— -->
 <section id="faq">
-  <div class="wrap"><h2>FAQ</h2><div class="hr"></div>
+  <div class="wrap">
+    <h2>FAQ</h2>
+    <div class="caption">Частые вопросы</div>
+    <div class="sep">
+      <div class="wash"></div>
+      <div class="line"></div>
+      <svg viewBox="0 0 200 30" fill="none"><path d="M10,20 C60,0 140,40 190,10" stroke="#c6a678" stroke-width="1.2" opacity="0.6"/></svg>
+    </div>
+
     <div class="grid2">
       <div class="card">Можно добавить фото? — Да</div>
       <div class="card">Срок изготовления — 3–7 дней</div>
@@ -263,22 +424,92 @@ setInterval(spawnStar, 450);
 
 <section>
   <div class="wrap" style="text-align:center">
-    <button class="btn" onclick="location.href='questions.html'">Создать книгу 💫</button>
+    <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
   </div>
 </section>
 
 <footer>© История, написанная сердцем</footer>
 
-<!-- Mobile bottom nav -->
-<nav class="bottom">
-  <div class="row">
-    <a href="#about">О проекте</a>
-    <a href="#process">Процесс</a>
-    <a href="#examples">Примеры</a>
-    <a href="#pricing">Тарифы</a>
-    <a class="cta" href="questions.html">Старт</a>
-  </div>
-</nav>
+<script>
+/* BG switch on scroll */
+let bg=0;const b1=document.querySelector('.bg1'),b2=document.querySelector('.bg2');
+function updBG(){
+  if(scrollY>innerHeight*0.7&&bg===0){b1.classList.remove('show');b2.classList.add('show');bg=1}
+  else if(scrollY<=innerHeight*0.7&&bg===1){b2.classList.remove('show');b1.classList.add('show');bg=0}
+}
+addEventListener('scroll',updBG);updBG();
+
+/* Stars layer (stable) */
+const starsLayer=document.getElementById('stars');
+function spawnStar(){
+  const s=document.createElement('div');
+  s.className='star';
+  s.style.left=Math.random()*100+'vw';
+  s.style.top='-10vh';
+  s.style.animationDuration=(7+Math.random()*6)+'s';
+  s.style.filter='blur('+(Math.random()*0.4)+'px)';
+  starsLayer.appendChild(s);
+  setTimeout(()=>s.remove(),15000);
+}
+for(let i=0;i<28;i++){ setTimeout(spawnStar, i*120); }
+setInterval(spawnStar, 480);
+
+/* Upload slots (variant D) */
+const MAX_SLOTS = 8;
+const slotsEl = document.getElementById('slots');
+const filesState = new Array(MAX_SLOTS).fill(null);
+
+function createSlot(i){
+  const slot = document.createElement('label');
+  slot.className='slot';
+  slot.innerHTML = `
+    <input type="file" accept="image/*" />
+    <span class="add">＋</span>
+  `;
+  const input = slot.querySelector('input');
+  input.addEventListener('change', e=>{
+    const file = input.files && input.files[0];
+    if(!file) return;
+    filesState[i] = file;
+    const url = URL.createObjectURL(file);
+    slot.innerHTML = `
+      <input type="file" accept="image/*" />
+      <img src="${url}" alt="">
+      <span class="name">${file.name}</span>
+    `;
+    slot.querySelector('input').addEventListener('change', ev=>{
+      const f = ev.target.files && ev.target.files[0];
+      if(!f) return;
+      filesState[i] = f;
+      const u = URL.createObjectURL(f);
+      slot.querySelector('img').src = u;
+      slot.querySelector('.name').textContent = f.name;
+    });
+  });
+  return slot;
+}
+for(let i=0;i<MAX_SLOTS;i++){ slotsEl.appendChild(createSlot(i)); }
+
+/* Send photos to Telegram (requires /api/telegram.js on Vercel) */
+document.getElementById('sendPhotos').addEventListener('click', async ()=>{
+  const chosen = filesState.filter(Boolean);
+  if(chosen.length===0){ alert('Добавьте хотя бы одну фотографию.'); return; }
+
+  try{
+    // Пакуем в FormData. Если /api/telegram.js не настроен — запрос вернётся с ошибкой.
+    const form = new FormData();
+    chosen.forEach((f,idx)=> form.append('photo'+idx, f, f.name));
+    form.append('note','Фотографии для книги (лендинг)');
+
+    const res = await fetch('/api/telegram', { method:'POST', body: form });
+    if(!res.ok) throw new Error('Не удалось отправить. Проверь /api/telegram.js');
+    alert('Фото отправлены. Спасибо!');
+  }catch(e){
+    console.error(e);
+    alert('Не получилось отправить. Мы можем настроить это позже — нужен /api/telegram.js с поддержкой FormData.');
+  }
+});
+</script>
 
 </body>
 </html>
