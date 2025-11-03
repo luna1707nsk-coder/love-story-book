@@ -9,11 +9,10 @@
 
 <style>
 :root{
-  --velvet:#3a1f2d;
-  --rose:#cda3b7;
-  --rose2:#b37a91;
-  --card:rgba(255,255,255,.88);
-  --border:rgba(255,255,255,.92);
+  --velvet:#3a1f2d; --milk:#fffaf5;
+  --rose:#cda3b7; --rose2:#b37a91;
+  --card:rgba(255,255,255,.88); --border:rgba(255,255,255,.92);
+  --gold1:#4b2d3b;--gold2:#7a5365;--gold3:#c6a678;--gold4:#7a5365;--gold5:#4b2d3b;
 }
 
 /* RESET */
@@ -25,8 +24,29 @@ body{
   overflow-x:hidden; min-height:100vh;
 }
 
-/* Stars layer */
-#stars{position:fixed; inset:0; z-index:1; pointer-events:none;}
+/* HEADER мини (логотип слева, ссылка домой) */
+.header{
+  position:fixed; top:0; left:0; right:0; z-index:5;
+  background:rgba(255,250,245,.75);
+  backdrop-filter:blur(12px) saturate(140%);
+  border-bottom:1px solid rgba(120,85,100,.12);
+}
+.header .row{
+  max-width:1100px; margin:0 auto; display:flex; align-items:center;
+  gap:18px; padding:12px 16px;
+}
+.logo{
+  font-family:"Bodoni Moda",serif; font-weight:600; font-size:18px; color:#3a1f2d;
+}
+.logo em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4),var(--gold5));
+  -webkit-background-clip:text; color:transparent; animation:goldGlow 9s ease-in-out infinite;
+}
+.header a.home{ margin-left:auto; text-decoration:none; color:#3a1f2d; font-weight:600; }
+
+/* STARS */
+#stars{ position:fixed; inset:0; z-index:1; pointer-events:none; }
 .star{
   position:absolute; width:6px; height:6px; border-radius:50%;
   background:radial-gradient(circle,#c5c8cc 0%,#7e7f84 42%,rgba(0,0,0,0) 80%);
@@ -41,12 +61,12 @@ body{
   100%{transform:translateY(108vh) scale(1);opacity:0}
 }
 
-/* App container (мы меняем только #app, #stars не трогаем) */
-#app{ position:relative; z-index:2; }
+/* APP CONTAINER */
+#app{ position:relative; z-index:2; padding-top:72px; }
 
-/* Card */
+/* CARD */
 .container{
-  max-width:680px; margin:110px auto;
+  max-width:680px; margin:100px auto;
   background:var(--card); border:1px solid var(--border);
   border-radius:28px; padding: clamp(24px,4.6vw,38px);
   box-shadow:0 18px 45px rgba(0,0,0,.15);
@@ -54,18 +74,18 @@ body{
 }
 @keyframes fade{from{opacity:0;transform:translateY(25px)} to{opacity:1;transform:none}}
 
-/* Headings */
+/* HEADINGS */
 h2{
   font-family:"Bodoni Moda",serif;
   font-size:clamp(24px,6vw,38px); margin-bottom:18px;
-  background:linear-gradient(90deg,#4b2d3b,#7a5365,#c6a678,#7a5365,#4b2d3b);
+  background:linear-gradient(90deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4),var(--gold5));
   -webkit-background-clip:text;color:transparent;
   animation:goldGlow 9s ease-in-out infinite;
   text-shadow:0 2px 5px rgba(255,255,255,.42);
 }
 @keyframes goldGlow{0%{filter:brightness(.92)}50%{filter:brightness(1.22)}100%{filter:brightness(.92)}}
 
-/* Form */
+/* FORM */
 textarea{
   width:100%; min-height:140px; padding:18px;
   font-family:inherit; font-size:clamp(16px,2.6vw,19px);
@@ -81,18 +101,18 @@ textarea{
 }
 .btn:hover{transform:translateY(-3px);opacity:.94}
 
-/* Progress */
+/* PROGRESS */
 progress{width:100%; height:8px; margin-bottom:18px; border-radius:8px; overflow:hidden}
 progress::-webkit-progress-bar{background:rgba(255,255,255,.45)}
 progress::-webkit-progress-value{background:#b590bf}
 
-/* Paywall */
+/* PAYWALL */
 .paywall-text{
   font-size:clamp(18px,2.6vw,21px); text-align:center;
   margin-bottom:26px; line-height:1.45;
 }
 
-/* Mobile CTA */
+/* MOBILE CTA */
 .bottom-cta{
   display:none; position:fixed; left:12px; right:12px; bottom:12px; z-index:3;
   background:linear-gradient(130deg,var(--rose),var(--rose2));
@@ -101,20 +121,28 @@ progress::-webkit-progress-value{background:#b590bf}
 }
 @media(max-width:768px){
   .bottom-cta{display:block}
-  .container{margin-top:80px;margin-bottom:140px}
+  .container{margin-top:70px;margin-bottom:140px}
 }
 </style>
 </head>
 <body>
 
+<!-- Header mini -->
+<header class="header">
+  <div class="row">
+    <div class="logo"><em>A book written with soul</em></div>
+    <a class="home" href="index.html">На главную</a>
+  </div>
+</header>
+
 <!-- Stars layer -->
 <div id="stars"></div>
 
-<!-- App content -->
+<!-- App -->
 <div id="app"></div>
 
 <script>
-/* Stars — стабильные, поверх фона, под контентом */
+/* Stars */
 const starsLayer=document.getElementById('stars');
 function spawnStar(){
   const s=document.createElement('div');
@@ -122,22 +150,20 @@ function spawnStar(){
   s.style.left=Math.random()*100+'vw';
   s.style.top='-10vh';
   s.style.animationDuration=(7+Math.random()*6)+'s';
-  s.style.filter='blur('+ (Math.random()*0.4) +'px)';
+  s.style.filter='blur('+(Math.random()*0.4)+'px)';
   starsLayer.appendChild(s);
   setTimeout(()=>s.remove(),15000);
 }
-// стартовая россыпь
 for(let i=0;i<24;i++){ setTimeout(spawnStar, i*140); }
-// редкий «дождь»
 setInterval(spawnStar, 520);
 
-/* Questions app — меняем только #app, не трогаем #stars */
+/* Questions App */
 const questions = [
  "Где вы впервые встретились?",
  "Что вы почувствовали в тот момент?",
  "Кто сделал первый шаг?",
  "Когда вы поняли, что это — любовь?",
- "Какой момент начала отношений самый ценный?",
+ "Какой момент начала отношений самый ценный?"
 ];
 let step=0;
 
@@ -164,9 +190,7 @@ function showPaywall(){
         Вы прошли 5 вопросов 💫<br><br>
         Чтобы открыть оставшиеся 95 — оформите доступ
       </div>
-      <button class="btn" onclick="window.location.href='https://t.me/abookaboutyou'">
-        Открыть все вопросы ✨
-      </button>
+      <button class="btn" onclick="window.location.href='https://t.me/abookaboutyou'">Открыть все вопросы ✨</button>
     </div>
   `;
   document.getElementById('app').innerHTML = html;
@@ -177,7 +201,6 @@ function next(){
   if(step>=5) showPaywall();
   else render();
 }
-
 render();
 </script>
 
