@@ -1,157 +1,146 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>История, написанная сердцем — Вопросы</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>История — вопросы</title>
 
-<!-- 1A: Bodoni Moda + Cormorant Garamond (+ handwriting layer) -->
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=Cormorant+Garamond:wght@400;500&family=Great+Vibes&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=Cormorant+Garamond:wght@400;500&family=Great+Vibes&display=swap" rel="stylesheet"/>
 
 <style>
 :root{
-  --ink:#47363f; --plum:#4e2f40;
-  --rose:#c49aa6; --rose2:#b47c8b;
-  --gold1:#f7e8c9; --gold2:#e7d19b; --gold3:#d0b46a; /* Dior creamy gold */
-  --glass:rgba(255,255,255,.86);
+  --ink:#3e2b33;
+  --plum:#4b2c3d;
+  --rose:#c49aa6;
+  --rose2:#b47c8b;
+  --gold1:#f7e8c9; --gold2:#e7d19b; --gold3:#d0b46a;
+  --glass:rgba(255,255,255,.88);
 }
 
 /* Base */
 *{box-sizing:border-box}
-html,body{margin:0}
 body{
-  font-family:"Cormorant Garamond",serif; color:var(--ink);
+  margin:0;
+  font-family:"Cormorant Garamond",serif;
   background:url("assets/roses.jpg") center/cover fixed no-repeat;
+  color:var(--ink);
   overflow-x:hidden;
 }
 
-/* butterflies overlay */
+/* butterflies texture */
 body::before{
-  content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
+  content:"";
+  position:fixed; inset:0;
   background:url("assets/butterflies.jpg") center/cover no-repeat;
-  mix-blend-mode:screen; opacity:.18; animation:par 22s ease-in-out infinite alternate;
+  pointer-events:none;
+  mix-blend-mode:screen; opacity:.16;
+  animation:zoom 22s ease-in-out infinite alternate;
 }
-@keyframes par{from{transform:scale(1)}to{transform:scale(1.06)}}
+@keyframes zoom{from{transform:scale(1)} to{transform:scale(1.05)}}
 
-.wrap{max-width:760px; margin:0 auto; padding:86px 18px 120px}
-
-/* foil title */
-.foil{
-  background:linear-gradient(98deg,var(--gold1),var(--gold2) 45%,var(--gold3) 60%,var(--gold1));
-  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-}
+/* layout */
+.wrap{max-width:760px;margin:0 auto;padding:82px 18px 120px}
 
 /* Progress */
-.center{text-align:center}
 .progress-head{
-  display:inline-block; margin:0 0 12px; padding:8px 18px; border-radius:12px;
-  background:rgba(255,255,255,.6); backdrop-filter:blur(8px);
-  font-family:"Bodoni Moda",serif; font-weight:600; font-size:24px; color:var(--plum);
-  text-shadow:0 1px 4px rgba(255,255,255,.9)
+  font-family:"Bodoni Moda",serif;
+  font-size:24px;font-weight:600;
+  text-align:center;
+  padding:8px 18px;
+  border-radius:10px;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(6px);
+  color:var(--plum);
+  margin-bottom:8px;
 }
-.progress-bar{height:10px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.55);margin:12px 0 28px}
-.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--rose2),var(--gold2));transition:width .45s ease}
+.progress-bar{height:10px;background:rgba(255,255,255,.55);border-radius:999px;overflow:hidden;margin-bottom:26px}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--rose2),var(--gold2));transition:width .45s}
 
-/* Card (soft-fade) */
+/* Card */
 .card{
-  background:var(--glass); backdrop-filter:blur(24px);
-  border:1px solid rgba(255,255,255,.55);
+  background:var(--glass);
+  backdrop-filter:blur(20px);
   border-radius:22px;
-  padding:42px 30px 48px;
-  box-shadow:0 20px 54px rgba(0,0,0,.16);
-  animation:fadeIn .5s ease both;
+  padding:42px 30px 46px;
+  border:1px solid rgba(255,255,255,.6);
+  box-shadow:0 18px 50px rgba(0,0,0,.16);
+  animation:fadeIn .5s both;
 }
-@keyframes fadeIn{from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:none}}
-.fade-out{animation:fadeOut .35s ease forwards}
-@keyframes fadeOut{to{opacity:0; transform:translateY(-12px)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(18px)}}
 
+/* Titles */
 .q-title{
-  font-family:"Bodoni Moda",serif; font-weight:600;
-  font-size:clamp(22px,3.8vw,34px); line-height:1.28; text-align:center; margin:0 0 16px;
-  color:var(--plum); text-shadow:0 0 6px rgba(255,255,255,.75)
+  font-family:"Bodoni Moda",serif;
+  font-size:clamp(22px,3.5vw,32px);
+  text-align:center;
+  line-height:1.25;
+  margin:0 0 16px;
+  color:var(--plum);
 }
 
-/* Handwriting overlay (тонко, премиально) */
+/* handwritten layer */
 .write-surface{position:relative}
 textarea.answer{
-  width:100%; min-height:180px; border-radius:18px;
-  padding:18px 22px; border:1px solid rgba(0,0,0,.06);
-  background:#fff; resize:vertical; outline:none;
-  color:transparent; caret-color:#7b5b66; font:19px/1.6 "Cormorant Garamond",serif;
-  box-shadow:inset 0 6px 18px rgba(0,0,0,.05);
+  width:100%;min-height:180px;border-radius:18px;
+  padding:18px 22px;
+  border:1px solid rgba(0,0,0,.06);
+  background:#fff;
+  font:19px/1.6 "Cormorant Garamond",serif;
 }
-textarea.answer::placeholder{color:transparent}
+textarea.answer::placeholder{color:#bfaeb6}
 .ink{
-  position:absolute; inset:0; pointer-events:none; padding:18px 22px;
-  white-space:pre-wrap; word-break:break-word;
-  font:28px/1.45 "Great Vibes",cursive; color:#613649;
-  filter:drop-shadow(0 0 1px rgba(255,255,255,.7));
+  position:absolute;inset:0;padding:18px 22px;pointer-events:none;
+  font:28px/1.5 "Great Vibes",cursive;color:#613649;
+  white-space:pre-wrap;
 }
-.caret{display:inline-block;width:10px;height:28px;margin-left:2px;background:linear-gradient(180deg,#8a5a6b,#b07a8a);opacity:.85;animation:blink 1s steps(1) infinite}
+.caret{display:inline-block;width:9px;height:28px;background:#b27a8d;animation:blink 1s infinite}
 @keyframes blink{50%{opacity:0}}
 
 /* Buttons */
-.actions{display:flex; gap:10px; margin-top:16px; justify-content:center; flex-wrap:wrap}
+.actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap;justify-content:center}
 .btn{
-  border:none; cursor:pointer; font-weight:700; padding:14px 22px; border-radius:999px;
-  background:linear-gradient(140deg,#d9a8b9,#b27a8d); color:#fff;
-  box-shadow:0 12px 30px rgba(0,0,0,.18); transition:.25s ease
+  border:none;border-radius:999px;padding:14px 22px;
+  background:linear-gradient(140deg,#d9a8b9,#b27a8d);
+  color:#fff;font-weight:700;cursor:pointer;
+  box-shadow:0 12px 26px rgba(0,0,0,.16);
 }
-.btn:hover{transform:translateY(-2px)}
-.btn-ghost{background:transparent;color:var(--rose2);border:1px solid var(--rose2);box-shadow:none}
-.btn-ghost:hover{background:var(--rose2);color:#fff}
+.btn-ghost{
+  border:1px solid var(--rose2);background:transparent;color:var(--rose2);
+}
 
-/* Paywall — luxury shimmer */
-.lux-paywall{
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(24px);
-  padding: 44px 32px;
-  border-radius: 26px;
-  border: 1px solid rgba(255,255,255,0.6);
-  box-shadow: 0 25px 55px rgba(0,0,0,0.12);
-  animation: fadeIn .6s ease both;
+/* Paywall card CLEAR TEXT FIX */
+.pay-top-title{
+  font-family:"Bodoni Moda",serif;
+  font-size:28px;font-weight:600;
+  color:#4a2e3f;
+  text-align:center;
+  margin-bottom:14px;
 }
-.lux-title{
-  font-family:'Bodoni Moda',serif; font-size:30px; margin:0 0 14px; color:#4a2e3f;
-  position:relative; overflow:hidden;
+.pay-desc{
+  font-size:19px;line-height:1.55;text-align:center;color:#4b2e3d;
+  margin:0 auto 24px;max-width:520px;
 }
-.lux-title::after{
-  content:""; position:absolute; top:0; left:-120%; width:100%; height:100%;
-  background:linear-gradient(120deg,transparent 0%, rgba(255,255,255,.85) 45%, transparent 80%);
-  animation:shimmer 3.5s ease-in-out infinite;
+.pay-box{
+  background:#fff;border-radius:18px;
+  padding:20px 22px;margin-bottom:26px;
+  border:1px solid rgba(0,0,0,.05);
 }
-@keyframes shimmer{0%{left:-120%} 50%{left:100%} 100%{left:120%}}
-.lux-desc{
-  font-size:19px; line-height:1.55; color:#5b3a49; margin:0 auto 22px; max-width:520px;
-  text-shadow:0 1px 3px rgba(255,255,255,.7);
+.pay-btn{
+  display:block;margin:0 auto;
+  padding:15px 34px;border-radius:999px;
+  background:linear-gradient(140deg,#c49aa6,#b47c8b,#d8c7b0);
+  color:#fff;font-weight:700;font-size:18px;text-align:center;text-decoration:none;
 }
-.lux-box{
-  background:#fff; border:1px solid rgba(0,0,0,.06); border-radius:18px;
-  padding:18px 22px; margin:0 auto 26px; max-width:560px; font-size:18px; color:#4e2d3e;
-  box-shadow:0 10px 30px rgba(0,0,0,.06);
-}
-.lux-btn{
-  display:inline-block; padding:15px 32px; border-radius:999px;
-  background:linear-gradient(140deg,#c49aa6,#b47c8b,#d8c7b0); color:#fff; font-weight:700; font-size:18px; text-decoration:none;
-  box-shadow:0 14px 35px rgba(0,0,0,.18); transition:.25s;
-}
-.lux-btn:hover{transform:translateY(-2px); box-shadow:0 18px 40px rgba(0,0,0,.28)}
 
-/* 3D petals */
-.petal{
-  position:fixed; top:-20px; width:10px; height:10px; border-radius:50%;
-  background:radial-gradient(circle at 30% 30%, #ffdce9 0%, #f8a7c6 60%, transparent 75%);
-  opacity:.9; pointer-events:none; z-index:2; animation:fall linear forwards; will-change:transform,opacity,filter;
-}
-.petal[data-d="near"]{filter:blur(.5px) saturate(115%); transform:translateZ(40px)}
-.petal[data-d="mid"] {filter:blur(1.2px) saturate(110%); transform:translateZ(0)}
-.petal[data-d="far"] {filter:blur(2.2px) saturate(105%); opacity:.7; transform:translateZ(-40px)}
-@keyframes fall{to{transform:translate3d(var(--dx),110vh,0) rotate(var(--rot)); opacity:.2}}
+/* petals */
+.petal{position:fixed;top:-20px;width:9px;height:9px;border-radius:50%;
+ background:radial-gradient(circle at 30% 30%,#ffdcea,#f8a7c6 60%,transparent 78%);
+animation:fall linear forwards;pointer-events:none;z-index:2}
+@keyframes fall{to{transform:translate(var(--dx),105vh);opacity:.15}}
 
-/* Mobile */
-@media (max-width:520px){
-  .progress-head{font-size:20px}
-  .lux-title{font-size:26px}
+/* mobile */
+@media(max-width:520px){
+  .pay-top-title{font-size:24px}
 }
 </style>
 </head>
@@ -159,172 +148,119 @@ textarea.answer::placeholder{color:transparent}
 
 <div class="wrap">
 
-  <div class="center">
-    <div id="ph" class="progress-head foil">Вопрос 1 из 5</div>
-    <div class="progress-bar"><div id="pf" class="progress-fill"></div></div>
+<div id="ph" class="progress-head">Вопрос 1 из 5</div>
+<div class="progress-bar"><div id="pf" class="progress-fill"></div></div>
+
+<div id="card" class="card">
+
+  <h2 id="qt" class="q-title"></h2>
+
+  <div class="write-surface">
+    <textarea id="ta" class="answer" placeholder="Ваш ответ..."></textarea>
+    <div id="ink" class="ink"><span class="caret"></span></div>
   </div>
 
-  <div id="card" class="card">
-    <h2 id="qt" class="q-title">…</h2>
-
-    <div class="write-surface">
-      <textarea id="ta" class="answer" placeholder="Ваш ответ…"></textarea>
-      <div id="ink" class="ink"><span class="caret"></span></div>
-    </div>
-
-    <div class="actions">
-      <button class="btn-ghost" id="saveBtn">Сохранить и вернуться позже</button>
-      <button class="btn" id="nextBtn">Далее</button>
-    </div>
+  <div class="actions">
+    <button id="saveBtn" class="btn-ghost">Сохранить и вернуться позже</button>
+    <button id="nextBtn" class="btn">Далее</button>
   </div>
 
 </div>
 
-<script>
-/* ====== ВАЖНО ПРО TELEGRAM (3А) ======
-   Фронт отправляет ответы POST-запросом на /api/telegram
-   На Vercel создай файл /api/telegram.js, который берёт:
-   process.env.BOT_TOKEN, process.env.CHAT_ID
-   и шлёт fetch в https://api.telegram.org/bot${BOT_TOKEN}/sendMessage
-   с text = JSON.stringify(payload, null, 2)
-   Так токен не светится на клиенте. 
-======================================= */
+</div>
 
-const QUESTIONS = [
+<script>
+const QUESTIONS=[
  "Где вы впервые встретились?",
- "Что вы подумали, когда впервые увидели друг друга?",
- "Кто сделал первый шаг к знакомству?",
- "Что больше всего запомнилось в тот день?",
- "Каким было первое сообщение или разговор?"
+ "Что вы подумали, когда увидели друг друга?",
+ "Кто сделал первый шаг?",
+ "Что запомнилось в тот день?",
+ "Каким было ваше первое сообщение?"
 ];
 
-let step = parseInt(localStorage.getItem("step")||0);
-const ph = document.getElementById('ph');
-const pf = document.getElementById('pf');
-const qt = document.getElementById('qt');
-const ta = document.getElementById('ta');
-const ink = document.getElementById('ink');
-const card = document.getElementById('card');
-const nextBtn = document.getElementById('nextBtn');
-const saveBtn = document.getElementById('saveBtn');
+let step=parseInt(localStorage.getItem("step")||0);
 
-function setProgress(){
-  ph.textContent = `Вопрос ${Math.min(step+1,5)} из 5`;
-  pf.style.width = (Math.min(step,5)/5*100)+'%';
-}
-function loadQ(){
-  if(step>=5){ showPaywall(); return; }
-  qt.textContent = QUESTIONS[step] || "Вопрос";
-  ta.value = localStorage.getItem('ans_'+step) || "";
-  renderInk();
-  setProgress();
-}
-loadQ();
+const ph=document.getElementById('ph');
+const pf=document.getElementById('pf');
+const qt=document.getElementById('qt');
+const ta=document.getElementById('ta');
+const ink=document.getElementById('ink');
+const card=document.getElementById('card');
 
-/* handwriting layer */
+function updateUI(){
+ ph.textContent=`Вопрос ${Math.min(step+1,5)} из 5`;
+ pf.style.width=(Math.min(step,5)/5*100)+"%";
+ qt.textContent=QUESTIONS[step]||"Вопрос";
+ ta.value=localStorage.getItem("ans_"+step)||"";
+ renderInk();
+}
+updateUI();
+
 function renderInk(){
-  let text = ta.value.replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  ink.innerHTML = (text ? text : "") + `<span class="caret"></span>`;
+ let t=ta.value.replace(/</g,"&lt;"); 
+ ink.innerHTML=t+'<span class="caret"></span>';
 }
-ta.addEventListener('input', ()=>{
-  localStorage.setItem('ans_'+step, ta.value);
-  renderInk();
-});
+ta.oninput=()=>{
+ localStorage.setItem("ans_"+step,ta.value);
+ renderInk();
+};
 
-/* send to serverless (Telegram) */
-async function sendToTelegram(payload){
-  try{
-    const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon('/api/telegram', blob);
-      return;
-    }
-    await fetch('/api/telegram', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
-  }catch(e){ /* молча, чтобы UX не ломать */ }
+function sendToTG(payload){
+ try{
+   const b=new Blob([JSON.stringify(payload)],{type:'application/json'});
+   navigator.sendBeacon?.('/api/telegram',b);
+ }catch(e){}
 }
 
-/* actions */
-saveBtn.addEventListener('click', ()=>{
-  localStorage.setItem('ans_'+step, ta.value.trim());
-  alert("Сохранено. Можете вернуться позже — ответы не пропадут 💗");
-});
+document.getElementById('saveBtn').onclick=()=>alert("Сохранено 💗");
 
-nextBtn.addEventListener('click', async ()=>{
-  const answer = ta.value.trim();
-  localStorage.setItem('ans_'+step, answer);
+document.getElementById('nextBtn').onclick=()=>{
+ localStorage.setItem("ans_"+step,ta.value.trim());
+ sendToTG({type:"answer",step:step+1,q:QUESTIONS[step],a:ta.value,time:new Date().toISOString()});
 
-  // Отправим текущий ответ в TG (без ожидания)
-  sendToTelegram({
-    type: 'answer',
-    step: step+1,
-    question: QUESTIONS[step],
-    answer,
-    time: new Date().toISOString(),
-    source: 'questions.html'
-  });
+ step++; localStorage.setItem("step",step);
+ if(step>=5){ showPaywall(); return; }
+ updateUI();
+};
 
-  // мягкая смена карточки
-  card.classList.add('fade-out');
-  setTimeout(()=>{
-    step++; localStorage.setItem('step', step);
-    if(step>=5){ showPaywall(); return; }
-    qt.textContent = QUESTIONS[step] || "Вопрос";
-    ta.value = localStorage.getItem('ans_'+step) || "";
-    renderInk(); setProgress();
-    card.classList.remove('fade-out');
-  }, 300);
-});
-
-/* paywall with shimmer */
 function showPaywall(){
-  setProgress();
-  pf.style.width='100%';
-  ph.textContent = "Пробная часть завершена";
+ ph.textContent="Пробная часть завершена";
+ pf.style.width="100%";
 
-  const answers = [];
-  for(let i=0;i<5;i++){
-    const a = localStorage.getItem('ans_'+i) || '';
-    answers.push({step:i+1, q:QUESTIONS[i], a});
-  }
-  // Отправим краткий отчёт (необяз.)
-  sendToTelegram({type:'trial_complete', answers, time:new Date().toISOString()});
+ const answers=[];
+ for(let i=0;i<5;i++){
+   answers.push({q:QUESTIONS[i],a:localStorage.getItem("ans_"+i)||""});
+ }
+ sendToTG({type:"trial",answers});
 
-  card.classList.remove('fade-out');
-  card.innerHTML = `
-    <div class="lux-paywall">
-      <h3 class="lux-title">Пробная часть завершена</h3>
-      <p class="lux-desc">
-        Спасибо 🌸 Вы прошли первые 5 вопросов.
-        Откройте оставшиеся 95 и создайте нетленную книгу вашей любви.
-      </p>
-      <div class="lux-box">
-        <ul style="margin:0;padding-left:22px;line-height:1.65">
-          <li>Доступ ко всем 100 вопросам</li>
-          <li>Автосохранение ответов</li>
-          <li>Авторская обработка текста</li>
-          <li>Премиальная вёрстка книги</li>
-        </ul>
-      </div>
-      <div style="text-align:center">
-        <a href="https://t.me/abookaboutyou" class="lux-btn">Разблокировать ✨</a>
-      </div>
-    </div>
-  `;
+ card.innerHTML=`
+   <div class="pay-top-title">Пробная часть завершена</div>
+   <div class="pay-desc">
+     Спасибо 🌸 Вы прошли первые 5 вопросов.
+     Откройте оставшиеся 95 и создайте нетленную историю вашей любви.
+   </div>
+   <div class="pay-box">
+     ✓ Доступ ко всем 100 вопросам<br>
+     ✓ Автосохранение<br>
+     ✓ Авторская редактура текста<br>
+     ✓ Премиальная вёрстка книги
+   </div>
+   <a href="https://t.me/abookaboutyou" class="pay-btn">Разблокировать ✨</a>
+ `;
 }
 
-/* 3D petals */
-function spawnPetal(depth="mid"){
-  const p=document.createElement('div'); p.className='petal'; p.dataset.d=depth;
-  p.style.left=Math.random()*100+'vw';
-  p.style.setProperty('--dx',(Math.random()*40-20)+'vw');
-  p.style.setProperty('--rot',(Math.random()*240-120)+'deg');
-  p.style.animationDuration=(8+Math.random()*8)+'s';
-  document.body.appendChild(p); setTimeout(()=>p.remove(),16000);
+/* petals */
+function petal(){
+ let p=document.createElement("div");
+ p.className="petal";
+ p.style.left=Math.random()*100+"vw";
+ p.style.setProperty("--dx",(Math.random()*50-25)+"vw");
+ p.style.animationDuration=(8+Math.random()*8)+"s";
+ document.body.appendChild(p);
+ setTimeout(()=>p.remove(),16000);
 }
-for(let i=0;i<6;i++) spawnPetal("far");
-for(let i=0;i<6;i++) spawnPetal("mid");
-for(let i=0;i<6;i++) spawnPetal("near");
-setInterval(()=>spawnPetal(["far","mid","near"][Math.floor(Math.random()*3)]), 1600);
+setInterval(()=>petal(),1200);
 </script>
+
 </body>
 </html>
