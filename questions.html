@@ -1,70 +1,141 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>История любви — вопросы</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
 <style>
-body {
-  margin:0;
-  font-family: "Cormorant Garamond", serif;
-  background: url("assets/background3.jpg") center/cover fixed;
-  color:#3a2a35;
+:root{
+ --velvet:#3a1f2d;
+ --rose:#cda3b7;
+ --rose2:#b37a91;
+ --card:rgba(255,255,255,.88);
+ --border:rgba(255,255,255,.92);
 }
 
-/* контейнер */
-.card {
-  background: rgba(255,255,255,0.8);
-  border-radius:30px;
-  padding:26px;
-  margin: 80px auto;
-  width:90%;
-  max-width:550px;
-  backdrop-filter: blur(10px);
-  border:1px solid rgba(255,255,255,.8);
-  box-shadow:0 14px 35px rgba(0,0,0,.15);
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+ font-family:"Cormorant Garamond",serif;
+ background:url("assets/background3.jpg") center/cover fixed;
+ color:var(--velvet);
+ overflow-x:hidden;
+ min-height:100vh;
+ padding-bottom:120px;
 }
 
-h2 { font-size:28px; margin-bottom:18px; font-weight:600; }
-
-textarea {
-  width:100%; min-height:120px;
-  border-radius:18px;
-  border:1px solid rgba(0,0,0,.15);
-  padding:16px;
-  font-size:18px;
-  font-family:inherit;
-  resize:none;
+/* Stars */
+.spark{
+ position:fixed;width:4px;height:4px;border-radius:50%;
+ background:radial-gradient(circle,#fff,rgba(255,255,255,.08));
+ animation:fall 5.5s infinite ease-in-out;
+ opacity:.75;pointer-events:none;z-index:0;
+}
+@keyframes fall{
+ 0%{transform:translateY(-10vh) scale(.4);opacity:0}
+ 50%{opacity:1}
+ 100%{transform:translateY(110vh) scale(1);opacity:0}
 }
 
-/* кнопка */
-.btn {
-  width:100%;
-  margin-top:18px;
-  padding:16px;
-  background:linear-gradient(90deg,#b982b6,#e3c4e8);
-  color:#fff;
-  border:none;
-  border-radius:50px;
-  font-size:22px;
-  cursor:pointer;
-  font-weight:600;
+/* Container card */
+.container{
+ max-width:640px;
+ margin:120px auto;
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:24px;
+ padding: clamp(24px,4vw,36px);
+ box-shadow:0 14px 40px rgba(0,0,0,.16);
+ animation:fade .55s ease;
+}
+@keyframes fade{from{opacity:0;transform:translateY(20px)}}
+
+/* Titles */
+h2{
+ font-family:"Bodoni Moda",serif;
+ font-size:clamp(24px,6vw,38px);
+ margin-bottom:18px;
+ text-align:left;
+ background:linear-gradient(90deg,#4b2d3b,#7a5365,#c6a678,#7a5365,#4b2d3b);
+ -webkit-background-clip:text;color:transparent;
+ animation:goldGlow 9s ease-in-out infinite;
+ text-shadow:0 2px 4px rgba(255,255,255,0.4);
+}
+@keyframes goldGlow{
+ 0%{filter:brightness(.92)}
+ 50%{filter:brightness(1.2)}
+ 100%{filter:brightness(.92)}
 }
 
-.sparkle {
-  position:absolute;
-  width:4px;height:4px;
-  background: radial-gradient(circle, white, rgba(255,255,255,0.1));
-  border-radius:50%;
-  animation: spark 4s infinite ease-in-out;
+/* Textarea */
+textarea{
+ width:100%;
+ min-height:140px;
+ font-family:inherit;
+ font-size:clamp(16px,2.6vw,19px);
+ padding:16px;
+ border-radius:18px;
+ border:1px solid rgba(0,0,0,.16);
+ background:rgba(255,255,255,.9);
+ resize:none;
 }
-@keyframes spark {
-  0% { transform:translateY(-10vh); opacity:0; }
-  50% { opacity:1; }
-  100% { transform:translateY(110vh); opacity:0; }
+
+/* Button */
+.btn{
+ width:100%;
+ margin-top:16px;
+ padding:14px 28px;
+ font-size:clamp(17px,2.5vw,20px);
+ font-weight:700;
+ border-radius:50px;
+ border:none;
+ cursor:pointer;
+ color:white;
+ background:linear-gradient(130deg,var(--rose),var(--rose2));
+ box-shadow:0 8px 22px rgba(0,0,0,.18);
+ transition:.22s;
+}
+.btn:hover{transform:translateY(-3px);opacity:.95}
+
+/* Progress bar */
+progress{
+ width:100%;
+ height:8px;
+ margin-bottom:18px;
+ border-radius:8px;
+ overflow:hidden;
+}
+progress::-webkit-progress-bar{background:rgba(255,255,255,.4)}
+progress::-webkit-progress-value{background:#b590bf}
+
+/* Paywall */
+.paywall-text{
+ font-size:clamp(18px,2.5vw,20px);
+ text-align:center;
+ margin-bottom:26px;
+ color:var(--velvet);
+ font-weight:500;
+}
+
+/* Mobile bottom nav CTA (same vibe as index) */
+.bottom-cta{
+ position:fixed;left:12px;right:12px;bottom:12px;z-index:12;
+ background:linear-gradient(130deg,var(--rose),var(--rose2));
+ border-radius:999px;
+ padding:14px;
+ text-align:center;
+ font-size:18px;
+ font-weight:700;
+ color:#fff;
+ display:none;
+}
+@media(max-width:768px){
+ .bottom-cta{display:block}
+ .container{margin-top:100px;margin-bottom:150px}
 }
 </style>
 </head>
@@ -72,40 +143,67 @@ textarea {
 <body>
 
 <script>
-for(let i=0;i<30;i++){
-  let s=document.createElement("div");
-  s.classList.add("sparkle");
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDelay=Math.random()*4+"s";
-  document.body.appendChild(s);
+// Stars
+for(let i=0;i<50;i++){
+ let s=document.createElement('div');
+ s.className='spark';
+ s.style.left=Math.random()*100+'vw';
+ s.style.animationDelay=(Math.random()*5)+'s';
+ document.body.appendChild(s);
 }
 
 const questions = [
 "Где вы впервые встретились?",
-"Что вы подумали при первой встрече?",
+"Что вы почувствовали в тот момент?",
 "Кто сделал первый шаг?",
-"Как вы почувствовали, что это — любовь?",
-"Какой момент начала отношений запомнился сильнее всего?"
+"Когда вы поняли, что это — любовь?",
+"Какой момент начала отношений самый ценный?",
 ];
 
-let idx=0;
-
-function render(){
-  document.body.innerHTML = `
-  <div class="card">
-    <h2>${questions[idx]}</h2>
-    <textarea placeholder="Ваш ответ..."></textarea>
-    <button class="btn" onclick="next()">Далее</button>
-  </div>`;
-}
+let index = 0;
 render();
 
+/* render question */
+function render(){
+ document.body.innerHTML = `
+ <div class="container">
+   <progress value="${index}" max="5"></progress>
+   <h2>${questions[index]}</h2>
+   <textarea placeholder="Ваш ответ..."></textarea>
+   <button class="btn" onclick="next()">Далее</button>
+ </div>
+
+ <a href="questions.html" class="bottom-cta">Продолжить ✨</a>
+ `;
+}
+
+/* next question */
 function next(){
-  idx++;
-  if(idx>=5){
-    window.location.href="pay.html";
-  } else render();
+ index++;
+ if(index >= 5){
+   showPaywall();
+ } else {
+   render();
+ }
+}
+
+/* paywall screen */
+function showPaywall(){
+ document.body.innerHTML = `
+ <div class="container">
+   <h2>Пробный этап завершён</h2>
+   <div class="paywall-text">
+     Вы ответили на первые 5 вопросов 💫  
+     Чтобы открыть оставшиеся 95 — завершите доступ
+   </div>
+
+   <button class="btn" onclick="window.location.href='https://t.me/abookaboutyou'">
+     Открыть все вопросы ✨
+   </button>
+ </div>
+ `;
 }
 </script>
+
 </body>
 </html>
