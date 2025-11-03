@@ -1,104 +1,108 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>История, написанная сердцем</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>История, написанная сердцем</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --text: #3a2a35;
+      --panel: rgba(255,255,255,0.75);
+      --grad: linear-gradient(90deg, #b590bf, #e4c8eb);
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<style>
-:root {
-  --text: #3a2a35;
-  --panel: rgba(255,255,255,0.75);
-  --panel-border: rgba(255,255,255,0.85);
-  --button: linear-gradient(90deg, #b982b6, #e3c4e8);
-}
+    body {
+      font-family: "Cormorant Garamond", serif;
+      color: var(--text);
+      overflow-x: hidden;
+      background: #f5e9f2;
+    }
 
-body {
-  margin: 0;
-  font-family: "Cormorant Garamond", serif;
-  color: var(--text);
-  overflow-x: hidden;
-}
+    /* BG */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-.hero {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-}
+    .bg {
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      background-size: cover;
+      background-position: center;
+      filter: blur(8px) brightness(1.1);
+      opacity: 0;
+      transition: opacity 3.5s ease;
+    }
 
-/* ——— ФОНЫ ——— */
-.bg {
-  position: absolute;
-  top:0; left:0;
-  width:100%;
-  height:100%;
-  background-size: cover;
-  background-position: center;
-  filter: blur(6px) brightness(1.1);
-  opacity: 0;
-  transition: opacity 3s ease-in-out;
-}
+    .bg.show { opacity: 1; }
+    .bg.bg1 { background-image: url("assets/background1.jpg"); }
+    .bg.bg2 { background-image: url("assets/background2.jpg"); }
 
-.bg.show { opacity: 1; }
+    /* Sparkles */
+    .spark {
+      position: absolute;
+      width: 5px; height: 5px;
+      background: radial-gradient(circle, white, rgba(255,255,255,0));
+      border-radius: 50%;
+      animation: fall 5s infinite ease-in-out;
+      opacity: .7;
+    }
 
-.bg.bg1 { background-image: url("assets/background1.jpg"); }
-.bg.bg2 { background-image: url("assets/background2.jpg"); }
+    @keyframes fall {
+      0% { transform: translateY(-10vh) scale(.4); opacity:0; }
+      50% { opacity:1; }
+      100% { transform: translateY(100vh) scale(1); opacity:0; }
+    }
 
-/* ——— БЛЁСТКИ ——— */
-.sparkle {
-  position: absolute;
-  width:4px;
-  height:4px;
-  background: radial-gradient(circle, white, rgba(255,255,255,0.1));
-  border-radius:50%;
-  animation: sparkleMove 4s infinite ease-in-out;
-  opacity: 0.8;
-}
+    .center {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding-top: 27vh;
+      color: var(--text);
+    }
 
-@keyframes sparkleMove {
-  0% { transform: translateY(-10vh) scale(0.4); opacity:0; }
-  50% { opacity:1; }
-  100% { transform: translateY(110vh) scale(1); opacity:0; }
-}
+    h1 {
+      font-size: 46px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
 
-/* ——— КОНТЕНТ ——— */
-.center {
-  position: relative;
-  z-index: 3;
-  padding: 120px 20px 40px;
-  text-align: center;
-}
+    .sub {
+      font-size: 21px;
+      opacity: .85;
+      margin-bottom: 35px;
+    }
 
-h1 {
-  font-size: 42px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
+    .btn {
+      background: var(--grad);
+      color: white;
+      border: none;
+      font-size: 22px;
+      padding: 15px 34px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 8px 25px rgba(0,0,0,.15);
+      transition: .25s;
+    }
 
-.subtitle {
-  font-size: 20px;
-  margin-bottom: 30px;
-  opacity: .85;
-}
-
-.btn {
-  padding: 16px 32px;
-  border: none;
-  cursor: pointer;
-  border-radius: 50px;
-  font-size: 20px;
-  background: var(--button);
-  color: white;
-  font-weight: 600;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.14);
-  transition: .3s;
-}
-
-.btn:hover { transform: translateY(-4px); opacity:.9; }
-
-</style>
+    .btn:hover {
+      transform: translateY(-4px);
+      opacity:.92;
+    }
+  </style>
 </head>
 
 <body>
@@ -107,35 +111,31 @@ h1 {
   <div class="bg bg1 show"></div>
   <div class="bg bg2"></div>
 
-  <!-- 40 блёсток -->
-  <script>
-    for (let i = 0; i < 40; i++) {
-      let s = document.createElement("div");
-      s.classList.add("sparkle");
-      s.style.left = Math.random()*100 + "vw";
-      s.style.animationDelay = Math.random()*4 + "s";
-      document.body.appendChild(s);
-    }
-  </script>
-
   <div class="center">
     <h1>История, написанная сердцем</h1>
-    <div class="subtitle">100 вопросов, которые превращают память в книгу любви</div>
-
-    <button class="btn" onclick="window.location.href='questions.html'">
-      Создать книгу ✨
-    </button>
+    <div class="sub">100 вопросов, создающих книгу любви</div>
+    <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
   </div>
 </div>
 
 <script>
-let imgs = document.querySelectorAll('.bg');
-let cur = 0;
-setInterval(()=>{
-  imgs[cur].classList.remove("show");
-  cur = (cur+1) % imgs.length;
-  imgs[cur].classList.add("show");
-}, 9000);
+  // смена фоновых фото
+  const bgs = document.querySelectorAll('.bg');
+  let cur = 0;
+  setInterval(() => {
+    bgs[cur].classList.remove('show');
+    cur = (cur + 1) % bgs.length;
+    bgs[cur].classList.add('show');
+  }, 9000);
+
+  // sparkles
+  for (let i=0;i<50;i++){
+    let s=document.createElement('div');
+    s.className="spark";
+    s.style.left=Math.random()*100+"vw";
+    s.style.animationDelay=Math.random()*4+"s";
+    document.body.appendChild(s);
+  }
 </script>
 
 </body>
