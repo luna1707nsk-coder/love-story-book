@@ -3,82 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Вопросы</title>
+<title>Вопросы — История, написанная сердцем</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;600&family=Cormorant+Garamond:wght@300;400;500&family=Mulish:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --font-display:"Bodoni Moda", serif;
   --font-serif:"Cormorant Garamond", serif;
   --font-sans:"Mulish", sans-serif;
-  --rose:#b47c8b;
-  --panel:rgba(255,255,255,.9);
+  --ink:#3f3638; --muted:#7f6c73;
+  --rose:#b47c8b; --panel:rgba(255,255,255,.90);
+  --radius:16px;
 }
 
-/* BACKGROUND */
+*{box-sizing:border-box}
+html,body{margin:0}
 body{
-  margin:0;
+  font-family:var(--font-sans);
+  color:var(--ink);
   background:url("assets/butterflies.jpg") center/cover fixed;
   backdrop-filter:blur(6px);
-  padding:30px;
-  font-family:var(--font-sans);
 }
 
-/* CARD */
-.container{
-  max-width:800px;margin:auto;
-  background:var(--panel);border-radius:20px;padding:30px;
-}
+.wrap{max-width:880px;margin:0 auto;padding:28px 18px 80px}
+
 h1{
   font-family:var(--font-display);
-  font-size:32px;text-align:center;margin-bottom:20px;
+  text-align:center;
+  font-size:clamp(24px,3.2vw,34px);
+  color:#6f4a59; margin:10px 0 6px;
 }
+.subtitle{ text-align:center; color:var(--muted); margin-bottom:16px}
+
+/* card */
+.card{
+  background:var(--panel);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:0 10px 26px rgba(0,0,0,.08);
+  margin-bottom:18px;
+  opacity:0; transform:translateY(16px);
+  transition:opacity .45s ease, transform .45s ease;
+}
+.card.show{opacity:1; transform:none}
 
 label{
+  display:block;
   font-family:var(--font-serif);
-  font-size:20px;margin-bottom:6px;display:block;
+  font-size:18px;
+  margin-bottom:8px;
+  color:#6f4a59;
 }
 textarea{
-  width:100%;height:90px;font-family:var(--font-sans);
-  margin-bottom:18px;padding:14px;border-radius:10px;
-  border:1px solid #d3b3c4;font-size:16px
+  width:100%; min-height:110px; resize:vertical;
+  padding:12px; border-radius:12px;
+  border:1px solid #d7bdc8; background:#fff;
+  font-family:var(--font-sans); font-size:16px;
 }
 
-button{
-  display:block;margin:10px auto;padding:12px 30px;
-  font-size:18px;background:var(--rose);color:#fff;
-  border:none;border-radius:30px;cursor:pointer;transition:.3s;
+/* buttons */
+.actions{ display:flex; gap:10px; justify-content:center; margin-top:16px }
+.btn{
+  display:inline-block; padding:12px 22px; border-radius:999px;
+  background:var(--rose); color:#fff; border:0;
+  font-weight:600; cursor:pointer; transition:.25s ease;
+  text-decoration:none;
 }
-button:hover{transform:scale(1.04)}
+.btn:hover{ transform:translateY(-1px) }
+
+/* progress */
+.progress{ text-align:center; color:#8a7680; margin:8px 0 18px }
+
+/* floating petals */
+.petal{
+  position:fixed; width:9px; height:9px; border-radius:50%;
+  background:rgba(196,154,166,.30); filter:blur(.6px);
+  pointer-events:none; animation:fall linear infinite;
+  z-index:0;
+}
+@keyframes fall{
+  from{ transform:translateY(-10px) translateX(0) rotate(0deg); opacity:.85}
+  to{   transform:translateY(110vh) translateX(20px) rotate(90deg); opacity:.25}
+}
+
 </style>
 </head>
-
 <body>
 
-<div class="container">
-<h1>Ответьте на вопросы 💌</h1>
+<div class="wrap">
+  <h1>Ваша история любви</h1>
+  <div class="subtitle">Ответьте на несколько вопросов — мы бережно соберём из этого книгу</div>
+  <div class="progress" id="progress">Вопрос 1 из 5</div>
 
-<form>
-<label>1. Где вы впервые встретились?</label>
-<textarea></textarea>
+  <div id="qroot"></div>
 
-<label>2. Что вы почувствовали в тот момент?</label>
-<textarea></textarea>
-
-<label>3. Кто сделал первый шаг?</label>
-<textarea></textarea>
-
-<label>4. Что вы особенно запомнили?</label>
-<textarea></textarea>
-
-<label>5. Что вы подумали, уходя после первой встречи?</label>
-<textarea></textarea>
-
-<button type="submit">Продолжить</button>
-</form>
+  <div class="actions">
+    <a class="btn" href="index.html">На главную</a>
+  </div>
 </div>
+
+<script>
+// ----- QUESTIONS (первые 5 как демо)
+const questions = [
+  "Где вы впервые встретились?",
+  "Что вы подумали при первой встрече?",
+  "Кто сделал первый шаг?",
+  "Что больше всего запомнилось в тот день?",
+  "Каким было первое сообщение или разговор?"
+];
+
+const root=document.getElementById('qroot');
+const progress=document.getElementById('progress');
+
+function card(q,i){
+  const el=document.createElement('div');
+  el.className='card';
+  el.innerHTML = `
+    <label>${i+1}. ${q}</label>
+    <textarea oninput="localStorage.setItem('ans_${i}', this.value)">${localStorage.getItem('ans_'+i)||''}</textarea>
+  `;
+  root.appendChild(el);
+  setTimeout(()=>el.classList.add('show'), 40 + i*60);
+}
+
+questions.forEach((q,i)=>card(q,i));
+progress.textContent = `Вопрос 1 из ${questions.length}`;
+
+// ----- floating petals -----
+function spawnPetal(){
+  const p=document.createElement('div');
+  p.className='petal';
+  p.style.left=(Math.random()*100)+'vw';
+  p.style.animationDuration=(8+Math.random()*10)+'s';
+  p.style.animationDelay=(Math.random()*4)+'s';
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(), 16000);
+}
+for(let i=0;i<10;i++) spawnPetal();
+setInterval(spawnPetal, 2000);
+</script>
 
 </body>
 </html>
-
