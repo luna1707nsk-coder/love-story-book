@@ -3,197 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Вопросы — История, написанная сердцем</title>
+<title>Вопросы</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-body {
-  font-family: var(--font-sans);
-  color: var(--ink);
+:root{
+  --font-display:"Bodoni Moda", serif;
+  --font-serif:"Cormorant Garamond", serif;
+  --font-sans:"Mulish", sans-serif;
+  --rose:#b47c8b;
+  --panel:rgba(255,255,255,.9);
 }
 
-h1, h2, h3, .chapter-title {
-  font-family: var(--font-display);
-  font-weight: 600;
-}
-
-.question-label {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
-
-.wrap { max-width:800px; margin:0 auto; padding:28px 20px; }
-
-h1 {
-  font-family:"Playfair Display", serif;
-  font-size:36px;
-  text-align:center;
-  color:#7a4b63;
-  margin-bottom:10px;
-}
-
-.progress {
-  text-align:center;
-  margin-bottom:20px;
-  font-size:18px;
-  opacity:.8;
-}
-
-.card {
-  background:rgba(255,255,255,.7);
+/* BACKGROUND */
+body{
+  margin:0;
+  background:url("assets/butterflies.jpg") center/cover fixed;
   backdrop-filter:blur(6px);
-  border-radius:14px;
-  box-shadow:0 4px 16px rgba(177,156,166,.18);
-  padding:24px;
-  margin-bottom:22px;
-  opacity:0;
-  transform:translateY(18px);
-  transition:.45s ease;
+  padding:30px;
+  font-family:var(--font-sans);
 }
 
-.card.show {
-  opacity:1;
-  transform:none;
+/* CARD */
+.container{
+  max-width:800px;margin:auto;
+  background:var(--panel);border-radius:20px;padding:30px;
+}
+h1{
+  font-family:var(--font-display);
+  font-size:32px;text-align:center;margin-bottom:20px;
 }
 
-label {
-  display:block;
-  font-weight:600;
-  margin-bottom:8px;
-  font-size:18px;
-  color:#6e4a58;
+label{
+  font-family:var(--font-serif);
+  font-size:20px;margin-bottom:6px;display:block;
+}
+textarea{
+  width:100%;height:90px;font-family:var(--font-sans);
+  margin-bottom:18px;padding:14px;border-radius:10px;
+  border:1px solid #d3b3c4;font-size:16px
 }
 
-textarea {
-  width:100%;
-  height:120px;
-  border:1px solid rgba(0,0,0,.1);
-  border-radius:8px;
-  padding:12px;
-  font-family:inherit;
-  resize:none;
-  font-size:15px;
+button{
+  display:block;margin:10px auto;padding:12px 30px;
+  font-size:18px;background:var(--rose);color:#fff;
+  border:none;border-radius:30px;cursor:pointer;transition:.3s;
 }
-
-.btn {
-  display:inline-block;
-  padding:14px 24px;
-  background:#c49aa6;
-  color:#fff;
-  border-radius:40px;
-  text-decoration:none;
-  font-weight:600;
-  border:none;
-  cursor:pointer;
-  margin-top:8px;
-  transition:.25s;
-}
-.btn:hover {
-  background:#ab7c8b;
-}
-
-.paywall {
-  text-align:center;
-  padding:40px 30px;
-  background:#fff3f7;
-  border-radius:18px;
-  box-shadow:0 8px 20px rgba(0,0,0,.12);
-  border:1px solid rgba(0,0,0,.06);
-}
-
-/* fade */
-.fade { animation:fade .7s ease forwards; }
-@keyframes fade { from {opacity:0;} to {opacity:1;} }
+button:hover{transform:scale(1.04)}
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
-  <h1>Ваша история любви</h1>
-  <div class="progress" id="progress">Вопрос 1 из 100</div>
+<div class="container">
+<h1>Ответьте на вопросы 💌</h1>
 
-  <div id="questions-container"></div>
+<form>
+<label>1. Где вы впервые встретились?</label>
+<textarea></textarea>
+
+<label>2. Что вы почувствовали в тот момент?</label>
+<textarea></textarea>
+
+<label>3. Кто сделал первый шаг?</label>
+<textarea></textarea>
+
+<label>4. Что вы особенно запомнили?</label>
+<textarea></textarea>
+
+<label>5. Что вы подумали, уходя после первой встречи?</label>
+<textarea></textarea>
+
+<button type="submit">Продолжить</button>
+</form>
 </div>
-
-<script>
-const questions = [
-"Где вы впервые встретились?",
-"Что вы подумали при первой встрече?",
-"Кто сделал первый шаг?",
-"Что больше всего запомнилось в тот день?",
-"Каким было первое сообщение/разговор?",
-
-"Что вы чувствовали перед первым свиданием?",
-"Кто выбирал место?",
-"... остальные 94 вопроса потом добавим ..."
-];
-
-let answered = 0;
-const freeLimit = 5;
-const container = document.getElementById("questions-container");
-
-function renderQuestion(i){
-  const card = document.createElement("div");
-  card.className = "card";
-  card.innerHTML = `
-    <label>${questions[i]}</label>
-    <textarea oninput="saveAnswer(${i}, this.value)">${loadAnswer(i)}</textarea>
-  `;
-  container.appendChild(card);
-  setTimeout(()=>card.classList.add("show"),50);
-}
-
-function saveAnswer(i, val){
-  localStorage.setItem("answer_"+i, val);
-  answered = i+1;
-  updateProgress();
-  if(answered === freeLimit){
-    setTimeout(showPaywall,800);
-  }
-}
-
-function loadAnswer(i){
-  return localStorage.getItem("answer_"+i) || "";
-}
-
-function updateProgress(){
-  document.getElementById("progress").textContent =
-    `Вопрос ${Math.min(answered+1,100)} из 100`;
-}
-
-// show first 5
-for(let i=0;i<freeLimit;i++){
-  renderQuestion(i);
-}
-
-function showPaywall(){
-  container.innerHTML += `
-    <div class="paywall fade">
-      <h2 style="font-family:'Playfair Display';color:#7a4b63;margin-bottom:12px">
-      Продолжить историю?</h2>
-      <p style="opacity:.85;margin-bottom:20px">
-        Вы ответили на первые 5 вопросов 💕<br>
-        Чтобы открыть все 100 — оформите доступ.
-      </p>
-
-      <button class="btn" onclick="pay()">Разблокировать 💗</button>
-      <div style="margin-top:10px;font-size:14px;opacity:.7">
-        Оплата через Telegram
-      </div>
-    </div>
-  `;
-}
-
-function pay(){
-  window.location.href = "https://t.me/YOUR_BOT_NAME"; // вставим твой бот позже
-}
-
-updateProgress();
-</script>
 
 </body>
 </html>
+
