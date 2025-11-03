@@ -5,16 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>История, написанная сердцем</title>
 
-<!-- Luxury Wedding Fonts -->
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
- --plum: #402732;
- --milk: #fffaf5;
- --gold: linear-gradient(90deg,#c6a678,#f5e7c6,#d3b27c);
- --rose: #b87fa3;
- --rose2: #d8b4c6;
+ --velvet:#3a1f2d; /* глубокий винный бархат */
+ --milk:#fffaf5;
+ --rose:#cda3b7;
+ --rose2:#b37a91;
 }
 
 /* Reset */
@@ -22,26 +21,26 @@
 body{
  font-family:"Cormorant Garamond",serif;
  background:#fffaf5;
- color:var(--plum);
+ color:var(--velvet);
  overflow-x:hidden;
 }
 
-/* Backgrounds (no blur) */
+/* Background layers (no blur) */
 .bg{
- position:fixed;inset:0;z-index:-2;
+ position:fixed;inset:0;z-index:-3;
  background-size:cover;background-position:center;
- opacity:0;transition:opacity 4s ease;
+ opacity:0;transition:opacity 1.8s ease;
 }
-.bg.show{opacity:1}
 .bg1{background-image:url("assets/background1.jpg")}
 .bg2{background-image:url("assets/background2.jpg")}
+.bg.show{opacity:1}
 
-/* Sparkles */
+/* Silver Star Sparkles */
 .spark{
  position:fixed;width:4px;height:4px;border-radius:50%;
- background:radial-gradient(circle,#fff,rgba(255,255,255,.05));
- animation:fall 5s infinite ease-in-out;
- opacity:.8;pointer-events:none;z-index:5;
+ background:radial-gradient(circle,#fff,rgba(255,255,255,.1));
+ animation:fall 5.5s infinite ease-in-out;
+ opacity:.75;pointer-events:none;z-index:5;
 }
 @keyframes fall{
  0%{transform:translateY(-10vh) scale(.4);opacity:0}
@@ -49,65 +48,66 @@ body{
  100%{transform:translateY(110vh) scale(1);opacity:0}
 }
 
-/* Menu */
+/* Navbar */
 nav{
- position:fixed;top:0;left:0;width:100%;
- padding:18px 35px;z-index:10;
+ position:fixed;top:0;left:0;width:100%;z-index:10;
+ padding:16px 30px;
  background:rgba(255,250,245,.7);
  backdrop-filter:saturate(140%) blur(10px);
- border-bottom:1px solid rgba(255,255,255,.6);
- display:flex;justify-content:center;gap:32px;
- font-size:20px;font-weight:500;
+ border-bottom:1px solid rgba(120,85,100,.15);
+ display:flex;justify-content:center;gap:28px;
+ font-size:19px;font-weight:600;
 }
 nav a{
- text-decoration:none;color:var(--plum);
- position:relative;padding-bottom:4px;
+ text-decoration:none;color:var(--velvet);
+ padding-bottom:3px;position:relative;
 }
 nav a:after{
  content:"";position:absolute;left:0;bottom:0;width:0;height:2px;
- background:var(--gold);transition:.4s;
+ background:linear-gradient(90deg,#c8b07a,#f6e8c6,#d2b37d);
+ transition:.4s;
 }
 nav a:hover:after{width:100%}
 
-/* Flourish line */
-.line{
- width:100%;text-align:center;margin:18px 0;
-}
-.line img{
- width:160px;opacity:.7;
-}
-
 /* Hero */
-.hero{
- padding-top:140px;padding-bottom:100px;
- text-align:center;
-}
+.hero{padding-top:140px;padding-bottom:120px;text-align:center}
 .hero-card{
- background:rgba(255,255,255,.82);
- border:1px solid rgba(255,255,255,.9);
+ background:rgba(255,255,255,.85);
+ border:1px solid rgba(255,255,255,.8);
  border-radius:26px;
  padding:70px 36px;max-width:900px;margin:auto;
  box-shadow:0 18px 45px rgba(0,0,0,.12);
 }
-h1{
+
+/* DIOR Velvet Gold Text */
+h1,h2{
  font-family:"Bodoni Moda",serif;
- font-size:54px;margin-bottom:12px;
- background:var(--gold);-webkit-background-clip:text;color:transparent;
- animation:shine 7s ease-in-out infinite;
+ background:linear-gradient(90deg,#4b2d3b,#7a5365,#c6a678,#7a5365,#4b2d3b);
+ -webkit-background-clip:text;color:transparent;
+ animation:goldGlow 9s infinite ease-in-out;
+ letter-spacing:.5px;
+ text-shadow:0 2px 5px rgba(255,255,255,0.4);
 }
-@keyframes shine{
- 0%{filter:brightness(1)}
- 50%{filter:brightness(1.3)}
- 100%{filter:brightness(1)}
+h1{font-size:54px;margin-bottom:12px}
+h2{font-size:42px;margin-bottom:8px;text-align:center}
+
+@keyframes goldGlow{
+ 0%{filter:brightness(.9)}
+ 50%{filter:brightness(1.25)}
+ 100%{filter:brightness(.9)}
 }
-.sub{font-size:24px;margin-bottom:28px;opacity:.85}
+
+.sub{
+ font-size:23px;margin-bottom:30px;opacity:.88;
+ color:#5c4252;
+}
 
 /* Button */
 .btn{
  background:linear-gradient(130deg,var(--rose),var(--rose2));
  border:none;padding:16px 42px;border-radius:50px;
- font-size:22px;font-weight:600;color:white;
- box-shadow:0 10px 28px rgba(0,0,0,.18);cursor:pointer;
+ font-size:22px;font-weight:600;color:white;cursor:pointer;
+ box-shadow:0 10px 28px rgba(0,0,0,.18);
  transition:.25s;
 }
 .btn:hover{transform:translateY(-4px);opacity:.92}
@@ -116,23 +116,16 @@ h1{
 section{padding:90px 22px}
 .wrap{max-width:1100px;margin:auto}
 
-h2{
- font-family:"Bodoni Moda",serif;
- font-size:42px;text-align:center;margin-bottom:8px;
- background:var(--gold);-webkit-background-clip:text;color:transparent;
- animation:shine 7s infinite;
-}
 .hr{
- width:200px;height:2px;margin:10px auto 36px;
- background:var(--gold);
+ width:200px;height:2px;margin:12px auto 36px;
+ background:linear-gradient(90deg,#c6a678,#eddcb8,#d2b37d);
 }
 
-/* Card */
+/* Cards */
 .card{
- background:rgba(255,255,255,.82);
- border:1px solid rgba(255,255,255,.92);
- border-radius:22px;
- padding:30px;
+ background:rgba(255,255,255,.83);
+ border:1px solid rgba(255,255,255,.9);
+ border-radius:22px;padding:30px;
  font-size:22px;line-height:1.55;
  box-shadow:0 10px 35px rgba(0,0,0,.1);
 }
@@ -147,12 +140,29 @@ footer{text-align:center;padding:32px;font-size:19px;color:#6c4d60}
 
 <body>
 
+<!-- Backgrounds -->
 <div class="bg bg1 show"></div>
 <div class="bg bg2"></div>
 
 <script>
-let bgs=document.querySelectorAll('.bg');let i=0;
-setInterval(()=>{bgs[i].classList.remove('show');i=(i+1)%bgs.length;bgs[i].classList.add('show')},9000);
+// Scroll-change background
+let bgIndex = 0;
+const bgs = [document.querySelector('.bg1'), document.querySelector('.bg2')];
+window.addEventListener('scroll', () => {
+  let pos = window.scrollY;
+  let viewport = window.innerHeight * 0.7;
+  if(pos > viewport && bgIndex === 0){
+    bgs[0].classList.remove('show');
+    bgs[1].classList.add('show');
+    bgIndex = 1;
+  } else if(pos <= viewport && bgIndex === 1){
+    bgs[1].classList.remove('show');
+    bgs[0].classList.add('show');
+    bgIndex = 0;
+  }
+});
+
+// sparkles
 for(let x=0;x<55;x++){
  let s=document.createElement('div');s.className="spark";
  s.style.left=Math.random()*100+"vw";
@@ -180,8 +190,8 @@ for(let x=0;x<55;x++){
 <section id="about">
 <h2>О проекте</h2><div class="hr"></div>
 <div class="wrap grid2">
- <div class="card">Создаю уникальные love-story книги, как свадебные журналы премиум-класса.</div>
- <div class="card">Добавлю ваши фотографии. Каждая история проходит ручную литературную обработку.</div>
+ <div class="card">Создаю love-story книги в стиле Dior Bridal — эстетично и чувственно.</div>
+ <div class="card">По желанию добавим ваши фотографии и персональные акценты.</div>
 </div>
 </section>
 
@@ -189,18 +199,18 @@ for(let x=0;x<55;x++){
 <h2>Процесс</h2><div class="hr"></div>
 <div class="wrap grid2">
  <div class="card">1) 5 бесплатных вопросов</div>
- <div class="card">2) Оплата — и открываются все 100</div>
- <div class="card">3) Вы отвечаете в удобном темпе</div>
- <div class="card">4) Получаете книгу</div>
+ <div class="card">2) Открываются все 100 после оплаты</div>
+ <div class="card">3) Вы отвечаете в своём темпе</div>
+ <div class="card">4) Получаете премиум-книгу</div>
 </div>
 </section>
 
 <section id="examples">
-<h2>Примеры книг</h2><div class="hr"></div>
+<h2>Примеры</h2><div class="hr"></div>
 <div class="wrap grid3">
- <div class="card">💍 Пример макета 1</div>
- <div class="card">📖 Пример макета 2</div>
- <div class="card">💌 Пример макета 3</div>
+ <div class="card">💍 Макет книги 1</div>
+ <div class="card">📖 Макет книги 2</div>
+ <div class="card">💌 Макет книги 3</div>
 </div>
 </section>
 
@@ -208,17 +218,16 @@ for(let x=0;x<55;x++){
 <h2>Тарифы</h2><div class="hr"></div>
 <div class="wrap grid3">
  <div class="card">Basic — 990₽<br>Цифровая версия</div>
- <div class="card">Standard — позже<br>Печать + оформление</div>
+ <div class="card">Standard — скоро<br>Печать + упаковка</div>
  <div class="card">Premium — позже<br>Подарочный набор</div>
 </div>
 </section>
 
 <section id="faq">
 <h2>FAQ</h2><div class="hr"></div>
-<div class="wrap">
+<div class="wrap grid2">
  <div class="card">Можно добавить фото? — Да</div>
- <div class="card">Как быстро? — 3–7 дней</div>
- <div class="card">Доступ навсегда? — Да</div>
+ <div class="card">Сколько делается? — 3–7 дней</div>
 </div>
 </section>
 
