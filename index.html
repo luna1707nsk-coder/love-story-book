@@ -1,243 +1,336 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>История, написанная сердцем</title>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Шрифты luxury -->
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
 <style>
 :root{
- --velvet:#3a1f2d; /* глубокий винный бархат */
- --milk:#fffaf5;
- --rose:#cda3b7;
- --rose2:#b37a91;
+  --velvet:#3a1f2d;         /* бархатный винный */
+  --ink:#4a2f3d;            /* основной текст */
+  --milk:#fffaf5;           /* молочный фон */
+  --rose:#cda3b7;           /* градиент кнопок */
+  --rose2:#b37a91;
+  --gold1:#4b2d3b;          /* нижний слой шимер-градиента */
+  --gold2:#7a5365;
+  --gold3:#c6a678;          /* блик */
+  --gold4:#7a5365;
+  --gold5:#4b2d3b;
+  --card: rgba(255,255,255,.86);
+  --card-border: rgba(255,255,255,.92);
 }
 
-/* Reset */
-*{margin:0;padding:0;box-sizing:border-box}
+/* Reset / base */
+*{box-sizing:border-box}
+html,body{margin:0}
 body{
- font-family:"Cormorant Garamond",serif;
- background:#fffaf5;
- color:var(--velvet);
- overflow-x:hidden;
+  font-family:"Cormorant Garamond",serif;
+  background:var(--milk);
+  color:var(--ink);
+  overflow-x:hidden;
 }
 
-/* Background layers (no blur) */
+/* ===== Backgrounds (no blur) ===== */
 .bg{
- position:fixed;inset:0;z-index:-3;
- background-size:cover;background-position:center;
- opacity:0;transition:opacity 1.8s ease;
+  position:fixed; inset:0; z-index:-3;
+  background-size:cover; background-position:center;
+  opacity:0; transition:opacity 1.6s ease;
 }
-.bg1{background-image:url("assets/background1.jpg")}
-.bg2{background-image:url("assets/background2.jpg")}
-.bg.show{opacity:1}
+.bg1{ background-image:url("assets/background1.jpg"); }
+.bg2{ background-image:url("assets/background2.jpg"); }
+.bg.show{ opacity:1; }
 
-/* Silver Star Sparkles */
+/* ===== Silver sparkles ===== */
 .spark{
- position:fixed;width:4px;height:4px;border-radius:50%;
- background:radial-gradient(circle,#fff,rgba(255,255,255,.1));
- animation:fall 5.5s infinite ease-in-out;
- opacity:.75;pointer-events:none;z-index:5;
+  position:fixed; z-index:0;
+  width:4px; height:4px; border-radius:50%;
+  background:radial-gradient(circle,#fff,rgba(255,255,255,.08));
+  animation:spFall 5.6s infinite ease-in-out;
+  opacity:.75; pointer-events:none;
 }
-@keyframes fall{
- 0%{transform:translateY(-10vh) scale(.4);opacity:0}
- 50%{opacity:1}
- 100%{transform:translateY(110vh) scale(1);opacity:0}
+@keyframes spFall{
+  0%{ transform:translateY(-10vh) scale(.4); opacity:0; }
+  50%{ opacity:1; }
+  100%{ transform:translateY(110vh) scale(1); opacity:0; }
 }
 
-/* Navbar */
-nav{
- position:fixed;top:0;left:0;width:100%;z-index:10;
- padding:16px 30px;
- background:rgba(255,250,245,.7);
- backdrop-filter:saturate(140%) blur(10px);
- border-bottom:1px solid rgba(120,85,100,.15);
- display:flex;justify-content:center;gap:28px;
- font-size:19px;font-weight:600;
+/* ===== Desktop NAV ===== */
+nav.top{
+  position:fixed; top:0; left:0; right:0; z-index:10;
+  display:flex; justify-content:center; gap:32px;
+  padding:16px 28px;
+  background:rgba(255,250,245,.72);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid rgba(120,85,100,.15);
 }
-nav a{
- text-decoration:none;color:var(--velvet);
- padding-bottom:3px;position:relative;
+nav.top a{
+  text-decoration:none; color:var(--velvet);
+  font-weight:600; font-size:18px; padding-bottom:4px; position:relative;
 }
-nav a:after{
- content:"";position:absolute;left:0;bottom:0;width:0;height:2px;
- background:linear-gradient(90deg,#c8b07a,#f6e8c6,#d2b37d);
- transition:.4s;
+nav.top a::after{
+  content:""; position:absolute; left:0; bottom:0; width:0; height:2px;
+  background:linear-gradient(90deg,#c6a678,#eddcb8,#d2b37d);
+  transition:.35s;
 }
-nav a:hover:after{width:100%}
+nav.top a:hover::after{ width:100%; }
 
-/* Hero */
-.hero{padding-top:140px;padding-bottom:120px;text-align:center}
+/* ===== Mobile bottom bar (вариант B) ===== */
+nav.bottom{
+  position:fixed; left:12px; right:12px; bottom:12px; z-index:12;
+  display:none; /* включаем на мобилках */
+  background:rgba(255,255,255,.88);
+  border:1px solid var(--card-border);
+  border-radius:999px;
+  box-shadow:0 10px 28px rgba(0,0,0,.15);
+  padding:10px;
+}
+.bottom .row{
+  display:flex; align-items:center; justify-content:space-around; gap:6px;
+}
+.bottom a{
+  flex:1; text-align:center; text-decoration:none; color:var(--velvet);
+  font-weight:600; font-size:13px; line-height:1; padding:8px 6px; border-radius:999px;
+}
+.bottom a.cta{
+  background:linear-gradient(130deg,var(--rose),var(--rose2));
+  color:#fff; font-weight:700;
+}
+
+/* ===== Hero ===== */
+.hero{ padding: clamp(100px, 16vw, 160px) 18px 90px; text-align:center; }
 .hero-card{
- background:rgba(255,255,255,.85);
- border:1px solid rgba(255,255,255,.8);
- border-radius:26px;
- padding:70px 36px;max-width:900px;margin:auto;
- box-shadow:0 18px 45px rgba(0,0,0,.12);
+  max-width: 980px; margin: 0 auto;
+  background: var(--card);
+  border:1px solid var(--card-border);
+  border-radius: clamp(18px, 3vw, 26px);
+  padding: clamp(36px, 5vw, 70px) clamp(20px, 5vw, 40px);
+  box-shadow: 0 18px 45px rgba(0,0,0,.12);
 }
 
-/* DIOR Velvet Gold Text */
+/* Dior Gold Velvet headings — читаемые на светлом фоне */
 h1,h2{
- font-family:"Bodoni Moda",serif;
- background:linear-gradient(90deg,#4b2d3b,#7a5365,#c6a678,#7a5365,#4b2d3b);
- -webkit-background-clip:text;color:transparent;
- animation:goldGlow 9s infinite ease-in-out;
- letter-spacing:.5px;
- text-shadow:0 2px 5px rgba(255,255,255,0.4);
+  font-family:"Bodoni Moda",serif;
+  background:linear-gradient(90deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4),var(--gold5));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:goldGlow 9s ease-in-out infinite;
+  letter-spacing:.4px;
+  /* тонкий внутренний бархатный контур для читабельности */
+  text-shadow: 0 0 0 rgba(0,0,0,0), 0 0 1px rgba(58,31,45,.15);
 }
-h1{font-size:54px;margin-bottom:12px}
-h2{font-size:42px;margin-bottom:8px;text-align:center}
+h1{ font-size: clamp(34px, 7vw, 54px); margin: 0 0 12px; }
+h2{ font-size: clamp(26px, 5.2vw, 42px); margin: 0 0 8px; text-align:center; }
 
 @keyframes goldGlow{
- 0%{filter:brightness(.9)}
- 50%{filter:brightness(1.25)}
- 100%{filter:brightness(.9)}
+  0%{ filter:brightness(.92); }
+  50%{ filter:brightness(1.2); }
+  100%{ filter:brightness(.92); }
 }
 
 .sub{
- font-size:23px;margin-bottom:30px;opacity:.88;
- color:#5c4252;
+  font-size: clamp(16px, 2.6vw, 23px);
+  color:#5c4252; opacity:.9; margin: 0 0 28px;
 }
 
-/* Button */
+/* Buttons */
 .btn{
- background:linear-gradient(130deg,var(--rose),var(--rose2));
- border:none;padding:16px 42px;border-radius:50px;
- font-size:22px;font-weight:600;color:white;cursor:pointer;
- box-shadow:0 10px 28px rgba(0,0,0,.18);
- transition:.25s;
+  appearance:none; border:none; cursor:pointer;
+  font-weight:700; color:#fff; font-size: clamp(16px, 2.4vw, 20px);
+  padding: 14px 30px; border-radius:999px;
+  background:linear-gradient(130deg,var(--rose),var(--rose2));
+  box-shadow:0 10px 28px rgba(0,0,0,.18); transition:.25s;
 }
-.btn:hover{transform:translateY(-4px);opacity:.92}
+.btn:hover{ transform:translateY(-3px); opacity:.95 }
 
-/* Sections */
-section{padding:90px 22px}
-.wrap{max-width:1100px;margin:auto}
-
+/* Sections & cards */
+section{ padding: clamp(60px, 10vw, 90px) 18px; }
+.wrap{ max-width:1100px; margin:0 auto; }
 .hr{
- width:200px;height:2px;margin:12px auto 36px;
- background:linear-gradient(90deg,#c6a678,#eddcb8,#d2b37d);
+  width: clamp(120px, 22vw, 200px); height:2px; margin: 10px auto 32px;
+  background:linear-gradient(90deg,#c6a678,#eddcb8,#d2b37d);
 }
 
-/* Cards */
 .card{
- background:rgba(255,255,255,.83);
- border:1px solid rgba(255,255,255,.9);
- border-radius:22px;padding:30px;
- font-size:22px;line-height:1.55;
- box-shadow:0 10px 35px rgba(0,0,0,.1);
+  background: var(--card);
+  border:1px solid var(--card-border);
+  border-radius: clamp(16px, 2.6vw, 22px);
+  padding: clamp(18px, 2.8vw, 30px);
+  font-size: clamp(16px, 2.4vw, 20px);
+  line-height: 1.55;
+  box-shadow: 0 10px 35px rgba(0,0,0,.1);
 }
 
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr}}
+/* Grids */
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap: clamp(14px, 2.2vw, 22px); }
+.grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap: clamp(14px, 2.2vw, 22px); }
 
-footer{text-align:center;padding:32px;font-size:19px;color:#6c4d60}
+/* Footer */
+footer{ text-align:center; padding: 28px; font-size: 16px; color:#6c4d60 }
+
+/* ===== Responsive breakpoints ===== */
+@media (max-width: 1024px){
+  nav.top{ gap:22px; }
+}
+
+@media (max-width: 820px){
+  nav.top{ display:none; }
+  nav.bottom{ display:block; }
+  .grid3{ grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px){
+  .grid2,.grid3{ grid-template-columns: 1fr; }
+  .hero{ padding-bottom: 70px; }
+  .btn{ padding: 14px 22px; }
+}
+
+@media (min-width: 1400px){
+  .wrap{ max-width: 1220px; }
+  .hero-card{ max-width: 1040px; }
+}
 </style>
 </head>
 
 <body>
 
-<!-- Backgrounds -->
+<!-- Backgrounds (две картинки без blur, переключение при скролле) -->
 <div class="bg bg1 show"></div>
 <div class="bg bg2"></div>
 
 <script>
-// Scroll-change background
+/* Scroll-switch backgrounds (B) */
 let bgIndex = 0;
-const bgs = [document.querySelector('.bg1'), document.querySelector('.bg2')];
-window.addEventListener('scroll', () => {
-  let pos = window.scrollY;
-  let viewport = window.innerHeight * 0.7;
-  if(pos > viewport && bgIndex === 0){
-    bgs[0].classList.remove('show');
-    bgs[1].classList.add('show');
-    bgIndex = 1;
-  } else if(pos <= viewport && bgIndex === 1){
-    bgs[1].classList.remove('show');
-    bgs[0].classList.add('show');
-    bgIndex = 0;
+const bgA = document.querySelector('.bg1');
+const bgB = document.querySelector('.bg2');
+function updateBG(){
+  const threshold = window.innerHeight * 0.7;
+  if (window.scrollY > threshold && bgIndex === 0){
+    bgA.classList.remove('show'); bgB.classList.add('show'); bgIndex = 1;
+  } else if (window.scrollY <= threshold && bgIndex === 1){
+    bgB.classList.remove('show'); bgA.classList.add('show'); bgIndex = 0;
   }
-});
+}
+window.addEventListener('scroll', updateBG);
+updateBG();
 
-// sparkles
-for(let x=0;x<55;x++){
- let s=document.createElement('div');s.className="spark";
- s.style.left=Math.random()*100+"vw";
- s.style.animationDelay=Math.random()*5+"s";
- document.body.appendChild(s);
+/* silver sparkles */
+for(let i=0;i<60;i++){
+  const s=document.createElement('div');
+  s.className='spark';
+  s.style.left=Math.random()*100+'vw';
+  s.style.animationDelay=(Math.random()*5)+'s';
+  document.body.appendChild(s);
 }
 </script>
 
-<nav>
- <a href="#about">О проекте</a>
- <a href="#process">Процесс</a>
- <a href="#examples">Примеры</a>
- <a href="#pricing">Тарифы</a>
- <a href="#faq">FAQ</a>
+<!-- Desktop NAV -->
+<nav class="top">
+  <a href="#about">О проекте</a>
+  <a href="#process">Процесс</a>
+  <a href="#examples">Примеры</a>
+  <a href="#pricing">Тарифы</a>
+  <a href="#faq">FAQ</a>
 </nav>
 
-<header class="hero">
- <div class="hero-card">
-  <h1>История, написанная сердцем</h1>
-  <p class="sub">100 вопросов, создающих вечную книгу любви</p>
-  <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
- </div>
+<!-- Hero -->
+<header class="hero" id="home">
+  <div class="hero-card">
+    <h1>История, написанная сердцем</h1>
+    <p class="sub">100 вопросов, создающих вечную книгу любви</p>
+    <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
+  </div>
 </header>
 
+<!-- About -->
 <section id="about">
-<h2>О проекте</h2><div class="hr"></div>
-<div class="wrap grid2">
- <div class="card">Создаю love-story книги в стиле Dior Bridal — эстетично и чувственно.</div>
- <div class="card">По желанию добавим ваши фотографии и персональные акценты.</div>
-</div>
+  <div class="wrap">
+    <h2>О проекте</h2>
+    <div class="hr"></div>
+    <div class="grid2">
+      <div class="card">
+        Создаю love-story книги в стиле Dior Bridal — эстетично, чувственно, навсегда.
+      </div>
+      <div class="card">
+        По желанию добавлю ваши фотографии, аккуратную редактуру и премиальную верстку.
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- Process -->
 <section id="process">
-<h2>Процесс</h2><div class="hr"></div>
-<div class="wrap grid2">
- <div class="card">1) 5 бесплатных вопросов</div>
- <div class="card">2) Открываются все 100 после оплаты</div>
- <div class="card">3) Вы отвечаете в своём темпе</div>
- <div class="card">4) Получаете премиум-книгу</div>
-</div>
+  <div class="wrap">
+    <h2>Процесс</h2>
+    <div class="hr"></div>
+    <div class="grid2">
+      <div class="card">1) 5 бесплатных вопросов</div>
+      <div class="card">2) Оплата — открываются все 100</div>
+      <div class="card">3) Отвечаете в своём темпе</div>
+      <div class="card">4) Получаете премиум-книгу</div>
+    </div>
+  </div>
 </section>
 
+<!-- Examples -->
 <section id="examples">
-<h2>Примеры</h2><div class="hr"></div>
-<div class="wrap grid3">
- <div class="card">💍 Макет книги 1</div>
- <div class="card">📖 Макет книги 2</div>
- <div class="card">💌 Макет книги 3</div>
-</div>
+  <div class="wrap">
+    <h2>Примеры книг</h2>
+    <div class="hr"></div>
+    <div class="grid3">
+      <div class="card">💍 Макет книги 1</div>
+      <div class="card">📖 Макет книги 2</div>
+      <div class="card">💌 Макет книги 3</div>
+    </div>
+  </div>
 </section>
 
+<!-- Pricing -->
 <section id="pricing">
-<h2>Тарифы</h2><div class="hr"></div>
-<div class="wrap grid3">
- <div class="card">Basic — 990₽<br>Цифровая версия</div>
- <div class="card">Standard — скоро<br>Печать + упаковка</div>
- <div class="card">Premium — позже<br>Подарочный набор</div>
-</div>
+  <div class="wrap">
+    <h2>Тарифы</h2>
+    <div class="hr"></div>
+    <div class="grid3">
+      <div class="card"><strong>Basic — 990₽</strong><br/>Цифровая версия</div>
+      <div class="card"><strong>Standard — позже</strong><br/>Печать + оформление</div>
+      <div class="card"><strong>Premium — позже</strong><br/>Подарочный набор</div>
+    </div>
+  </div>
 </section>
 
+<!-- FAQ -->
 <section id="faq">
-<h2>FAQ</h2><div class="hr"></div>
-<div class="wrap grid2">
- <div class="card">Можно добавить фото? — Да</div>
- <div class="card">Сколько делается? — 3–7 дней</div>
-</div>
+  <div class="wrap">
+    <h2>FAQ</h2>
+    <div class="hr"></div>
+    <div class="grid2">
+      <div class="card">Можно добавить фото? — Да</div>
+      <div class="card">Срок изготовления? — 3–7 дней</div>
+    </div>
+  </div>
 </section>
 
+<!-- Final CTA -->
 <section>
-<div class="wrap" style="text-align:center">
- <button class="btn" onclick="location.href='questions.html'">Создать книгу 💫</button>
-</div>
+  <div class="wrap" style="text-align:center">
+    <button class="btn" onclick="location.href='questions.html'">Создать книгу 💫</button>
+  </div>
 </section>
 
 <footer>© История, написанная сердцем</footer>
+
+<!-- Mobile bottom bar -->
+<nav class="bottom" aria-label="Нижняя панель навигации">
+  <div class="row">
+    <a href="#about">О проекте</a>
+    <a href="#process">Процесс</a>
+    <a href="#examples">Примеры</a>
+    <a href="#pricing">Тарифы</a>
+    <a class="cta" href="questions.html">Старт</a>
+  </div>
+</nav>
 
 </body>
 </html>
