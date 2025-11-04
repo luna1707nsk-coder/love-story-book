@@ -94,6 +94,75 @@ input[type=file]{
 }
 .tariff{background:white;border-radius:18px;padding:18px;margin-top:14px;border:1px solid #e2d3c4}
 .tariff p{margin-bottom:6px}
+
+.photo-upload-btn{
+  background:linear-gradient(130deg,#b99673,#d7c29c);
+  color:white;
+  padding:12px 26px;
+  border-radius:999px;
+  display:inline-block;
+  cursor:pointer;
+  font-weight:600;
+  margin-bottom:12px;
+}
+.photo-upload-btn input{display:none}
+
+.photo-preview{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:10px;
+}
+.photo-preview img{
+  width:76px; height:76px;
+  object-fit:cover;
+  border-radius:14px;
+  transition:.25s;
+  box-shadow:0 4px 14px rgba(0,0,0,.12);
+}
+.photo-preview img:hover{
+  transform:scale(1.06);
+  box-shadow:0 8px 22px rgba(0,0,0,.16);
+}
+
+/* Modal */
+.pay-modal{
+  position:fixed; inset:0;
+  display:none;
+  justify-content:center; align-items:center;
+  backdrop-filter:blur(14px);
+  background:rgba(0,0,0,.25);
+  z-index:80;
+  animation:fadeIn .35s ease;
+}
+.modal-content{
+  background:white;
+  border-radius:22px;
+  padding:30px;
+  width:90%; max-width:420px;
+  text-align:center;
+  box-shadow:0 18px 45px rgba(0,0,0,.2);
+  animation:pop .35s ease;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{transform:scale(.92)}to{transform:scale(1)}}
+.modal-title{font-family:"Spectral SC"; margin-bottom:20px}
+
+.tariff{
+  background:#faf6f0;
+  border:1px solid rgba(0,0,0,.05);
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+}
+.tariff .btn.small{
+  width:100%;
+  margin-top:8px;
+  padding:10px;
+  font-size:16px;
+}
+
+  
 </style>
 </head>
 <body>
@@ -132,22 +201,40 @@ input[type=file]{
 </div>
 
 <!-- PHOTO STEP -->
-<div id="photo-step" class="card">
+<div id="photo-step" class="card" style="display:none;">
   <h1>Добавьте фото</h1>
-  <p>По желанию — чтобы книга стала ещё теплее 🤍</p>
+  <p style="opacity:.9;">Чтобы книга стала ещё теплее 🤍<br><small>(По желанию — можно пропустить)</small></p>
 
-<div id="preview"></div>
-<div class="file-wrap" onclick="document.getElementById('photos').click()">
-  <span class="file-label">📎 Прикрепить фотографии</span>
+  <label class="photo-upload-btn">
+    📎 Прикрепить фото
+    <input type="file" id="photos" multiple accept="image/*" class="photo-input">
+  </label>
+
+  <div id="preview" class="photo-preview"></div>
+
+  <button class="btn" onclick="sendPhotos()">Отправить фото</button>
+  <button class="btn" style="margin-top:10px" onclick="finish()">Создать мою книгу ❤️</button>
 </div>
-<input type="file" id="photos" multiple accept="image/*">
 
+<!-- MODAL tariffs -->
+<div id="pay-modal" class="pay-modal">
+  <div class="modal-content">
+    <h2 class="modal-title">Выбери формат книги</h2>
 
-  <button class="btn" onclick="sendPhotos()">📤 Отправить фото</button>
-  <button class="btn" style="margin-top:10px" onclick="finish()">✨ Создать мою книгу</button>
+    <div class="tariff">
+      <h3>💫 Digital — 9€</h3>
+      <p>PDF-книга + оформление + доставка в Telegram</p>
+      <button class="btn small">Выбрать</button>
+    </div>
 
+    <div class="tariff">
+      <h3>📖 Печать — 39€</h3>
+      <p>Печать книги + PDF + доставка</p>
+      <button class="btn small">Выбрать</button>
+    </div>
+  </div>
 </div>
-</div>
+
 
 <script>
 /* Glitter */
@@ -220,6 +307,32 @@ document.getElementById("payModal").addEventListener("click", (e)=>{
   }
 });
 
+// превью фото
+document.getElementById("photos").addEventListener("change", function(){
+  const box=document.getElementById("preview");
+  box.innerHTML="";
+  [...this.files].forEach(f=>{
+    const img=document.createElement("img");
+    img.src=URL.createObjectURL(f);
+    box.appendChild(img);
+  });
+});
+
+// показать модал
+function finish(){
+  document.getElementById("pay-modal").style.display="flex";
+}
+
+// закрытие модалки кликом по фону
+document.addEventListener("click",e=>{
+  const modal=document.getElementById("pay-modal");
+  const content=document.querySelector(".modal-content");
+  if(modal.style.display==="flex" && !content.contains(e.target)){
+    modal.style.display="none";
+  }
+});
+
+  
 </script>
 </body>
 </html>
