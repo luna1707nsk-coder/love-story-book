@@ -326,15 +326,16 @@ function nextQ(){
   i++;
   if(i<qs.length){
     q.textContent=qs[i]; a.value="";
-  }else{
+}else{
     // показываем модалку тарифов
     document.getElementById("pay-modal").classList.add("show");
     document.body.classList.add("no-scroll");
-  }
+ }
 }
-document.getElementById('next').onclick=nextQ;
-a.addEventListener('keydown',e=>{ if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();nextQ();}});
-
+document.getElementById('next').onclick = nextQ;
+a.addEventListener('keydown', e=>{
+    if(e.key === "Enter") nextQ();
+});
 // ——— ФОТО ———
 let files=[];
 document.getElementById('photos').onchange=e=>{
