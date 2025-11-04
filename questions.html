@@ -103,8 +103,87 @@ textarea{
   border:1px dashed #bfa88d; background:#fff; color:#6a5447; padding:10px 14px;
   border-radius:12px; cursor:pointer; transition:.2s
 }
-.copy:hover{transform:translateY(-2px)}
-.copy small{display:block; font-size:12px; opacity:.8}
+.card-copy{
+  position:relative;
+  font-family:"Playfair Display",serif;
+  font-size:22px;
+  letter-spacing:2px;
+  font-weight:600;
+  padding:20px 26px;
+  border-radius:18px;
+  background:rgba(255,255,255,.65);
+  border:1px solid rgba(215,194,156,.7);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.1),
+    inset 0 0 16px rgba(255,255,255,.7);
+  backdrop-filter:blur(12px);
+  cursor:pointer;
+  transition:.3s;
+  color:#6a5447;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:6px;
+  overflow:hidden;
+}
+
+.card-copy:hover{
+  transform:translateY(-3px);
+  box-shadow:
+    0 16px 38px rgba(0,0,0,.18),
+    inset 0 0 22px rgba(255,255,255,.9);
+  border-color:#e8d3ac;
+}
+
+/* Блик */
+.card-copy::after{
+  content:"";
+  position:absolute;
+  width:180%;
+  height:140%;
+  top:-80%;
+  left:-50%;
+  background:linear-gradient(
+    120deg,
+    rgba(255,255,255,.1),
+    rgba(255,255,255,.5),
+    rgba(255,255,255,.1)
+  );
+  transform:rotate(20deg);
+  transition:.6s;
+  opacity:.4;
+}
+.card-copy:hover::after{
+  top:100%;
+}
+
+/* ✨ Золотые искры */
+.spark{
+  pointer-events:none;
+  position:absolute;
+  inset:0;
+  background:
+     radial-gradient(circle,rgba(255,215,168,.8) 2px,transparent 4px) 10px 10px,
+     radial-gradient(circle,rgba(255,245,210,.9) 2px,transparent 4px) 40px 60px,
+     radial-gradient(circle,rgba(255,235,190,.7) 2px,transparent 4px) 80px 30px,
+     radial-gradient(circle,rgba(255,225,180,.7) 2px,transparent 4px) 140px 80px;
+  background-size:100px 100px;
+  opacity:0;
+  transition:.3s ease;
+}
+
+.card-copy:hover .spark{
+  opacity:1;
+}
+
+/* подпись */
+.card-copy small{
+  font-size:12px;
+  opacity:.7;
+  letter-spacing:0;
+  font-weight:400;
+}
 .helper{font-size:13px; opacity:.7; text-align:center; margin-top:6px}
 
 @media (max-width:640px){
