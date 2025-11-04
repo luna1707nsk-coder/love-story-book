@@ -2,248 +2,223 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>История — Вопросы</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --cream:#FBF7F2;--ink:#4A3A39;
-  --card:rgba(255,255,255,.78);--veil:rgba(255,255,255,.9);
-  --gold2:#9b7f64;--gold3:#d7c29c;--gold4:#b99673;
-  --shadow:0 14px 38px rgba(0,0,0,.14);--radius:26px;
+  --cream:#FBF7F2; 
+  --ink:#4A3A39;
+  --card:rgba(255,255,255,.78);
+  --veil:rgba(255,255,255,.9);
+  --gold1:#9b7f64; 
+  --gold2:#d7c29c; 
+  --gold3:#b99673;
+  --shadow:0 14px 38px rgba(0,0,0,.14);
+  --radius:26px;
 }
-*{margin:0;padding:0;box-sizing:border-box}
+
 body{
-  background:url("assets/background3.jpg") center/cover fixed no-repeat;
-  font-family:"Playfair Display",serif;color:var(--ink);
-  min-height:100vh;overflow-x:hidden;
+  background:url("assets/background3.jpg") center/cover fixed;
+  font-family:"Playfair Display",serif;
+  color:var(--ink);
+  overflow-x:hidden;
 }
 
-#glitter{position:fixed;inset:0;pointer-events:none;z-index:1}
-
-/* MAIN CARD */
-.container{max-width:780px;margin:120px auto;padding:20px}
+/* Container */
+.container{max-width:760px;margin:120px auto 60px;padding:20px;}
 .card{
-  background:var(--card);backdrop-filter:blur(10px);
-  border-radius:var(--radius);padding:32px;
-  border:1px solid rgba(255,255,255,.92);
-  box-shadow:var(--shadow);animation:fade .7s ease;
+  background:var(--card);
+  backdrop-filter:blur(10px);
+  border-radius:var(--radius);
+  padding:32px;
+  box-shadow:var(--shadow);
+  animation:fade .7s ease;
 }
-@keyframes fade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
-h1{font-family:"Spectral SC",serif;text-align:center;margin-bottom:8px;
-background:linear-gradient(90deg,#9b7f64,#d7c29c,#b99673);
--webkit-background-clip:text;color:transparent}
+h1{
+  font-family:"Spectral SC",serif;
+  text-align:center;
+  margin-bottom:8px;
+  background:linear-gradient(90deg,#6a5447,#9b7f64,#d7c29c,#b99673,#7a5f4e);
+  -webkit-background-clip:text;color:transparent;
+}
 
-.progress-wrap{margin:10px 0 18px}
-.progress-top{display:flex;justify-content:space-between;font-weight:600}
-.progress{width:100%;height:8px;background:rgba(255,255,255,.6);border-radius:999px;overflow:hidden;margin-top:8px}
-.bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold2),var(--gold4));transition:.4s}
-
-h2.q{font-family:"Spectral SC";font-size:28px;margin:8px 0 12px}
+/* Inputs */
 textarea{
-  width:100%;height:160px;padding:16px;border:none;border-radius:16px;
+  width:100%;height:170px;padding:18px;border:none;border-radius:18px;
   background:var(--veil);font-size:20px;box-shadow:inset 0 2px 8px rgba(0,0,0,.06)
 }
 
+/* Button */
 .btn{
   border:none;cursor:pointer;color:#fff;font-weight:700;
-  background:linear-gradient(130deg,var(--gold2),var(--gold4));
+  background:linear-gradient(130deg,var(--gold1),var(--gold3));
   padding:14px 30px;border-radius:999px;font-size:20px;
-  box-shadow:0 12px 32px rgba(0,0,0,.18);transition:.25s;margin-top:18px
+  box-shadow:0 12px 32px rgba(0,0,0,.18);transition:.25s;
 }
 .btn:hover{transform:translateY(-3px);opacity:.96}
 
-/* PHOTO STEP */
-.photo-upload-btn{
-  background:linear-gradient(130deg,#b99673,#d7c29c);
-  color:white;padding:12px 26px;border-radius:999px;
-  display:inline-block;cursor:pointer;font-weight:600;margin-bottom:12px;
-  font-family:"Spectral SC";letter-spacing:.5px;
+/* Photo block fix */
+#photo-step{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;max-width:760px;margin:120px auto 60px;padding:30px;
 }
-.photo-upload-btn input{display:none}
 
-.photo-preview{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;justify-content:center}
-
-.preview-item{position:relative;opacity:1;transition:.25s}
-.preview-item.removing{opacity:0;transform:scale(.8)}
-
-.preview-img{width:82px;height:82px;border-radius:14px;object-fit:cover;cursor:pointer;
-box-shadow:0 4px 14px rgba(0,0,0,.12);transition:.25s}
-.preview-img:hover{transform:scale(1.08);box-shadow:0 8px 22px rgba(0,0,0,.18)}
-
-.remove-btn{
-  position:absolute;top:4px;right:4px;
-  width:22px;height:22px;border-radius:50%;
-  background:rgba(0,0,0,.65);color:white;
-  display:flex;justify-content:center;align-items:center;
-  font-size:16px;cursor:pointer;font-weight:bold;
-  box-shadow:0 2px 6px rgba(0,0,0,.35)
+/* Upload button */
+.photo-input-wrapper{display:flex;justify-content:center;width:100%;margin-bottom:10px;}
+.photo-btn{
+  display:inline-block;background:linear-gradient(130deg,var(--gold1),var(--gold3));
+  padding:14px 28px;border-radius:999px;color:#fff;font-weight:700;
+  cursor:pointer;box-shadow:0 12px 32px rgba(0,0,0,.18);transition:.25s;
 }
-.remove-btn:hover{background:rgba(0,0,0,.8)}
+.photo-btn:hover{transform:translateY(-3px);opacity:.96}
+.photo-input{display:none}
 
-/* MODAL */
-.modal-back{
-  position:fixed;inset:0;display:none;justify-content:center;align-items:center;
-  backdrop-filter:blur(14px);background:rgba(0,0,0,.25);
-  z-index:90;animation:fade .35s ease;
+/* Preview images */
+#preview{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:18px}
+.preview-item{
+  position:relative;width:90px;height:90px;border-radius:14px;overflow:hidden;
+  animation:fadeIn .3s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+.preview-item img{width:100%;height:100%;object-fit:cover;border-radius:14px;}
+.remove-photo{
+  position:absolute;top:5px;right:5px;background:rgba(0,0,0,.6);color:#fff;
+  font-size:12px;padding:3px 6px;border-radius:50%;cursor:pointer;transition:.2s;
+}
+.remove-photo:hover{background:rgba(0,0,0,.85);}
+
+/* Modal */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(5px);
+  display:none;justify-content:center;align-items:center;z-index:50;
 }
 .modal{
-  background:var(--card);border-radius:22px;padding:30px;
-  width:90%;max-width:420px;text-align:center;
-  box-shadow:0 18px 45px rgba(0,0,0,.2);
-  animation:pop .35s ease;
+  background:var(--card);padding:30px;border-radius:22px;
+  max-width:420px;text-align:center;animation:fade .35s ease;
 }
-@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
-
-.tariff{
-  background:white;border-radius:16px;padding:18px;margin-top:14px;border:1px solid rgba(0,0,0,.06)
-}
-.tariff .btn{width:100%;margin-top:8px;padding:10px;font-size:18px}
 </style>
 </head>
 
 <body>
 
-<canvas id="glitter"></canvas>
-
-<div id="payModal" class="modal-back">
-  <div class="modal">
-    <h2 class="Spectral">Выберите тариф</h2>
-
-    <div class="tariff">
-      <p><b>✨ Digital — 9€</b></p>
-      <p>PDF-книга + Telegram доставка</p>
-      <button class="btn" onclick="alert('Оплата подключим')">Выбрать</button>
-    </div>
-
-    <div class="tariff">
-      <p><b>📖 Печать — 39€</b></p>
-      <p>Печать книги + PDF + доставка</p>
-      <button class="btn" onclick="alert('Оплата скоро 💳')">Выбрать</button>
-    </div>
-  </div>
-</div>
-
 <div class="container">
+  <div id="step-questions" class="card">
+    <h1>Пробная часть</h1>
 
-<div id="questionStep" class="card">
-  <h1>Пробная часть</h1>
-  <div class="progress-wrap">
-    <div class="progress-top"><span id="label">Вопрос 1 из 5</span><span id="perc">0%</span></div>
-    <div class="progress"><div id="bar" class="bar"></div></div>
+    <h2 id="q">Где вы впервые встретились?</h2>
+    <textarea id="a" placeholder="Ваш ответ..."></textarea>
+
+    <button class="btn" id="next">Далее</button>
   </div>
-  <h2 id="q" class="q"></h2>
-  <textarea id="a" placeholder="Ваш ответ..."></textarea>
-  <button class="btn" id="next">Далее</button>
+
+  <!-- Photos -->
+  <div id="photo-step" class="card" style="display:none;">
+    <h1>Добавьте фото</h1>
+    <p>Чтобы книга стала ещё теплее 💕<br>(по желанию — можно пропустить)</p>
+
+    <div class="photo-input-wrapper">
+      <label class="photo-btn">📎 Прикрепить фото
+        <input type="file" id="photos" multiple accept="image/*" class="photo-input">
+      </label>
+    </div>
+
+    <div id="preview"></div>
+
+    <button class="btn" onclick="sendPhotos()">Отправить фото</button>
+    <button class="btn" style="margin-top:10px" onclick="finish()">Создать мою книгу 💖</button>
+  </div>
 </div>
 
-<div id="photoStep" class="card" style="display:none;">
-  <h1>Добавьте фото</h1>
-  <p>Чтобы книга стала ещё теплее 🤍<br><small>(по желанию — можно пропустить)</small></p>
+<!-- MODAL -->
+<div id="payModal" class="modal-bg">
+  <div class="modal">
+    <h2>Выберите тариф</h2>
+    <p>Чтобы получить свою книгу 💝</p><br>
 
-  <label class="photo-upload-btn">
-    📎 Прикрепить фото
-    <input type="file" id="photos" multiple accept="image/*">
-  </label>
-
-  <div id="preview" class="photo-preview"></div>
-
-  <button class="btn" onclick="sendPhotos()">Отправить фото</button>
-  <button class="btn" style="margin-top:10px" onclick="finish()">Создать мою книгу ❤️</button>
-</div>
-
+    <button class="btn" onclick="alert('Оплата скоро будет подключена 💳')">Тариф «Базовый» — 990₽</button><br><br>
+    <button class="btn" onclick="alert('Оплата скоро будет подключена 💳')">Тариф «Премиум» — 1990₽</button>
+  </div>
 </div>
 
 <script>
-/* Glitter */
-const c=document.getElementById('glitter'),x=c.getContext('2d');let W,H,p=[];
-function R(){W=c.width=innerWidth;H=c.height=innerHeight}addEventListener('resize',R);R();
-function S(n=60){for(let i=0;i<n;i++)p.push({x:Math.random()*W,y:Math.random()*-H*.2,r:Math.random()<.2?2.4:.8,o:1,v:1.2+Math.random()*1.2})}
-function A(){x.clearRect(0,0,W,H);x.globalCompositeOperation='lighter';
-p.forEach(a=>{a.y+=a.v;a.o-=.003;const g=x.createRadialGradient(a.x,a.y,0,a.x,a.y,a.r*2.2);g.addColorStop(0,`rgba(255,255,255,${a.o})`);g.addColorStop(1,"transparent");x.fillStyle=g;x.beginPath();x.arc(a.x,a.y,a.r,0,Math.PI*2);x.fill()});
-p=p.filter(a=>a.o>0);requestAnimationFrame(A)}
-S(70);setInterval(()=>S(6),600);A();
-
-/* QUESTIONS */
+// QUESTIONS
 const qs=[
 "Где вы впервые встретились?",
-"Что вы почувствовали при первой встрече?",
+"Что вы подумали при первой встрече?",
 "Кто сделал первый шаг?",
 "Какой момент стал решающим?",
-"Как вы поняли, что это любовь?"
+"Что больше всего запомнилось?"
 ];
 let i=0;
-const label=document.getElementById("label"),
-q=document.getElementById("q"),a=document.getElementById("a"),
-bar=document.getElementById("bar"),perc=document.getElementById("perc"),
-photoStep=document.getElementById("photoStep"),
-questionStep=document.getElementById("questionStep");
 
-function render(){label.textContent=`Вопрос ${i+1} из 5`;q.textContent=qs[i];bar.style.width=(i/5)*100+'%';perc.textContent=Math.round((i/5)*100)+'%';a.value='';}
-async function send(){
-  const t=a.value.trim();
-  if(t){
-    await fetch("/api/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:`📖 *Ответ*\n\n❓ *${qs[i]}*\n✏️ ${t}`})});
-  }
-  i++;
-  if(i<5)render();
-  else{questionStep.style.display="none";photoStep.style.display="block";}
+const qEl=document.getElementById("q");
+const aEl=document.getElementById("a");
+
+async function send(q,a){
+  await fetch("/api/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:`❓ ${q}\n✏️ ${a}`})});
 }
-document.getElementById("next").onclick=send;
-a.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();send();}};
-render();
 
-/* PHOTOS */
-let selectedPhotos=[];
-document.getElementById("photos").onchange=function(){
-  selectedPhotos=[...this.files];renderPreviews();
+function nextQ(){
+  const val=aEl.value.trim();
+  if(val){send(qs[i],val);}
+  i++;
+  if(i<qs.length){
+    qEl.textContent=qs[i];
+    aEl.value="";
+  } else {
+    document.getElementById("step-questions").style.display="none";
+    document.getElementById("photo-step").style.display="flex";
+  }
+}
+document.getElementById("next").onclick=nextQ;
+aEl.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();nextQ();}});
+
+// PHOTOS
+let files=[];
+
+document.getElementById("photos").onchange=e=>{
+  [...e.target.files].forEach(f=>files.push(f));
+  renderPreview();
 };
 
-function renderPreviews(){
-  const box=document.getElementById("preview");box.innerHTML="";
-  selectedPhotos.forEach((file,idx)=>{
-    const div=document.createElement("div");
-    div.className="preview-item";
-
-    const img=document.createElement("img");
-    img.src=URL.createObjectURL(file);
-    img.className="preview-img";
-
-    const rm=document.createElement("div");
-    rm.className="remove-btn";
-    rm.textContent="×";
-    rm.onclick=()=>{
-      div.classList.add("removing");
-      setTimeout(()=>{
-        selectedPhotos.splice(idx,1);
-        renderPreviews();
-      },200);
-    };
-
-    div.appendChild(img);
-    div.appendChild(rm);
-    box.appendChild(div);
+function renderPreview(){
+  const wrap=document.getElementById("preview");
+  wrap.innerHTML="";
+  files.forEach((file,idx)=>{
+    const url=URL.createObjectURL(file);
+    wrap.innerHTML+=`
+      <div class="preview-item">
+        <img src="${url}">
+        <div class="remove-photo" onclick="removePhoto(${idx})">✕</div>
+      </div>`;
   });
 }
 
-async function sendPhotos(){
-  for(const p of selectedPhotos){
-    const f=new FormData();f.append("photo",p);
-    await fetch("/api/sendPhoto",{method:"POST",body:f});
-  }
-  alert("Фото отправлены 🤍");
-  finish();
+function removePhoto(i){
+  files.splice(i,1);
+  renderPreview();
 }
 
-/* MODAL */
-function finish(){document.getElementById("payModal").style.display="flex";}
+async function sendPhotos(){
+  for(const file of files){
+    const fd=new FormData(); fd.append("photo",file);
+    await fetch("/api/sendPhoto",{method:"POST",body:fd});
+  }
+  alert("Фото отправлены 📸✨");
+}
+
+function finish(){
+  document.getElementById("payModal").style.display="flex";
+}
 document.getElementById("payModal").onclick=e=>{
-  if(e.target.id==="payModal")e.target.style.display="none";
+  if(e.target.id==="payModal") e.target.style.display="none";
 };
 </script>
+
 </body>
 </html>
-
