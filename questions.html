@@ -181,8 +181,36 @@ textarea{
 </head>
 <body>
 
-<!-- THEME BUTTON -->
-<div class="theme-toggle" id="themeToggle">🌙</div>
+<!-- TOP BAR: LOGO + THEME -->
+<div class="topbar">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f7e7c8"/>
+          <stop offset="0.45" stop-color="#b48e67"/>
+          <stop offset="1" stop-color="#8b6a4e"/>
+        </linearGradient>
+      </defs>
+
+      <!-- left book -->
+      <path d="M10 18c0-3 2-5 5-5h17c3 0 5 2 5 5v28c0 3-2 5-5 5H15c-3 0-5-2-5-5V18z"
+            fill="url(#g)" opacity=".85"/>
+
+      <!-- right outline -->
+      <path d="M32 13h17c3 0 5 2 5 5v28c0 3-2 5-5 5H32"
+            fill="none" stroke="url(#g)" stroke-width="2" opacity=".9"/>
+
+      <!-- heart ribbon -->
+      <path d="M22 22c2-3 6-3 8 0c2-3 6-3 8 0c2 3 0 6-8 12c-8-6-10-9-8-12z"
+            fill="#fff" opacity=".9"/>
+    </svg>
+
+    <div class="brand-name">a book written with soul</div>
+  </div>
+
+  <div class="theme-toggle" id="themeToggle">🌙</div>
+</div>
 
 <!-- QUESTIONS -->
 <div class="card" id="step-questions">
