@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>История, написанная сердцем</title>
 
@@ -9,280 +9,430 @@
 
 <style>
 :root{
-  --bg:#f6f1ec; --ink:#3e2f2e;
-  --rose:#c49aa6; --rose2:#a97c8b;
-  --gold:#d7c29c; --gold2:#b99673;
-  --panel:rgba(255,255,255,.78);
-  --card:rgba(255,255,255,.82);
-  --shadow:0 14px 38px rgba(0,0,0,.14);
-  --radius:26px;
+  /* Кремовая luxury-палитра */
+  --cream: #FBF7F2;
+  --ink:   #4A3A39;
+  --veil:  rgba(255,255,255,.78);
+  --card:  rgba(255,255,255,.72);
+  --line:  rgba(74,58,57,.12);
+
+  /* Золото: и внутри текста, и мягкое свечение вокруг */
+  --gold1:#6a5447;
+  --gold2:#9b7f64;
+  --gold3:#d7c29c;
+  --gold4:#b99673;
+  --gold5:#7a5f4e;
+
+  --shadow: 0 14px 38px rgba(0,0,0,.14);
+  --radius: 26px;
 }
 
+/* Сброс */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
-  background:#f4efea url("assets/background1.jpg") center/cover fixed no-repeat;
-  color:var(--ink); font-family:"Playfair Display",serif; overflow-x:hidden;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:"Playfair Display", serif;
+  overflow-x:hidden;
 }
 
-/* второй фон на скролле */
-.hero::after{
-  content:""; position:fixed; inset:0; z-index:-1;
-  background:url("assets/background2.jpg") center/cover no-repeat;
-  opacity:0; transition:opacity .6s ease;
-}
-.scrolled .hero::after{ opacity:.9; }
+/* ФОНЫ (2 картинки и плавная смена) */
+.bg{position:fixed; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1.4s ease; z-index:-3}
+.bg1{background-image:url("assets/background1.jpg")}
+.bg2{background-image:url("assets/background2.jpg")}
+.bg.show{opacity:1}
 
-/* шапка */
-.nav{
-  position:sticky; top:0; z-index:20;
-  backdrop-filter: blur(12px);
-  background:rgba(255,255,255,.6); border-bottom:1px solid rgba(255,255,255,.7);
-}
-.nav-inner{max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:24px; padding:14px 18px}
-.brand{font-family:"Spectral SC",serif; font-size:20px; font-weight:600; letter-spacing:.5px}
-.brand b{background:linear-gradient(90deg,#6a5447,#9b7f64,#d7c29c,#b99673,#7a5f4e); -webkit-background-clip:text; color:transparent}
-.nav a{color:var(--ink); text-decoration:none; opacity:.85; margin:0 10px}
-.cta{margin-left:auto; padding:10px 18px; border-radius:999px; color:#fff; text-decoration:none;
-  background:linear-gradient(135deg,#9b7f64,#b99673); box-shadow:0 10px 26px rgba(0,0,0,.18)}
-
-/* блёстки */
+/* СМЕСЬ БЛЁСТОК (пыль + редкие яркие) — canvas */
 #glitter{position:fixed; inset:0; pointer-events:none; z-index:1}
 
-/* секции */
-.section{max-width:1100px; margin:0 auto; padding:80px 18px}
-.panel{
-  background:var(--panel); border:1px solid rgba(255,255,255,.92); backdrop-filter: blur(10px);
-  border-radius:var(--radius); box-shadow:var(--shadow); padding:36px;
+/* ШАПКА */
+.header{
+  position:fixed; inset:0 0 auto 0; z-index:5;
+  background:rgba(255,255,255,.75); backdrop-filter:blur(10px) saturate(140%);
+  border-bottom:1px solid var(--line);
 }
-h2{font-family:"Spectral SC",serif; font-size:34px; margin-bottom:12px}
-.sub{opacity:.9; margin-bottom:16px}
+.header .row{
+  max-width:1200px; margin:0 auto; padding:12px 18px;
+  display:flex; align-items:center; gap:22px;
+}
+.logo{
+  font-family:"Spectral SC", serif; font-weight:600; letter-spacing:.4px;
+  font-size:20px; white-space:nowrap; color:var(--ink);
+}
+.logo em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4),var(--gold5));
+  -webkit-background-clip:text; color:transparent;
+  animation:goldSheen 9s ease-in-out infinite;
+  text-shadow:0 0 22px rgba(215,194,156,.22);
+}
+@keyframes goldSheen{0%,100%{filter:brightness(.95)}50%{filter:brightness(1.2)}}
 
-/* drag & drop */
-.upload-wrap{display:grid; gap:16px}
-.drop{
-  position:relative; display:flex; align-items:center; justify-content:center; text-align:center;
-  min-height:190px; border-radius:18px; background:rgba(255,255,255,.9);
-  border:2px dashed rgba(0,0,0,.1);
+nav.nav{margin-left:auto; display:flex; gap:22px; align-items:center}
+nav.nav a{
+  text-decoration:none; color:var(--ink); font-weight:600; opacity:.85; position:relative; padding:6px 2px
 }
-.drop.drag{border-color:#b99673; background:rgba(255,255,255,.96)}
-.drop input{display:none}
-.actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
+nav.nav a:after{
+  content:""; position:absolute; left:0; right:100%; bottom:-2px; height:2px;
+  background:linear-gradient(90deg,var(--gold2),var(--gold3),var(--gold4));
+  transition:.35s
+}
+nav.nav a:hover{opacity:1}
+nav.nav a:hover:after{right:0}
+
+/* НИЖНЕЕ mobile-меню */
+nav.bottom{
+  display:none; position:fixed; left:12px; right:12px; bottom:12px; z-index:6;
+  background:rgba(255,255,255,.92); border:1px solid rgba(255,255,255,.7);
+  border-radius:999px; padding:10px; box-shadow:0 10px 30px rgba(0,0,0,.18)
+}
+nav.bottom .row{display:flex; justify-content:space-around; align-items:center; gap:8px}
+nav.bottom a{
+  text-decoration:none; color:var(--ink); font-weight:600; font-size:13px; padding:8px 12px; border-radius:999px
+}
+nav.bottom a.cta{background:linear-gradient(130deg,var(--gold2),var(--gold4)); color:#fff}
+
+/* ОБЩИЙ ЛЕЙАУТ */
+.hero{padding-top:96px}
+section{padding:clamp(58px,8vw,90px) 18px; position:relative; z-index:2}
+.wrap{max-width:1100px; margin:0 auto}
+
+/* Заголовки — editorial */
+h2{
+  font-family:"Spectral SC", serif; font-weight:600;
+  font-size:clamp(26px,5vw,42px); text-align:center; letter-spacing:.3px;
+  background:linear-gradient(90deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4),var(--gold5));
+  -webkit-background-clip:text; color:transparent;
+  text-shadow:0 2px 10px rgba(215,194,156,.18);
+  animation:goldSheen 9s ease-in-out infinite;
+}
+.caption{ text-align:center; margin-top:6px; color:#5b4a46; opacity:.92; font-size:clamp(14px,2.6vw,18px) }
+
+/* Разделители */
+.sep{display:flex; flex-direction:column; align-items:center; gap:12px; margin:16px 0 34px}
+.sep .line{width:clamp(120px,22vw,220px); height:2px; background:linear-gradient(90deg,var(--gold2),var(--gold3),var(--gold4)); opacity:.9}
+.sep svg{width:120px; opacity:.65}
+
+/* Карточки */
+.card{
+  background:var(--card); backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.9); border-radius:var(--radius);
+  padding:clamp(18px,2.6vw,28px); box-shadow:var(--shadow);
+  font-size:clamp(16px,2.4vw,20px); line-height:1.6;
+}
+
+/* Сетки */
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:clamp(14px,2.2vw,22px)}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,2.2vw,22px)}
+@media(max-width:900px){.grid3{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* Кнопки */
 .btn{
   border:none; cursor:pointer; color:#fff; font-weight:700;
-  background:linear-gradient(130deg,#9b7f64,#b99673);
-  padding:12px 22px; border-radius:999px; font-size:16px; box-shadow:0 12px 30px rgba(0,0,0,.18)
+  background:linear-gradient(130deg,var(--gold2),var(--gold4));
+  padding:14px 30px; border-radius:999px; font-size:clamp(16px,2.4vw,20px);
+  box-shadow:0 12px 32px rgba(0,0,0,.18); transition:.25s
 }
-.link-ghost{background:transparent; color:var(--ink); border:1px dashed rgba(0,0,0,.2)}
-.note{opacity:.85; font-size:14px}
+.btn:hover{transform:translateY(-3px); opacity:.96}
 
-.preview{display:flex; flex-wrap:wrap; gap:10px}
-.thumb{width:95px; height:95px; border-radius:10px; background:#fff; overflow:hidden; box-shadow:0 6px 16px rgba(0,0,0,.08)}
-.thumb img{width:100%; height:100%; object-fit:cover}
-
-hr.sep{margin:42px 0; border:none; height:1px; background:linear-gradient(90deg,transparent,#e8d8c2,transparent)}
-
-@media(max-width:720px){
-  h2{font-size:28px}
-  .panel{padding:24px}
+/* Обложки (плейсхолдеры) */
+.covers{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,2vw,20px)}
+.cover{
+  aspect-ratio:3/4; border-radius:18px; background:linear-gradient(160deg,#fff,#f4efe7);
+  border:1px dashed rgba(0,0,0,.15); display:flex; align-items:center; justify-content:center;
+  color:#7b6a62; font-weight:600
 }
+@media(max-width:800px){.covers{grid-template-columns:1fr 1fr}}
+
+/* Загрузка фото (интерфейс) */
+.upload-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+@media(max-width:900px){.upload-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.upload-grid{grid-template-columns:repeat(2,1fr)}}
+.slot{
+  aspect-ratio:1/1; border-radius:16px; background:rgba(255,255,255,.95);
+  border:1px dashed rgba(0,0,0,.18); display:flex; align-items:center; justify-content:center; color:#6a5a52; position:relative; overflow:hidden; font-weight:600
+}
+.slot input{display:none}
+.slot .add{font-size:40px}
+.slot img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.slot .name{
+  position:absolute; left:8px; right:8px; bottom:8px; background:rgba(255,255,255,.82);
+  border-radius:10px; padding:4px 8px; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis
+}
+.upload-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:14px}
+.small{font-size:14px; opacity:.8}
+
+/* Плавные появления (editorial reveal) */
+.reveal{opacity:0; transform:translateY(22px); transition:.8s ease}
+.reveal.visible{opacity:1; transform:none}
+
+/* Моб.адаптация */
+@media(max-width:860px){nav.nav{display:none} nav.bottom{display:block}}
+footer{text-align:center; padding:30px; color:#6b5953; font-size:18px}
 </style>
 </head>
+
 <body>
 
+<!-- ДВА ФОНА -->
+<div class="bg bg1 show"></div>
+<div class="bg bg2"></div>
+
+<!-- GLITTER CANVAS -->
 <canvas id="glitter"></canvas>
 
-<!-- Навигация -->
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="brand">A book <b>written with soul</b></div>
-    <a href="#start">Книга</a>
-    <a href="#about">О проекте</a>
+<!-- HEADER -->
+<header class="header">
+  <div class="row">
+    <div class="logo"><em>A book written with soul</em></div>
+    <nav class="nav">
+      <a href="#madebyyou">Книга</a>
+      <a href="#about">О проекте</a>
+      <a href="#covers">Обложки</a>
+      <a href="#upload">Фото</a>
+      <a href="#belief">Вера и память</a>
+      <a href="#why">Зачем</a>
+      <a href="#pricing">Тарифы</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile bottom nav -->
+<nav class="bottom">
+  <div class="row">
+    <a href="#madebyyou">Книга</a>
     <a href="#covers">Обложки</a>
-    <a href="#photos">Фото</a>
-    <a href="#why">Зачем</a>
-    <a href="#pricing">Тарифы</a>
-    <a href="#faq">FAQ</a>
-    <a class="cta" href="questions.html">Начать историю ✨</a>
+    <a href="#upload">Фото</a>
+    <a class="cta" href="questions.html">Старт</a>
   </div>
 </nav>
 
 <div class="hero"></div>
 
-<!-- 1. Книга написанная тобою -->
-<section id="start" class="section">
-  <div class="panel">
+<!-- 1. КНИГА НАПИСАННАЯ ТОБОЮ -->
+<section id="madebyyou">
+  <div class="wrap reveal">
     <h2>Книга, написанная тобою</h2>
-    <p class="sub">Стань автором вашей истории — порадуй вторую половинку ❤️</p>
-    <a class="btn" href="questions.html">Начать 5 бесплатных вопросов</a>
-  </div>
-</section>
+    <div class="caption">Стань автором вашей истории, порадуй свою вторую половинку ❤️</div>
 
-<hr class="sep">
+    <div class="sep">
+      <div class="line"></div>
+      <svg viewBox="0 0 200 30"><path d="M10,20 C60,0 140,40 190,10" stroke="#d7c29c" stroke-width="1.2" fill="none"/></svg>
+    </div>
 
-<!-- 2. О проекте -->
-<section id="about" class="section">
-  <div class="panel">
-    <h2>О проекте</h2>
-    <p class="sub">Почему это уникально</p>
-    <p>Мы бережно собираем воспоминания в изящную форму книги. 100 вопросов раскрывают вашу историю — от первых встреч до планов на будущее. Вы получаете не просто текст, а премиально оформленную память.</p>
-  </div>
-</section>
-
-<hr class="sep">
-
-<!-- 3. Обложки (заглушка — наполним позже) -->
-<section id="covers" class="section">
-  <div class="panel">
-    <h2>Выбери обложку будущей книги</h2>
-    <p class="sub">Премиальные варианты в свадебной эстетике</p>
-    <p>Скоро добавим галерею обложек. Выберите стиль, соответствующий вашей истории.</p>
-  </div>
-</section>
-
-<hr class="sep">
-
-<!-- 4. Фото (по желанию) -->
-<section id="photos" class="section">
-  <div class="panel">
-    <h2>Добавьте ваши фото <span style="opacity:.7">(по желанию)</span></h2>
-    <p class="sub">Они украсят книгу и сделают её ещё более личной. Можно пропустить.</p>
-
-    <div class="upload-wrap">
-      <div id="drop" class="drop">
-        <div>
-          <div style="font-weight:600; margin-bottom:6px">Перетащите сюда фото</div>
-          <div class="note">или нажмите «Выбрать файлы»</div>
-        </div>
-        <input id="fileInput" type="file" accept="image/*" multiple>
+    <div class="grid2">
+      <div class="card">Начни с 5 бесплатных вопросов — почувствуй, как воспоминания превращаются в страницы. После покупки откроются все 100 вопросов и мы соберём премиальную книгу.</div>
+      <div class="card" style="display:flex;align-items:center;justify-content:center">
+        <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
       </div>
-
-      <div class="actions">
-        <button class="btn" id="pickBtn">Выбрать файлы</button>
-        <button class="btn" id="sendBtn">Отправить фото</button>
-        <button class="btn link-ghost" id="skipBtn">Продолжить без фото</button>
-      </div>
-
-      <div id="preview" class="preview"></div>
-      <div class="note">Опционально: фотографии можно также добавить после ответов на вопросы.</div>
     </div>
   </div>
 </section>
 
-<hr class="sep">
+<!-- 2. О ПРОЕКТЕ -->
+<section id="about">
+  <div class="wrap reveal">
+    <h2>О проекте</h2>
+    <div class="caption">Почему это уникально</div>
 
-<!-- 5. Зачем эта книга -->
-<section id="why" class="section">
-  <div class="panel">
+    <div class="sep"><div class="line"></div>
+      <svg viewBox="0 0 200 30"><path d="M10,20 C60,0 140,40 190,10" stroke="#d7c29c" stroke-width="1.2" fill="none"/></svg>
+    </div>
+
+    <div class="grid2">
+      <div class="card">«История, написанная сердцем» — персональная книга о вашей любви, созданная из искренних ответов на 100 продуманных вопросов.</div>
+      <div class="card">Мы оформляем её в эстетике премиальных свадебных журналов: утончённая типографика, кремовая палитра, золотые отблески и деликатные детали.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ОБЛОЖКИ -->
+<section id="covers">
+  <div class="wrap reveal">
+    <h2>Выбери обложку вашей будущей книги</h2>
+    <div class="caption">Скоро добавим премиальные макеты</div>
+
+    <div class="sep"><div class="line"></div>
+      <svg viewBox="0 0 200 30"><path d="M10,20 C60,0 140,40 190,10" stroke="#d7c29c" stroke-width="1.2" fill="none"/></svg>
+    </div>
+
+    <div class="covers">
+      <div class="cover">Mockup A</div>
+      <div class="cover">Mockup B</div>
+      <div class="cover">Mockup C</div>
+    </div>
+  </div>
+</section>
+
+<!-- ФОТО -->
+<section id="upload">
+  <div class="wrap reveal">
+    <h2>Добавьте ваше фото (по желанию)</h2>
+    <div class="caption">Фотографии тоже станут страницами вашей книги</div>
+
+    <div class="sep"><div class="line"></div>
+      <svg viewBox="0 0 200 30"><path d="M10,20 C60,0 140,40 190,10" stroke="#d7c29c" stroke-width="1.2" fill="none"/></svg>
+    </div>
+
+    <div class="card">
+      <div id="slots" class="upload-grid"></div>
+      <div class="upload-actions">
+        <button class="btn" id="sendPhotos">Отправить фото</button>
+        <div class="small">До 8 фото • позже подключим отправку в Telegram-архив</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ВЕРА -->
+<section id="belief">
+  <div class="wrap reveal">
     <h2>Вера в любовь и память</h2>
-    <p class="sub">Тёплое издание, которое останется в семье</p>
-    <p>Книга поддерживает разговоры и сближает. Это подарок, который читают вслух, показывают близким и перечитывают спустя годы.</p>
+    <div class="caption">Книга — способ не забывать</div>
+
+    <div class="sep"><div class="line"></div>
+      <svg viewBox="0 0 200 30"><path d="M10,20 C60,0 140,40 190,10" stroke="#d7c29c" stroke-width="1.2" fill="none"/></svg>
+    </div>
+
+    <div class="grid2">
+      <div class="card">Любовь живёт в деталях: улыбке, слове, дороге домой. Книга бережно собирает эти крупицы, чтобы они не потерялись.</div>
+      <div class="card">Каждая пара заслуживает историю, которая переживёт память. Мы упакуем её в красивый объект — вашу книгу.</div>
+    </div>
   </div>
 </section>
 
-<hr class="sep">
+<!-- ЗАЧЕМ -->
+<section id="why">
+  <div class="wrap reveal">
+    <h2>Зачем эта книга нужна каждому?</h2>
+    <div class="caption">Память — это ценность</div>
 
-<!-- 6. Тарифы (как было) -->
-<section id="pricing" class="section">
-  <div class="panel">
+    <div class="sep"><div class="line"></div>
+      <svg viewBox="0 0 200 30"><path d="M10,20 C60,0 140,40 190,10" stroke="#d7c29c" stroke-width="1.2" fill="none"/></svg>
+    </div>
+
+    <div class="grid3">
+      <div class="card"><b>Подарок с душой</b><br>Больше, чем вещь — это чувство, которое останется.</div>
+      <div class="card"><b>Ценность над временем</b><br>Страницы сохраняют то, что обычно забывается.</div>
+      <div class="card"><b>Опора для двоих</b><br>Перечитывая, вы заново влюбляетесь друг в друга.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ТАРИФЫ -->
+<section id="pricing">
+  <div class="wrap reveal">
     <h2>Тарифы</h2>
-    <ul>
-      <li><b>Basic</b> — цифровая версия до 100 страниц (990)</li>
-      <li><b>Standard</b> — как раньше (цену укажем позже)</li>
-      <li><b>Premium</b> — как раньше (цену укажем позже)</li>
-    </ul>
+    <div class="caption">Выберите формат</div>
+
+    <div class="sep"><div class="line"></div>
+      <svg viewBox="0 0 200 30"><path d="M10,20 C60,0 140,40 190,10" stroke="#d7c29c" stroke-width="1.2" fill="none"/></svg>
+    </div>
+
+    <div class="grid3">
+      <div class="card"><b>Basic — 990₽</b><br>Цифровая версия до 100 страниц</div>
+      <div class="card"><b>Standard — позже</b><br>Печать, премиальная бумага</div>
+      <div class="card"><b>Premium — позже</b><br>Подарочный набор, футляр</div>
+    </div>
   </div>
 </section>
 
-<hr class="sep">
-
-<!-- 7. FAQ (как было) -->
-<section id="faq" class="section">
-  <div class="panel">
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap reveal">
     <h2>FAQ</h2>
-    <p>Список вопросов-ответов оставляем как раньше.</p>
+    <div class="caption">Частые вопросы</div>
+
+    <div class="sep"><div class="line"></div>
+      <svg viewBox="0 0 200 30"><path d="M10,20 C60,0 140,40 190,10" stroke="#d7c29c" stroke-width="1.2" fill="none"/></svg>
+    </div>
+
+    <div class="grid2">
+      <div class="card"><b>Можно добавить фото?</b><br>Да, и мы аккуратно встроим их в макет книги.</div>
+      <div class="card"><b>Срок изготовления?</b><br>Обычно 3–7 дней после получения ответов и материалов.</div>
+    </div>
   </div>
 </section>
+
+<section>
+  <div class="wrap reveal" style="text-align:center">
+    <button class="btn" onclick="location.href='questions.html'">Начать историю ✨</button>
+  </div>
+</section>
+
+<footer>© История, написанная сердцем</footer>
 
 <script>
-// переключение второго фона
-const root = document.documentElement;
-addEventListener('scroll', ()=> {
-  if (scrollY > 240) document.body.classList.add('scrolled');
-  else document.body.classList.remove('scrolled');
-});
+/* Смена фона при скролле */
+const b1=document.querySelector('.bg1'), b2=document.querySelector('.bg2');
+let bg=0;
+function swapBG(){ if(scrollY>innerHeight*.7 && bg===0){b1.classList.remove('show');b2.classList.add('show');bg=1}
+                  else if(scrollY<=innerHeight*.7 && bg===1){b2.classList.remove('show');b1.classList.add('show');bg=0}}
+addEventListener('scroll',swapBG); swapBG();
 
-// Glitter
-const cvs=document.getElementById('glitter'), ctx=cvs.getContext('2d'); let W,H,parts=[];
-function r(){W=cvs.width=innerWidth; H=cvs.height=innerHeight}
-addEventListener('resize',r); r();
-function spawn(n=70){ for(let i=0;i<n;i++) parts.push({x:Math.random()*W,y:Math.random()*-H*.2,r:Math.random()<.18?2.4+Math.random()*1.8:.9+Math.random()*1.2,v:1.2+Math.random()*1.1,g:Math.random()<.2})}
-function step(){ ctx.clearRect(0,0,W,H); ctx.globalCompositeOperation='lighter';
-  for(const p of parts){ p.y+=p.v; p.x+=Math.sin((p.y+p.r)*.01)*.3;
+/* Glitter (смешанная пыль + редкие яркие) */
+const cvs=document.getElementById('glitter'), ctx=cvs.getContext('2d');
+let W,H,parts=[];
+function resize(){W=cvs.width=innerWidth; H=cvs.height=innerHeight}
+addEventListener('resize',resize); resize();
+function spawn(n=60){
+  for(let i=0;i<n;i++){
+    parts.push({
+      x:Math.random()*W, y:Math.random()*-H*.2,
+      r:Math.random()<.18? 2.2+Math.random()*1.8 : .8+Math.random()*1.2,
+      v:1.2+Math.random()*1.2,
+      a:.35+Math.random()*.4,
+      g:Math.random()<.18  // редкий яркий
+    })
+  }
+}
+function step(){
+  ctx.clearRect(0,0,W,H);
+  ctx.globalCompositeOperation='lighter';
+  for(const p of parts){
+    p.y+=p.v; p.x+=Math.sin((p.y+p.r)*.01)*.3;
     const grd=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2.2);
-    if(p.g){grd.addColorStop(0,'rgba(255,240,210,.9)');grd.addColorStop(1,'rgba(255,240,210,0)')}
-    else{grd.addColorStop(0,'rgba(255,255,255,.7)');grd.addColorStop(1,'rgba(255,255,255,0)')}
+    if(p.g){ grd.addColorStop(0,'rgba(255,240,210,.9)'); grd.addColorStop(1,'rgba(255,240,210,0)'); }
+    else   { grd.addColorStop(0,'rgba(255,255,255,.7)'); grd.addColorStop(1,'rgba(255,255,255,0)'); }
     ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
   }
-  parts=parts.filter(p=>p.y<H+20); requestAnimationFrame(step)
+  parts=parts.filter(p=>p.y<H+20);
+  requestAnimationFrame(step);
 }
 spawn(70); setInterval(()=>spawn(8),600); step();
 
-// Drag & Drop логика
-const drop = document.getElementById('drop');
-const input = document.getElementById('fileInput');
-const pickBtn = document.getElementById('pickBtn');
-const sendBtn = document.getElementById('sendBtn');
-const skipBtn = document.getElementById('skipBtn');
-const preview = document.getElementById('preview');
+/* Reveal */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target)} })
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-let chosenFiles = [];
-
-function renderPreview(){
-  preview.innerHTML = "";
-  chosenFiles.forEach(file=>{
-    const url = URL.createObjectURL(file);
-    const div = document.createElement('div');
-    div.className='thumb';
-    div.innerHTML = `<img src="${url}" alt="">`;
-    preview.appendChild(div);
+/* Фото-слоты (интерфейс) */
+const MAX=8, slots=document.getElementById('slots'); const files=new Array(MAX).fill(null);
+function slot(i){
+  const label=document.createElement('label'); label.className='slot';
+  label.innerHTML=`<input type="file" accept="image/*"/><span class="add">＋</span>`;
+  const input=label.querySelector('input');
+  input.addEventListener('change',e=>{
+    const f=input.files && input.files[0]; if(!f) return;
+    files[i]=f; const u=URL.createObjectURL(f);
+    label.innerHTML=`<input type="file" accept="image/*"/><img src="${u}"><span class="name">${f.name}</span>`;
+    label.querySelector('input').addEventListener('change',ev=>{
+      const nf=ev.target.files && ev.target.files[0]; if(!nf) return;
+      files[i]=nf; label.querySelector('img').src=URL.createObjectURL(nf); label.querySelector('.name').textContent=nf.name;
+    });
   });
+  return label;
 }
-
-pickBtn.onclick = ()=> input.click();
-
-input.onchange = ()=> {
-  chosenFiles = [...input.files];
-  renderPreview();
-};
-
-;['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,(e)=>{e.preventDefault(); drop.classList.add('drag')}))
-;['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,(e)=>{e.preventDefault(); drop.classList.remove('drag')}))
-drop.addEventListener('drop',(e)=>{
-  const files = [...(e.dataTransfer?.files || [])].filter(f=>f.type.startsWith('image/'));
-  if (files.length){ chosenFiles = files; renderPreview(); }
+for(let i=0;i<MAX;i++) slots.appendChild(slot(i));
+document.getElementById('sendPhotos').addEventListener('click',()=>{
+  const chosen=files.filter(Boolean);
+  if(!chosen.length) return alert('Добавьте хотя бы одно фото');
+  alert('✅ Интерфейс готов. Отправку подключим, когда включим Telegram-бота.');
 });
-
-// Отправка фото в Telegram
-sendBtn.onclick = async ()=>{
-  if (!chosenFiles.length){ alert('Выберите фото'); return; }
-  // читаем как dataURL
-  const toDataURL = (file)=> new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res({name:file.name,dataUrl:fr.result}); fr.onerror=rej; fr.readAsDataURL(file); });
-  const images = await Promise.all(chosenFiles.map(toDataURL));
-  sendBtn.disabled = true; sendBtn.textContent = 'Отправка...';
-  try{
-    const r = await fetch('/api/sendPhoto',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ images, caption:'📸 Фото к книге (главная страница)' }) });
-    if (!r.ok) throw 0;
-    sendBtn.textContent = 'Отправлено ✅';
-  }catch(e){
-    sendBtn.textContent = 'Ошибка';
-    alert('Не удалось отправить. Попробуйте ещё раз.');
-  }finally{
-    setTimeout(()=>{ sendBtn.disabled=false; sendBtn.textContent='Отправить фото'; }, 1600);
-  }
-};
-
-skipBtn.onclick = ()=> window.location.href='questions.html';
 </script>
 </body>
 </html>
