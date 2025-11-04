@@ -162,6 +162,43 @@ input[type=file]{
   font-size:16px;
 }
 
+  .photo-preview-container{
+  position:relative;
+  display:inline-block;
+}
+
+.photo-remove{
+  position:absolute;
+  top:4px; right:4px;
+  background:rgba(0,0,0,.6);
+  color:white;
+  width:20px; height:20px;
+  border-radius:50%;
+  font-size:14px;
+  display:flex;
+  justify-content:center; align-items:center;
+  cursor:pointer;
+  opacity:0;
+  transition:.2s;
+}
+
+.photo-preview-container:hover .photo-remove{
+  opacity:1;
+}
+
+.photo-preview-container img{
+  width:76px; height:76px;
+  object-fit:cover;
+  border-radius:14px;
+  transition:.25s;
+  box-shadow:0 4px 14px rgba(0,0,0,.12);
+}
+.photo-preview-container img:hover{
+  transform:scale(1.06);
+  box-shadow:0 8px 22px rgba(0,0,0,.16);
+}
+
+
   
 </style>
 </head>
@@ -277,15 +314,59 @@ a.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();send();}
 render();
 
 /* Photo preview */
-document.getElementById("photos").addEventListener("change",e=>{
- const p=document.getElementById("preview"); p.innerHTML="";
- [...e.target.files].forEach(file=>{
-  const img=document.createElement("img");
-  img.className="preview-img";
-  img.src=URL.createObjectURL(file);
-  p.appendChild(img);
- });
+let selectedPhotos = [];
+
+document.getElementById("photos").addEventListener("change", function(){
+  selectedPhotos = [...this.files];
+  renderPreviews();
 });
+
+function renderPreviews(){
+  const preview = document.getElementById("preview");
+  preview.innerHTML = "";
+
+  selectedPhotos.forEach((file, index) => {
+    const url = URL.createObjectURL(file);
+
+    const div = document.createElement("div");
+    div.className = "photo-preview-container";
+
+    const img = document.createElement("img");
+    img.src = url;
+
+    const removeBtn = document.createElement("div");
+    removeBtn.className = "photo-remove";
+    removeBtn.textContent = "×";
+
+    removeBtn.onclick = () => {
+      selectedPhotos.splice(index, 1);
+      renderPreviews();
+    };
+
+    div.appendChild(img);
+    div.appendChild(removeBtn);
+    preview.appendChild(div);
+  });
+}
+
+// sendPhotos теперь шлёт selectedPhotos
+async function sendPhotos(){
+  if (!selectedPhotos.length) {
+    alert("Фото не выбраны, но это необязательно 🌸");
+    finish();
+    return;
+  }
+
+  for (const photo of selectedPhotos){
+    const fd = new FormData();
+    fd.append("photo", photo);
+    await fetch("/api/sendPhoto", { method:"POST", body:fd });
+  }
+
+  alert("Фото отправлены 🤍");
+  finish();
+}
+
 
 /* Send photos */
 async function sendPhotos(){
