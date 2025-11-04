@@ -1,397 +1,249 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>История — Вопросы</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --cream:#FBF7F2; --ink:#4A3A39;
-  --card:rgba(255,255,255,.78); --veil:rgba(255,255,255,.9);
-  --gold2:#9b7f64; --gold3:#d7c29c; --gold4:#b99673;
-  --shadow:0 14px 38px rgba(0,0,0,.14); --radius:26px;
+ --cream:#FBF7F2; --ink:#4A3A39;
+ --card:rgba(255,255,255,.78); --veil:rgba(255,255,255,.9);
+ --gold2:#9b7f64; --gold4:#b99673;
+ --radius:26px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-
 body{
-  min-height:100vh;
-  display:flex; align-items:flex-start; justify-content:center;
-  background:url("assets/background3.jpg") center/cover fixed no-repeat;
-  font-family:"Playfair Display",serif; color:var(--ink);
-  padding:40px 12px; overflow-x:hidden;
+ min-height:100vh;display:flex;align-items:center;justify-content:center;
+ background:url("assets/background3.jpg") center/cover fixed no-repeat;
+ font-family:"Playfair Display",serif;color:var(--ink);padding:40px 14px;
+ overflow-x:hidden;
 }
-.no-scroll{overflow:hidden}
 
-/* Карточка-центр */
 .card{
-  width:100%; max-width:780px; margin:0 auto;
-  background:var(--card); backdrop-filter:blur(10px);
-  border-radius:var(--radius); padding:34px; box-shadow:var(--shadow);
-  animation:fade .55s ease;
+ width:100%;max-width:780px;background:var(--card);backdrop-filter:blur(10px);
+ border-radius:var(--radius);padding:34px;box-shadow:0 14px 38px rgba(0,0,0,.15);
+ animation:fade .5s ease;margin:auto;
 }
 @keyframes fade{from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none}}
 
-/* Заголовок */
 h1{
-  font-family:"Spectral SC",serif; text-align:center; margin-bottom:14px;
-  background:linear-gradient(90deg,#6a5447,#9b7f64,#d7c29c,#b99673,#7a5f4e);
-  -webkit-background-clip:text; color:transparent;
+ font-family:"Spectral SC",serif;text-align:center;margin-bottom:14px;
+ background:linear-gradient(90deg,#6a5447,#9b7f64,#d7c29c,#b99673,#7a5f4e);
+ -webkit-background-clip:text;color:transparent;
 }
 
-/* Вопросы */
-h2{font-size:26px;margin-bottom:14px;text-align:left}
+h2{font-size:26px;margin-bottom:12px;text-align:left}
 textarea{
-  width:100%; height:180px; padding:18px; border:none; border-radius:18px;
-  background:var(--veil); font-size:20px; box-shadow:inset 0 2px 8px rgba(0,0,0,.06)
+ width:100%;height:190px;padding:18px;border:none;border-radius:18px;
+ background:var(--veil);font-size:20px;border:1px solid #eee;outline:none;
 }
 
-/* Кнопки */
 .btn{
-  border:none; cursor:pointer; color:#fff; font-weight:700;
-  background:linear-gradient(130deg,var(--gold2),var(--gold4));
-  padding:14px 28px; border-radius:999px; font-size:18px;
-  box-shadow:0 12px 32px rgba(0,0,0,.18); transition:.25s;
+ border:none;cursor:pointer;color:#fff;font-weight:700;
+ background:linear-gradient(130deg,var(--gold2),var(--gold4));
+ padding:15px 28px;border-radius:99px;font-size:18px;width:100%;
+ margin-top:16px;box-shadow:0 12px 28px rgba(0,0,0,.18);
 }
-.btn:hover{transform:translateY(-3px); opacity:.96}
-.btn-full{width:100%}
+.btn:hover{transform:translateY(-2px);transition:.2s;opacity:.96}
 
-/* Фото */
-#photo-step{display:none; text-align:center}
+/* Фото блок */
+#photo-step{display:none;text-align:center}
+
 .photo-upload-btn{
-  display:inline-block; cursor:pointer; padding:14px 32px; margin:14px 0 8px;
-  background:linear-gradient(130deg,var(--gold2),var(--gold4)); color:#fff;
-  border-radius:999px; font-weight:700; font-size:18px; box-shadow:0 12px 32px rgba(0,0,0,.18)
+ display:inline-block;cursor:pointer;padding:14px 32px;margin:14px 0;
+ background:linear-gradient(130deg,var(--gold2),var(--gold4));color:#fff;
+ border-radius:999px;font-weight:700;font-size:18px
 }
 #photos{display:none}
 
-#preview{margin-top:14px; display:flex; flex-wrap:wrap; gap:12px; justify-content:center}
-.preview-item{position:relative; width:96px; height:96px; border-radius:12px; overflow:hidden; box-shadow:0 6px 16px rgba(0,0,0,.16); animation:polaroid .5s ease}
-@keyframes polaroid{from{opacity:0; transform:translateY(-12px) scale(.9);} to{opacity:1; transform:none}}
-.preview-item img{width:100%; height:100%; object-fit:cover}
+#preview{margin-top:14px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.preview-item{position:relative;width:96px;height:96px;border-radius:12px;
+ overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.16);animation:polaroid .4s ease}
+@keyframes polaroid{from{opacity:0;transform:translateY(-12px) scale(.92)} to{opacity:1;transform:none}}
+.preview-item img{width:100%;height:100%;object-fit:cover}
 .delete-x{
-  position:absolute; top:6px; right:6px; width:22px; height:22px;
-  border-radius:50%; background:rgba(0,0,0,.65); color:#fff;
-  font-size:14px; display:flex; align-items:center; justify-content:center; cursor:pointer
+ position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;
+ background:rgba(0,0,0,.7);color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer
 }
 
-.photo-actions{display:flex; gap:12px; justify-content:center; margin-top:14px}
-
-/* Модалка оплаты */
+/* Модал оплаты */
 .modal-bg{
-  position:fixed; inset:0; display:none; justify-content:center; align-items:center;
-  background:rgba(0,0,0,.45); backdrop-filter:blur(8px); z-index:50;
+ position:fixed;inset:0;display:none;justify-content:center;align-items:center;
+ background:rgba(0,0,0,.45);backdrop-filter:blur(8px);z-index:9999;
 }
 .modal{
-  background:var(--card); border-radius:22px; padding:26px; width:92%; max-width:520px;
-  box-shadow:0 18px 45px rgba(0,0,0,.2); animation:fade .35s ease;
+ background:rgba(255,255,255,.92);border-radius:26px;padding:26px;width:90%;max-width:480px;
+ box-shadow:0 18px 45px rgba(0,0,0,.2);animation:fadeUp .35s ease;
 }
-.modal h3{
-  font-family:"Spectral SC",serif; text-align:center; margin-bottom:12px;
-  background:linear-gradient(90deg,#9b7f64,#d7c29c,#b99673); -webkit-background-clip:text; color:transparent;
-}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none}}
+
 .tariff{
-  background:#fff; border:1px solid rgba(180,160,130,.35); border-radius:16px;
-  padding:16px; margin:12px 0; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,.06)
+ background:#fff;border:1px solid #d9c7a9;border-radius:18px;padding:18px;margin:12px 0;text-align:center;
 }
-.tariff .price{font-weight:700; color:#8e6c50; margin:8px 0 10px}
-.tariff .split{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
-.copy{
-  border:1px dashed #bfa88d; background:#fff; color:#6a5447; padding:10px 14px;
-  border-radius:12px; cursor:pointer; transition:.2s
-}
-.card-copy{
-  position:relative;
-  font-family:"Playfair Display",serif;
-  font-size:22px;
-  letter-spacing:2px;
-  font-weight:600;
-  padding:20px 26px;
-  border-radius:18px;
-  background:rgba(255,255,255,.65);
-  border:1px solid rgba(215,194,156,.7);
-  box-shadow:
-    0 8px 24px rgba(0,0,0,.1),
-    inset 0 0 16px rgba(255,255,255,.7);
-  backdrop-filter:blur(12px);
-  cursor:pointer;
-  transition:.3s;
-  color:#6a5447;
-  text-align:center;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:6px;
-  overflow:hidden;
-}
+.price{font-size:20px;font-weight:700;color:#8e6c50;margin-bottom:10px}
 
-.card-copy:hover{
-  transform:translateY(-3px);
-  box-shadow:
-    0 16px 38px rgba(0,0,0,.18),
-    inset 0 0 22px rgba(255,255,255,.9);
-  border-color:#e8d3ac;
+.cardnum{
+ font-size:26px;font-weight:800;letter-spacing:3px;background:linear-gradient(90deg,#c8aa76,#e8d3ac,#b79166);
+ -webkit-background-clip:text;color:transparent;margin:8px 0;
 }
+.banktag{font-size:13px;opacity:.75;margin-bottom:12px}
 
-/* Блик */
-.card-copy::after{
-  content:"";
-  position:absolute;
-  width:180%;
-  height:140%;
-  top:-80%;
-  left:-50%;
-  background:linear-gradient(
-    120deg,
-    rgba(255,255,255,.1),
-    rgba(255,255,255,.5),
-    rgba(255,255,255,.1)
-  );
-  transform:rotate(20deg);
-  transition:.6s;
-  opacity:.4;
+.copybtn{
+ padding:10px 14px;border-radius:12px;background:#fff;border:1px dashed #c9b391;
+ cursor:pointer;font-size:15px;margin-bottom:8px;
 }
-.card-copy:hover::after{
-  top:100%;
-}
+.copybtn:hover{background:#faf4e8}
 
-/* ✨ Золотые искры */
-.spark{
-  pointer-events:none;
-  position:absolute;
-  inset:0;
-  background:
-     radial-gradient(circle,rgba(255,215,168,.8) 2px,transparent 4px) 10px 10px,
-     radial-gradient(circle,rgba(255,245,210,.9) 2px,transparent 4px) 40px 60px,
-     radial-gradient(circle,rgba(255,235,190,.7) 2px,transparent 4px) 80px 30px,
-     radial-gradient(circle,rgba(255,225,180,.7) 2px,transparent 4px) 140px 80px;
-  background-size:100px 100px;
-  opacity:0;
-  transition:.3s ease;
+.paybtn{
+ padding:12px;border-radius:14px;background:linear-gradient(130deg,#a88a5e,#d8c6a3);
+ color:#fff;font-weight:700;font-size:17px;width:100%;
 }
+.paybtn:hover{opacity:.92}
 
-.card-copy:hover .spark{
-  opacity:1;
-}
-
-/* подпись */
-.card-copy small{
-  font-size:12px;
-  opacity:.7;
-  letter-spacing:0;
-  font-weight:400;
-}
-.helper{font-size:13px; opacity:.7; text-align:center; margin-top:6px}
-
-@media (max-width:640px){
-  .photo-actions{flex-direction:column}
-  .btn-full,.photo-actions .btn{width:100%}
-}
+.close-hint{margin-top:8px;text-align:center;font-size:13px;opacity:.7}
 </style>
 </head>
+
 <body>
 
-<!-- Шаг 1: вопросы -->
-<div class="card" id="step-questions">
+<!-- Вопросы -->
+<div class="card" id="step-q">
   <h1>Пробная часть</h1>
   <h2 id="q">Где вы впервые встретились?</h2>
   <textarea id="a" placeholder="Ваш ответ..."></textarea>
-  <button class="btn btn-full" id="next">Далее</button>
+  <button class="btn" id="next">Далее</button>
 </div>
 
-<!-- Шаг 2: фото -->
+<!-- Фото шаг -->
 <div class="card" id="photo-step">
-  <h1>Добавьте фото</h1>
-  <p>Чтобы книга стала ещё теплее 🤍 <br>(по желанию — можно пропустить)</p>
+ <h1>Добавьте фото</h1>
+ <p>Чтобы книга стала ещё теплее 🤍<br>(по желанию — можно пропустить)</p>
 
-  <label class="photo-upload-btn">
-    📎 Прикрепить фото
-    <input type="file" id="photos" multiple accept="image/*">
-  </label>
+ <label class="photo-upload-btn">
+ 📎 Прикрепить фото
+ <input type="file" id="photos" multiple accept="image/*">
+ </label>
 
-  <div id="preview"></div>
+ <div id="preview"></div>
 
-  <div class="photo-actions">
-    <button class="btn" id="send-photos">Отправить фото</button>
-    <button class="btn" id="open-pay">Создать мою книгу ❤️</button>
-  </div>
-
-  <div class="helper">Нажми на ✖️, чтобы удалить фото</div>
+ <button class="btn" onclick="sendPhotos()">Отправить фото</button>
+ <button class="btn" onclick="openPay()">Создать мою книгу ❤️</button>
+ <div style="font-size:13px;margin-top:6px;opacity:.8">Нажми на ✖, чтобы удалить фото</div>
 </div>
 
-<!-- Модалка тарифов -->
+<!-- Модал оплаты -->
 <div id="payModal" class="modal-bg">
-  <div class="modal">
-    <h3>Выберите тариф</h3>
+ <div class="modal">
+   <h1 style="font-size:24px;margin-bottom:8px;">Выберите тариф</h1>
 
-    <div class="tariff">
-      <div><b>✨ Basic</b></div>
-      <div class="price">2490 ₽</div>
-      <div class="split">
-        <div class="card-copy" onclick="copyCard()">
-  <span class="card-num">2200&nbsp;7017&nbsp;4877&nbsp;2404</span>
-  <div class="spark"></div>
-  <small>Т-Банк — нажмите, чтобы скопировать</small>
-</div>
-        <button class="btn" onclick="openBot('basic')">Оплатил — отправить чек в Telegram</button>
-      </div>
-    </div>
+   <div class="tariff">
+     <div>✨ Basic</div>
+     <div class="price">2490 ₽</div>
+     <div class="cardnum">2200 7017 4877 2404</div>
+     <div class="banktag">Т-Банк — нажмите для копирования</div>
+     <button class="copybtn" onclick="copyCard()">📋 Скопировать реквизиты</button>
+     <button class="paybtn" onclick="pay('basic')">Оплатил — отправить чек</button>
+   </div>
 
-    <div class="tariff">
-      <div><b>💎 Premium</b></div>
-      <div class="price">6990 ₽</div>
-      <div class="split">
-        <div class="card-copy" onclick="copyCard()">
-  <span class="card-num">2200&nbsp;7017&nbsp;4877&nbsp;2404</span>
-  <div class="spark"></div>
-  <small>Т-Банк — нажмите, чтобы скопировать</small>
-</div>
-        <button class="btn" onclick="openBot('premium')">Оплатил — отправить чек в Telegram</button>
-      </div>
-    </div>
+   <div class="tariff">
+     <div>💎 Premium</div>
+     <div class="price">6990 ₽</div>
+     <div class="cardnum">2200 7017 4877 2404</div>
+     <div class="banktag">Т-Банк — нажмите для копирования</div>
+     <button class="copybtn" onclick="copyCard()">📋 Скопировать реквизиты</button>
+     <button class="paybtn" onclick="pay('premium')">Оплатил — отправить чек</button>
+   </div>
 
-    <p class="helper">Нажмите вне окна, чтобы закрыть</p>
-  </div>
+   <div class="close-hint">Нажмите вне окна, чтобы закрыть</div>
+ </div>
 </div>
 
 <script>
-// ——— ВОПРОСЫ ———
+// вопросы
 const qs=[
-  "Где вы впервые встретились?",
-  "Что вы подумали при первой встрече?",
-  "Кто сделал первый шаг?",
-  "Какой момент стал решающим?",
-  "Что больше всего запомнилось?"
+ "Где вы впервые встретились?",
+ "Что вы подумали при первой встрече?",
+ "Кто сделал первый шаг?",
+ "Какой момент стал решающим?",
+ "Что больше всего запомнилось?"
 ];
-let i=0;
-const qEl=document.getElementById('q');
-const aEl=document.getElementById('a');
 
-async function sendAnswerToBot(question, answer){
-  if(!answer.trim()) return;
-  await fetch("/api/sendMessage",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({text:`📖 <b>Ответ пользователя</b>\n\n❓ <b>${question}</b>\n✏️ ${answer}`})
-  });
+let i=0;
+const q=document.getElementById('q');
+const a=document.getElementById('a');
+
+async function sendAnswer(question,answer){
+ if(!answer.trim())return;
+ await fetch("/api/sendMessage",{
+  method:"POST",headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({text:`📖 <b>Ответ</b>\n\n❓ ${question}\n✏️ ${answer}`})
+ });
 }
 
 function nextQ(){
-  const val=aEl.value.trim();
-  if(val) sendAnswerToBot(qs[i],val);
-  i++;
-  if(i<qs.length){
-    qEl.textContent=qs[i];
-    aEl.value="";
-  }else{
-    // Переход к шагу фото
-    document.getElementById('step-questions').style.display='none';
-    const photo=document.getElementById('photo-step');
-    photo.style.display='block';
-    window.scrollTo({top:0,behavior:"smooth"});
-  }
+ const val=a.value.trim();
+ if(val) sendAnswer(qs[i],val);
+ i++;
+ if(i<qs.length){
+  q.textContent=qs[i];a.value="";
+ }else{
+  document.getElementById("step-q").style.display="none";
+  document.getElementById("photo-step").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+ }
 }
+document.getElementById("next").onclick=nextQ;
+a.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();nextQ();}});
 
-document.getElementById('next').onclick = nextQ;
-// Enter = далее (Shift+Enter — перенос строки)
-aEl.addEventListener('keydown',e=>{
-  if(e.key==="Enter" && !e.shiftKey){
-    e.preventDefault();
-    nextQ();
-  }
-});
-
-// ——— ФОТО ———
+// фото
 let files=[];
-const inputPhotos=document.getElementById('photos');
-const previewBox=document.getElementById('preview');
-
-inputPhotos.onchange=e=>{
-  for(const f of e.target.files) files.push(f);
-  renderPhotos();
+document.getElementById('photos').onchange=e=>{
+ for(const f of e.target.files) files.push(f);
+ renderPhotos();
 };
-
 function renderPhotos(){
-  previewBox.innerHTML="";
-  files.forEach((file,idx)=>{
-    const url=URL.createObjectURL(file);
-    const wrap=document.createElement('div');
-    wrap.className='preview-item';
-    wrap.innerHTML=`<span class="delete-x" title="Удалить" onclick="removePhoto(${idx})">✖</span><img src="${url}" alt="">`;
-    previewBox.appendChild(wrap);
-  });
+ const box=document.getElementById('preview');box.innerHTML="";
+ files.forEach((file,idx)=>{
+  const url=URL.createObjectURL(file);
+  box.innerHTML+=`
+   <div class="preview-item">
+    <span class="delete-x" onclick="removePhoto(${idx})">✖</span>
+    <img src="${url}">
+   </div>`;
+ });
 }
-
-function removePhoto(idx){
-  files.splice(idx,1);
-  renderPhotos();
-}
+function removePhoto(i){files.splice(i,1);renderPhotos();}
 
 async function sendPhotos(){
-  if(!files.length){ alert("Фото можно пропустить — это не обязательно 🤍"); return; }
-  for(const f of files){
-    const fd=new FormData(); fd.append("photo",f);
-    await fetch("/api/sendPhoto",{method:"POST",body:fd});
-    await new Promise(r=>setTimeout(r,250));
-  }
-  alert("Фото отправлены 🤍");
+ for(const f of files){
+  const fd=new FormData();fd.append("photo",f);
+  await fetch("/api/sendPhoto",{method:"POST",body:fd});
+  await new Promise(r=>setTimeout(r,300));
+ }
+ alert("Фото отправлены 🤍");
 }
 
-document.getElementById('send-photos').onclick = sendPhotos;
+// оплата
+function openPay(){document.getElementById("payModal").style.display="flex";}
+document.getElementById("payModal").onclick=e=>{if(e.target.id==="payModal")e.target.style.display="none";};
 
-// ——— ОПЛАТА / МОДАЛКА ———
-const payModal=document.getElementById('payModal');
-document.getElementById('open-pay').onclick=()=>openPay();
-
-function openPay(){
-  payModal.style.display='flex';
-  document.body.classList.add('no-scroll');
-}
-payModal.addEventListener('click',e=>{
-  if(e.target===payModal){
-    payModal.style.display='none';
-    document.body.classList.remove('no-scroll');
-  }
-});
-
-// Копирование номера карты
 function copyCard(){
-  navigator.clipboard.writeText("2200701748772404");
-
-  // Визуальная анимация ✔️
-  const cards = document.querySelectorAll(".card-copy");
-  cards.forEach(card=>{
-    const flash = document.createElement("div");
-    flash.style.position="absolute";
-    flash.style.inset="0";
-    flash.style.background="rgba(255,255,255,.7)";
-    flash.style.borderRadius="inherit";
-    flash.style.opacity="0";
-    flash.style.transition="opacity .4s ease";
-    card.appendChild(flash);
-    setTimeout(()=>flash.style.opacity="1",10);
-    setTimeout(()=>flash.remove(),450);
-  });
-
-  alert("Номер карты скопирован ✨💳");
+ navigator.clipboard.writeText("2200701748772404");
+ alert("Скопировано ✅");
 }
-document.getElementById('copyBasic').onclick=copyNumber;
-document.getElementById('copyPremium').onclick=copyNumber;
 
-// Переход в бота и уведомление админ-каналу
-function openBot(tier){
-  const bot="abookaboutyou_bot";
-  const start=tier==="premium"?"pay_premium":"pay_basic";
-  window.open(`https://t.me/${bot}?start=${start}`,'_blank');
-
-  fetch("/api/sendMessage",{
-    method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({text:`💸 Пользователь перешёл к оплате (${tier}) и отправке чека.`})
-  });
+function pay(tier){
+ window.open(`https://t.me/abookaboutyou_bot?start=${tier}`,"_blank");
+ fetch("/api/sendMessage",{method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({text:`💸 Пользователь выбрал тариф: ${tier}, перешёл отправлять чек.`})
+ });
 }
 </script>
+
 </body>
 </html>
