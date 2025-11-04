@@ -262,23 +262,20 @@ function openBot(tier){
   const bot = "abookaboutyou_bot";
   const start = tier==="premium" ? "pay_premium" : "pay_basic";
 
-  // 1) открыть Телеграм для отправки чека
-  window.open(`https://t.me/${bot}?start=${start}`,'_blank');
+  // 1) Открыть бота для отправки чека
+  window.open(`https://t.me/${bot}?start=${start}`, '_blank');
 
-  // 2) создать уникальный ID Кабинета
-  const uid = "u_" + Math.random().toString(36).slice(2);
-  localStorage.setItem("session_uid", uid);
+  // 2) Создать локальную "сессию"
+  const uid = 'u_' + Math.random().toString(36).slice(2);
+  localStorage.setItem('session_uid', uid);
 
-  // 3) перейти в личный кабинет
-  setTimeout(() => {
-    window.location.href = `/account.html?session=${uid}`;
-  }, 400);
+  // 3) Перейти в личный кабинет (доступ выдаём после предоплаты)
+  setTimeout(()=>{ window.location.href = `/account.html?session=${uid}`; }, 400);
 
-  // 4) уведомление тебе
+  // 4) Уведомить тебя
   fetch("/api/sendMessage",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({text:`💸 Новый платёж — тариф: ${tier}, UID: ${uid}`})
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({text:`💸 Пользователь перешёл к оплате (${tier}). Сессия: ${uid}`})
   });
 }
 
