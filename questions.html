@@ -15,6 +15,7 @@
   --shadow:0 14px 38px rgba(0,0,0,.14); --radius:26px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+
 body{
   background:url("assets/background3.jpg") center/cover fixed no-repeat;
   color:var(--ink); font-family:"Playfair Display",serif; overflow-x:hidden; min-height:100vh;
@@ -43,7 +44,7 @@ h1{font-family:"Spectral SC",serif; text-align:center; margin-bottom:8px;
 .progress{width:100%; height:8px; background:rgba(255,255,255,.6); border-radius:999px; overflow:hidden; margin-top:8px}
 .bar{height:100%; width:0%; background:linear-gradient(90deg,var(--gold2),var(--gold3),var(--gold4)); transition:width .4s ease}
 
-/* Вопрос */
+/* Текст */
 h2.q{font-family:"Spectral SC",serif; font-size:28px; margin:8px 0 12px}
 textarea{
   width:100%; height:170px; padding:18px; border:none; border-radius:18px;
@@ -89,43 +90,27 @@ textarea{
     <h2 id="q" class="q">Где вы впервые встретились?</h2>
     <textarea id="a" placeholder="Ваш ответ..."></textarea>
 
-    <div style="display:flex; gap:12px; flex-wrap:wrap">
-      <button class="btn" id="next">Далее</button>
-    </div>
+    <button class="btn" id="next">Далее</button>
   </div>
 </div>
 
 <script>
-/* Glitter mix */
+/* Glitter */
 const cvs=document.getElementById('glitter'), ctx=cvs.getContext('2d');
 let W,H,parts=[];
 function resize(){W=cvs.width=innerWidth; H=cvs.height=innerHeight}
 addEventListener('resize',resize); resize();
-function spawn(n=60){
-  for(let i=0;i<n;i++){
-    parts.push({x:Math.random()*W, y:Math.random()*-H*.2, r:Math.random()<.18?2.2+Math.random()*1.8:.8+Math.random()*1.2, v:1.2+Math.random()*1.2, g:Math.random()<.2})
-  }
-}
-function step(){
-  ctx.clearRect(0,0,W,H); ctx.globalCompositeOperation='lighter';
-  for(const p of parts){
-    p.y+=p.v; p.x+=Math.sin((p.y+p.r)*.01)*.3;
-    const grd=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2.2);
-    if(p.g){grd.addColorStop(0,'rgba(255,240,210,.9)');grd.addColorStop(1,'rgba(255,240,210,0)')}
-    else{grd.addColorStop(0,'rgba(255,255,255,.7)');grd.addColorStop(1,'rgba(255,255,255,0)')}
-    ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
-  }
-  parts=parts.filter(p=>p.y<H+20); requestAnimationFrame(step)
-}
+function spawn(n=60){for(let i=0;i<n;i++)parts.push({x:Math.random()*W,y:Math.random()*-H*.2,r:Math.random()<.18?2.2+Math.random()*1.8:.8+Math.random()*1.2,v:1.2+Math.random()*1.2,g:Math.random()<.2})}
+function step(){ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';for(const p of parts){p.y+=p.v;p.x+=Math.sin((p.y+p.r)*.01)*.3;const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2.2);if(p.g){g.addColorStop(0,'rgba(255,240,210,.9)');g.addColorStop(1,'rgba(255,240,210,0)')}else{g.addColorStop(0,'rgba(255,255,255,.7)');g.addColorStop(1,'rgba(255,255,255,0)')}ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}parts=parts.filter(p=>p.y<H+20);requestAnimationFrame(step)}
 spawn(70); setInterval(()=>spawn(8),600); step();
 
-/* Вопросы (пробные 5) */
+/* Questions */
 const qs=[
-  "Где вы впервые встретились?",
-  "Что вы подумали при первой встрече?",
-  "Кто сделал первый шаг?",
-  "Какой момент стал решающим для вас?",
-  "Что больше всего запомнилось в тот день?"
+"Где вы впервые встретились?",
+"Что вы почувствовали при первой встрече?",
+"Кто сделал первый шаг?",
+"Какой момент стал решающим?",
+"Как вы поняли, что это любовь?"
 ];
 
 let i=0;
@@ -143,31 +128,32 @@ function render(){
   perc.textContent=Math.round((i/5)*100)+'%';
   a.value='';
 }
-document.getElementById('next').addEventListener('click', async ()=>{
-  // Отправка ответа в Telegram
-  await fetch("/api/sendMessage", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      text: `📖 *Ответ пользователя*\n\n❓ *${qs[i]}*\n✏️ ${a.value}`
-    })
-  });
+async function send(){
+  const text=a.value.trim();
+
+  if(text){ // не отправляем пустые
+    await fetch("/api/sendMessage", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({text:`📖 *Ответ*\n\n❓ *${qs[i]}*\n✏️ ${text}`})
+    });
+  }
 
   i++;
-
-  if(i<5){
-    render();
-  } else {
-    bar.style.width='100%';
-    perc.textContent='100%';
+  if(i<5){render()}
+  else{
+    bar.style.width='100%'; perc.textContent='100%';
     card.innerHTML=`
       <div class="final">
         <h2>✨ Пробная часть завершена</h2>
-        <p>Вы прошли 5 вопросов. Откройте оставшиеся 95 и создайте нетленную книгу вашей любви.</p>
-        <button class="btn" onclick="location.href='index.html'">На главную</button>
+        <p>Готовы создать вашу вечную книгу любви? ❤️</p>
+        <button class="btn" onclick="location.href='index.html#tariffs'">Оплатить и получить свою книгу</button>
       </div>`;
   }
-});
+}
+
+document.getElementById('next').addEventListener('click',send);
+a.addEventListener('keydown',e=>{ if(e.key==="Enter"){e.preventDefault(); send();}})
 
 render();
 </script>
