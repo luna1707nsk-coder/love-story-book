@@ -258,10 +258,30 @@ async function sendPhotos(){for(const f of files){const fd=new FormData();fd.app
 function openPay(){document.getElementById("payModal").style.display="flex";}
 document.getElementById("payModal").onclick=e=>{if(e.target.id==="payModal")e.target.style.display="none";}
 function copyCard(){navigator.clipboard.writeText("2200701748772404");alert("Скопировано ✅");}
-function openBot(t){
- window.open(`https://t.me/abookaboutyou_bot?start=${t==="premium"?"pay_premium":"pay_basic"}`,"_blank");
- fetch("/api/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:`💸 Выбран тариф: ${t}`})});
+function openBot(tier){
+  const bot = "abookaboutyou_bot";
+  const start = tier==="premium" ? "pay_premium" : "pay_basic";
+
+  // 1) открыть Телеграм для отправки чека
+  window.open(`https://t.me/${bot}?start=${start}`,'_blank');
+
+  // 2) создать уникальный ID Кабинета
+  const uid = "u_" + Math.random().toString(36).slice(2);
+  localStorage.setItem("session_uid", uid);
+
+  // 3) перейти в личный кабинет
+  setTimeout(() => {
+    window.location.href = `/account.html?session=${uid}`;
+  }, 400);
+
+  // 4) уведомление тебе
+  fetch("/api/sendMessage",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({text:`💸 Новый платёж — тариф: ${tier}, UID: ${uid}`})
+  });
 }
+
 
 /* THEME */
 const btn=document.getElementById("themeToggle");
