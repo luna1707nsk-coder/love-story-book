@@ -116,23 +116,29 @@ textarea{
     <button class="btn" id="next">Далее</button>
   </div>
 
-  <!-- Photos -->
-  <div id="photo-step" class="card" style="display:none;">
-    <h1>Добавьте фото</h1>
-    <p>Чтобы книга стала ещё теплее 💕<br>(по желанию — можно пропустить)</p>
+<!-- 📸 PHOTO STEP -->
+<div id="photo-step" class="card" style="display:none; max-width:780px; margin:120px auto;">
+  <h1>Добавьте фото</h1>
+  <p>Чтобы книга стала ещё теплее 💜<br>
+  <span style="opacity:.7">(по желанию — можно пропустить)</span></p>
 
-    <div class="photo-input-wrapper">
-      <label class="photo-btn">📎 Прикрепить фото
-        <input type="file" id="photos" multiple accept="image/*" class="photo-input">
-      </label>
-    </div>
+  <label class="btn photo-upload-btn">
+    📎 Прикрепить фото
+    <input type="file" id="photos" multiple accept="image/*" class="photo-input">
+  </label>
 
-    <div id="preview"></div>
+  <div id="preview" class="preview-grid"></div>
 
+  <div class="photo-actions">
     <button class="btn" onclick="sendPhotos()">Отправить фото</button>
-    <button class="btn" style="margin-top:10px" onclick="finish()">Создать мою книгу 💖</button>
+    <button class="btn" onclick="finish()">Создать мою книгу 💖</button>
+  </div>
+
+  <div style="font-size:14px; opacity:.6; margin-top:8px;">
+    Нажми на фото, чтобы удалить ✖️
   </div>
 </div>
+
 
 <!-- MODAL -->
 <div id="payModal" class="modal-bg">
