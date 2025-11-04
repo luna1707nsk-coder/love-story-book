@@ -277,6 +277,49 @@ function finish(){
 document.getElementById("payModal").onclick=e=>{
   if(e.target.id==="payModal") e.target.style.display="none";
 };
+  // Show preview + delete photo on click
+let selectedPhotos = [];
+
+document.getElementById("photos").addEventListener("change", function(e) {
+  selectedPhotos = [...e.target.files];
+  renderPreview();
+});
+
+function renderPreview() {
+  const preview = document.getElementById("preview");
+  preview.innerHTML = "";
+
+  selectedPhotos.forEach((file, index) => {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+
+    img.onclick = () => {
+      selectedPhotos.splice(index,1);
+      renderPreview();
+    };
+
+    preview.appendChild(img);
+  });
+}
+
+// Send all photos to bot
+async function sendPhotos() {
+  if (selectedPhotos.length === 0) {
+    alert("Вы не добавили фото — но это не обязательно 💛");
+    return;
+  }
+
+  for (const file of selectedPhotos) {
+    const formData = new FormData();
+    formData.append("photo", file);
+
+    await fetch("/api/sendPhoto", { method:"POST", body:formData });
+    await new Promise(r => setTimeout(r, 500));
+  }
+
+  alert("Фото отправлены 🕊");
+}
+
 </script>
 
 </body>
