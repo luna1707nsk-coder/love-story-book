@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Вопросы — История</title>
+<title>История — Вопросы</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -14,88 +14,86 @@
   --gold2:#9b7f64; --gold3:#d7c29c; --gold4:#b99673;
   --shadow:0 14px 38px rgba(0,0,0,.14); --radius:26px;
 }
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
   background:url("assets/background3.jpg") center/cover fixed no-repeat;
-  color:var(--ink); font-family:"Playfair Display",serif; overflow-x:hidden; min-height:100vh;
+  color:var(--ink); font-family:"Playfair Display",serif; min-height:100vh;
 }
 
 /* Glitter */
 #glitter{position:fixed; inset:0; pointer-events:none; z-index:1}
 
-/* Container */
-.container{max-width:780px; margin:120px auto 60px; padding:20px}
+/* Card */
+.container{max-width:780px;margin:120px auto;padding:20px}
 .card{
   background:var(--card); backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.92); border-radius:var(--radius);
-  padding:32px; box-shadow:var(--shadow); animation:fade .7s ease
+  border-radius:var(--radius); padding:32px;
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:var(--shadow); animation:fade .7s ease
 }
 @keyframes fade{from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:none}}
 
 h1{
-  font-family:"Spectral SC",serif; text-align:center; margin-bottom:8px;
-  background:linear-gradient(90deg,#6a5447,#9b7f64,#d7c29c,#b99673,#7a5f4e);
-  -webkit-background-clip:text; color:transparent; text-shadow:0 2px 10px rgba(215,194,156,.18)
+  font-family:"Spectral SC",serif;text-align:center;margin-bottom:8px;
+  background:linear-gradient(90deg,#9b7f64,#d7c29c,#b99673);
+  -webkit-background-clip:text;color:transparent
 }
 
 /* Progress */
 .progress-wrap{margin:10px 0 18px}
-.progress-top{display:flex; justify-content:space-between; font-weight:600}
-.progress{
-  width:100%; height:8px; background:rgba(255,255,255,.6);
-  border-radius:999px; overflow:hidden; margin-top:8px
-}
-.bar{
-  height:100%; width:0%;
-  background:linear-gradient(90deg,var(--gold2),var(--gold3),var(--gold4));
-  transition:width .4s ease
-}
+.progress-top{display:flex;justify-content:space-between;font-weight:600}
+.progress{width:100%;height:8px;background:rgba(255,255,255,.6);border-radius:999px;overflow:hidden;margin-top:8px}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold2),var(--gold4));transition:.4s}
 
-/* Text */
-h2.q{font-family:"Spectral SC",serif; font-size:28px; margin:8px 0 12px}
+/* Question */
+h2.q{font-family:"Spectral SC",serif;font-size:28px;margin:8px 0 12px}
 textarea{
-  width:100%; height:170px; padding:18px; border:none; border-radius:18px;
-  background:var(--veil); font-family:inherit; font-size:20px;
-  box-shadow:inset 0 2px 8px rgba(0,0,0,.06)
+  width:100%;height:170px;padding:18px;border:none;border-radius:18px;
+  background:var(--veil);font-size:20px;box-shadow:inset 0 2px 8px rgba(0,0,0,.06)
 }
 
 /* Buttons */
 .btn{
-  border:none; cursor:pointer; color:#fff; font-weight:700;
+  border:none;cursor:pointer;color:#fff;font-weight:700;
   background:linear-gradient(130deg,var(--gold2),var(--gold4));
-  padding:14px 30px; border-radius:999px; font-size:20px;
-  box-shadow:0 12px 32px rgba(0,0,0,.18); transition:.25s; margin-top:18px
+  padding:14px 30px;border-radius:999px;font-size:20px;
+  box-shadow:0 12px 32px rgba(0,0,0,.18);transition:.25s;margin-top:18px
 }
 .btn:hover{transform:translateY(-3px);opacity:.96}
 
-/* Modal */
+/* After questions: photo step */
+#photo-step{display:none;text-align:center}
+.photo-input{margin-top:20px;font-size:18px;color:var(--ink)}
+input[type=file]{
+  padding:12px;border-radius:16px;background:var(--veil);
+  width:100%;margin-top:10px;border:1px solid #e6d7c8;font-size:16px
+}
+
+/* Preview grid B (premium mini-cards) */
+#preview{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px;justify-content:center}
+.preview-img{
+  width:110px;height:110px;border-radius:16px;object-fit:cover;
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+  border:2px solid rgba(255,255,255,.8);
+}
+
+/* Modal tariffs */
 .modal-back{
-  position:fixed; inset:0; background:rgba(0,0,0,.45); backdrop-filter:blur(8px);
-  display:none; align-items:center; justify-content:center; z-index:999
+  position:fixed;inset:0;background:rgba(0,0,0,.45);
+  backdrop-filter:blur(8px);display:none;align-items:center;
+  justify-content:center;z-index:999
 }
 .modal{
-  background:var(--card); border-radius:22px; padding:28px;
-  max-width:420px; width:92%; box-shadow:var(--shadow);
-  text-align:center; animation:fade .5s ease
+  background:var(--card);border-radius:22px;padding:28px;
+  max-width:420px;width:92%;box-shadow:var(--shadow);text-align:center;
 }
 .modal h3{
-  font-family:"Spectral SC",serif; font-size:26px; margin-bottom:10px;
+  font-family:"Spectral SC",serif;font-size:26px;margin-bottom:10px;
   background:linear-gradient(90deg,#9b7f64,#d7c29c,#b99673);
-  -webkit-background-clip:text; color:transparent;
+  -webkit-background-clip:text;color:transparent
 }
-.tariff{
-  background:white; border-radius:18px; padding:18px 14px;
-  margin-top:14px; border:1px solid #e2d3c4;
-}
+.tariff{background:white;border-radius:18px;padding:18px;margin-top:14px;border:1px solid #e2d3c4}
 .tariff p{margin-bottom:6px}
-
-/* Responsive */
-@media(max-width:640px){
-  .card{padding:24px}
-  h2.q{font-size:24px}
-  textarea{height:150px}
-  .btn{width:100%}
-}
 </style>
 </head>
 <body>
@@ -108,44 +106,51 @@ textarea{
     <h3>Выберите тариф</h3>
 
     <div class="tariff">
-      <p><b>✨ Стандарт — 590₽</b></p>
-      <p>PDF-книга + сохранение ответов</p>
-      <button class="btn" onclick="alert('Далее подключаем оплату 💳')">Выбрать</button>
+      <p><b>✨ Стандарт — 990₽</b></p>
+      <p>PDF-книга + сохранение истории</p>
+      <button class="btn" onclick="alert('Оплата подключим ✨')">Выбрать</button>
     </div>
 
     <div class="tariff">
-      <p><b>💎 Премиум — 1190₽</b></p>
+      <p><b>💎 Премиум — 1990₽</b></p>
       <p>PDF + печать + доставка</p>
-      <button class="btn" onclick="alert('Далее подключаем оплату 💳')">Выбрать</button>
+      <button class="btn" onclick="alert('Оплата скоро 💳')">Выбрать</button>
     </div>
   </div>
 </div>
 
 <div class="container">
-  <div id="card" class="card">
-    <h1>Пробная часть</h1>
-
-    <div class="progress-wrap">
-      <div class="progress-top"><span id="label">Вопрос 1 из 5</span><span id="perc">0%</span></div>
-      <div class="progress"><div id="bar" class="bar"></div></div>
-    </div>
-
-    <h2 id="q" class="q">Где вы впервые встретились?</h2>
-    <textarea id="a" placeholder="Ваш ответ..."></textarea>
-
-    <button class="btn" id="next">Далее</button>
+<div id="step-questions" class="card">
+  <h1>Пробная часть</h1>
+  <div class="progress-wrap">
+    <div class="progress-top"><span id="label">Вопрос 1 из 5</span><span id="perc">0%</span></div>
+    <div class="progress"><div id="bar" class="bar"></div></div>
   </div>
+  <h2 id="q" class="q"></h2>
+  <textarea id="a" placeholder="Ваш ответ..."></textarea>
+  <button class="btn" id="next">Далее</button>
+</div>
+
+<!-- PHOTO STEP -->
+<div id="photo-step" class="card">
+  <h1>Добавьте фото</h1>
+  <p>По желанию — чтобы книга стала ещё теплее 🤍</p>
+
+  <input type="file" id="photos" multiple accept="image/*" class="photo-input">
+  <div id="preview"></div>
+
+  <button class="btn" onclick="sendPhotos()">Отправить фото</button>
+  <button class="btn" style="margin-top:10px" onclick="finish()">Создать мою книгу ❤️</button>
+</div>
 </div>
 
 <script>
 /* Glitter */
-const cvs=document.getElementById('glitter'),ctx=cvs.getContext('2d');
-let W,H,parts=[];
-function resize(){W=cvs.width=innerWidth;H=cvs.height=innerHeight}
-addEventListener('resize',resize);resize();
-function spawn(n=60){for(let i=0;i<n;i++)parts.push({x:Math.random()*W,y:Math.random()*-H*.2,r:Math.random()<.18?2.2+Math.random()*1.8:.8+Math.random()*1.2,v:1.2+Math.random()*1.2,g:Math.random()<.2})}
-function step(){ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';for(const p of parts){p.y+=p.v;p.x+=Math.sin((p.y+p.r)*.01)*.3;const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2.2);if(p.g){g.addColorStop(0,'rgba(255,240,210,.9)');g.addColorStop(1,'rgba(255,240,210,0)')}else{g.addColorStop(0,'rgba(255,255,255,.7)');g.addColorStop(1,'rgba(255,255,255,0)')}ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}parts=parts.filter(p=>p.y<H+20);requestAnimationFrame(step)}
-spawn(70);setInterval(()=>spawn(8),600);step();
+const cvs=document.getElementById('glitter'),ctx=cvs.getContext('2d');let W,H,parts=[];
+function resize(){W=cvs.width=innerWidth;H=cvs.height=innerHeight}addEventListener('resize',resize);resize();
+function spawn(n=60){for(let i=0;i<n;i++)parts.push({x:Math.random()*W,y:Math.random()*-H*.2,r:Math.random()<.2?2.2+Math.random()*1.8:.8+Math.random()*1.2,v:1.2+Math.random()*1.2,g:Math.random()<.3})}
+function step(){ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';for(const p of parts){p.y+=p.v;p.x+=Math.sin((p.y+p.r)*.01)*.3;const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2.2);g.addColorStop(0,'rgba(255,255,255,.8)');g.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}parts=parts.filter(p=>p.y<H+20);requestAnimationFrame(step)}
+spawn(70);setInterval(()=>spawn(6),600);step();
 
 /* Questions */
 const qs=[
@@ -157,43 +162,52 @@ const qs=[
 ];
 
 let i=0;
-const label=document.getElementById('label');
-const q=document.getElementById('q');
-const a=document.getElementById('a');
-const bar=document.getElementById('bar');
-const perc=document.getElementById('perc');
-const card=document.getElementById('card');
+const label=document.getElementById("label"),q=document.getElementById("q"),
+a=document.getElementById("a"),bar=document.getElementById("bar"),
+perc=document.getElementById("perc");
 
-function render(){
-  label.textContent=`Вопрос ${i+1} из 5`;
-  q.textContent=qs[i];
-  bar.style.width=(i/5)*100+'%';
-  perc.textContent=Math.round((i/5)*100)+'%';
-  a.value='';
-}
-
+function render(){label.textContent=`Вопрос ${i+1} из 5`;q.textContent=qs[i];bar.style.width=(i/5)*100+'%';perc.textContent=Math.round((i/5)*100)+'%';a.value='';}
 async function send(){
-  const text=a.value.trim();
-  if(text){
-    await fetch("/api/sendMessage",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({text:`📖 *Ответ*\n\n❓ *${qs[i]}*\n✏️ ${text}`})
-    });
-  }
+ const text=a.value.trim();
+ if(text){
+  await fetch("/api/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:`📖 *Ответ*\n\n❓ *${qs[i]}*\n✏️ ${text}`})});
+ }
+ i++;
+ if(i<5){render()} else {
+  document.getElementById("step-questions").style.display="none";
+  document.getElementById("photo-step").style.display="block";
+ }
+}
+document.getElementById("next").addEventListener("click",send);
+a.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();send();}});
+render();
 
-  i++;
-  if(i<5) render();
-  else {
-    bar.style.width='100%'; perc.textContent='100%';
-    document.getElementById("payModal").style.display="flex";
-  }
+/* Photo preview */
+document.getElementById("photos").addEventListener("change",e=>{
+ const p=document.getElementById("preview"); p.innerHTML="";
+ [...e.target.files].forEach(file=>{
+  const img=document.createElement("img");
+  img.className="preview-img";
+  img.src=URL.createObjectURL(file);
+  p.appendChild(img);
+ });
+});
+
+/* Send photos */
+async function sendPhotos(){
+ const files=document.getElementById("photos").files;
+ for(let file of files){
+  const fd=new FormData(); fd.append("file",file);
+  await fetch("/api/sendPhoto",{method:"POST",body:fd});
+  await new Promise(r=>setTimeout(r,300));
+ }
+ alert("Фото успешно отправлены 🌸");
 }
 
-document.getElementById('next').addEventListener('click',send);
-a.addEventListener('keydown',e=>{if(e.key==="Enter"){e.preventDefault();send()}});
-
-render();
+/* Finish → open tariffs modal */
+function finish(){
+ document.getElementById("payModal").style.display="flex";
+}
 </script>
 </body>
 </html>
