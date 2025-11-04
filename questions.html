@@ -120,6 +120,34 @@ textarea{
   max-width:420px;width:92%;text-align:center;
   font-size:20px;
 }
+
+.tariff-modal{
+  width:100%;
+  max-width:420px;
+}
+
+.tariff-card{
+  background:#fefefe;
+  border:1px solid rgba(180,160,130,.35);
+  border-radius:14px;
+  padding:18px;
+  margin:12px 0;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  text-align:center;
+}
+
+.tariff-card h3{
+  font-family:"Spectral SC",serif;
+  margin-bottom:6px;
+}
+
+.tariff-card strong{
+  display:block;
+  font-size:22px;
+  margin:8px 0;
+  color:#8e6c50;
+}
+
 </style>
 </head>
 <body>
@@ -149,11 +177,28 @@ textarea{
   <button class="btn" onclick="finish()">Создать мою книгу 💖</button>
 </div>
 
-<!-- MODAL -->
+<!-- PAY MODAL -->
 <div id="payModal" class="modal-bg">
-  <div class="modal">
-    <p>Выберите тариф и получите свою книгу 💝</p>
-    <button class="btn btn-full">Перейти к тарифам</button>
+  <div class="modal tariff-modal">
+    <h2 style="margin-bottom: 14px;">Выберите тариф 💝</h2>
+
+    <div class="tariff-card">
+      <h3>✨ Базовый</h3>
+      <p>100 вопросов + PDF книга</p>
+      <strong>29€</strong>
+      <button class="btn btn-full" onclick="pay('basic')">Купить</button>
+    </div>
+
+    <div class="tariff-card">
+      <h3>💎 Премиум</h3>
+      <p>PDF книга + Макет для печати + Дизайн-оформление</p>
+      <strong>59€</strong>
+      <button class="btn btn-full" onclick="pay('premium')">Купить</button>
+    </div>
+
+    <p style="opacity:.7;font-size:14px;margin-top:12px;">
+      Нажмите вне окна, чтобы закрыть
+    </p>
   </div>
 </div>
 
@@ -250,6 +295,10 @@ document.getElementById("payModal").onclick = e=>{
 }
 
 function finish(){ showPay(); }
+function pay(type){
+  console.log("Оплата тарифа:", type);
+  alert("Тут будет подключена оплата — скоро 🚀");
+}
 </script>
 </body>
 </html>
