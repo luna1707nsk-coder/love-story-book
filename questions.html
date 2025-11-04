@@ -6,383 +6,317 @@
 <meta name="format-detection" content="telephone=no">
 <title>История — Вопросы</title>
 
-<!-- Шрифты -->
+<!-- FONTS -->
 <link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* ====== ТЕМЫ ====== */
-:root{
-  --bg:#FBF7F2; --ink:#4A3A39;
-  --card:rgba(255,255,255,.82); --veil:rgba(255,255,255,.7);
+/* ========= THEMES ========= */
+:root {
+  --bg: #FBF7F2;
+  --ink: #4A3A39;
+  --card: rgba(255,255,255,.82);
   --gold1:#f1e4c5; --gold2:#c7a875; --gold3:#9c7b55;
   --blur-card: blur(14px);
 }
-:root[data-theme="dark"]{
-  --bg:#15120F; --ink:#E8DCCB;
-  --card:rgba(35,30,25,.72); --veil:rgba(255,255,255,.08);
-  --gold1:#b7a06d; --gold2:#8d744d; --gold3:#5c4633;
+
+:root[data-theme="dark"] {
+  --bg: #15120F;
+  --ink: #E8DCCB;
+  --card: rgba(35,30,25,.72);
   --blur-card: blur(16px);
+  --gold1:#b7a06d; --gold2:#8d744d; --gold3:#5c4633;
 }
 
-/* ====== БАЗА ====== */
+/* ========== RESET ========== */
 *{margin:0;padding:0;box-sizing:border-box}
 body{
-  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
   background:var(--bg) url("assets/background3.jpg") center/cover fixed no-repeat;
-  color:var(--ink); font-family:"Playfair Display",serif;
-  padding:64px 12px 36px; transition:background .3s,color .3s;
-  overflow-x:hidden;
+  font-family:"Playfair Display",serif;
+  padding:36px 10px; color:var(--ink);
+  transition:background .3s,color .3s;
 }
 
-/* ====== ТОП-ХЕДЕР с логотипом и темой ====== */
-.topbar{
-  position:fixed; inset:auto 0 auto 0; top:10px; z-index:1000;
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  pointer-events:none;
-}
-.brand{
-  pointer-events:auto;
-  display:flex; align-items:center; gap:10px; padding:8px 14px;
-  background:rgba(255,255,255,.55);
-  border:1px solid rgba(255,255,255,.35);
-  border-radius:999px; backdrop-filter:blur(10px);
-  box-shadow:0 8px 24px rgba(0,0,0,.08);
-}
-.logo{
-  width:28px; height:28px;
-}
-.brand-name{
-  font-family:"Spectral SC",serif; font-size:14px; letter-spacing:.06em;
-  color:#6b5446;
-}
+/* THEME BUTTON */
 .theme-toggle{
-  pointer-events:auto;
-  display:flex; align-items:center; justify-content:center;
-  width:44px; height:44px; border-radius:50%;
-  margin-left:8px;
+  position:fixed;top:14px;right:14px;
+  width:44px;height:44px;border-radius:50%;
   background:rgba(255,255,255,.55);
-  border:1px solid rgba(255,255,255,.35);
   backdrop-filter:blur(10px);
-  font-size:20px; cursor:pointer; transition:.25s;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;cursor:pointer;
+  z-index:500;border:1px solid rgba(255,255,255,.35);
+  transition:.25s;
 }
 .theme-toggle:hover{transform:scale(1.07)}
 
-/* ====== КАРТОЧКИ ====== */
+/* CARD */
 .card{
-  width:100%; max-width:780px; margin:auto;
-  background:var(--card); backdrop-filter:var(--blur-card);
-  border-radius:26px; padding:34px;
+  width:100%;max-width:780px;
+  background:var(--card);
+  backdrop-filter:var(--blur-card);
+  border-radius:26px;
+  padding:34px;
   box-shadow:0 14px 38px rgba(0,0,0,.14);
-  animation:fade .6s ease; transition:background .3s;
+  animation:fade .6s ease;
+  transition:background .3s;
 }
-@keyframes fade{from{opacity:0; transform:translateY(18px)}}
+@keyframes fade{from{opacity:0;transform:translateY(18px)}}
 
-/* Заголовки и поле */
+/* TITLES */
 h1{
-  font-family:"Spectral SC",serif; text-align:center; margin-bottom:12px;
+  font-family:"Spectral SC",serif;
+  text-align:center;margin-bottom:10px;
   background:linear-gradient(100deg,#7a5e49,#c9a876,#ecd8b8);
-  -webkit-background-clip:text; color:transparent;
+  -webkit-background-clip:text;color:transparent;
 }
-h2{font-size:26px; margin:14px 0}
+h2{font-size:26px;margin:14px 0}
+
+/* TEXTAREA */
 textarea{
-  width:100%; height:180px; padding:18px; border:none; border-radius:18px;
-  background:var(--veil); font-size:20px; color:var(--ink);
+  width:100%;height:180px;
+  padding:18px;border:none;border-radius:18px;
+  background:rgba(255,255,255,.7);
+  font-size:20px;
   box-shadow:inset 0 2px 8px rgba(0,0,0,.06);
+  color:var(--ink);
 }
 
-/* Кнопки */
+/* BUTTON */
 .btn{
-  border:none; cursor:pointer; color:#fff; font-weight:700;
+  border:none;cursor:pointer;color:#fff;font-weight:700;
   background:linear-gradient(130deg,var(--gold2),var(--gold3));
-  padding:14px 28px; border-radius:999px; font-size:18px;
-  box-shadow:0 12px 32px rgba(0,0,0,.18); transition:.25s;
+  padding:14px 28px;border-radius:999px;font-size:18px;
+  box-shadow:0 12px 32px rgba(0,0,0,.18);
+  transition:.25s;
 }
-.btn:hover{transform:translateY(-3px); opacity:.96}
+.btn:hover{transform:translateY(-3px);opacity:.96}
 .btn-full{width:100%}
 
-/* ====== Фото-этап ====== */
-#photo-step{display:none; text-align:center}
+/* PHOTO STEP */
+#photo-step{display:none;text-align:center}
+#photos{display:none}
 .photo-upload-btn{
-  display:inline-block; cursor:pointer; padding:14px 32px; margin-top:12px;
-  background:linear-gradient(130deg,var(--gold2),var(--gold3)); color:#fff;
-  border-radius:999px; font-weight:700; font-size:18px;
+  display:inline-block;padding:14px 32px;margin-top:12px;cursor:pointer;
+  background:linear-gradient(130deg,var(--gold2),var(--gold3));
+  color:#fff;border-radius:999px;font-weight:700;font-size:18px;
   box-shadow:0 10px 26px rgba(0,0,0,.18)
 }
-#photos{display:none}
-#preview{margin-top:14px; display:flex; flex-wrap:wrap; gap:12px; justify-content:center}
-.preview-item{position:relative; width:96px; height:96px; border-radius:12px; overflow:hidden; box-shadow:0 6px 16px rgba(0,0,0,.16); animation:pop .4s ease}
-@keyframes pop{from{opacity:0; transform:scale(.9)}to{opacity:1; transform:none}}
-.preview-item img{width:100%; height:100%; object-fit:cover; border-radius:12px}
+#preview{margin-top:14px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.preview-item{width:96px;height:96px;border-radius:12px;overflow:hidden;position:relative}
+.preview-item img{width:100%;height:100%;object-fit:cover;border-radius:12px}
 .delete-x{
-  position:absolute; top:6px; right:6px; width:22px; height:22px;
-  border-radius:50%; background:rgba(0,0,0,.65); color:#fff; font-size:14px;
-  display:flex; align-items:center; justify-content:center; cursor:pointer;
+  position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;
+  background:rgba(0,0,0,.65);color:#fff;font-size:14px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer
 }
-.photo-actions{display:flex; gap:12px; justify-content:center; margin-top:14px}
+.photo-actions{display:flex;gap:12px;justify-content:center;margin-top:14px}
 
-/* ====== Модал оплаты ====== */
+/* MODAL */
 .modal-bg{
-  position:fixed; inset:0; display:none; justify-content:center; align-items:center;
-  background:rgba(0,0,0,.45); backdrop-filter:blur(8px); z-index:9999;
+  position:fixed;inset:0;background:rgba(0,0,0,.45);
+  backdrop-filter:blur(8px);
+  display:none;justify-content:center;align-items:center;z-index:99;
 }
 .modal{
-  background:var(--card); border-radius:24px; padding:26px; width:92%; max-width:520px;
-  animation:fade .35s ease; box-shadow:0 18px 45px rgba(0,0,0,.2);
+  background:var(--card);border-radius:24px;padding:26px;
+  width:92%;max-width:480px;
+  animation:fade .35s ease;
+  box-shadow:0 18px 45px rgba(0,0,0,.2);
 }
 
-/* Тарифы и цены */
-.tariff-title{
-  font-family:"Spectral SC",serif; font-size:26px; text-align:center; margin-bottom:6px;
-  background:linear-gradient(90deg,#8b6a52,#c9a876,#eddab8);
-  -webkit-background-clip:text; color:transparent;
-}
-.price{font-weight:700; color:var(--ink); text-align:center; margin-bottom:10px}
-
-/* ====== Премиальная карта (живое золото + 3D) ====== */
-.tilt{transform-style:preserve-3d; will-change:transform, filter; transition:transform .18s ease, filter .18s ease}
+/* GOLD CARD */
 .bank-card{
-  position:relative; height:150px; border-radius:22px; overflow:hidden; cursor:pointer;
-  box-shadow:0 20px 40px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.6);
-  background:radial-gradient(120% 120% at 20% 10%, #f7e7c8 0%, #b48e67 40%, #8b6a4e 70%, #e7d4b5 100%);
+  margin:14px 0;padding:22px;border-radius:18px;
+  background:linear-gradient(145deg,#d6c4a5,#b49368,#8c6a43);
+  box-shadow:inset 0 2px 4px rgba(255,255,255,.4),
+             inset 0 -2px 6px rgba(0,0,0,.3),
+             0 10px 25px rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.28);
+  backdrop-filter:blur(10px);
+  cursor:pointer;overflow:hidden;
+  transition:.2s;
+  transform-style:preserve-3d;
 }
+.bank-card:active{transform:scale(.97)}
+
+/* grain */
 .bank-card::after{
-  content:""; position:absolute; inset:0; pointer-events:none; opacity:.18;
+  content:"";position:absolute;inset:0;
   background:url("https://www.transparenttextures.com/patterns/asfalt-light.png");
-  mix-blend-mode:soft-light;
+  opacity:.18;pointer-events:none;
 }
-/* «живое золото» цифр */
+
+/* card number shine */
 .cardnum{
-  position:absolute; left:0; right:0; top:40px; text-align:center;
-  font-family:"Spectral SC",serif; font-weight:700; font-size:28px; letter-spacing:.28em;
-  color:transparent; -webkit-text-stroke:.6px rgba(255,255,255,.65);
-  background:linear-gradient(120deg,#fdf6e3,#fff,#d8c39e,#9f7f5b,#fff,#f1e3bf);
-  -webkit-background-clip:text; background-clip:text; background-size:200% 200%;
-  animation:shimmer 4s ease-in-out infinite;
+  font-family:"Spectral SC",serif;font-weight:700;font-size:28px;text-align:center;
+  letter-spacing:4px;margin-bottom:10px;user-select:none;
+  background:linear-gradient(90deg,#fff,#e4d3a8,#c1a475,#a48652,#dcc38d,#fff);
+  -webkit-background-clip:text;color:transparent;
+  animation:shine 3s infinite;
 }
-@keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.cardnum .row2{display:block; margin-top:12px; letter-spacing:.42em}
-.copy-hint{font-size:13px; opacity:.75; text-align:center; margin:8px 0}
-
-/* Кнопки в модалке */
-.btn-ghost{
-  width:100%; padding:12px; border-radius:12px; background:#fff;
-  border:1px dashed #cdb18d; color:#7a604a; font-weight:600; cursor:pointer;
-}
-.btn-ghost:active{transform:translateY(1px)}
-.btn-gold{
-  width:100%; padding:14px; border-radius:16px;
-  background:linear-gradient(130deg,var(--gold2),var(--gold3)); color:#fff; font-weight:800; cursor:pointer;
-  box-shadow:0 12px 32px rgba(0,0,0,.16); margin-top:10px;
+@keyframes shine{
+ 0%{filter:brightness(.9)}50%{filter:brightness(1.23)}100%{filter:brightness(.9)}
 }
 
-/* Моб. правки */
+.copy-hint{font-size:13px;opacity:.7;text-align:center;margin-bottom:8px}
+.tariff-title{
+ font-family:"Spectral SC",serif;font-size:26px;text-align:center;margin-bottom:6px;
+ background:linear-gradient(90deg,#8b6a52,#c9a876,#eddab8);
+ -webkit-background-clip:text;color:transparent;
+}
+.price{text-align:center;margin-bottom:12px;font-weight:700;color:var(--ink)}
+
 @media(max-width:640px){
-  .card{padding:24px}
-  h2{font-size:24px}
-  textarea{height:160px}
-  .bank-card{height:138px}
+ .photo-actions{flex-direction:column}
+ .btn-full,.photo-actions .btn{width:100%}
 }
+
 @media (max-width: 480px){
-  .cardnum{font-size:22px; letter-spacing:.22em}
+ .bank-card{width:100%;padding:18px;border-radius:15px}
+ .cardnum{font-size:22px;letter-spacing:3px}
 }
 </style>
 </head>
 <body>
 
-<!-- Topbar: логотип + переключатель темы -->
-<div class="topbar">
-  <div class="brand">
-    <!-- Логотип: минималистичная иконка «книга-сердце» -->
-    <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
-      <defs>
-        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#f7e7c8"/><stop offset="0.45" stop-color="#b48e67"/><stop offset="1" stop-color="#8b6a4e"/>
-        </linearGradient>
-      </defs>
-      <!-- книга -->
-      <path d="M10 18c0-3 2-5 5-5h17c3 0 5 2 5 5v28c0 3-2 5-5 5H15c-3 0-5-2-5-5V18z" fill="url(#g)" opacity=".85"/>
-      <path d="M32 13h17c3 0 5 2 5 5v28c0 3-2 5-5 5H32" fill="none" stroke="url(#g)" stroke-width="2" opacity=".9"/>
-      <!-- сердце-лента -->
-      <path d="M22 22c2-3 6-3 8 0c2-3 6-3 8 0c2 3 0 6-8 12c-8-6-10-9-8-12z" fill="#fff" opacity=".9"/>
-    </svg>
-    <div class="brand-name">a book written with soul</div>
-  </div>
-  <div id="themeToggle" class="theme-toggle" title="Сменить тему">🌙</div>
-</div>
+<!-- THEME BUTTON -->
+<div class="theme-toggle" id="themeToggle">🌙</div>
 
-<!-- ВОПРОСЫ -->
+<!-- QUESTIONS -->
 <div class="card" id="step-questions">
-  <h1>Пробная часть</h1>
-  <h2 id="q">Где вы впервые встретились?</h2>
-  <textarea id="a" placeholder="Ваш ответ..."></textarea>
-  <button class="btn btn-full" id="next">Далее</button>
+ <h1>Пробная часть</h1>
+ <h2 id="q">Где вы впервые встретились?</h2>
+ <textarea id="a" placeholder="Ваш ответ..."></textarea>
+ <button class="btn btn-full" id="next">Далее</button>
 </div>
 
-<!-- ФОТО -->
-<div class="card" id="photo-step" style="display:none;">
-  <h1>Добавьте фото</h1>
-  <p>Чтобы книга стала ещё теплее 🤍 (по желанию — можно пропустить)</p>
-  <label class="photo-upload-btn">📎 Прикрепить фото
-    <input type="file" id="photos" multiple accept="image/*">
-  </label>
-  <div id="preview"></div>
-  <div class="photo-actions">
-    <button class="btn" onclick="sendPhotos()">Отправить фото</button>
-    <button class="btn" onclick="openPay()">Создать мою книгу ❤️</button>
-  </div>
+<!-- PHOTO STEP -->
+<div class="card" id="photo-step">
+ <h1>Добавьте фото</h1>
+ <p>Чтобы книга стала ещё теплее 🤍 (по желанию — можно пропустить)</p>
+ <label class="photo-upload-btn">📎 Прикрепить фото <input type="file" id="photos" multiple accept="image/*"></label>
+ <div id="preview"></div>
+ <div class="photo-actions">
+   <button class="btn" onclick="sendPhotos()">Отправить фото</button>
+   <button class="btn" onclick="openPay()">Создать мою книгу ❤️</button>
+ </div>
 </div>
 
-<!-- МОДАЛ ОПЛАТЫ -->
+<!-- PAYMENT -->
 <div id="payModal" class="modal-bg">
-  <div class="modal">
-    <!-- Basic -->
-    <div class="tariff-title">✨ Basic</div>
-    <div class="price">2490 ₽</div>
-    <div class="bank-card tilt" data-tilt onclick="copyCard()">
-      <div class="cardnum">
-        <span class="row1">2200&nbsp;7017&nbsp;4877</span>
-        <span class="row2">2404</span>
-      </div>
-    </div>
-    <div class="copy-hint">Т-Банк — нажмите, чтобы скопировать</div>
-    <button class="btn-ghost" onclick="copyCard()">📋 Скопировать реквизиты</button>
-    <button class="btn-gold" onclick="openBot('basic')">Оплатил — отправить чек</button>
+ <div class="modal">
 
-    <hr style="opacity:.2;margin:18px 0">
-
-    <!-- Premium -->
-    <div class="tariff-title">💎 Premium</div>
-    <div class="price">6990 ₽</div>
-    <div class="bank-card tilt" data-tilt onclick="copyCard()">
-      <div class="cardnum">
-        <span class="row1">2200&nbsp;7017&nbsp;4877</span>
-        <span class="row2">2404</span>
-      </div>
-    </div>
-    <div class="copy-hint">Т-Банк — нажмите, чтобы скопировать</div>
-    <button class="btn-ghost" onclick="copyCard()">📋 Скопировать реквизиты</button>
-    <button class="btn-gold" onclick="openBot('premium')">Оплатил — отправить чек</button>
+  <div class="tariff-title">✨ Basic</div>
+  <div class="price">2490 ₽</div>
+  <div class="bank-card tilt" onclick="copyCard()">
+    <div class="cardnum">2200&nbsp;7017&nbsp;4877&nbsp;2404</div>
   </div>
+  <div class="copy-hint">Т-Банк — нажмите, чтобы скопировать</div>
+  <button class="btn btn-full" onclick="openBot('basic')">Оплатил — отправить чек</button>
+
+  <hr style="opacity:.2;margin:18px 0">
+
+  <div class="tariff-title">💎 Premium</div>
+  <div class="price">6990 ₽</div>
+  <div class="bank-card tilt" onclick="copyCard()">
+    <div class="cardnum">2200&nbsp;7017&nbsp;4877&nbsp;2404</div>
+  </div>
+  <div class="copy-hint">Т-Банк — нажмите, чтобы скопировать</div>
+  <button class="btn btn-full" onclick="openBot('premium')">Оплатил — отправить чек</button>
+ </div>
 </div>
 
 <script>
-/* ===== ВОПРОСЫ ===== */
-const qs=[
- "Где вы впервые встретились?",
- "Что вы подумали при первой встрече?",
- "Кто сделал первый шаг?",
- "Какой момент стал решающим?",
- "Что больше всего запомнилось?"
-];
-let i=0;
-const qEl=document.getElementById('q'), aEl=document.getElementById('a');
+/* QUESTIONS */
+const qs=["Где вы впервые встретились?","Что вы подумали при первой встрече?","Кто сделал первый шаг?","Какой момент стал решающим?","Что больше всего запомнилось?"];
+let i=0;const q=document.getElementById('q'),a=document.getElementById('a');
 
-async function sendAnswerToBot(question, answer){
-  if(!answer.trim()) return;
-  await fetch("/api/sendMessage",{
-    method:"POST", headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({text:`📖 <b>Ответ пользователя</b>\n\n❓ <b>${question}</b>\n✏️ ${answer}`})
-  });
+async function sendAnswer(qt,an){
+ if(!an.trim())return;
+ await fetch("/api/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:`📖 <b>Ответ</b>\n❓ ${qt}\n✏️ ${an}`})});
 }
 function nextQ(){
-  const val=aEl.value.trim();
-  if(val) sendAnswerToBot(qs[i],val);
-  i++;
-  if(i<qs.length){ qEl.textContent=qs[i]; aEl.value=""; }
-  else{
-    document.getElementById('step-questions').style.display='none';
-    document.getElementById('photo-step').style.display='block';
-    window.scrollTo({top:0,behavior:"smooth"});
-  }
-}
+ const v=a.value.trim();if(v)sendAnswer(qs[i],v);
+ i++;
+ if(i<qs.length){q.textContent=qs[i];a.value="";}
+ else{
+  document.getElementById('step-questions').style.display="none";
+  document.getElementById('photo-step').style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+ }}
 document.getElementById('next').onclick=nextQ;
-aEl.addEventListener('keydown',e=>{if(e.key==="Enter"){e.preventDefault(); nextQ();}});
+a.addEventListener('keydown',e=>{if(e.key==="Enter"){e.preventDefault();nextQ();}});
 
-/* ===== ФОТО ===== */
+/* PHOTOS */
 let files=[];
-document.getElementById('photos').onchange=e=>{
-  for(const f of e.target.files) files.push(f);
-  renderPhotos();
-};
-function renderPhotos(){
-  const box=document.getElementById('preview'); box.innerHTML="";
-  files.forEach((file,idx)=>{
-    const url=URL.createObjectURL(file);
-    const wrap=document.createElement('div'); wrap.className='preview-item';
-    wrap.innerHTML=`<span class="delete-x" title="Удалить" onclick="removePhoto(${idx})">✖</span><img src="${url}">`;
-    box.appendChild(wrap);
-  });
+document.getElementById('photos').onchange=e=>{for(const f of e.target.files)files.push(f);render();}
+function render(){
+ const box=document.getElementById('preview');box.innerHTML="";
+ files.forEach((f,i)=>{const u=URL.createObjectURL(f);box.innerHTML+=`<div class="preview-item"><span class="delete-x" onclick="del(${i})">✖</span><img src="${u}"></div>`});
 }
-function removePhoto(idx){ files.splice(idx,1); renderPhotos(); }
-
+function del(i){files.splice(i,1);render();}
 async function sendPhotos(){
-  if(!files.length){ openPay(); return; }
-  for(const f of files){
-    const fd=new FormData(); fd.append("photo",f);
-    await fetch("/api/sendPhoto",{method:"POST",body:fd});
-    await new Promise(r=>setTimeout(r,250));
-  }
-  alert("Фото отправлены 🤍");
-  openPay();
+ for(const f of files){
+  const fd=new FormData();fd.append("photo",f);
+  await fetch("/api/sendPhoto",{method:"POST",body:fd});
+  await new Promise(r=>setTimeout(r,300));
+ }
+ alert("Фото отправлены 🤍");
 }
 
-/* ===== ОПЛАТА ===== */
-function openPay(){ document.getElementById("payModal").style.display="flex"; }
-document.getElementById("payModal").addEventListener("click", (e)=>{
-  if(e.target.id==="payModal") e.currentTarget.style.display="none";
-});
-function copyCard(){
-  navigator.clipboard.writeText("2200701748772404");
-  alert("Номер карты скопирован ✅");
-}
-function openBot(tier){
-  const bot="abookaboutyou_bot";
-  const start = tier==="premium" ? "pay_premium" : "pay_basic";
-  window.open(`https://t.me/${bot}?start=${start}`,'_blank');
-  fetch("/api/sendMessage",{
-    method:"POST", headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({text:`💳 Пользователь выбрал тариф: <b>${tier.toUpperCase()}</b>. Переходит к отправке чека.`})
-  });
+/* PAYMENT */
+function openPay(){document.getElementById("payModal").style.display="flex";}
+document.getElementById("payModal").onclick=e=>{if(e.target.id==="payModal")e.target.style.display="none";}
+function copyCard(){navigator.clipboard.writeText("2200701748772404");alert("Скопировано ✅")}
+function openBot(t){
+ window.open(`https://t.me/abookaboutyou_bot?start=${t==="premium"?"pay_premium":"pay_basic"}`,"_blank");
+ fetch("/api/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:`💸 Пользователь выбрал тариф: ${t}`})});
 }
 
-/* ===== Переключатель темы: авто + ручной ===== */
-const themeBtn=document.getElementById('themeToggle');
+/* THEME LOGIC */
+const btn=document.getElementById("themeToggle");
 function setTheme(mode){
-  document.documentElement.setAttribute('data-theme',mode);
-  localStorage.setItem('theme',mode);
-  themeBtn.textContent = mode==='dark' ? '☀️' : '🌙';
+ document.documentElement.setAttribute("data-theme",mode);
+ localStorage.setItem("theme",mode);
+ btn.textContent = mode==="dark" ? "☀️" : "🌙";
 }
 (function initTheme(){
-  const saved=localStorage.getItem('theme');
-  if(saved){ setTheme(saved); }
-  else {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setTheme(prefersDark ? 'dark' : 'light');
-  }
+ const saved=localStorage.getItem("theme");
+ if(saved){setTheme(saved)}
+ else{
+   const prefers=window.matchMedia("(prefers-color-scheme: dark)").matches;
+   setTheme(prefers?"dark":"light");
+ }
 })();
-themeBtn.onclick=()=> setTheme(
-  document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark'
+btn.onclick=()=>setTheme(
+ document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark"
 );
 
-/* ===== 3D-tilt для карт ===== */
-const tiltEls=[...document.querySelectorAll('[data-tilt]')];
-function tiltHandle(e,el){
-  const r=el.getBoundingClientRect();
-  const x=(e.clientX-r.left)/r.width - .5;
-  const y=(e.clientY-r.top)/r.height - .5;
-  el.style.transform=`rotateX(${ -y*8 }deg) rotateY(${ x*10 }deg)`;
+/* 3D TILT EFFECT ON CARDS */
+const cards=document.querySelectorAll(".tilt");
+
+function tilt(e,card){
+ const r=card.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+ const rotX=((y/r.height)-0.5)*8;
+ const rotY=((x/r.width)-0.5)*-8;
+ card.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg)`;
 }
-tiltEls.forEach(el=>{
-  el.addEventListener('mousemove',e=>tiltHandle(e,el));
-  el.addEventListener('mouseleave',()=>el.style.transform='rotateX(0) rotateY(0)');
+cards.forEach(c=>{
+ c.addEventListener("mousemove",e=>tilt(e,c));
+ c.addEventListener("mouseleave",()=>c.style.transform="rotateX(0) rotateY(0)");
 });
-// Гироскоп — мягко
+
+/* Gyro tilt on mobile */
 if(window.DeviceMotionEvent){
-  window.addEventListener('devicemotion',e=>{
-    const x=(e.accelerationIncludingGravity?.x||0)/6;
-    const y=(e.accelerationIncludingGravity?.y||0)/6;
-    tiltEls.forEach(el=> el.style.transform=`rotateX(${ y }deg) rotateY(${ -x }deg)`);
+ window.addEventListener("devicemotion",e=>{
+  const x=e.accelerationIncludingGravity.x/4;
+  const y=e.accelerationIncludingGravity.y/4;
+  cards.forEach(c=>{
+   c.style.transform=`rotateX(${y}deg) rotateY(${-x}deg)`;
   });
+ });
 }
 </script>
 </body>
