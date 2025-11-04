@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>История — Вопросы</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
 
 <style>
 :root{
@@ -14,64 +14,42 @@
   --gold2:#9b7f64; --gold3:#d7c29c; --gold4:#b99673;
   --shadow:0 14px 38px rgba(0,0,0,.14); --radius:26px;
 }
+
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  min-height:100vh;
+  display:flex; align-items:flex-start; justify-content:center;
   background:url("assets/background3.jpg") center/cover fixed no-repeat;
-  font-family:"Playfair Display",serif; color:var(--ink); padding:40px 10px;
-  overflow-x:hidden;
-  <div id="paymentModal" class="payment-modal">
-  <div class="payment-content">
-    <h2 class="pay-title">Открой полную версию</h2>
-    <p class="pay-sub">99 вопросов, книга вашей истории, премиум-дизайн</p>
-
-    <div class="plan-box">
-      <div class="plan">
-        <div class="plan-name">Basic</div>
-        <div class="plan-price">2490 ₽</div>
-      </div>
-      <div class="plan">
-        <div class="plan-name premium">Premium</div>
-        <div class="plan-price">6990 ₽</div>
-      </div>
-    </div>
-
-    <div class="pay-info">
-      <div class="pay-label">Оплата:</div>
-      <div class="card-number" id="copyCard">2200 7017 4877 2404</div>
-      <button class="btn-pay" id="copyBtn">📋 Скопировать реквизиты</button>
-      <button class="btn-next" id="payTelegram">📤 Я оплатил</button>
-    </div>
-
-    <p class="close-hint">Нажмите вне окна чтобы закрыть</p>
-  </div>
-</div>
+  font-family:"Playfair Display",serif; color:var(--ink);
+  padding:40px 12px; overflow-x:hidden;
 }
+.no-scroll{overflow:hidden}
 
-/* CARD (центрируется всегда) */
+/* Карточка-центр */
 .card{
   width:100%; max-width:780px; margin:0 auto;
   background:var(--card); backdrop-filter:blur(10px);
   border-radius:var(--radius); padding:34px; box-shadow:var(--shadow);
-  animation:fade .6s ease;
+  animation:fade .55s ease;
 }
 @keyframes fade{from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none}}
 
+/* Заголовок */
 h1{
   font-family:"Spectral SC",serif; text-align:center; margin-bottom:14px;
   background:linear-gradient(90deg,#6a5447,#9b7f64,#d7c29c,#b99673,#7a5f4e);
   -webkit-background-clip:text; color:transparent;
 }
 
-/* ВОПРОСЫ */
+/* Вопросы */
 h2{font-size:26px;margin-bottom:14px;text-align:left}
 textarea{
   width:100%; height:180px; padding:18px; border:none; border-radius:18px;
   background:var(--veil); font-size:20px; box-shadow:inset 0 2px 8px rgba(0,0,0,.06)
 }
 
-/* КНОПКИ */
+/* Кнопки */
 .btn{
   border:none; cursor:pointer; color:#fff; font-weight:700;
   background:linear-gradient(130deg,var(--gold2),var(--gold4));
@@ -81,7 +59,7 @@ textarea{
 .btn:hover{transform:translateY(-3px); opacity:.96}
 .btn-full{width:100%}
 
-/* ШАГ ФОТО (строго по центру) */
+/* Фото */
 #photo-step{display:none; text-align:center}
 .photo-upload-btn{
   display:inline-block; cursor:pointer; padding:14px 32px; margin:14px 0 8px;
@@ -102,22 +80,22 @@ textarea{
 
 .photo-actions{display:flex; gap:12px; justify-content:center; margin-top:14px}
 
-/* МОДАЛКА ТАРИФОВ */
+/* Модалка оплаты */
 .modal-bg{
   position:fixed; inset:0; display:none; justify-content:center; align-items:center;
   background:rgba(0,0,0,.45); backdrop-filter:blur(8px); z-index:50;
 }
 .modal{
-  background:var(--card); border-radius:22px; padding:26px; width:92%; max-width:480px;
+  background:var(--card); border-radius:22px; padding:26px; width:92%; max-width:520px;
   box-shadow:0 18px 45px rgba(0,0,0,.2); animation:fade .35s ease;
 }
 .modal h3{
-  font-family:"Spectral SC",serif; text-align:center; margin-bottom:10px;
+  font-family:"Spectral SC",serif; text-align:center; margin-bottom:12px;
   background:linear-gradient(90deg,#9b7f64,#d7c29c,#b99673); -webkit-background-clip:text; color:transparent;
 }
 .tariff{
   background:#fff; border:1px solid rgba(180,160,130,.35); border-radius:16px;
-  padding:16px; margin:10px 0; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,.06)
+  padding:16px; margin:12px 0; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,.06)
 }
 .tariff .price{font-weight:700; color:#8e6c50; margin:8px 0 10px}
 .tariff .split{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
@@ -131,123 +109,21 @@ textarea{
 
 @media (max-width:640px){
   .photo-actions{flex-direction:column}
-  .btn-full{width:100%}
-}
-.payment-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.55);
-  backdrop-filter: blur(8px);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.payment-content {
-  background: rgba(255,255,255,.92);
-  border-radius: 22px;
-  padding: 32px;
-  width: 90%;
-  max-width: 420px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.18);
-  text-align: center;
-  animation: fadeUp .35s ease;
-}
-
-@keyframes fadeUp {
-  from {opacity: 0; transform: translateY(20px);}
-  to {opacity: 1; transform: translateY(0);}
-}
-
-.pay-title {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  font-family: "Spectral SC", serif;
-}
-
-.plan-box {
-  margin: 16px 0;
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-}
-
-.plan {
-  padding: 14px 20px;
-  border-radius: 16px;
-  background: #fff;
-  border: 1px solid #e6ddd2;
-  text-align: center;
-  box-shadow: 0 6px 16px rgba(0,0,0,.07);
-}
-
-.plan-name.premium {
-  color: #c2a476;
-  font-weight: 700;
-}
-
-.plan-price {
-  font-size: 19px;
-  margin-top: 6px;
-  font-weight: 600;
-}
-
-.card-number {
-  font-size: 22px;
-  font-weight: 600;
-  border: 1px dashed #c4b89c;
-  padding: 10px;
-  border-radius: 12px;
-  margin-bottom: 10px;
-}
-
-.btn-pay, .btn-next {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  font-size: 18px;
-  margin-top: 8px;
-  border-radius: 14px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.btn-pay {
-  background: #fff;
-  border: 1px solid #d8c6a3;
-}
-
-.btn-next {
-  background: linear-gradient(130deg,#a88a5e,#d8c6a3);
-  color: #fff;
-}
-
-.close-hint {
-  margin-top: 12px;
-  font-size: 13px;
-  color: #555;
+  .btn-full,.photo-actions .btn{width:100%}
 }
 </style>
 </head>
 <body>
 
-<!-- БЛОК ВОПРОСОВ -->
+<!-- Шаг 1: вопросы -->
 <div class="card" id="step-questions">
   <h1>Пробная часть</h1>
   <h2 id="q">Где вы впервые встретились?</h2>
   <textarea id="a" placeholder="Ваш ответ..."></textarea>
   <button class="btn btn-full" id="next">Далее</button>
 </div>
-card.innerHTML = `
-<div class="final">
-  <h2>✨ Пробная часть завершена</h2>
-  <p>Вы прошли 5 вопросов.<br>Откройте оставшиеся 95 и создайте книгу вашей любви.</p>
-  <button class="btn" onclick="openPaymentModal()">Перейти к оплате</button>
-</div>`;
 
-<!-- БЛОК ФОТО -->
+<!-- Шаг 2: фото -->
 <div class="card" id="photo-step">
   <h1>Добавьте фото</h1>
   <p>Чтобы книга стала ещё теплее 🤍 <br>(по желанию — можно пропустить)</p>
@@ -260,14 +136,14 @@ card.innerHTML = `
   <div id="preview"></div>
 
   <div class="photo-actions">
-    <button class="btn" onclick="sendPhotos()">Отправить фото</button>
-    <button class="btn" onclick="openPay()">Создать мою книгу ❤️</button>
+    <button class="btn" id="send-photos">Отправить фото</button>
+    <button class="btn" id="open-pay">Создать мою книгу ❤️</button>
   </div>
 
   <div class="helper">Нажми на ✖️, чтобы удалить фото</div>
 </div>
 
-<!-- МОДАЛ: ТАРИФЫ + РЕКВИЗИТЫ + КНОПКИ В БОТ -->
+<!-- Модалка тарифов -->
 <div id="payModal" class="modal-bg">
   <div class="modal">
     <h3>Выберите тариф</h3>
@@ -276,9 +152,8 @@ card.innerHTML = `
       <div><b>✨ Basic</b></div>
       <div class="price">2490 ₽</div>
       <div class="split">
-        <div class="copy" onclick="copyCard()">
-          2200 7017 4877 2404
-          <small>Т-Банк (Тинькофф) — нажмите, чтобы скопировать</small>
+        <div class="copy" id="copyBasic">2200 7017 4877 2404
+          <small>Т-Банк — нажмите, чтобы скопировать</small>
         </div>
         <button class="btn" onclick="openBot('basic')">Оплатил — отправить чек в Telegram</button>
       </div>
@@ -288,9 +163,8 @@ card.innerHTML = `
       <div><b>💎 Premium</b></div>
       <div class="price">6990 ₽</div>
       <div class="split">
-        <div class="copy" onclick="copyCard()">
-          2200 7017 4877 2404
-          <small>Т-Банк (Тинькофф) — нажмите, чтобы скопировать</small>
+        <div class="copy" id="copyPremium">2200 7017 4877 2404
+          <small>Т-Банк — нажмите, чтобы скопировать</small>
         </div>
         <button class="btn" onclick="openBot('premium')">Оплатил — отправить чек в Telegram</button>
       </div>
@@ -303,111 +177,122 @@ card.innerHTML = `
 <script>
 // ——— ВОПРОСЫ ———
 const qs=[
- "Где вы впервые встретились?",
- "Что вы подумали при первой встрече?",
- "Кто сделал первый шаг?",
- "Какой момент стал решающим?",
- "Что больше всего запомнилось?"
+  "Где вы впервые встретились?",
+  "Что вы подумали при первой встрече?",
+  "Кто сделал первый шаг?",
+  "Какой момент стал решающим?",
+  "Что больше всего запомнилось?"
 ];
 let i=0;
-const q=document.getElementById('q'), a=document.getElementById('a');
+const qEl=document.getElementById('q');
+const aEl=document.getElementById('a');
 
 async function sendAnswerToBot(question, answer){
   if(!answer.trim()) return;
   await fetch("/api/sendMessage",{
-    method:"POST", headers:{"Content-Type":"application/json"},
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
     body:JSON.stringify({text:`📖 <b>Ответ пользователя</b>\n\n❓ <b>${question}</b>\n✏️ ${answer}`})
   });
 }
 
 function nextQ(){
-  const val=a.value.trim();
+  const val=aEl.value.trim();
   if(val) sendAnswerToBot(qs[i],val);
   i++;
   if(i<qs.length){
-    q.textContent=qs[i]; a.value="";
-}else{
-    // показываем модалку тарифов
-    document.getElementById("pay-modal").classList.add("show");
-    document.body.classList.add("no-scroll");
- }
+    qEl.textContent=qs[i];
+    aEl.value="";
+  }else{
+    // Переход к шагу фото
+    document.getElementById('step-questions').style.display='none';
+    const photo=document.getElementById('photo-step');
+    photo.style.display='block';
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
 }
+
 document.getElementById('next').onclick = nextQ;
-a.addEventListener('keydown', e=>{
-    if(e.key === "Enter") nextQ();
+// Enter = далее (Shift+Enter — перенос строки)
+aEl.addEventListener('keydown',e=>{
+  if(e.key==="Enter" && !e.shiftKey){
+    e.preventDefault();
+    nextQ();
+  }
 });
+
 // ——— ФОТО ———
 let files=[];
-document.getElementById('photos').onchange=e=>{
+const inputPhotos=document.getElementById('photos');
+const previewBox=document.getElementById('preview');
+
+inputPhotos.onchange=e=>{
   for(const f of e.target.files) files.push(f);
   renderPhotos();
 };
+
 function renderPhotos(){
-  const box=document.getElementById('preview'); box.innerHTML="";
+  previewBox.innerHTML="";
   files.forEach((file,idx)=>{
     const url=URL.createObjectURL(file);
-    const wrap=document.createElement('div'); wrap.className='preview-item';
-    wrap.innerHTML=`<span class="delete-x" title="Удалить" onclick="removePhoto(${idx})">✖</span><img src="${url}">`;
-    box.appendChild(wrap);
+    const wrap=document.createElement('div');
+    wrap.className='preview-item';
+    wrap.innerHTML=`<span class="delete-x" title="Удалить" onclick="removePhoto(${idx})">✖</span><img src="${url}" alt="">`;
+    previewBox.appendChild(wrap);
   });
 }
-function removePhoto(idx){ files.splice(idx,1); renderPhotos(); }
+
+function removePhoto(idx){
+  files.splice(idx,1);
+  renderPhotos();
+}
 
 async function sendPhotos(){
-  if(!files.length){ return; }
+  if(!files.length){ alert("Фото можно пропустить — это не обязательно 🤍"); return; }
   for(const f of files){
     const fd=new FormData(); fd.append("photo",f);
     await fetch("/api/sendPhoto",{method:"POST",body:fd});
-    await new Promise(r=>setTimeout(r,300));
+    await new Promise(r=>setTimeout(r,250));
   }
   alert("Фото отправлены 🤍");
 }
 
-// ——— ОПЛАТА ЧЕРЕЗ РЕКВИЗИТЫ + ЧЕК В БОТ ———
-function openPay(){ document.getElementById('payModal').style.display='flex'; }
-document.getElementById('payModal').onclick = e => {
-  if(e.target.id==='payModal') e.target.style.display='none';
-};
-function copyCard(){
+document.getElementById('send-photos').onclick = sendPhotos;
+
+// ——— ОПЛАТА / МОДАЛКА ———
+const payModal=document.getElementById('payModal');
+document.getElementById('open-pay').onclick=()=>openPay();
+
+function openPay(){
+  payModal.style.display='flex';
+  document.body.classList.add('no-scroll');
+}
+payModal.addEventListener('click',e=>{
+  if(e.target===payModal){
+    payModal.style.display='none';
+    document.body.classList.remove('no-scroll');
+  }
+});
+
+// Копирование номера карты
+function copyNumber(){
   navigator.clipboard.writeText("2200701748772404");
   alert("Номер карты скопирован 📋");
 }
+document.getElementById('copyBasic').onclick=copyNumber;
+document.getElementById('copyPremium').onclick=copyNumber;
+
+// Переход в бота и уведомление админ-каналу
 function openBot(tier){
-  // Открываем чат с ботом с параметром тарифа
-  const bot = "abookaboutyou_bot";
-  const start = tier==="premium" ? "pay_premium" : "pay_basic";
+  const bot="abookaboutyou_bot";
+  const start=tier==="premium"?"pay_premium":"pay_basic";
   window.open(`https://t.me/${bot}?start=${start}`,'_blank');
 
-  // Доп. уведомление тебе в админ-чат (через api)
   fetch("/api/sendMessage",{
     method:"POST",headers:{"Content-Type":"application/json"},
     body:JSON.stringify({text:`💸 Пользователь перешёл к оплате (${tier}) и отправке чека.`})
   });
 }
-const paymentModal = document.getElementById("paymentModal");
-const payBtn = document.getElementById("payTelegram");
-const copyBtn = document.getElementById("copyBtn");
-
-function openPaymentModal() {
-  paymentModal.style.display = "flex";
-}
-
-copyBtn.onclick = () => {
-  navigator.clipboard.writeText("2200701748772404");
-  alert("Номер карты скопирован ✅");
-};
-
-payBtn.onclick = () => {
-  window.location.href = "https://t.me/abookaboutyou_bot?start=paid";
-  setTimeout(() => {
-    // авто-сообщение
-    window.open("tg://msg?text=Я%20оплатил,%20проверьте,%20пожалуйста%20❤️");
-  }, 500);
-};
-
-paymentModal.addEventListener("click", (e) => {
-  if (e.target === paymentModal) paymentModal.style.display = "none";
-});
 </script>
 </body>
 </html>
