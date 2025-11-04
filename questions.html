@@ -162,24 +162,26 @@ input[type=file]{
   font-size:16px;
 }
 
-  .photo-preview-container{
+.photo-preview-container{
   position:relative;
   display:inline-block;
+  margin:6px;
 }
 
 .photo-remove{
   position:absolute;
   top:4px; right:4px;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,.65);
   color:white;
-  width:20px; height:20px;
+  width:22px; height:22px;
   border-radius:50%;
-  font-size:14px;
+  font-size:16px;
   display:flex;
   justify-content:center; align-items:center;
   cursor:pointer;
   opacity:0;
-  transition:.2s;
+  transition:.25s;
+  font-weight:bold;
 }
 
 .photo-preview-container:hover .photo-remove{
@@ -187,19 +189,18 @@ input[type=file]{
 }
 
 .photo-preview-container img{
-  width:76px; height:76px;
+  width:82px; height:82px;
   object-fit:cover;
   border-radius:14px;
-  transition:.25s;
   box-shadow:0 4px 14px rgba(0,0,0,.12);
+  transition:.25s;
 }
+
 .photo-preview-container img:hover{
   transform:scale(1.06);
-  box-shadow:0 8px 22px rgba(0,0,0,.16);
+  box-shadow:0 8px 22px rgba(0,0,0,.18);
 }
 
-
-  
 </style>
 </head>
 <body>
@@ -240,15 +241,14 @@ input[type=file]{
 <!-- PHOTO STEP -->
 <div id="photo-step" class="card" style="display:none;">
   <h1>Добавьте фото</h1>
-  <p style="opacity:.9;">Чтобы книга стала ещё теплее 🤍<br><small>(По желанию — можно пропустить)</small></p>
+<p>По желанию — чтобы книга стала ещё теплее 💞</p>
 
-  <label class="photo-upload-btn">
-    📎 Прикрепить фото
-    <input type="file" id="photos" multiple accept="image/*" class="photo-input">
-  </label>
-
-  <div id="preview" class="photo-preview"></div>
+<input type="file" id="photos" multiple accept="image/*" class="photo-input">
+<div id="preview" class="photo-preview"></div>
 <p style="font-size:14px; opacity:.7; margin-top:6px;">Нажмите ❌ чтобы удалить фото</p>
+
+<button class="btn" onclick="sendPhotos()">Отправить фото</button>
+<button class="btn" style="margin-top:10px" onclick="finish()">Создать мою книгу ❤️</button>
 
 
   <button class="btn" onclick="sendPhotos()">Отправить фото</button>
@@ -273,6 +273,8 @@ input[type=file]{
     </div>
   </div>
 </div>
+
+  
 
 
 <script>
