@@ -15,21 +15,7 @@
   --shadow:0 14px 38px rgba(0,0,0,.14); --radius:26px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-<script>
-async function sendAnswerToBot(question, answer) {
-  try {
-    await fetch("/api/sendMessage", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: `📖 <b>Ответ пользователя</b>\n\n❓ <b>${question}</b>\n✏️ ${answer}`
-      }),
-    });
-  } catch (error) {
-    console.error("Ошибка отправки:", error);
-  }
-}
-</script>
+
 body{
   background:url("assets/background3.jpg") center/cover fixed no-repeat;
   color:var(--ink); font-family:"Playfair Display",serif; overflow-x:hidden; min-height:100vh;
@@ -111,7 +97,20 @@ textarea{
 </div>
 
 <script>
-/* Glitter mix */
+/* Telegram sending */
+async function sendAnswerToBot(question, answer) {
+  try {
+    await fetch("/api/sendMessage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text: `📖 <b>Ответ пользователя</b>\n\n❓ <b>${question}</b>\n✏️ ${answer}`
+      }),
+    });
+  } catch (e) { console.error(e); }
+}
+
+/* Glitter */
 const cvs=document.getElementById('glitter'), ctx=cvs.getContext('2d');
 let W,H,parts=[];
 function resize(){W=cvs.width=innerWidth; H=cvs.height=innerHeight}
@@ -134,7 +133,7 @@ function step(){
 }
 spawn(70); setInterval(()=>spawn(8),600); step();
 
-/* Вопросы (пробные 5) */
+/* Questions */
 const qs=[
   "Где вы впервые встретились?",
   "Что вы подумали при первой встрече?",
@@ -142,7 +141,6 @@ const qs=[
   "Какой момент стал решающим для вас?",
   "Что больше всего запомнилось в тот день?"
 ];
-
 let i=0;
 const label=document.getElementById('label');
 const q=document.getElementById('q');
@@ -159,6 +157,11 @@ function render(){
   a.value='';
 }
 document.getElementById('next').addEventListener('click',()=>{
+  const answer=a.value.trim();
+  if(!answer) return alert("Напишите ответ 😊");
+
+  sendAnswerToBot(qs[i], answer);
+
   i++;
   if(i<5){ render(); }
   else{
@@ -167,7 +170,7 @@ document.getElementById('next').addEventListener('click',()=>{
       <div class="final">
         <h2>✨ Пробная часть завершена</h2>
         <p>Вы прошли 5 вопросов. Откройте оставшиеся 95 и создайте нетленную книгу вашей любви.</p>
-        <button class="btn" onclick="alert('Подключим оплату и Telegram-бота на следующем шаге')">Открыть все вопросы</button>
+        <button class="btn" onclick="alert('Подключаем оплату скоро 💫')">Открыть все вопросы</button>
       </div>`;
   }
 });
