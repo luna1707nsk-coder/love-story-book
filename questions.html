@@ -377,6 +377,30 @@ function openBot(tier){
     body:JSON.stringify({text:`💸 Пользователь перешёл к оплате (${tier}) и отправке чека.`})
   });
 }
+const paymentModal = document.getElementById("paymentModal");
+const payBtn = document.getElementById("payTelegram");
+const copyBtn = document.getElementById("copyBtn");
+
+function openPaymentModal() {
+  paymentModal.style.display = "flex";
+}
+
+copyBtn.onclick = () => {
+  navigator.clipboard.writeText("2200701748772404");
+  alert("Номер карты скопирован ✅");
+};
+
+payBtn.onclick = () => {
+  window.location.href = "https://t.me/abookaboutyou_bot?start=paid";
+  setTimeout(() => {
+    // авто-сообщение
+    window.open("tg://msg?text=Я%20оплатил,%20проверьте,%20пожалуйста%20❤️");
+  }, 500);
+};
+
+paymentModal.addEventListener("click", (e) => {
+  if (e.target === paymentModal) paymentModal.style.display = "none";
+});
 </script>
 </body>
 </html>
