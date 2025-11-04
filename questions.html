@@ -21,6 +21,32 @@ body{
   background:url("assets/background3.jpg") center/cover fixed no-repeat;
   font-family:"Playfair Display",serif; color:var(--ink); padding:40px 10px;
   overflow-x:hidden;
+  <div id="paymentModal" class="payment-modal">
+  <div class="payment-content">
+    <h2 class="pay-title">Открой полную версию</h2>
+    <p class="pay-sub">99 вопросов, книга вашей истории, премиум-дизайн</p>
+
+    <div class="plan-box">
+      <div class="plan">
+        <div class="plan-name">Basic</div>
+        <div class="plan-price">2490 ₽</div>
+      </div>
+      <div class="plan">
+        <div class="plan-name premium">Premium</div>
+        <div class="plan-price">6990 ₽</div>
+      </div>
+    </div>
+
+    <div class="pay-info">
+      <div class="pay-label">Оплата:</div>
+      <div class="card-number" id="copyCard">2200 7017 4877 2404</div>
+      <button class="btn-pay" id="copyBtn">📋 Скопировать реквизиты</button>
+      <button class="btn-next" id="payTelegram">📤 Я оплатил</button>
+    </div>
+
+    <p class="close-hint">Нажмите вне окна чтобы закрыть</p>
+  </div>
+</div>
 }
 
 /* CARD (центрируется всегда) */
