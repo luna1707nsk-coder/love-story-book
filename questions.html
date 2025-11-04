@@ -15,6 +15,21 @@
   --shadow:0 14px 38px rgba(0,0,0,.14); --radius:26px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+<script>
+async function sendAnswerToBot(question, answer) {
+  try {
+    await fetch("/api/sendMessage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text: `📖 <b>Ответ пользователя</b>\n\n❓ <b>${question}</b>\n✏️ ${answer}`
+      }),
+    });
+  } catch (error) {
+    console.error("Ошибка отправки:", error);
+  }
+}
+</script>
 body{
   background:url("assets/background3.jpg") center/cover fixed no-repeat;
   color:var(--ink); font-family:"Playfair Display",serif; overflow-x:hidden; min-height:100vh;
