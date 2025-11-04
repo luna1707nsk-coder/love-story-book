@@ -19,35 +19,51 @@ body{
   background:url("assets/background3.jpg") center/cover fixed no-repeat;
   color:var(--ink); font-family:"Playfair Display",serif; overflow-x:hidden; min-height:100vh;
 }
+
+/* Блёстки */
 #glitter{position:fixed; inset:0; pointer-events:none; z-index:1}
+
+/* Контейнер */
 .container{max-width:780px; margin:120px auto 60px; padding:20px}
-.card{background:var(--card); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.92); border-radius:var(--radius); padding:32px; box-shadow:var(--shadow); animation:fade .7s ease}
+.card{
+  background:var(--card); backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.92); border-radius:var(--radius);
+  padding:32px; box-shadow:var(--shadow); animation:fade .7s ease
+}
 @keyframes fade{from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:none}}
+
 h1{font-family:"Spectral SC",serif; text-align:center; margin-bottom:8px;
   background:linear-gradient(90deg,#6a5447,#9b7f64,#d7c29c,#b99673,#7a5f4e);
   -webkit-background-clip:text; color:transparent; text-shadow:0 2px 10px rgba(215,194,156,.18)
 }
+
+/* Прогресс */
 .progress-wrap{margin:10px 0 18px}
 .progress-top{display:flex; justify-content:space-between; font-weight:600}
 .progress{width:100%; height:8px; background:rgba(255,255,255,.6); border-radius:999px; overflow:hidden; margin-top:8px}
 .bar{height:100%; width:0%; background:linear-gradient(90deg,var(--gold2),var(--gold3),var(--gold4)); transition:width .4s ease}
+
+/* Вопрос */
 h2.q{font-family:"Spectral SC",serif; font-size:28px; margin:8px 0 12px}
-textarea{width:100%; height:170px; padding:18px; border:none; border-radius:18px; background:var(--veil); font-family:inherit; font-size:20px; box-shadow:inset 0 2px 8px rgba(0,0,0,.06)}
-.btn{border:none; cursor:pointer; color:#fff; font-weight:700; background:linear-gradient(130deg,var(--gold2),var(--gold4)); padding:14px 30px; border-radius:999px; font-size:20px; box-shadow:0 12px 32px rgba(0,0,0,.18); transition:.25s; margin-top:18px}
+textarea{
+  width:100%; height:170px; padding:18px; border:none; border-radius:18px;
+  background:var(--veil); font-family:inherit; font-size:20px;
+  box-shadow:inset 0 2px 8px rgba(0,0,0,.06)
+}
+
+/* Кнопки */
+.btn{
+  border:none; cursor:pointer; color:#fff; font-weight:700;
+  background:linear-gradient(130deg,var(--gold2),var(--gold4));
+  padding:14px 30px; border-radius:999px; font-size:20px;
+  box-shadow:0 12px 32px rgba(0,0,0,.18); transition:.25s; margin-top:18px
+}
 .btn:hover{transform:translateY(-3px);opacity:.96}
-.final{text-align:left}
+
+/* Финал */
+.final{text-align:center}
 .final h2{font-family:"Spectral SC",serif; font-size:30px; margin-bottom:8px}
 .final p{opacity:.9; font-size:20px}
-
-.upload-wrap{display:grid; gap:16px; margin-top:18px}
-.drop{position:relative; display:flex; align-items:center; justify-content:center; text-align:center; min-height:160px; border-radius:18px; background:rgba(255,255,255,.95); border:2px dashed rgba(0,0,0,.1)}
-.drop.drag{border-color:#b99673}
-.drop input{display:none}
-.actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
-.link-ghost{background:transparent; color:var(--ink); border:1px dashed rgba(0,0,0,.2)}
-.preview{display:flex; flex-wrap:wrap; gap:10px}
-.thumb{width:90px; height:90px; border-radius:10px; background:#fff; overflow:hidden; box-shadow:0 6px 16px rgba(0,0,0,.08)}
-.thumb img{width:100%; height:100%; object-fit:cover}
 
 @media(max-width:640px){
   .card{padding:24px}
@@ -80,7 +96,7 @@ textarea{width:100%; height:170px; padding:18px; border:none; border-radius:18px
 </div>
 
 <script>
-// Glitter
+/* Glitter mix */
 const cvs=document.getElementById('glitter'), ctx=cvs.getContext('2d');
 let W,H,parts=[];
 function resize(){W=cvs.width=innerWidth; H=cvs.height=innerHeight}
@@ -103,7 +119,7 @@ function step(){
 }
 spawn(70); setInterval(()=>spawn(8),600); step();
 
-/* --- Вопросы (пробные 5) --- */
+/* Вопросы (пробные 5) */
 const qs=[
   "Где вы впервые встретились?",
   "Что вы подумали при первой встрече?",
@@ -127,113 +143,20 @@ function render(){
   perc.textContent=Math.round((i/5)*100)+'%';
   a.value='';
 }
-
-async function sendAnswerToBot(question, answer) {
-  try {
-    await fetch("/api/sendMessage", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: `📖 <b>Ответ пользователя</b>\n\n❓ <b>${question}</b>\n✏️ ${answer}`
-      }),
-    });
-  } catch (error) {
-    console.error("Ошибка отправки:", error);
-  }
-}
-
-document.getElementById('next').addEventListener('click',async ()=>{
-  const answer = a.value.trim();
-  await sendAnswerToBot(qs[i], answer || "—");
-
+document.getElementById('next').addEventListener('click',()=>{
   i++;
   if(i<5){ render(); }
   else{
     bar.style.width='100%'; perc.textContent='100%';
-    // финальный экран + блок «Добавить фото»
     card.innerHTML=`
       <div class="final">
         <h2>✨ Пробная часть завершена</h2>
-        <p>Спасибо! Вы прошли первые 5 вопросов. Откройте оставшиеся 95 и создайте нетленную книгу вашей любви.</p>
-
-        <div class="upload-wrap">
-          <h3 style="margin-top:18px; font-family:'Spectral SC',serif">Добавить фото <span style="opacity:.7">(по желанию)</span></h3>
-          <div id="drop" class="drop">
-            <div>
-              <div style="font-weight:600; margin-bottom:6px">Перетащите сюда фото</div>
-              <div class="note">или нажмите «Выбрать файлы»</div>
-            </div>
-            <input id="fileInput" type="file" accept="image/*" multiple>
-          </div>
-          <div class="actions">
-            <button class="btn" id="pickBtn">Выбрать файлы</button>
-            <button class="btn" id="sendBtn">Отправить фото</button>
-            <button class="btn link-ghost" id="continueBtn">Продолжить без фото</button>
-          </div>
-          <div id="preview" class="preview"></div>
-          <p class="note">Фото — опционально. Можно пропустить.</p>
-        </div>
+        <p>Вы прошли 5 вопросов. Откройте оставшиеся 95 и создайте нетленную книгу вашей любви.</p>
+        <button class="btn" onclick="alert('Подключим оплату и Telegram-бота на следующем шаге')">Открыть все вопросы</button>
       </div>`;
-
-    // инициализация загрузчика в финальном экране
-    initUploader({
-      caption:'📸 Фото к книге (после вопросов)',
-      onContinue: ()=> alert('Здесь потом откроем страницу оплаты/100 вопросов 😉')
-    });
   }
 });
-
 render();
-
-/* Общая функция-инициализация drag&drop блока (для финала) */
-function initUploader({caption,onContinue}){
-  const drop = document.getElementById('drop');
-  const input = document.getElementById('fileInput');
-  const pickBtn = document.getElementById('pickBtn');
-  const sendBtn = document.getElementById('sendBtn');
-  const contBtn = document.getElementById('continueBtn');
-  const preview = document.getElementById('preview');
-
-  let chosenFiles = [];
-  function renderPreview(){
-    preview.innerHTML = "";
-    chosenFiles.forEach(file=>{
-      const url = URL.createObjectURL(file);
-      const div = document.createElement('div');
-      div.className='thumb'; div.innerHTML = `<img src="${url}" alt="">`;
-      preview.appendChild(div);
-    });
-  }
-
-  pickBtn.onclick = ()=> input.click();
-  input.onchange = ()=> { chosenFiles = [...input.files]; renderPreview(); };
-
-  ;['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,(e)=>{e.preventDefault(); drop.classList.add('drag')}))
-  ;['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,(e)=>{e.preventDefault(); drop.classList.remove('drag')}))
-  drop.addEventListener('drop',(e)=>{
-    const files = [...(e.dataTransfer?.files || [])].filter(f=>f.type.startsWith('image/'));
-    if (files.length){ chosenFiles = files; renderPreview(); }
-  });
-
-  sendBtn.onclick = async ()=>{
-    if (!chosenFiles.length){ alert('Выберите фото'); return; }
-    const toDataURL = (file)=> new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res({name:file.name,dataUrl:fr.result}); fr.onerror=rej; fr.readAsDataURL(file); });
-    const images = await Promise.all(chosenFiles.map(toDataURL));
-    sendBtn.disabled = true; sendBtn.textContent = 'Отправка...';
-    try{
-      const r = await fetch('/api/sendPhoto',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ images, caption }) });
-      if (!r.ok) throw 0;
-      sendBtn.textContent = 'Отправлено ✅';
-    }catch(e){
-      sendBtn.textContent = 'Ошибка';
-      alert('Не удалось отправить. Попробуйте ещё раз.');
-    }finally{
-      setTimeout(()=>{ sendBtn.disabled=false; sendBtn.textContent='Отправить фото'; }, 1600);
-    }
-  };
-
-  contBtn.onclick = ()=> onContinue?.();
-}
 </script>
 </body>
 </html>
