@@ -327,9 +327,9 @@ function nextQ(){
   if(i<qs.length){
     q.textContent=qs[i]; a.value="";
   }else{
-    document.getElementById('step-questions').style.display='none';
-    document.getElementById('photo-step').style.display='block';
-    window.scrollTo({top:0,behavior:"smooth"});
+    // показываем модалку тарифов
+    document.getElementById("pay-modal").classList.add("show");
+    document.body.classList.add("no-scroll");
   }
 }
 document.getElementById('next').onclick=nextQ;
