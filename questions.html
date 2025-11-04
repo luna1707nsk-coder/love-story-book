@@ -1,95 +1,56 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="auto">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="format-detection" content="telephone=no">
 <title>История — Вопросы</title>
 
-<!-- FONTS -->
 <link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* ========= THEMES ========= */
-:root {
-  --bg: #FBF7F2;
-  --ink: #4A3A39;
-  --card: rgba(255,255,255,.82);
-  --gold1:#f1e4c5; --gold2:#c7a875; --gold3:#9c7b55;
-  --blur-card: blur(14px);
+:root{
+ --cream:#FBF7F2; --ink:#4A3A39;
+ --card:rgba(255,255,255,.78);
+ --gold1:#f1e4c5; --gold2:#c7a875; --gold3:#9c7b55;
 }
 
-:root[data-theme="dark"] {
-  --bg: #15120F;
-  --ink: #E8DCCB;
-  --card: rgba(35,30,25,.72);
-  --blur-card: blur(16px);
-  --gold1:#b7a06d; --gold2:#8d744d; --gold3:#5c4633;
-}
-
-/* ========== RESET ========== */
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--bg) url("assets/background3.jpg") center/cover fixed no-repeat;
-  font-family:"Playfair Display",serif;
-  padding:36px 10px; color:var(--ink);
-  transition:background .3s,color .3s;
+ min-height:100vh;display:flex;align-items:center;justify-content:center;
+ background:url("assets/background3.jpg") center/cover fixed no-repeat;
+ font-family:"Playfair Display",serif;padding:40px 10px;color:var(--ink);
 }
-
-/* THEME BUTTON */
-.theme-toggle{
-  position:fixed;top:14px;right:14px;
-  width:44px;height:44px;border-radius:50%;
-  background:rgba(255,255,255,.55);
-  backdrop-filter:blur(10px);
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;cursor:pointer;
-  z-index:500;border:1px solid rgba(255,255,255,.35);
-  transition:.25s;
-}
-.theme-toggle:hover{transform:scale(1.07)}
 
 /* CARD */
 .card{
-  width:100%;max-width:780px;
-  background:var(--card);
-  backdrop-filter:var(--blur-card);
-  border-radius:26px;
-  padding:34px;
-  box-shadow:0 14px 38px rgba(0,0,0,.14);
-  animation:fade .6s ease;
-  transition:background .3s;
+ width:100%;max-width:780px;margin:auto;
+ background:rgba(255,255,255,.82);backdrop-filter:blur(14px);
+ border-radius:26px;padding:34px;box-shadow:0 14px 38px rgba(0,0,0,.14);
+ animation:fade .6s ease;
 }
 @keyframes fade{from{opacity:0;transform:translateY(18px)}}
 
 /* TITLES */
 h1{
-  font-family:"Spectral SC",serif;
-  text-align:center;margin-bottom:10px;
-  background:linear-gradient(100deg,#7a5e49,#c9a876,#ecd8b8);
-  -webkit-background-clip:text;color:transparent;
+ font-family:"Spectral SC",serif;text-align:center;margin-bottom:10px;
+ background:linear-gradient(100deg,#7a5e49,#c9a876,#ecd8b8);
+ -webkit-background-clip:text;color:transparent;
 }
 h2{font-size:26px;margin:14px 0}
-
-/* TEXTAREA */
 textarea{
-  width:100%;height:180px;
-  padding:18px;border:none;border-radius:18px;
-  background:rgba(255,255,255,.7);
-  font-size:20px;
-  box-shadow:inset 0 2px 8px rgba(0,0,0,.06);
-  color:var(--ink);
+ width:100%;height:180px;padding:18px;border:none;border-radius:18px;
+ background:rgba(255,255,255,.7);
+ font-size:20px;box-shadow:inset 0 2px 8px rgba(0,0,0,.06)
 }
 
 /* BUTTON */
 .btn{
-  border:none;cursor:pointer;color:#fff;font-weight:700;
-  background:linear-gradient(130deg,var(--gold2),var(--gold3));
-  padding:14px 28px;border-radius:999px;font-size:18px;
-  box-shadow:0 12px 32px rgba(0,0,0,.18);
-  transition:.25s;
+ border:none;cursor:pointer;color:#fff;font-weight:700;
+ background:linear-gradient(130deg,#c5a26f,#987147);
+ padding:14px 28px;border-radius:999px;font-size:18px;
+ box-shadow:0 12px 32px rgba(0,0,0,.18);
+ transition:.25s;
 }
 .btn:hover{transform:translateY(-3px);opacity:.96}
 .btn-full{width:100%}
@@ -98,91 +59,87 @@ textarea{
 #photo-step{display:none;text-align:center}
 #photos{display:none}
 .photo-upload-btn{
-  display:inline-block;padding:14px 32px;margin-top:12px;cursor:pointer;
-  background:linear-gradient(130deg,var(--gold2),var(--gold3));
-  color:#fff;border-radius:999px;font-weight:700;font-size:18px;
-  box-shadow:0 10px 26px rgba(0,0,0,.18)
+ display:inline-block;padding:14px 32px;margin-top:12px;cursor:pointer;
+ background:linear-gradient(130deg,#c5a26f,#987147);color:#fff;
+ border-radius:999px;font-weight:700;font-size:18px;
+ box-shadow:0 10px 26px rgba(0,0,0,.18)
 }
 #preview{margin-top:14px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 .preview-item{width:96px;height:96px;border-radius:12px;overflow:hidden;position:relative}
 .preview-item img{width:100%;height:100%;object-fit:cover;border-radius:12px}
 .delete-x{
-  position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;
-  background:rgba(0,0,0,.65);color:#fff;font-size:14px;
-  display:flex;align-items:center;justify-content:center;cursor:pointer
+ position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;
+ background:rgba(0,0,0,.65);color:#fff;font-size:14px;
+ display:flex;align-items:center;justify-content:center;cursor:pointer
 }
 .photo-actions{display:flex;gap:12px;justify-content:center;margin-top:14px}
 
-/* MODAL */
+/* MODAL BG */
 .modal-bg{
-  position:fixed;inset:0;background:rgba(0,0,0,.45);
-  backdrop-filter:blur(8px);
-  display:none;justify-content:center;align-items:center;z-index:99;
-}
-.modal{
-  background:var(--card);border-radius:24px;padding:26px;
-  width:92%;max-width:480px;
-  animation:fade .35s ease;
-  box-shadow:0 18px 45px rgba(0,0,0,.2);
+ position:fixed;inset:0;background:rgba(0,0,0,.45);
+ backdrop-filter:blur(8px);
+ display:none;justify-content:center;align-items:center;z-index:99;
 }
 
-/* GOLD CARD */
+/* MODAL */
+.modal{
+ background:rgba(255,255,255,.92);border-radius:24px;padding:26px;
+ width:92%;max-width:480px;animation:fade .35s ease;box-shadow:0 18px 45px rgba(0,0,0,.2);
+}
+
+/* PREMIUM CARD BLOCK */
 .bank-card{
-  margin:14px 0;padding:22px;border-radius:18px;
-  background:linear-gradient(145deg,#d6c4a5,#b49368,#8c6a43);
-  box-shadow:inset 0 2px 4px rgba(255,255,255,.4),
-             inset 0 -2px 6px rgba(0,0,0,.3),
-             0 10px 25px rgba(0,0,0,.25);
-  border:1px solid rgba(255,255,255,.28);
-  backdrop-filter:blur(10px);
-  cursor:pointer;overflow:hidden;
-  transition:.2s;
-  transform-style:preserve-3d;
+ margin:14px 0;padding:20px;border-radius:18px;position:relative;
+ background:linear-gradient(145deg,#d6c4a5,#b49368,#8c6a43);
+ box-shadow:inset 0 2px 4px rgba(255,255,255,.4), inset 0 -2px 6px rgba(0,0,0,.3), 0 10px 25px rgba(0,0,0,.25);
+ border:1px solid rgba(255,255,255,.3);
+ backdrop-filter:blur(10px);
+ overflow:hidden;cursor:pointer;
+ transition:.2s;
 }
 .bank-card:active{transform:scale(.97)}
 
-/* grain */
+/* metallic noise texture */
 .bank-card::after{
-  content:"";position:absolute;inset:0;
-  background:url("https://www.transparenttextures.com/patterns/asfalt-light.png");
-  opacity:.18;pointer-events:none;
+ content:"";position:absolute;inset:0;
+ background:url("https://www.transparenttextures.com/patterns/asfalt-light.png");opacity:.18;
+ pointer-events:none;
 }
 
-/* card number shine */
+/* NUMBER */
 .cardnum{
-  font-family:"Spectral SC",serif;font-weight:700;font-size:28px;text-align:center;
-  letter-spacing:4px;margin-bottom:10px;user-select:none;
-  background:linear-gradient(90deg,#fff,#e4d3a8,#c1a475,#a48652,#dcc38d,#fff);
-  -webkit-background-clip:text;color:transparent;
-  animation:shine 3s infinite;
+ font-family:"Spectral SC",serif;font-weight:700;font-size:28px;text-align:center;
+ letter-spacing:4px;margin-bottom:10px;user-select:none;
+ background:linear-gradient(90deg,#fff,#e4d3a8,#c1a475,#a48652,#dcc38d,#fff);
+ -webkit-background-clip:text;color:transparent;
+ animation:shine 3s infinite;
 }
 @keyframes shine{
- 0%{filter:brightness(.9)}50%{filter:brightness(1.23)}100%{filter:brightness(.9)}
+ 0%{filter:brightness(.9)}50%{filter:brightness(1.25)}100%{filter:brightness(.9)}
 }
 
+/* COPY HINT */
 .copy-hint{font-size:13px;opacity:.7;text-align:center;margin-bottom:8px}
+
+/* PRICE & TITLE */
 .tariff-title{
  font-family:"Spectral SC",serif;font-size:26px;text-align:center;margin-bottom:6px;
  background:linear-gradient(90deg,#8b6a52,#c9a876,#eddab8);
  -webkit-background-clip:text;color:transparent;
 }
-.price{text-align:center;margin-bottom:12px;font-weight:700;color:var(--ink)}
+.price{font-weight:700;text-align:center;margin:6px 0 10px;color:#6a4e32}
 
+/* NO AUTOLINKS */
+a,a:visited,a:hover{color:inherit;text-decoration:none}
+
+/* MOBILE */
 @media(max-width:640px){
  .photo-actions{flex-direction:column}
  .btn-full,.photo-actions .btn{width:100%}
 }
-
-@media (max-width: 480px){
- .bank-card{width:100%;padding:18px;border-radius:15px}
- .cardnum{font-size:22px;letter-spacing:3px}
-}
 </style>
 </head>
 <body>
-
-<!-- THEME BUTTON -->
-<div class="theme-toggle" id="themeToggle">🌙</div>
 
 <!-- QUESTIONS -->
 <div class="card" id="step-questions">
@@ -202,16 +159,17 @@ textarea{
    <button class="btn" onclick="sendPhotos()">Отправить фото</button>
    <button class="btn" onclick="openPay()">Создать мою книгу ❤️</button>
  </div>
+ <div class="helper">Нажми ✖ чтобы удалить фото</div>
 </div>
 
-<!-- PAYMENT -->
+<!-- PAYMENT MODAL -->
 <div id="payModal" class="modal-bg">
  <div class="modal">
 
   <div class="tariff-title">✨ Basic</div>
   <div class="price">2490 ₽</div>
-  <div class="bank-card tilt" onclick="copyCard()">
-    <div class="cardnum">2200&nbsp;7017&nbsp;4877&nbsp;2404</div>
+  <div class="bank-card" onclick="copyCard()">
+    <div class="cardnum">2200 7017 4877 2404</div>
   </div>
   <div class="copy-hint">Т-Банк — нажмите, чтобы скопировать</div>
   <button class="btn btn-full" onclick="openBot('basic')">Оплатил — отправить чек</button>
@@ -220,18 +178,20 @@ textarea{
 
   <div class="tariff-title">💎 Premium</div>
   <div class="price">6990 ₽</div>
-  <div class="bank-card tilt" onclick="copyCard()">
-    <div class="cardnum">2200&nbsp;7017&nbsp;4877&nbsp;2404</div>
+  <div class="bank-card" onclick="copyCard()">
+    <div class="cardnum">2200 7017 4877 2404</div>
   </div>
   <div class="copy-hint">Т-Банк — нажмите, чтобы скопировать</div>
   <button class="btn btn-full" onclick="openBot('premium')">Оплатил — отправить чек</button>
+
+  <p style="text-align:center;font-size:13px;opacity:.6;margin-top:12px">Нажмите вне окна, чтобы закрыть</p>
  </div>
 </div>
 
 <script>
-/* QUESTIONS */
 const qs=["Где вы впервые встретились?","Что вы подумали при первой встрече?","Кто сделал первый шаг?","Какой момент стал решающим?","Что больше всего запомнилось?"];
-let i=0;const q=document.getElementById('q'),a=document.getElementById('a');
+let i=0;
+const q=document.getElementById('q'),a=document.getElementById('a');
 
 async function sendAnswer(qt,an){
  if(!an.trim())return;
@@ -258,13 +218,10 @@ function render(){
 }
 function del(i){files.splice(i,1);render();}
 async function sendPhotos(){
- for(const f of files){
-  const fd=new FormData();fd.append("photo",f);
+ for(const f of files){const fd=new FormData();fd.append("photo",f);
   await fetch("/api/sendPhoto",{method:"POST",body:fd});
   await new Promise(r=>setTimeout(r,300));
- }
- alert("Фото отправлены 🤍");
-}
+}alert("Фото отправлены 🤍");}
 
 /* PAYMENT */
 function openPay(){document.getElementById("payModal").style.display="flex";}
@@ -273,50 +230,6 @@ function copyCard(){navigator.clipboard.writeText("2200701748772404");alert("С�
 function openBot(t){
  window.open(`https://t.me/abookaboutyou_bot?start=${t==="premium"?"pay_premium":"pay_basic"}`,"_blank");
  fetch("/api/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:`💸 Пользователь выбрал тариф: ${t}`})});
-}
-
-/* THEME LOGIC */
-const btn=document.getElementById("themeToggle");
-function setTheme(mode){
- document.documentElement.setAttribute("data-theme",mode);
- localStorage.setItem("theme",mode);
- btn.textContent = mode==="dark" ? "☀️" : "🌙";
-}
-(function initTheme(){
- const saved=localStorage.getItem("theme");
- if(saved){setTheme(saved)}
- else{
-   const prefers=window.matchMedia("(prefers-color-scheme: dark)").matches;
-   setTheme(prefers?"dark":"light");
- }
-})();
-btn.onclick=()=>setTheme(
- document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark"
-);
-
-/* 3D TILT EFFECT ON CARDS */
-const cards=document.querySelectorAll(".tilt");
-
-function tilt(e,card){
- const r=card.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
- const rotX=((y/r.height)-0.5)*8;
- const rotY=((x/r.width)-0.5)*-8;
- card.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-}
-cards.forEach(c=>{
- c.addEventListener("mousemove",e=>tilt(e,c));
- c.addEventListener("mouseleave",()=>c.style.transform="rotateX(0) rotateY(0)");
-});
-
-/* Gyro tilt on mobile */
-if(window.DeviceMotionEvent){
- window.addEventListener("devicemotion",e=>{
-  const x=e.accelerationIncludingGravity.x/4;
-  const y=e.accelerationIncludingGravity.y/4;
-  cards.forEach(c=>{
-   c.style.transform=`rotateX(${y}deg) rotateY(${-x}deg)`;
-  });
- });
 }
 </script>
 </body>
