@@ -136,11 +136,21 @@ input[type=file]{
   <h1>Добавьте фото</h1>
   <p>По желанию — чтобы книга стала ещё теплее 🤍</p>
 
-  <input type="file" id="photos" multiple accept="image/*" class="photo-input">
-  <div id="preview"></div>
+  <div class="file-wrap" onclick="document.getElementById('photos').click()">
+  <span class="file-label">📎 Прикрепить фотографии</span>
+</div>
+<input type="file" id="photos" multiple accept="image/*">
 
-  <button class="btn" onclick="sendPhotos()">Отправить фото</button>
-  <button class="btn" style="margin-top:10px" onclick="finish()">Создать мою книгу ❤️</button>
+<div id="preview"></div>
+<div class="file-wrap" onclick="document.getElementById('photos').click()">
+  <span class="file-label">📎 Прикрепить фотографии</span>
+</div>
+<input type="file" id="photos" multiple accept="image/*">
+
+
+  <button class="btn" onclick="sendPhotos()">📤 Отправить фото</button>
+  <button class="btn" style="margin-top:10px" onclick="finish()">✨ Создать мою книгу</button>
+
 </div>
 </div>
 
@@ -208,6 +218,13 @@ async function sendPhotos(){
 function finish(){
  document.getElementById("payModal").style.display="flex";
 }
+  // закрыть модал по клику вне окна
+document.getElementById("payModal").addEventListener("click", (e)=>{
+  if(e.target === e.currentTarget){
+    document.getElementById("payModal").style.display="none";
+  }
+});
+
 </script>
 </body>
 </html>
