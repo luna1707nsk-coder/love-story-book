@@ -2,338 +2,254 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>История — Вопросы</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --cream:#FBF7F2; 
-  --ink:#4A3A39;
-  --card:rgba(255,255,255,.78);
-  --veil:rgba(255,255,255,.9);
-  --gold1:#9b7f64; 
-  --gold2:#d7c29c; 
-  --gold3:#b99673;
-  --shadow:0 14px 38px rgba(0,0,0,.14);
-  --radius:26px;
+:root {
+  --cream:#FBF7F2; --ink:#4A3A39;
+  --card:rgba(255,255,255,.78); --veil:rgba(255,255,255,.9);
+  --gold2:#9b7f64; --gold3:#d7c29c; --gold4:#b99673;
+  --shadow:0 14px 38px rgba(0,0,0,.14); --radius:26px;
 }
+
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  background:url("assets/background3.jpg") center/cover fixed;
-  font-family:"Playfair Display",serif;
+  background:url("assets/background3.jpg") center/cover fixed no-repeat;
+  font-family:'Playfair Display',serif;
   color:var(--ink);
-  overflow-x:hidden;
-}
-
-/* Container */
-.container{
-  max-width:780px;
-  margin:120px auto 60px;
-  padding:20px;
+  min-height:100vh;
   display:flex;
+  align-items:center;
   justify-content:center;
+  padding:40px 10px;
 }
 
-@keyframes fade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+/* Card */
+.card{
+  width:100%;
+  max-width:760px;
+  background:var(--card);
+  backdrop-filter:blur(10px);
+  border-radius:var(--radius);
+  padding:34px;
+  box-shadow:var(--shadow);
+}
 
-h1{
+/* Title */
+h1 {
   font-family:"Spectral SC",serif;
+  font-size:32px;
   text-align:center;
-  margin-bottom:8px;
+  margin-bottom:20px;
   background:linear-gradient(90deg,#6a5447,#9b7f64,#d7c29c,#b99673,#7a5f4e);
-  -webkit-background-clip:text;color:transparent;
+  -webkit-background-clip:text;
+  color:transparent;
 }
 
-/* Inputs */
+/* Question */
+h2 {font-size:26px;margin-bottom:14px;}
 textarea{
-  width:100%;height:170px;padding:18px;border:none;border-radius:18px;
-  background:var(--veil);font-size:20px;box-shadow:inset 0 2px 8px rgba(0,0,0,.06)
+  width:100%;height:180px;
+  padding:18px;border:none;border-radius:18px;
+  background:var(--veil);
+  font-size:20px;
+  box-shadow:inset 0 2px 8px rgba(0,0,0,.06);
 }
 
-/* Button */
+/* Buttons */
 .btn{
   border:none;cursor:pointer;color:#fff;font-weight:700;
-  background:linear-gradient(130deg,var(--gold1),var(--gold3));
-  padding:14px 30px;border-radius:999px;font-size:20px;
-  box-shadow:0 12px 32px rgba(0,0,0,.18);transition:.25s;
+  background:linear-gradient(130deg,var(--gold2),var(--gold4));
+  padding:14px 30px;border-radius:999px;font-size:18px;
+  box-shadow:0 12px 32px rgba(0,0,0,.18);
+  transition:.25s;margin-top:18px;
 }
 .btn:hover{transform:translateY(-3px);opacity:.96}
+.btn-full{width:100%}
 
-/* Photo block fix */
-#photo-step{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;max-width:760px;margin:120px auto 60px;padding:30px;
+/* Photo area */
+#photo-step{display:none;text-align:center}
+.photo-upload-btn{
+  cursor:pointer;padding:14px 32px;
+  background:linear-gradient(130deg,var(--gold2),var(--gold4));
+  color:white;border-radius:999px;font-weight:600;
+  font-size:18px;margin:14px auto;display:inline-block;
+  box-shadow:0 12px 32px rgba(0,0,0,.18)
+}
+#photos{display:none}
+
+#preview{
+  margin-top:14px;display:flex;flex-wrap:wrap;
+  gap:12px;justify-content:center;
 }
 
-/* Upload button */
-.photo-input-wrapper{display:flex;justify-content:center;width:100%;margin-bottom:10px;}
-.photo-btn{
-  display:inline-block;background:linear-gradient(130deg,var(--gold1),var(--gold3));
-  padding:14px 28px;border-radius:999px;color:#fff;font-weight:700;
-  cursor:pointer;box-shadow:0 12px 32px rgba(0,0,0,.18);transition:.25s;
-}
-.photo-btn:hover{transform:translateY(-3px);opacity:.96}
-.photo-input{display:none}
-
-/* Preview images */
-#preview{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:18px}
 .preview-item{
-  position:relative;width:90px;height:90px;border-radius:14px;overflow:hidden;
-  animation:fadeIn .3s ease;
+  position:relative; width:90px; height:90px;
+  border-radius:12px; overflow:hidden; cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,.16);
+  transition:.25s;
 }
-@keyframes fadeIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
-.preview-item img{width:100%;height:100%;object-fit:cover;border-radius:14px;}
-.remove-photo{
-  position:absolute;top:5px;right:5px;background:rgba(0,0,0,.6);color:#fff;
-  font-size:12px;padding:3px 6px;border-radius:50%;cursor:pointer;transition:.2s;
+.preview-item:hover{transform:scale(1.05)}
+
+.preview-item img{
+  width:100%;height:100%;object-fit:cover;
 }
-.remove-photo:hover{background:rgba(0,0,0,.85);}
+
+.delete-x{
+  position:absolute;top:6px;right:6px;
+  background:rgba(0,0,0,.6);
+  color:white;border-radius:50%;
+  width:22px;height:22px;
+  font-size:14px;display:flex;
+  justify-content:center;align-items:center;
+  cursor:pointer;
+}
 
 /* Modal */
 .modal-bg{
-  position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(5px);
-  display:none;justify-content:center;align-items:center;z-index:50;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;justify-content:center;align-items:center;
 }
 .modal{
-  background:var(--card);padding:30px;border-radius:22px;
-  max-width:420px;text-align:center;animation:fade .35s ease;
+  background:white;padding:32px;border-radius:18px;
+  max-width:420px;width:92%;text-align:center;
+  font-size:20px;
 }
-  /* Center card always */
-#photo-step {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-}
-
-/* Custom upload button */
-.photo-upload-btn {
-  cursor:pointer;
-  display:inline-block;
-  padding:14px 32px;
-  background:linear-gradient(130deg,var(--gold2),var(--gold4));
-  color:white;
-  border-radius:999px;
-  font-weight:600;
-  margin:10px 0 20px;
-  font-size:18px;
-  box-shadow:0 12px 32px rgba(0,0,0,.18);
-  transition:.25s;
-}
-.photo-upload-btn:hover {
-  transform:translateY(-3px);
-  opacity:.96;
-}
-.photo-upload-btn input{
-  display:none;
-}
-
-
-/* preview grid */
-.preview-grid {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-  width:100%;
-  padding:10px 0;
-}
-.preview-grid img {
-  width:90px;
-  height:90px;
-  object-fit:cover;
-  border-radius:10px;
-  cursor:pointer;
-  transition:.25s;
-  box-shadow:0 4px 10px rgba(0,0,0,.2);
-}
-.preview-grid img:hover {
-  transform:scale(1.07);
-  box-shadow:0 6px 18px rgba(0,0,0,.28);
-}
-
-/* buttons in one row */
-.photo-actions {
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  width:100%;
-  margin-top:10px;
-}
-  .card{
-  margin:0 auto;
-}
-
-
 </style>
 </head>
-
 <body>
 
-<div class="container">
-  <div id="step-questions" class="card">
-    <h1>Пробная часть</h1>
+<div class="card" id="main-step">
+  <h1>Пробная часть</h1>
 
-    <h2 id="q">Где вы впервые встретились?</h2>
-    <textarea id="a" placeholder="Ваш ответ..."></textarea>
+  <h2 id="question">Где вы впервые встретились?</h2>
+  <textarea id="answer" placeholder="Ваш ответ..."></textarea>
 
-    <button class="btn" id="next">Далее</button>
-  </div>
-
-<!-- 📸 PHOTO STEP -->
-<div id="photo-step" class="card" style="display:none; max-width:780px; margin:120px auto;">
-  <h1>Добавьте фото</h1>
-  <p>Чтобы книга стала ещё теплее 💜<br>
-  <span style="opacity:.7">(по желанию — можно пропустить)</span></p>
-
-  <label class="btn photo-upload-btn">
-    📎 Прикрепить фото
-    <input type="file" id="photos" multiple accept="image/*" class="photo-input">
-  </label>
-
-  <div id="preview" class="preview-grid"></div>
-
-  <div class="photo-actions">
-    <button class="btn" onclick="sendPhotos()">Отправить фото</button>
-    <button class="btn" onclick="finish()">Создать мою книгу 💖</button>
-  </div>
-
-  <div style="font-size:14px; opacity:.6; margin-top:8px;">
-    Нажми на ✖️, чтобы удалить фото
-  </div>
+  <button class="btn btn-full" id="nextBtn">Далее</button>
 </div>
 
+<!-- PHOTO STEP -->
+<div class="card" id="photo-step">
+  <h1>Добавьте фото</h1>
+  <p>Чтобы книга стала ещё теплее 💗 <br>(по желанию — можно пропустить)</p>
+
+  <label class="photo-upload-btn">
+    📎 Прикрепить фото
+    <input type="file" id="photos" multiple accept="image/*">
+  </label>
+
+  <div id="preview"></div>
+
+  <button class="btn" onclick="sendPhotos()">Отправить фото</button>
+  <button class="btn" onclick="finish()">Создать мою книгу 💖</button>
+</div>
 
 <!-- MODAL -->
 <div id="payModal" class="modal-bg">
   <div class="modal">
-    <h2>Выберите тариф</h2>
-    <p>Чтобы получить свою книгу 💝</p><br>
-
-    <button class="btn" onclick="alert('Оплата скоро будет подключена 💳')">Тариф «Базовый» — 990₽</button><br><br>
-    <button class="btn" onclick="alert('Оплата скоро будет подключена 💳')">Тариф «Премиум» — 1990₽</button>
+    <p>Выберите тариф и получите свою книгу 💝</p>
+    <button class="btn btn-full">Перейти к тарифам</button>
   </div>
 </div>
 
 <script>
-// QUESTIONS
-const qs=[
-"Где вы впервые встретились?",
-"Что вы подумали при первой встрече?",
-"Кто сделал первый шаг?",
-"Какой момент стал решающим?",
-"Что больше всего запомнилось?"
+/* QUESTIONS LOGIC */
+const questions = [
+  "Где вы впервые встретились?",
+  "Что вы подумали при первой встрече?",
+  "Кто сделал первый шаг?",
+  "Какой момент стал решающим для вас?",
+  "Что больше всего запомнилось в тот день?"
 ];
-let i=0;
 
-const qEl=document.getElementById("q");
-const aEl=document.getElementById("a");
+let index = 0;
+const q = document.getElementById("question");
+const a = document.getElementById("answer");
+const next = document.getElementById("nextBtn");
 
-async function send(q,a){
-  await fetch("/api/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:`❓ ${q}\n✏️ ${a}`})});
+async function sendAnswer(q, a){
+  if(!a.trim()) return;
+  await fetch("/api/sendMessage",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({text:`❓${q}\n✏️ ${a}`})
+  });
 }
 
-function nextQ(){
-  const val=aEl.value.trim();
-  if(val){send(qs[i],val);}
-  i++;
-  if(i<qs.length){
-    qEl.textContent=qs[i];
-    aEl.value="";
-  } else {
-    document.getElementById("step-questions").style.display="none";
-    document.getElementById("photo-step").style.display="flex";
-  }
+function showPhotosStep(){
+  document.getElementById("main-step").style.display="none";
+  document.getElementById("photo-step").style.display="block";
 }
-document.getElementById("next").onclick=nextQ;
-aEl.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();nextQ();}});
 
-// PHOTOS
-let files=[];
-
-document.getElementById("photos").onchange=e=>{
-  [...e.target.files].forEach(f=>files.push(f));
-  renderPreview();
+next.onclick = async ()=>{
+  if(a.value.trim()) await sendAnswer(questions[index], a.value);
+  index++;
+  if(index<questions.length){
+    q.textContent = questions[index];
+    a.value='';
+  } else showPhotosStep();
 };
 
-function renderPreview(){
-  const wrap=document.getElementById("preview");
-  wrap.innerHTML="";
-  files.forEach((file,idx)=>{
-    const url=URL.createObjectURL(file);
-    wrap.innerHTML+=`
+a.addEventListener("keydown", e => {
+  if(e.key === "Enter" && !e.shiftKey){
+    e.preventDefault();
+    next.click();
+  }
+});
+
+/* PHOTO PREVIEW + DELETE */
+let files = [];
+
+document.getElementById("photos").onchange = (e)=>{
+  for(let f of e.target.files) files.push(f);
+  renderPhotos();
+};
+
+function renderPhotos(){
+  const box = document.getElementById("preview");
+  box.innerHTML = "";
+  files.forEach((file,i)=>{
+    const url = URL.createObjectURL(file);
+    box.innerHTML += `
       <div class="preview-item">
+        <span class="delete-x" onclick="removePhoto(${i})">✖</span>
         <img src="${url}">
-        <div class="remove-photo" onclick="removePhoto(${idx})">✕</div>
       </div>`;
   });
 }
 
 function removePhoto(i){
   files.splice(i,1);
-  renderPreview();
+  renderPhotos();
 }
 
+/* SEND PHOTOS */
 async function sendPhotos(){
-  for(const file of files){
-    const fd=new FormData(); fd.append("photo",file);
+  if(files.length===0){ showPay(); return; }
+
+  for(let f of files){
+    const fd = new FormData();
+    fd.append("photo", f);
     await fetch("/api/sendPhoto",{method:"POST",body:fd});
   }
-  alert("Фото отправлены 📸✨");
+  showPay();
 }
 
-function finish(){
+/* SHOW MODAL */
+function showPay(){
   document.getElementById("payModal").style.display="flex";
 }
-document.getElementById("payModal").onclick=e=>{
+
+document.getElementById("payModal").onclick = e=>{
   if(e.target.id==="payModal") e.target.style.display="none";
-};
-  // Show preview + delete photo on click
-let selectedPhotos = [];
-
-document.getElementById("photos").addEventListener("change", function(e) {
-  selectedPhotos = [...e.target.files];
-  renderPreview();
-});
-
-function renderPreview() {
-  const preview = document.getElementById("preview");
-  preview.innerHTML = "";
-
-  selectedPhotos.forEach((file, index) => {
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(file);
-
-    img.onclick = () => {
-      selectedPhotos.splice(index,1);
-      renderPreview();
-    };
-
-    preview.appendChild(img);
-  });
 }
 
-// Send all photos to bot
-async function sendPhotos() {
-  if (selectedPhotos.length === 0) {
-    alert("Вы не добавили фото — но это не обязательно 💛");
-    return;
-  }
-
-  for (const file of selectedPhotos) {
-    const formData = new FormData();
-    formData.append("photo", file);
-
-    await fetch("/api/sendPhoto", { method:"POST", body:formData });
-    await new Promise(r => setTimeout(r, 500));
-  }
-
-  alert("Фото отправлены 🕊");
-}
-
+function finish(){ showPay(); }
 </script>
-
 </body>
 </html>
