@@ -1,1 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="auto">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Личный кабинет — История</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+<style>
+:root{ --bg:#FBF7F2; --ink:#4A3A39; --glass:rgba(255,255,255,.84); --gold2:#c7a875; --gold3:#9c7b55; }
+:root[data-theme="dark"]{ --bg:#14110E; --ink:#E8DCCB; --glass:rgba(28,24,21,.76); }
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg) url("assets/background4.jpg") center/cover fixed no-repeat;
+  color:var(--ink); font-family:"Playfair Display",serif;
+  min-height:100vh; padding:72px 10px 90px;
+}
+/* header */
+.header{ position:fixed; inset:0 0 auto 0; z-index:50; display:flex; align-items:center; justify-content:space-between;
+  padding:10px 14px; backdrop-filter:blur(10px); }
+.brand{ display:flex; gap:10px; align-items:center }
+.brand .pill{ width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.35);
+  display:flex;align-items:center;justify-content:center }
+.brand .name{ font-family:"Spectral SC",serif;font-weight:600;
+  background:linear-gradient(100deg,#7a5e49,#c9a876,#ecd8b8);-webkit-background-clip:text;color:transparent }
+.theme{ width:38px;height:38px;border-radius:50%; background:rgba(255,255,255,.55); display:flex;align-items:center;justify-content:center;
+  cursor:pointer; border:1px solid rgba(255,255,255,.35) }
+.wrap{ max-width:980px; margin:0 auto; display:grid; gap:18px }
+
+/* cards */
+.card{ background:var(--glass); border-radius:22px; padding:20px; box-shadow:0 12px 30px rgba(0,0,0,.12); backdrop-filter:blur(10px) }
+.card h2{ font-family:"Spectral SC",serif; margin-bottom:8px;
+  background:linear-gradient(100deg,#7a5e49,#c9a876,#ecd8b8);-webkit-background-clip:text;color:transparent }
+.sub{ opacity:.85; margin-bottom:12px }
+
+/* profile row */
+.profile{ display:flex; gap:10px; flex-wrap:wrap; align-items:center }
+.profile input{ padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.08); background:rgba(255,255,255,.9) }
+
+/* QA */
+.qa{ display:flex; flex-direction:column; gap:12px; max-height:56vh; overflow:auto; padding-right:6px }
+.qitem{ background:rgba(255,255,255,.7); border-radius:14px; padding:12px }
+.qitem h4{ font-size:16px; margin-bottom:6px }
+.qitem textarea{ width:100%; min-height:90px; border:none; border-radius:12px; padding:10px; font-size:16px; background:rgba(255,255,255,.92) }
+
+/* photos */
+.upload{ display:flex; gap:12px; align-items:center; flex-wrap:wrap }
+.input-file{ display:none }
+.btn{
+  border:none; cursor:pointer; color:#fff; font-weight:700;
+  background:linear-gradient(130deg,var(--gold2),var(--gold3));
+  padding:12px 22px; border-radius:999px; font-size:16px;
+  box-shadow:0 12px 28px rgba(0,0,0,.15); transition:.25s;
+}
+.btn:hover{ transform:translateY(-2px); opacity:.96 }
+.preview{ margin-top:10px; display:flex; flex-wrap:wrap; gap:10px }
+.thumb{ width:86px; height:86px; border-radius:12px; overflow:hidden; position:relative; box-shadow:0 6px 16px rgba(0,0,0,.16) }
+.thumb img{ width:100%; height:100%; object-fit:cover }
+.thumb .x{ position:absolute; top:6px; right:6px; width:20px; height:20px; font-size:12px; border-radius:50%;
+  background:rgba(0,0,0,.65); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer }
+
+/* designs */
+.designs{ display:flex; gap:10px; flex-wrap:wrap }
+.designs label{ display:flex; gap:8px; align-items:center; background:rgba(255,255,255,.7); padding:8px 12px; border-radius:12px }
+
+/* bar */
+.bar{ position:fixed; left:0; right:0; bottom:0; z-index:40; display:flex; gap:10px; justify-content:center; padding:10px; backdrop-filter:blur(10px) }
+.bar .btn{ padding:12px 18px }
+
+/* support */
+.support{ position:fixed; right:12px; bottom:70px; width:320px; max-width:92vw; background:var(--glass); border-radius:14px; padding:10px;
+  box-shadow:0 10px 24px rgba(0,0,0,.16); display:none; z-index:60 }
+.support .log{ max-height:220px; overflow:auto; padding:6px; background:rgba(255,255,255,.6); border-radius:10px; margin-bottom:8px }
+.support .row{ display:flex; gap:6px }
+.support input{ flex:1; padding:10px; border:none; border-radius:999px; background:rgba(255,255,255,.85) }
+.fab{ position:fixed; right:12px; bottom:12px; z-index:55; width:54px; height:54px; border-radius:50%;
+  background:linear-gradient(130deg,var(--gold2),var(--gold3)); color:#fff; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:0 12px 28px rgba(0,0,0,.2) }
+
+@media(max-width:640px){ .qa{ max-height:52vh } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand">
+    <div class="pill">📖</div>
+    <div class="name">Личный кабинет</div>
+  </div>
+  <div class="theme" id="themeBtn">🌙</div>
+</header>
+
+<main class="wrap">
+  <!-- ПРОФИЛЬ -->
+  <section class="card">
+    <h2>Ваш профиль</h2>
+    <div class="sub">Введите ваш Telegram ник (чтобы мы связались):</div>
+    <div class="profile">
+      <input id="tgUser" placeholder="@username">
+      <span id="sessionInfo" style="opacity:.7"></span>
+    </div>
+  </section>
+
+  <!-- ПРОГРЕСС -->
+  <section class="card">
+    <h2>Ваш прогресс</h2>
+    <div class="sub">Отвечайте на вопросы, добавляйте фото и выбирайте дизайн. Черновик сохраняется автоматически.</div>
+    <div id="status">Ответов: 0 / 100 · Фото: 0 · Дизайн: не выбран</div>
+  </section>
+
+  <!-- ВОПРОСЫ -->
+  <section class="card">
+    <h2>Вопросы</h2>
+    <div class="qa" id="qa"></div>
+  </section>
+
+  <!-- ФОТО -->
+  <section class="card">
+    <h2>Фотографии</h2>
+    <div class="sub">По желанию. Они попадут в архив вместе с ответами.</div>
+    <div class="upload">
+      <label class="btn">📎 Прикрепить фото<input id="files" class="input-file" type="file" multiple accept="image/*"></label>
+      <button class="btn" id="clearPhotos">Очистить</button>
+    </div>
+    <div class="preview" id="preview"></div>
+  </section>
+
+  <!-- ДИЗАЙН -->
+  <section class="card">
+    <h2>Дизайн книги</h2>
+    <div class="sub">Выберите стиль (примеры на главной, добавим превью).</div>
+    <div class="designs" id="designs">
+      <label><input type="radio" name="design" value="classic"> Classic</label>
+      <label><input type="radio" name="design" value="pudra"> Wedding Pudra Luxe</label>
+      <label><input type="radio" name="design" value="silver"> Silver Grain</label>
+      <label><input type="radio" name="design" value="minimal"> Minimal White</label>
+    </div>
+  </section>
+</main>
+
+<!-- НИЖНИЙ БАР -->
+<div class="bar">
+  <button class="btn" id="saveDraft">Сохранить черновик</button>
+  <button class="btn" id="finish">Завершить и создать книгу</button>
+</div>
+
+<!-- МИНИ-ЧАТ ПОДДЕРЖКИ -->
+<div class="support" id="supportBox">
+  <div class="log" id="supportLog"></div>
+  <div class="row">
+    <input id="supportInput" placeholder="Ваш вопрос..." />
+    <button class="btn" id="supportSend">Отправить</button>
+  </div>
+</div>
+<div class="fab" id="supportFab">💬</div>
+
+<script>
+/* ===== ТЕМА ===== */
+const themeBtn=document.getElementById('themeBtn');
+function setTheme(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('cab_theme',m);themeBtn.textContent=m==='dark'?'☀️':'🌙'}
+(function(){const s=localStorage.getItem('cab_theme');if(s){setTheme(s)}else{setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}})();
+themeBtn.onclick=()=>setTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
+
+/* ===== СЕССИЯ/ДАННЫЕ ===== */
+const session = new URLSearchParams(location.search).get('session') || localStorage.getItem('session_uid') || 'guest';
+document.getElementById('sessionInfo').textContent = `Сессия: ${session}`;
+const LS_KEY = `cab_draft_${session}`;
+const state = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+state.answers = state.answers || {};
+state.photos = state.photos || []; // base64
+state.design = state.design || '';
+state.username = state.username || '';
+
+/* ===== ВОПРОСЫ (1–100) ===== */
+const QUESTIONS = [
+  "Где вы впервые встретились?","Что вы подумали при первой встрече?","Кто сделал первый шаг?","Какой момент стал решающим?","Что больше всего запомнилось?",
+  "Где прошло ваше первое свидание?","Что вы чувствовали перед встречей?","Кто выбирал место?","Что пошло не по плану, но стало милым моментом?","Какой момент первого свидания запомнился навсегда?",
+  "Кто первым признался в симпатии?","Какая песня или фильм ассоциируются с первыми встречами?","Какая фраза или поступок тогда особенно тронули?","Когда вы впервые поняли, что влюблены?","Какой запах, вкус или звук напоминает о начале отношений?",
+  // … Добавь оставшиеся до 100 по твоей структуре глав (можно постепенно)
+];
+
+/* ===== РЕНДЕР ===== */
+const qa = document.getElementById('qa');
+function renderQuestions(){
+  qa.innerHTML='';
+  QUESTIONS.forEach((q,idx)=>{
+    const i=idx+1, v=state.answers[i] || '';
+    const el=document.createElement('div'); el.className='qitem';
+    el.innerHTML = `<h4>${i}. ${q}</h4><textarea data-id="${i}" placeholder="Ваш ответ...">${v}</textarea>`;
+    qa.appendChild(el);
+  });
+}
+renderQuestions();
+
+/* ===== HANDLERS ===== */
+qa.addEventListener('input',(e)=>{
+  if(e.target.tagName==='TEXTAREA'){
+    state.answers[e.target.dataset.id]=e.target.value;
+    sync(); updateStatus();
+  }
+});
+document.getElementById('designs').addEventListener('change',(e)=>{
+  if(e.target.name==='design'){ state.design=e.target.value; sync(); updateStatus(); }
+});
+const tgUser=document.getElementById('tgUser');
+tgUser.value = state.username || '';
+tgUser.addEventListener('input',()=>{ state.username = tgUser.value.trim(); sync(); });
+
+function answeredCount(){ return Object.values(state.answers).filter(v=>v && v.trim().length>0).length; }
+function updateStatus(){ document.getElementById('status').textContent = `Ответов: ${answeredCount()} / 100 · Фото: ${state.photos.length} · Дизайн: ${state.design || 'не выбран'}`; }
+function sync(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+updateStatus();
+
+/* ===== ФОТО ===== */
+const filesInput=document.getElementById('files');
+const previewBox=document.getElementById('preview');
+filesInput.onchange=(e)=>{
+  for(const f of e.target.files){
+    const rr=new FileReader();
+    rr.onload=()=>{ state.photos.push(rr.result); sync(); drawPhotos(); updateStatus(); };
+    rr.readAsDataURL(f);
+  }
+  filesInput.value="";
+};
+document.getElementById('clearPhotos').onclick=()=>{ state.photos=[]; sync(); drawPhotos(); updateStatus(); }
+function drawPhotos(){
+  previewBox.innerHTML='';
+  state.photos.forEach((b64,idx)=>{
+    const el=document.createElement('div'); el.className='thumb';
+    el.innerHTML = `<img src="${b64}"><div class="x" onclick="delPhoto(${idx})">✖</div>`;
+    previewBox.appendChild(el);
+  });
+}
+window.delPhoto=(i)=>{ state.photos.splice(i,1); sync(); drawPhotos(); updateStatus(); }
+drawPhotos();
+
+/* ===== ЧЕРНОВИК ===== */
+document.getElementById('saveDraft').onclick=()=>{ sync(); alert('Черновик сохранён ✅'); }
+
+/* ===== ФИНИШ: ZIP → TG ===== */
+document.getElementById('finish').onclick = async ()=>{
+  if(!state.username){ alert("Укажите ваш Telegram @username, чтобы мы связались 🙂"); return; }
+
+  const zip = new JSZip();
+  const answersArr=[];
+  for(let i=1;i<=100;i++){
+    const q = QUESTIONS[i-1] || `Вопрос ${i}`;
+    const a = state.answers[i] || '';
+    answersArr.push(`${i}. ${q}\n${a}\n`);
+  }
+  const answersTxt = answersArr.join('\n----------------------\n\n');
+  const meta = {
+    session,
+    username: state.username,
+    design: state.design || null,
+    answered: answeredCount(),
+    photos: state.photos.length,
+    created_at: new Date().toISOString()
+  };
+
+  zip.file('answers.txt', answersTxt);
+  zip.file('meta.json', JSON.stringify(meta,null,2));
+
+  const photosFolder = zip.folder('photos');
+  (state.photos||[]).forEach((b64,idx)=>{
+    const base64 = b64.split(',')[1];
+    photosFolder.file(`photo_${String(idx+1).padStart(2,'0')}.jpg`, base64, {base64:true});
+  });
+
+  const blob = await zip.generateAsync({type:'blob'});
+  const fd = new FormData();
+  fd.append('zip', blob, `order_${session}.zip`);
+  fd.append('caption', `🆕 Заказ\n@${state.username || '-'} · session: ${session}\nОтветов: ${answeredCount()} · Фото: ${state.photos.length}\nДизайн: ${state.design || '-'}`);
+
+  const r = await fetch('/api/sendZip',{method:'POST', body:fd});
+  if(r.ok){
+    alert('Готово! Мы получили ваш заказ. Скоро свяжемся в Telegram 🤍');
+    // localStorage.removeItem(LS_KEY); // можно включить очистку
+  }else{
+    alert('Не удалось отправить. Попробуйте позже или напишите в поддержку.');
+  }
+};
+
+/* ===== ПОДДЕРЖКА ===== */
+const supportFab=document.getElementById('supportFab');
+const supportBox=document.getElementById('supportBox');
+const supportLog=document.getElementById('supportLog');
+const supportInput=document.getElementById('supportInput');
+supportFab.onclick=()=>{ supportBox.style.display = (supportBox.style.display==='block'?'none':'block'); };
+document.getElementById('supportSend').onclick=async()=>{
+  const text=supportInput.value.trim(); if(!text) return;
+  supportLog.innerHTML += `<div>Вы: ${text}</div>`;
+  supportInput.value='';
+  await fetch('/api/supportMessage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session, text, username: state.username||''})});
+};
+</script>
+</body>
+</html>
 
