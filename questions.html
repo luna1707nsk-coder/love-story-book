@@ -240,6 +240,12 @@ textarea{
   <textarea id="a" placeholder="Ваш ответ..."></textarea>
   <button class="btn btn-full" id="next">Далее</button>
 </div>
+card.innerHTML = `
+<div class="final">
+  <h2>✨ Пробная часть завершена</h2>
+  <p>Вы прошли 5 вопросов.<br>Откройте оставшиеся 95 и создайте книгу вашей любви.</p>
+  <button class="btn" onclick="openPaymentModal()">Перейти к оплате</button>
+</div>`;
 
 <!-- БЛОК ФОТО -->
 <div class="card" id="photo-step">
