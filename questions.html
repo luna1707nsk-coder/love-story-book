@@ -16,7 +16,9 @@
   position:fixed;
   top:12px; left:0; right:0;
   display:flex; justify-content:center; gap:10px;
-  z-index:999; pointer-events:none;
+  z-index:900; /* было 999 */
+  pointer-events:none;
+}
 }
 .brand{
   pointer-events:auto;
@@ -141,9 +143,14 @@ textarea{
 
 /* MODAL */
 .modal-bg{
-  position:fixed;inset:0;background:rgba(0,0,0,.45);
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
   backdrop-filter:blur(8px);
-  display:none;justify-content:center;align-items:center;z-index:99;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:2000; /* поставили поверх логотипа */
 }
 .modal{
   background:var(--card);border-radius:24px;padding:26px;
