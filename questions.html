@@ -358,9 +358,25 @@ payModal.addEventListener('click',e=>{
 });
 
 // Копирование номера карты
-function copyNumber(){
+function copyCard(){
   navigator.clipboard.writeText("2200701748772404");
-  alert("Номер карты скопирован 📋");
+
+  // Визуальная анимация ✔️
+  const cards = document.querySelectorAll(".card-copy");
+  cards.forEach(card=>{
+    const flash = document.createElement("div");
+    flash.style.position="absolute";
+    flash.style.inset="0";
+    flash.style.background="rgba(255,255,255,.7)";
+    flash.style.borderRadius="inherit";
+    flash.style.opacity="0";
+    flash.style.transition="opacity .4s ease";
+    card.appendChild(flash);
+    setTimeout(()=>flash.style.opacity="1",10);
+    setTimeout(()=>flash.remove(),450);
+  });
+
+  alert("Номер карты скопирован ✨💳");
 }
 document.getElementById('copyBasic').onclick=copyNumber;
 document.getElementById('copyPremium').onclick=copyNumber;
