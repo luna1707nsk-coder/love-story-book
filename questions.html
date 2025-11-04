@@ -11,36 +11,6 @@
 
 <style>
 /* ========= THEMES ========= */
-/* ====== LOGO BAR ====== */
-.topbar{
-  position:fixed;
-  top:12px; left:0; right:0;
-  display:flex; justify-content:center; gap:10px;
-  z-index:900; /* было 999 */
-  pointer-events:none;
-}
-}
-.brand{
-  pointer-events:auto;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 14px;
-  background:rgba(255,255,255,.55);
-  border:1px solid rgba(255,255,255,.35);
-  border-radius:999px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 8px 24px rgba(0,0,0,.08);
-  white-space:nowrap;
-}
-.logo{
-  width:24px;
-  height:24px;
-  display:block;
-}
-
-/* move theme button to topbar */
-.theme-toggle{margin-left:8px;}
 :root {
   --bg: #FBF7F2;
   --ink: #4A3A39;
@@ -145,14 +115,9 @@ textarea{
 
 /* MODAL */
 .modal-bg{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.45);
+  position:fixed;inset:0;background:rgba(0,0,0,.45);
   backdrop-filter:blur(8px);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:2000; /* поставили поверх логотипа */
+  display:none;justify-content:center;align-items:center;z-index:99;
 }
 .modal{
   background:var(--card);border-radius:24px;padding:26px;
@@ -216,36 +181,8 @@ textarea{
 </head>
 <body>
 
-<!-- TOP BAR: LOGO + THEME -->
-<div class="topbar">
-  <div class="brand">
-    <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
-      <defs>
-        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#f7e7c8"/>
-          <stop offset="0.45" stop-color="#b48e67"/>
-          <stop offset="1" stop-color="#8b6a4e"/>
-        </linearGradient>
-      </defs>
-
-      <!-- left book -->
-      <path d="M10 18c0-3 2-5 5-5h17c3 0 5 2 5 5v28c0 3-2 5-5 5H15c-3 0-5-2-5-5V18z"
-            fill="url(#g)" opacity=".85"/>
-
-      <!-- right outline -->
-      <path d="M32 13h17c3 0 5 2 5 5v28c0 3-2 5-5 5H32"
-            fill="none" stroke="url(#g)" stroke-width="2" opacity=".9"/>
-
-      <!-- heart ribbon -->
-      <path d="M22 22c2-3 6-3 8 0c2-3 6-3 8 0c2 3 0 6-8 12c-8-6-10-9-8-12z"
-            fill="#fff" opacity=".9"/>
-    </svg>
-
-    <div class="brand-name">a book written with soul</div>
-  </div>
-
-  <div class="theme-toggle" id="themeToggle">🌙</div>
-</div>
+<!-- THEME BUTTON -->
+<div class="theme-toggle" id="themeToggle">🌙</div>
 
 <!-- QUESTIONS -->
 <div class="card" id="step-questions">
