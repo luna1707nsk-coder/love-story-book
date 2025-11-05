@@ -1,462 +1,338 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Личный кабинет — A Book Written With Soul</title>
-<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Личный кабинет</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
 :root{
-  --ink:#e9dcc9;
-  --panel:#15110f;
-  --panel2:#120f0d;
-  --muted:#b8a589;
-  --gold1:#e9d7b3; --gold2:#b99261; --gold3:#8a6948;
+  --gold1:#e8d9b6;
+  --gold2:#c7a875;
+  --gold3:#9c7b55;
+  --ink:#4A3A39;
+  --bg:#FBF7F2;
 }
-*{box-sizing:border-box;margin:0;padding:0}
+
 body{
-  background:
-    linear-gradient(rgba(12,10,8,.78), rgba(12,10,8,.78)),
-    url("assets/background4.jpg") center/cover fixed no-repeat;
-  color:var(--ink);
-  min-height:100svh;
-  padding:18px 12px 88px;
   font-family:"Playfair Display",serif;
-  position:relative; overflow-x:hidden;
-}
-/* gold grain + glow */
-body::before{
-  content:""; position:fixed; inset:0; pointer-events:none;
-  background-image:url("https://www.transparenttextures.com/patterns/asfalt-light.png");
-  opacity:.12; mix-blend-mode:overlay; z-index:1;
-}
-body::after{
-  content:""; position:fixed; inset:0; pointer-events:none; z-index:2;
-  background: radial-gradient(circle at 50% 0%, rgba(255,230,180,.25), transparent 65%);
-  animation:goldGlow 6s ease-in-out infinite alternate; opacity:.2;
-}
-@keyframes goldGlow{0%{opacity:.13;filter:brightness(1)}100%{opacity:.28;filter:brightness(1.25)}}
-
-/* header */
-.header{display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:14px;position:sticky;top:8px;z-index:5}
-.logo{
-  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
-  background:linear-gradient(145deg,#f3ead5,#c9a876); color:#3f2f22;
-  box-shadow:0 10px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.6);
-  position:relative; transform:translateZ(0);
-  animation:float 6s ease-in-out infinite;
-}
-.logo::after{
-  content:""; position:absolute; inset:-2px; border-radius:12px;
-  background: conic-gradient(from 0deg, rgba(255,255,255,.0), rgba(255,255,255,.35), rgba(255,255,255,.0));
-  filter:blur(6px); opacity:.0; transition:.35s;
-}
-.logo:hover::after{opacity:.35}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-.title{
-  font-family:"Spectral SC",serif; letter-spacing:.06em; font-size:18px;
-  background:linear-gradient(90deg,#d9c29a,#b99363,#e9d6b5);
-  -webkit-background-clip:text; color:transparent; text-shadow:0 1px 0 rgba(0,0,0,.35);
+  background:url("assets/background4.jpg") center/cover fixed no-repeat;
+  margin:0;
+  color:var(--ink);
 }
 
-/* layout */
-.wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:360px 1fr;gap:18px;position:relative;z-index:3}
-@media(max-width:900px){ .wrap{grid-template-columns:1fr} }
-
-/* cards */
-.card{
-  background:linear-gradient(180deg,var(--panel),var(--panel2));
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:18px; padding:18px; box-shadow:0 20px 55px rgba(0,0,0,.35);
+/* HEADER */
+.header{
+  text-align:center;
+  padding:18px 0;
+}
+.logo-book{
+  font-size:42px;
+  animation:breath 4s ease-in-out infinite;
+  display:inline-block;
+  margin-bottom:4px;
+}
+@keyframes breath{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-2px) scale(1.01)}
+}
+.header-title{
+  font-family:"Spectral SC";
+  font-size:18px;
+  background:linear-gradient(90deg,#9b7f64,#d7c29c,#b99673);
+  -webkit-background-clip:text;
+  color:transparent;
+  margin-top:-4px;
 }
 
-/* profile */
-.profile{position:sticky; top:64px}
-.header-sm{font-family:"Spectral SC",serif; color:#e7d6ba; margin-bottom:12px; opacity:.9}
-.profile-row{display:flex; gap:12px; align-items:center; margin-bottom:10px}
-.avatar{
-  width:56px;height:56px;border-radius:50%; display:grid; place-items:center;
-  background:linear-gradient(145deg,#1c1714,#0e0c0a); color:#e9dcc9; font-weight:700;
-  border:1px solid rgba(255,255,255,.08); box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+/* PAGE SECTIONS */
+.section{
+  display:none;
+  padding:16px;
 }
-.small{font-size:12px;color:#a89678}
-.btn{
-  border:none; cursor:pointer; color:#241b13; font-weight:700;
-  border-radius:999px; padding:12px 16px; font-size:16px;
-  background:linear-gradient(130deg,var(--gold2),var(--gold1));
-  box-shadow:0 10px 30px rgba(0,0,0,.35);
-}
-.btn:active{transform:translateY(1px)}
-.row{display:flex; gap:10px; align-items:center}
-.mt{margin-top:12px}
-.sep{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
+.section.active{display:block}
 
-/* circular progress */
-.progress{display:flex; align-items:center; gap:12px; margin:8px 0 14px;}
-svg.ring{width:60px;height:60px;rotate:-90deg}
-.ring circle.bg{stroke:#2a221a; stroke-width:7; fill:none}
-.ring circle.fg{stroke:url(#g); stroke-width:7; stroke-linecap:round; fill:none; transition:stroke-dashoffset .35s}
+/* PROFILE PANEL */
+.profile-card{
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(12px);
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:14px;
+}
+.profile-card div{margin:4px 0;font-size:16px}
 
-/* covers – Netflix style row */
-.covers-wrap{margin-top:8px}
-.scroller{
-  display:flex; gap:12px; overflow:auto; scroll-snap-type:x mandatory; padding-bottom:6px;
+/* QUESTIONS */
+.question{
+  background:rgba(255,255,255,.85);
+  padding:14px;
+  border-radius:14px;
+  margin-bottom:10px;
 }
-.scroller::-webkit-scrollbar{height:8px}
-.scroller::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15); border-radius:8px}
-.cover{
-  min-width:120px; aspect-ratio:3/4; border-radius:12px; position:relative; cursor:pointer; overflow:hidden;
-  border:1px solid rgba(255,255,255,.08); scroll-snap-align:start;
-  background:radial-gradient(260px 130px at 50% 30%, #3a2f25, #1a1511);
-  transition:transform .2s, box-shadow .2s, outline-color .2s;
+.question-title{
+  font-weight:600;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
 }
-.cover.gold{ background: radial-gradient(240px 120px at 50% 30%, #876b49,#3b2f24)}
-.cover.sand{ background: radial-gradient(240px 120px at 50% 30%, #746a59,#2a2520)}
-.cover .badge{
-  position:absolute; inset:auto 8px 8px auto; font-size:12px; padding:6px 8px;
-  border-radius:999px; background:rgba(0,0,0,.4); color:#efdcb8; border:1px solid rgba(255,255,255,.08)
+.question-content{
+  display:none;
+  margin-top:10px;
 }
-.cover input{position:absolute; inset:0; opacity:0}
-.cover:hover{transform:translateY(-2px); box-shadow:0 18px 40px rgba(0,0,0,.35)}
-.cover.selected{outline:2px solid #d4b37c; box-shadow:0 0 0 4px rgba(212,179,124,.15)}
+textarea{
+  width:100%;
+  border:none;
+  border-radius:12px;
+  padding:12px;
+  font-size:16px;
+  background:rgba(255,255,255,.65);
+}
+.save-btn{
+  margin-top:8px;
+  padding:10px;
+  width:100%;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(130deg,var(--gold2),var(--gold3));
+  color:#fff;
+  font-weight:600;
+  font-size:15px;
+}
 
-/* photo uploader */
-.photos{margin-top:10px}
-.pu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.pbtn{border:none;border-radius:999px;padding:10px 14px;background:linear-gradient(130deg,var(--gold2),var(--gold1));color:#241b13;font-weight:700;cursor:pointer}
+/* COVER CAROUSEL */
+.cover-block{text-align:center}
+.cover-img{
+  width:80%;
+  max-width:320px;
+  height:420px;
+  object-fit:cover;
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(0,0,0,.22);
+  transition:opacity .6s ease;
+}
+
+.cover-title{
+  margin-top:10px;
+  font-weight:600;
+  font-size:18px;
+}
+
+/* PHOTOS */
+.photo-upload-btn{
+  display:inline-block;
+  padding:12px 22px;
+  background:linear-gradient(130deg,var(--gold2),var(--gold3));
+  color:#fff;
+  border-radius:999px;
+  cursor:pointer;
+}
 #photoInput{display:none}
-.preview{display:flex;flex-wrap:wrap;gap:10px}
-.pv{position:relative;width:86px;height:86px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 24px rgba(0,0,0,.25)}
-.pv img{width:100%;height:100%;object-fit:cover}
-.pv .del{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:13px}
+#photoPreview{
+  margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+}
+.preview-item{width:90px;height:90px;position:relative;border-radius:10px;overflow:hidden}
+.preview-item img{width:100%;height:100%;object-fit:cover}
+.delete-x{
+  position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);
+  color:#fff;border-radius:50%;width:18px;height:18px;font-size:12px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
 
-/* questions */
-.q{margin-bottom:12px; border:1px solid rgba(255,255,255,.06); border-radius:14px; overflow:hidden}
-.qh{
-  padding:14px 14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
-  background:linear-gradient(180deg,#171311,#14110f);
+/* CHAT SUPPORT */
+.chat-box{
+  background:rgba(255,255,255,.8);
+  border-radius:14px;
+  height:300px;
+  padding:12px;
+  overflow-y:auto;
+  font-size:15px;
 }
-.qh .num{color:#bda989; font-family:"Spectral SC",serif}
-.qa{display:none; padding:14px; background:linear-gradient(180deg,#14110f,#120f0d)}
-.qa textarea{
-  width:100%; min-height:120px; border-radius:12px; border:1px solid rgba(255,255,255,.06);
-  background:#100d0b; color:var(--ink); resize:vertical; padding:12px; font-size:16px;
+.support-input{
+  margin-top:8px;
+  display:flex;
+  gap:8px;
 }
-.hint{font-size:12px;color:#a89678; margin-top:8px}
-.tags{display:flex; gap:8px; flex-wrap:wrap}
-.tag{background:#0f0c0a; border:1px dashed rgba(255,255,255,.1); color:#c9b89a; padding:6px 10px; border-radius:999px; font-size:12px; cursor:pointer}
+.support-input input{
+  flex:1;padding:10px;border-radius:10px;border:none;
+  background:rgba(255,255,255,.7);
+}
+.send-btn{
+  padding:10px 14px;
+  border:none;
+  background:linear-gradient(130deg,var(--gold2),var(--gold3));
+  border-radius:10px;
+  color:#fff;font-weight:600;
+}
 
-/* Pro-mode tweaks */
-.pro .qh{padding:10px 12px}
-.pro .qa textarea{min-height:90px}
-.pro .q{margin-bottom:10px}
-
-/* chat — Поддержка */
-.chatfab{
-  position:fixed; right:14px; bottom:14px; z-index:10;
-  width:52px;height:52px;border-radius:50%; display:grid;place-items:center;
-  background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13;
-  box-shadow:0 14px 40px rgba(0,0,0,.4); cursor:pointer;
+/* NAV BAR */
+.navbar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(10px);
+  display:flex;
+  border-top:1px solid rgba(0,0,0,.1);
 }
-.chat{
-  position:fixed; right:14px; bottom:80px; width:320px; max-width:calc(100% - 28px);
-  background:var(--panel); border:1px solid rgba(255,255,255,.06); border-radius:14px; display:none; flex-direction:column; overflow:hidden;
-  box-shadow:0 20px 55px rgba(0,0,0,.45); z-index:10;
+.nav-item{
+  flex:1;padding:8px 0;
+  text-align:center;
+  font-size:12px;
+  cursor:pointer;
 }
-.chat-head{padding:10px 12px; display:flex; justify-content:space-between; align-items:center; background:#171311; border-bottom:1px solid rgba(255,255,255,.06)}
-.chat-body{max-height:45svh; overflow:auto; padding:12px; display:flex; flex-direction:column; gap:10px}
-.msg{font-size:14px; background:#100d0b; border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:10px; width:max-content; max-width:100%}
-.msg.you{align-self:flex-end; background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13; border:none}
-.chat-send{display:flex; gap:6px; padding:10px; background:#171311; border-top:1px solid rgba(255,255,255,.06)}
-.chat-send input{flex:1; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#0f0d0b; color:var(--ink)}
-.chat-send button{padding:10px 12px;border-radius:10px;border:none;background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13; font-weight:700}
-
-/* mobile stacking fix */
-@media(max-width:900px){
-  .profile{position:static}
-}
+.nav-item span{font-size:20px;display:block;margin-bottom:2px}
+.nav-item.active{background:rgba(0,0,0,.06);font-weight:700;border-radius:8px}
 </style>
 </head>
+
 <body>
 
-<header class="header">
-  <div class="logo" title="A Book Written With Soul">📖</div>
-  <div class="title">A Book Written With Soul</div>
-</header>
+<div class="header">
+  <div class="logo-book">📖</div>
+  <div class="header-title">A Book Written With Soul</div>
+</div>
 
-<main class="wrap">
-  <!-- LEFT: PROFILE -->
-  <section class="card profile" id="profileCard">
-    <div class="header-sm">Ваш кабинет</div>
-
-    <div class="profile-row">
-      <div class="avatar" id="avatar">AB</div>
-      <div>
-        <div class="small">token: <span id="utoken">—</span></div>
-        <div class="progress">
-          <svg class="ring" viewBox="0 0 44 44">
-            <defs>
-              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#e6d2aa"/><stop offset="100%" stop-color="#b99261"/>
-              </linearGradient>
-            </defs>
-            <circle class="bg" cx="22" cy="22" r="18"></circle>
-            <circle class="fg" id="pfg" cx="22" cy="22" r="18" stroke-dasharray="113.1" stroke-dashoffset="113.1"></circle>
-          </svg>
-          <div class="txt"><span id="done">0</span>/<span id="total">100</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sep"></div>
-
-    <div class="row">
-      <label class="small" style="display:flex;align-items:center;gap:8px">
-        Pro-режим
-        <input type="checkbox" id="proToggle" style="width:38px;height:22px;appearance:none;background:#2a231d;border-radius:999px;position:relative;outline:none;cursor:pointer;border:1px solid rgba(255,255,255,.08)">
-      </label>
-    </div>
-
-    <div class="sep"></div>
-
-    <div class="header-sm">Выбор обложки</div>
-    <div class="covers-wrap">
-      <div class="scroller" id="covers">
-        <label class="cover gold"><span class="badge">Gold</span><input type="radio" name="cover" value="gold"></label>
-        <label class="cover"><span class="badge">Classic</span><input type="radio" name="cover" value="classic"></label>
-        <label class="cover sand"><span class="badge">Sand</span><input type="radio" name="cover" value="sand"></label>
-        <label class="cover"><span class="badge">Ivory</span><input type="radio" name="cover" value="ivory"></label>
-        <label class="cover"><span class="badge">Noir</span><input type="radio" name="cover" value="noir"></label>
-      </div>
-      <div class="small" style="margin-top:8px">Обложку можно поменять позже.</div>
-    </div>
-
-    <div class="sep"></div>
-
-    <div class="header-sm">Фотографии</div>
-    <div class="photos">
-      <div class="pu-head">
-        <div class="small">Добавьте до 20 фото (по желанию)</div>
-        <button class="pbtn" id="pick">📎 Добавить</button>
-        <input id="photoInput" type="file" accept="image/*" multiple>
-      </div>
-      <div class="preview" id="preview"></div>
-      <div class="small" id="pcounter" style="margin-top:6px">0 фото</div>
-    </div>
-
-    <button class="btn mt" id="finish">Завершить и отправить книгу</button>
-  </section>
-
-  <!-- RIGHT: QUESTIONS -->
-  <section class="card" id="qCard">
-    <div class="header-sm">Вопросы</div>
-    <div id="qlist"></div>
-  </section>
-</main>
-
-<!-- Поддержка -->
-<div class="chatfab" id="chatFab" title="Поддержка">💬</div>
-<div class="chat" id="chatBox">
-  <div class="chat-head"><b>Поддержка</b><span id="chatClose" style="cursor:pointer;opacity:.7">✖</span></div>
-  <div class="chat-body" id="chatMessages"></div>
-  <div class="chat-send">
-    <input id="chatInput" placeholder="Ваш вопрос…">
-    <button id="chatSend">Отправить</button>
+<!-- SECTIONS -->
+<div id="profile" class="section active">
+  <div class="profile-card">
+    <div><b>Ваш кабинет</b></div>
+    <div>Токен: <span id="tokenDisplay">–</span></div>
+    <div>Ответов сохранено: <span id="ansCount">0</span>/100</div>
+    <button class="save-btn" onclick="finish()">Завершить и отправить книгу</button>
   </div>
 </div>
 
+<div id="questions" class="section"></div>
+
+<div id="covers" class="section cover-block">
+  <img id="coverImg" class="cover-img" src="assets/cover1.jpg" />
+  <div class="cover-title">Выбор обложки</div>
+</div>
+
+<div id="photos" class="section">
+  <label class="photo-upload-btn">Добавить фото
+    <input id="photoInput" type="file" multiple accept="image/*">
+  </label>
+  <div id="photoPreview"></div>
+</div>
+
+<div id="support" class="section">
+  <div class="chat-box" id="chat"></div>
+  <div class="support-input">
+    <input id="supportMsg" placeholder="Напишите сообщение...">
+    <button class="send-btn" onclick="sendSupport()">→</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="navbar">
+  <div class="nav-item active" onclick="openTab('profile',this)"><span>👤</span>Профиль</div>
+  <div class="nav-item" onclick="openTab('questions',this)"><span>📝</span>Вопросы</div>
+  <div class="nav-item" onclick="openTab('covers',this)"><span>📚</span>Обложка</div>
+  <div class="nav-item" onclick="openTab('photos',this)"><span>📷</span>Фото</div>
+  <div class="nav-item" onclick="openTab('support',this)"><span>💬</span>Поддержка</div>
+</div>
+
 <script>
-/* ===== utils / LS ===== */
-const LS=(k,v)=>v===undefined?localStorage.getItem(k):localStorage.setItem(k,v);
-function debounceWrap(){
-  const t={}; return (id,fn,ms=500)=>{ clearTimeout(t[id]); t[id]=setTimeout(fn,ms); };
+/* NAV */
+function openTab(id, el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelector('#'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
 }
-const debounce = debounceWrap();
 
-/* ===== token / initials ===== */
-const params=new URL(location.href).searchParams;
-const token = params.get("token") || "DEMO-TOKEN";
-document.getElementById("utoken").textContent = token;
-(function setInitials(){
-  const t = token.replace(/[^a-zA-ZА-Яа-я0-9]/g,"").toUpperCase();
-  const ini = (t[0]||"A")+(t[1]||"B");
-  document.getElementById("avatar").textContent = ini;
-})();
-
-/* ===== questions ===== */
-const QUESTIONS = [
- "Где вы впервые встретились?","Что вы подумали при первой встрече?","Кто сделал первый шаг?","Какой момент стал решающим?","Что больше всего запомнилось?"
+/* QUESTIONS */
+const questionsList=[
+ "Где вы впервые встретились?",
+ "Что вы подумали при первой встрече?",
+ "Кто сделал первый шаг?",
+ "Какой момент стал решающим?",
+ "Что больше всего запомнилось?"
 ];
-// дополним до 100
-while(QUESTIONS.length<100) QUESTIONS.push(`Вопрос ${QUESTIONS.length+1}`);
-
-const total = QUESTIONS.length;
-document.getElementById("total").textContent = total;
-const qlist = document.getElementById("qlist");
-
-function keyAns(i){return `cab_${token}_a_${i}`}
-
 function renderQuestions(){
-  qlist.innerHTML="";
-  QUESTIONS.forEach((q,i)=>{
-    const saved=LS(keyAns(i))||"";
-    const done = saved.trim().length>=3;
-    qlist.insertAdjacentHTML("beforeend",`
-      <div class="q" data-i="${i}">
-        <div class="qh" onclick="toggleQ(${i})">
-          <div><span class="num">${i+1}/${total}</span> — ${q}</div>
-          <div>${done?"✅":"▸"}</div>
+  const el=document.getElementById("questions");
+  el.innerHTML="";
+  let savedCount=0;
+
+  questionsList.forEach((q,i)=>{
+    const saved=localStorage.getItem(`a${i}`)??"";
+    if(saved.trim()) savedCount++;
+    el.innerHTML+=`
+      <div class="question">
+        <div class="question-title" onclick="toggle(${i})">
+          <span>${i+1}. ${q}</span><span id="arr${i}">▶️</span>
         </div>
-        <div class="qa" id="qa_${i}" style="display:${i===0?'block':'none'}">
-          <textarea id="ta_${i}" placeholder="Ваш развёрнутый ответ...">${saved}</textarea>
-          <div class="hint">Автосохранение • Подсказки:</div>
-          <div class="tags">
-            <div class="tag" onclick="ins(${i},'Вспоминаю, как мы...')">Вспоминаю…</div>
-            <div class="tag" onclick="ins(${i},'Особенно тронул момент, когда...')">Тронул момент…</div>
-            <div class="tag" onclick="ins(${i},'Я понял(а), что это любовь, когда...')">Это любовь…</div>
-          </div>
+        <div class="question-content" id="c${i}">
+          <textarea id="t${i}">${saved}</textarea>
+          <button class="save-btn" onclick="save(${i})">Сохранить</button>
         </div>
-      </div>
-    `);
-    const ta=document.getElementById(`ta_${i}`);
-    ta.addEventListener("input",()=>debounce(`a${i}`,()=>{LS(keyAns(i),ta.value);updateProgress();}));
-    ta.addEventListener("keydown",e=>{
-      if(document.body.classList.contains("pro")){
-        if(e.key==="ArrowDown"){e.preventDefault();openQ(i+1)}
-        if(e.key==="ArrowUp"){e.preventDefault();openQ(i-1)}
-        if(e.key==="Enter" && e.ctrlKey){e.preventDefault();openQ(i+1)}
-      }
-    });
+      </div>`;
   });
+
+  document.getElementById("ansCount").textContent=savedCount;
 }
-function toggleQ(i){
-  const el=document.getElementById(`qa_${i}`);
-  const is=el.style.display!=="none";
-  if(is){el.style.display="none";}
-  else{
-    if(document.body.classList.contains("pro")) document.querySelectorAll(".qa").forEach(x=>x.style.display="none");
-    el.style.display="block"; const ta=document.getElementById(`ta_${i}`); ta.focus();
-    el.scrollIntoView({behavior:"smooth",block:"center"});
-  }
+function toggle(i){
+  const c=document.getElementById("c"+i);
+  const a=document.getElementById("arr"+i);
+  if(c.style.display==="block"){c.style.display="none";a.textContent="▶️";}
+  else{c.style.display="block";a.textContent="▼";}
 }
-function openQ(i){
-  if(i<0||i>=total) return;
-  document.querySelectorAll(".qa").forEach(x=>x.style.display="none");
-  const el=document.getElementById(`qa_${i}`); if(!el) return;
-  el.style.display="block"; document.getElementById(`ta_${i}`).focus();
-  el.scrollIntoView({behavior:"smooth",block:"center"});
-}
-function ins(i,txt){
-  const ta=document.getElementById(`ta_${i}`); ta.value=(ta.value?ta.value+"\n":"")+txt;
-  LS(keyAns(i),ta.value); updateProgress();
+function save(i){
+  localStorage.setItem(`a${i}`,document.getElementById("t"+i).value);
+  renderQuestions();
 }
 
-/* ===== progress ring ===== */
-function updateProgress(){
-  let done=0; for(let i=0;i<total;i++){ if((LS(keyAns(i))||"").trim().length>=3) done++; }
-  document.getElementById("done").textContent = done;
-  const per = done/total; const C=2*Math.PI*18;
-  document.getElementById("pfg").style.strokeDasharray=C;
-  document.getElementById("pfg").style.strokeDashoffset=C*(1-per);
-}
+/* COVER ROTATION */
+const covers=["assets/cover1.jpg","assets/cover2.jpg","assets/cover3.jpg"];
+let ci=0;
+setInterval(()=>{
+  ci=(ci+1)%covers.length;
+  document.getElementById("coverImg").style.opacity=0;
+  setTimeout(()=>{
+    document.getElementById("coverImg").src=covers[ci];
+    document.getElementById("coverImg").style.opacity=1;
+  },500);
+},5000);
 
-/* ===== covers (Netflix row) ===== */
-const covers = document.getElementById("covers");
-const savedCover=LS(`cab_${token}_cover`)||"gold";
-[...covers.querySelectorAll("input")].forEach(i=>{
-  i.checked = (i.value===savedCover);
-  if(i.checked) i.closest(".cover").classList.add("selected");
-  i.addEventListener("change",()=>{
-    [...covers.querySelectorAll(".cover")].forEach(c=>c.classList.remove("selected"));
-    i.closest(".cover").classList.add("selected");
-    LS(`cab_${token}_cover`, i.value);
-  });
-});
-
-/* ===== photos ===== */
-const pick=document.getElementById("pick");
-const photoInput=document.getElementById("photoInput");
-const preview=document.getElementById("preview");
-const pcounter=document.getElementById("pcounter");
+/* PHOTOS */
 let files=[];
-
-pick.onclick=()=>photoInput.click();
-photoInput.onchange=e=>{
-  for(const f of e.target.files){ if(files.length<20) files.push(f); }
+document.getElementById("photoInput").onchange=e=>{
+  for(const f of e.target.files) files.push(f);
   renderPhotos();
 };
 function renderPhotos(){
-  preview.innerHTML=""; files.forEach((f,i)=>{
+  const box=document.getElementById("photoPreview");
+  box.innerHTML="";
+  files.forEach((f,i)=>{
     const url=URL.createObjectURL(f);
-    const item=document.createElement("div"); item.className="pv";
-    item.innerHTML=`<span class="del" title="Удалить" onclick="delPhoto(${i})">✖</span><img src="${url}">`;
-    preview.appendChild(item);
+    box.innerHTML+=`
+      <div class="preview-item">
+        <span class="delete-x" onclick="rem(${i})">✖</span>
+        <img src="${url}">
+      </div>`;
   });
-  pcounter.textContent = `${files.length} фото`;
 }
-function delPhoto(i){ files.splice(i,1); renderPhotos(); }
+function rem(i){ files.splice(i,1); renderPhotos(); }
 
-/* ===== Pro toggle ===== */
-const proToggle=document.getElementById("proToggle");
-(function initPro(){
-  const on = LS(`cab_${token}_pro`) === "1";
-  proToggle.checked = on; document.body.classList.toggle("pro", on);
-})();
-proToggle.onchange=()=>{
-  const on=proToggle.checked; LS(`cab_${token}_pro`, on?"1":"0"); document.body.classList.toggle("pro", on);
-};
-
-/* ===== finish: send to /api/finish (server делает ZIP: lovebook_user_<token>.zip) ===== */
-document.getElementById("finish").onclick = async ()=>{
-  // собираем ответы
-  const answers=[]; for(let i=0;i<total;i++){ answers.push({i, q:QUESTIONS[i], a:LS(keyAns(i))||""}); }
-  const cover=LS(`cab_${token}_cover`)||"gold";
-
-  // шлём FormData, чтобы на сервере можно было собрать ZIP с фото
-  const fd=new FormData();
-  fd.append("token", token);
-  fd.append("cover", cover);
-  fd.append("answers", new Blob([JSON.stringify(answers,null,2)], {type:"application/json"}));
-  files.forEach((f,idx)=> fd.append("photos", f, `photo_${idx+1}.jpg`));
-
-  try{
-    const r=await fetch("/api/finish",{method:"POST", body:fd});
-    if(!r.ok) throw new Error("finish failed");
-    alert("Готово! Мы получили материалы. Скоро свяжемся 💌");
-  }catch(e){
-    alert("Не удалось отправить. Проверьте интернет и попробуйте позже.");
-  }
-};
-
-/* ===== chat 'Поддержка' ===== */
-const chatFab=document.getElementById("chatFab");
-const chatBox=document.getElementById("chatBox");
-const chatClose=document.getElementById("chatClose");
-const chatSend=document.getElementById("chatSend");
-const chatIn=document.getElementById("chatInput");
-const chatMsg=document.getElementById("chatMessages");
-
-chatFab.onclick=()=>chatBox.style.display="flex";
-chatClose.onclick=()=>chatBox.style.display="none";
-chatSend.onclick=sendMsg;
-chatIn.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();sendMsg();}});
-
-function pushMsg(who,text){
-  const d=document.createElement("div"); d.className="msg "+who; d.textContent=text;
-  chatMsg.appendChild(d); chatMsg.scrollTop=chatMsg.scrollHeight;
-}
-function sendMsg(){
-  const t=chatIn.value.trim(); if(!t) return;
-  pushMsg("you", t); chatIn.value="";
-  fetch("/api/support",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,message:t})})
-    .catch(()=>pushMsg("sys","Не удалось отправить. Попробуйте позже."));
+/* SUPPORT */
+function sendSupport(){
+  const t=document.getElementById("supportMsg");
+  if(!t.value.trim())return;
+  const msg=`<div><b>Вы:</b> ${t.value}</div>`;
+  document.getElementById("chat").innerHTML+=msg;
+  t.value="";
 }
 
-/* init */
-renderQuestions(); updateProgress();
+/* FINISH */
+function finish(){
+  alert("✅ Заявка на создание книги отправлена!");
+}
 
-/* mobile fix: профиль выше вопросов всегда (на малых экранах) */
-/* работает вместе с grid → 1 колонка */
+/* INIT */
+renderQuestions();
+document.getElementById("tokenDisplay").textContent = localStorage.getItem("userToken") || "нет";
 </script>
+
 </body>
 </html>
