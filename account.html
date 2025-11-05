@@ -2,337 +2,433 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Личный кабинет</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Личный кабинет — A Book Written With Soul</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --gold1:#e8d9b6;
-  --gold2:#c7a875;
-  --gold3:#9c7b55;
-  --ink:#4A3A39;
-  --bg:#FBF7F2;
+  --ink:#e9dcc9;
+  --muted:#b8a589;
+  --gold1:#e6d2aa; --gold2:#b99261; --gold3:#8a6948;
+  --panel:#171311; --panel2:#120f0d; --panel3:#0f0c0a;
+  --glass:rgba(23,19,17,.66);
 }
 
+/* -------- Base / Background -------- */
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:"Playfair Display",serif;
-  background:url("assets/background4.jpg") center/cover fixed no-repeat;
-  margin:0;
-  color:var(--ink);
+  font-family:"Playfair Display",serif; color:var(--ink);
+  background:
+    linear-gradient(rgba(10,8,6,.70), rgba(10,8,6,.70)),
+    url("assets/background4.jpg") center/cover fixed no-repeat;
+  min-height:100svh; overflow-x:hidden; padding-bottom:84px; /* под нижнюю навигацию */
+  position:relative;
 }
+/* золотой шум + мягкое свечение (luxury) */
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:1;
+  background-image:url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+  opacity:.12; mix-blend-mode:overlay;
+}
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:2;
+  background: radial-gradient(900px 420px at 50% -10%, rgba(255,230,180,.23), transparent 70%);
+  animation:goldGlow 7s ease-in-out infinite alternate; opacity:.22;
+}
+@keyframes goldGlow{0%{opacity:.14;filter:brightness(1)}100%{opacity:.28;filter:brightness(1.22)}}
 
-/* HEADER */
-.header{
-  text-align:center;
-  padding:18px 0;
-}
-.logo-book{
-  font-size:42px;
-  animation:breath 4s ease-in-out infinite;
-  display:inline-block;
-  margin-bottom:4px;
-}
-@keyframes breath{
-  0%,100%{transform:translateY(0) scale(1)}
-  50%{transform:translateY(-2px) scale(1.01)}
-}
+/* -------- Header -------- */
+.header{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 10px 6px;position:sticky;top:0;z-index:5}
+.logo-book{font-size:40px; animation:breath 6s ease-in-out infinite; will-change:transform}
+@keyframes breath{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.01)}}
 .header-title{
-  font-family:"Spectral SC";
-  font-size:18px;
-  background:linear-gradient(90deg,#9b7f64,#d7c29c,#b99673);
-  -webkit-background-clip:text;
-  color:transparent;
-  margin-top:-4px;
+  font-family:"Spectral SC",serif; font-size:16px; letter-spacing:.06em;
+  background:linear-gradient(90deg,#d9c29a,#b99363,#e9d6b5); -webkit-background-clip:text; color:transparent;
+  text-shadow:0 1px 0 rgba(0,0,0,.35);
 }
 
-/* PAGE SECTIONS */
-.section{
-  display:none;
-  padding:16px;
-}
-.section.active{display:block}
-
-/* PROFILE PANEL */
-.profile-card{
-  background:rgba(255,255,255,.8);
-  backdrop-filter:blur(12px);
-  padding:18px;
-  border-radius:18px;
-  margin-bottom:14px;
-}
-.profile-card div{margin:4px 0;font-size:16px}
-
-/* QUESTIONS */
-.question{
-  background:rgba(255,255,255,.85);
-  padding:14px;
-  border-radius:14px;
-  margin-bottom:10px;
-}
-.question-title{
-  font-weight:600;
-  cursor:pointer;
-  display:flex;
-  justify-content:space-between;
-}
-.question-content{
-  display:none;
-  margin-top:10px;
-}
-textarea{
-  width:100%;
-  border:none;
-  border-radius:12px;
-  padding:12px;
-  font-size:16px;
-  background:rgba(255,255,255,.65);
-}
-.save-btn{
-  margin-top:8px;
-  padding:10px;
-  width:100%;
-  border:none;
-  border-radius:20px;
-  background:linear-gradient(130deg,var(--gold2),var(--gold3));
-  color:#fff;
-  font-weight:600;
-  font-size:15px;
+/* -------- Sections Layout -------- */
+.section{padding:14px 12px; position:relative; z-index:3}
+.card{
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:16px; padding:16px; box-shadow:0 22px 60px rgba(0,0,0,.38);
 }
 
-/* COVER CAROUSEL */
-.cover-block{text-align:center}
-.cover-img{
-  width:80%;
-  max-width:320px;
-  height:420px;
-  object-fit:cover;
-  border-radius:14px;
-  box-shadow:0 8px 20px rgba(0,0,0,.22);
-  transition:opacity .6s ease;
+/* -------- Profile -------- */
+.block-title{
+  font-family:"Spectral SC",serif; color:#e7d6ba; margin-bottom:10px; opacity:.95
 }
+.profile-row{display:flex; gap:12px; align-items:center}
+.avatar{
+  width:56px;height:56px;border-radius:50%; display:grid;place-items:center;
+  background:linear-gradient(145deg,#1b1613,#0e0b09); color:var(--ink); font-weight:700;
+  border:1px solid rgba(255,255,255,.08); box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+}
+.small{font-size:12px;color:var(--muted)}
+.stat{margin-top:10px;display:flex;align-items:center;gap:10px}
+.ring{width:56px;height:56px;rotate:-90deg}
+.ring circle.bg{stroke:#2a221a; stroke-width:7; fill:none}
+.ring circle.fg{stroke:url(#g); stroke-width:7; stroke-linecap:round; fill:none; transition:stroke-dashoffset .35s}
+.btn{
+  border:none; cursor:pointer; color:#241b13; font-weight:700;
+  border-radius:999px; padding:12px 16px; font-size:16px;
+  background:linear-gradient(130deg,var(--gold2),var(--gold1));
+  box-shadow:0 12px 36px rgba(0,0,0,.4);
+}
+.btn:active{transform:translateY(1px)}
+.sep{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
 
-.cover-title{
-  margin-top:10px;
-  font-weight:600;
-  font-size:18px;
+/* -------- Covers (carousel) -------- */
+.covers.card{padding:18px}
+.scroller{
+  display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch; padding-bottom:6px;
 }
+.scroller::-webkit-scrollbar{height:8px}
+.scroller::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14); border-radius:8px}
+.cover{
+  min-width:130px; aspect-ratio:3/4; border-radius:12px; position:relative; overflow:hidden;
+  background:radial-gradient(240px 120px at 50% 30%, #3a2f25,#1a1511);
+  border:1px solid rgba(255,255,255,.08); scroll-snap-align:center;
+  box-shadow:0 18px 40px rgba(0,0,0,.45); transform:translateZ(0);
+}
+.cover.gold{ background: radial-gradient(240px 120px at 50% 30%, #876b49,#3b2f24) }
+.cover.sand{ background: radial-gradient(240px 120px at 50% 30%, #746a59,#2a2520) }
+.cover .badge{
+  position:absolute; right:8px; bottom:8px; font-size:12px; padding:6px 8px;
+  border-radius:999px; background:rgba(0,0,0,.4); color:#efdcb8; border:1px solid rgba(255,255,255,.08)
+}
+.cover.selected{outline:2px solid #d4b37c; box-shadow:0 0 0 4px rgba(212,179,124,.15)}
+.cover img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* PHOTOS */
-.photo-upload-btn{
-  display:inline-block;
-  padding:12px 22px;
-  background:linear-gradient(130deg,var(--gold2),var(--gold3));
-  color:#fff;
-  border-radius:999px;
-  cursor:pointer;
+/* -------- Questions (accordion) -------- */
+.q{margin-top:12px; border:1px solid rgba(255,255,255,.06); border-radius:14px; overflow:hidden}
+.qh{
+  padding:14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+  background:linear-gradient(180deg,#171311,#14110f);
 }
+.qh .num{color:#bda989; font-family:"Spectral SC",serif}
+.qa{display:none; padding:14px; background:linear-gradient(180deg,#14110f,#120f0d)}
+.qa textarea{
+  width:100%; min-height:120px; border-radius:12px; border:1px solid rgba(255,255,255,.06);
+  background:#100d0b; color:var(--ink); resize:vertical; padding:12px; font-size:16px;
+}
+.hint{font-size:12px;color:var(--muted); margin-top:8px}
+.tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+.tag{background:#0f0c0a; border:1px dashed rgba(255,255,255,.1); color:#c9b89a; padding:6px 10px; border-radius:999px; font-size:12px; cursor:pointer}
+
+/* -------- Photos -------- */
+.uploader .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.pbtn{border:none;border-radius:999px;padding:10px 14px;background:linear-gradient(130deg,var(--gold2),var(--gold1));color:#241b13;font-weight:700;cursor:pointer}
 #photoInput{display:none}
-#photoPreview{
-  margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
-}
-.preview-item{width:90px;height:90px;position:relative;border-radius:10px;overflow:hidden}
-.preview-item img{width:100%;height:100%;object-fit:cover}
-.delete-x{
-  position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);
-  color:#fff;border-radius:50%;width:18px;height:18px;font-size:12px;
-  display:flex;align-items:center;justify-content:center;cursor:pointer;
-}
+.preview{display:flex;flex-wrap:wrap;gap:10px}
+.pv{position:relative;width:86px;height:86px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.pv img{width:100%;height:100%;object-fit:cover}
+.pv .del{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:13px}
 
-/* CHAT SUPPORT */
-.chat-box{
-  background:rgba(255,255,255,.8);
-  border-radius:14px;
-  height:300px;
-  padding:12px;
-  overflow-y:auto;
-  font-size:15px;
+/* -------- Support chat (floating) -------- */
+.chatfab{
+  position:fixed; right:14px; bottom:86px; z-index:10;
+  width:54px;height:54px;border-radius:50%; display:grid;place-items:center;
+  background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13;
+  box-shadow:0 16px 44px rgba(0,0,0,.5); cursor:pointer;
 }
-.support-input{
-  margin-top:8px;
-  display:flex;
-  gap:8px;
+.chat{
+  position:fixed; right:14px; bottom:150px; width:86vw; max-width:360px;
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid rgba(255,255,255,.08); border-radius:14px; display:none; flex-direction:column; overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.55); z-index:20;
 }
-.support-input input{
-  flex:1;padding:10px;border-radius:10px;border:none;
-  background:rgba(255,255,255,.7);
-}
-.send-btn{
-  padding:10px 14px;
-  border:none;
-  background:linear-gradient(130deg,var(--gold2),var(--gold3));
-  border-radius:10px;
-  color:#fff;font-weight:600;
-}
+.chat-head{padding:10px 12px; display:flex; justify-content:space-between; align-items:center; background:#171311; border-bottom:1px solid rgba(255,255,255,.06)}
+.chat-body{max-height:45svh; overflow:auto; padding:12px; display:flex; flex-direction:column; gap:10px}
+.msg{font-size:14px; background:#100d0b; border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:10px; width:max-content; max-width:100%}
+.msg.you{align-self:flex-end; background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13; border:none}
+.chat-send{display:flex; gap:6px; padding:10px; background:#171311; border-top:1px solid rgba(255,255,255,.06)}
+.chat-send input{flex:1; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#0f0d0b; color:var(--ink)}
+.chat-send button{padding:10px 12px;border-radius:10px;border:none;background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13; font-weight:700}
 
-/* NAV BAR */
+/* -------- Bottom nav (thin contour + micro-gradient) -------- */
 .navbar{
-  position:fixed;bottom:0;left:0;right:0;
-  background:rgba(255,255,255,.85);
+  position:fixed;bottom:0;left:0;right:0;z-index:15;
+  background:linear-gradient(180deg, rgba(18,15,13,.85), rgba(16,13,11,.85));
   backdrop-filter:blur(10px);
-  display:flex;
-  border-top:1px solid rgba(0,0,0,.1);
+  display:flex; gap:8px; padding:8px; border-top:1px solid rgba(255,255,255,.06);
 }
 .nav-item{
-  flex:1;padding:8px 0;
-  text-align:center;
-  font-size:12px;
-  cursor:pointer;
+  flex:1; text-align:center; padding:10px 6px; border-radius:12px; cursor:pointer; user-select:none;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg, rgba(20,17,15,.7), rgba(17,14,12,.7));
+  color:#d8c6a3; font-size:12px;
 }
-.nav-item span{font-size:20px;display:block;margin-bottom:2px}
-.nav-item.active{background:rgba(0,0,0,.06);font-weight:700;border-radius:8px}
+.nav-item .icon{display:block; font-size:18px; margin-bottom:4px; filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))}
+.nav-item.active{outline:1px solid #d4b37c; box-shadow:0 0 0 4px rgba(212,179,124,.12)}
+
+/* -------- Responsive tweaks -------- */
+@media(min-width:900px){
+  .header{padding-top:18px}
+  .logo-book{font-size:44px}
+}
 </style>
 </head>
-
 <body>
 
-<div class="header">
-  <div class="logo-book">📖</div>
+<!-- Header -->
+<header class="header">
+  <div class="logo-book" aria-label="logo">📖</div>
   <div class="header-title">A Book Written With Soul</div>
-</div>
+</header>
 
-<!-- SECTIONS -->
-<div id="profile" class="section active">
-  <div class="profile-card">
-    <div><b>Ваш кабинет</b></div>
-    <div>Токен: <span id="tokenDisplay">–</span></div>
-    <div>Ответов сохранено: <span id="ansCount">0</span>/100</div>
-    <button class="save-btn" onclick="finish()">Завершить и отправить книгу</button>
+<!-- PROFILE -->
+<section id="sec-profile" class="section">
+  <div class="card">
+    <div class="block-title">Ваш кабинет</div>
+    <div class="profile-row">
+      <div class="avatar" id="avatar">AB</div>
+      <div>
+        <div class="small">token: <span id="utoken">—</span></div>
+        <div class="stat">
+          <svg class="ring" viewBox="0 0 44 44" aria-hidden="true">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#e6d2aa"/><stop offset="100%" stop-color="#b99261"/>
+              </linearGradient>
+            </defs>
+            <circle class="bg" cx="22" cy="22" r="18"></circle>
+            <circle class="fg" id="pfg" cx="22" cy="22" r="18" stroke-dasharray="113.1" stroke-dashoffset="113.1"></circle>
+          </svg>
+          <div class="small"><b><span id="done">0</span>/100</b> ответов</div>
+        </div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn" id="finish">Завершить и отправить книгу</button>
+  </div>
+</section>
+
+<!-- COVERS (carousel) -->
+<section id="sec-covers" class="section">
+  <div class="card covers">
+    <div class="block-title">Выбери обложку будущей книги</div>
+    <div class="scroller" id="coversRow" aria-label="Карусель обложек">
+      <label class="cover gold selected"><span class="badge">Gold</span><img src="assets/cover1.jpg" alt="Gold"></label>
+      <label class="cover"><span class="badge">Classic</span><img src="assets/cover2.jpg" alt="Classic"></label>
+      <label class="cover sand"><span class="badge">Sand</span><img src="assets/cover3.jpg" alt="Sand"></label>
+      <label class="cover"><span class="badge">Ivory</span><img src="assets/cover4.jpg" alt="Ivory"></label>
+      <label class="cover"><span class="badge">Noir</span><img src="assets/cover5.jpg" alt="Noir"></label>
+    </div>
+    <div class="small" style="margin-top:8px">Листай свайпом — или просто наблюдай: мы плавно показываем варианты.</div>
+  </div>
+</section>
+
+<!-- QUESTIONS -->
+<section id="sec-questions" class="section">
+  <div class="card">
+    <div class="block-title">Вопросы</div>
+    <div id="qlist"></div>
+  </div>
+</section>
+
+<!-- PHOTOS -->
+<section id="sec-photos" class="section">
+  <div class="card uploader">
+    <div class="head">
+      <div class="block-title" style="margin:0">Добавьте фото (по желанию)</div>
+      <button class="pbtn" id="pick">📎 Прикрепить</button>
+      <input id="photoInput" type="file" accept="image/*" multiple>
+    </div>
+    <div class="small">до 20 фотографий</div>
+    <div class="preview" id="preview"></div>
+    <div class="small" id="pcounter" style="margin-top:6px">0 фото</div>
+  </div>
+</section>
+
+<!-- Support floating -->
+<div class="chatfab" id="chatFab" title="Поддержка">💬</div>
+<div class="chat" id="chatBox" role="dialog" aria-label="Поддержка">
+  <div class="chat-head"><b>Поддержка</b><span id="chatClose" style="cursor:pointer;opacity:.7">✖</span></div>
+  <div class="chat-body" id="chatMessages"></div>
+  <div class="chat-send">
+    <input id="chatInput" placeholder="Ваш вопрос…">
+    <button id="chatSend">Отправить</button>
   </div>
 </div>
 
-<div id="questions" class="section"></div>
-
-<div id="covers" class="section cover-block">
-  <img id="coverImg" class="cover-img" src="assets/cover1.jpg" />
-  <div class="cover-title">Выбор обложки</div>
-</div>
-
-<div id="photos" class="section">
-  <label class="photo-upload-btn">Добавить фото
-    <input id="photoInput" type="file" multiple accept="image/*">
-  </label>
-  <div id="photoPreview"></div>
-</div>
-
-<div id="support" class="section">
-  <div class="chat-box" id="chat"></div>
-  <div class="support-input">
-    <input id="supportMsg" placeholder="Напишите сообщение...">
-    <button class="send-btn" onclick="sendSupport()">→</button>
-  </div>
-</div>
-
-<!-- NAV -->
-<div class="navbar">
-  <div class="nav-item active" onclick="openTab('profile',this)"><span>👤</span>Профиль</div>
-  <div class="nav-item" onclick="openTab('questions',this)"><span>📝</span>Вопросы</div>
-  <div class="nav-item" onclick="openTab('covers',this)"><span>📚</span>Обложка</div>
-  <div class="nav-item" onclick="openTab('photos',this)"><span>📷</span>Фото</div>
-  <div class="nav-item" onclick="openTab('support',this)"><span>💬</span>Поддержка</div>
-</div>
+<!-- Bottom nav -->
+<nav class="navbar" aria-label="Навигация">
+  <div class="nav-item active" data-target="sec-profile"><span class="icon">👤</span>Профиль</div>
+  <div class="nav-item" data-target="sec-covers"><span class="icon">📚</span>Обложка</div>
+  <div class="nav-item" data-target="sec-questions"><span class="icon">📝</span>Вопросы</div>
+  <div class="nav-item" data-target="sec-photos"><span class="icon">📷</span>Фото</div>
+  <div class="nav-item" data-target="#support-open"><span class="icon">💬</span>Поддержка</div>
+</nav>
 
 <script>
-/* NAV */
-function openTab(id, el){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelector('#'+id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  el.classList.add('active');
-}
+/* ====== Helpers ====== */
+const LS=(k,v)=>v===undefined?localStorage.getItem(k):localStorage.setItem(k,v);
+const params=new URL(location.href).searchParams;
+const token=params.get("token")||"DEMO-TOKEN";
+document.getElementById("utoken").textContent=token;
 
-/* QUESTIONS */
-const questionsList=[
+(function setInitials(){
+  const clean=token.replace(/[^a-zA-ZА-Яа-я0-9]/g,"").toUpperCase();
+  const ini=(clean[0]||"A")+(clean[1]||"B");
+  document.getElementById("avatar").textContent = ini;
+})();
+
+/* ====== Bottom nav scroll ====== */
+document.querySelectorAll(".nav-item").forEach(n=>{
+  n.onclick=()=>{
+    const t=n.getAttribute("data-target");
+    if(t==="#support-open"){openChat();return;}
+    document.getElementById(t)?.scrollIntoView({behavior:"smooth",block:"start"});
+    document.querySelectorAll(".nav-item").forEach(x=>x.classList.remove("active"));
+    n.classList.add("active");
+  };
+});
+
+/* ====== Covers: auto-slide carousel (каждые ~5 сек) ====== */
+const coversRow=document.getElementById("coversRow");
+let autoTimer=null;
+function autoSlide(){
+  const step = coversRow.firstElementChild?.getBoundingClientRect().width || 140;
+  coversRow.scrollBy({left: step+12, behavior:"smooth"});
+  // если прокрутили до конца — вернуться в начало
+  if(coversRow.scrollLeft + coversRow.clientWidth >= coversRow.scrollWidth - 2){
+    setTimeout(()=>coversRow.scrollTo({left:0,behavior:"smooth"}), 600);
+  }
+}
+autoTimer=setInterval(autoSlide, 5000); // M = 5 сек
+// пользователь свайпнул — перезапускаем таймер
+["touchstart","mousedown","wheel"].forEach(ev=>{
+  coversRow.addEventListener(ev, ()=>{clearInterval(autoTimer); autoTimer=setInterval(autoSlide,5000);},{passive:true});
+});
+
+/* ====== Questions (accordion + autosave) ====== */
+const QUESTIONS=[
  "Где вы впервые встретились?",
  "Что вы подумали при первой встрече?",
  "Кто сделал первый шаг?",
  "Какой момент стал решающим?",
  "Что больше всего запомнилось?"
 ];
+while(QUESTIONS.length<100) QUESTIONS.push(`Вопрос ${QUESTIONS.length+1}`);
+const total=QUESTIONS.length;
+const qlist=document.getElementById("qlist");
+
+function keyAns(i){return `cab_${token}_a_${i}`}
+
 function renderQuestions(){
-  const el=document.getElementById("questions");
-  el.innerHTML="";
-  let savedCount=0;
-
-  questionsList.forEach((q,i)=>{
-    const saved=localStorage.getItem(`a${i}`)??"";
-    if(saved.trim()) savedCount++;
-    el.innerHTML+=`
-      <div class="question">
-        <div class="question-title" onclick="toggle(${i})">
-          <span>${i+1}. ${q}</span><span id="arr${i}">▶️</span>
+  qlist.innerHTML="";
+  let done=0;
+  QUESTIONS.forEach((q,i)=>{
+    const saved=LS(keyAns(i))||"";
+    if(saved.trim().length>=3) done++;
+    qlist.insertAdjacentHTML("beforeend",`
+      <div class="q" data-i="${i}">
+        <div class="qh" onclick="toggleQ(${i})">
+          <div><span class="num">${i+1}/${total}</span> — ${q}</div>
+          <div>${saved.trim().length>=3?"✅":"▸"}</div>
         </div>
-        <div class="question-content" id="c${i}">
-          <textarea id="t${i}">${saved}</textarea>
-          <button class="save-btn" onclick="save(${i})">Сохранить</button>
+        <div class="qa" id="qa_${i}" style="${i<1?'display:block':''}">
+          <textarea id="ta_${i}" placeholder="Ваш развёрнутый ответ...">${saved}</textarea>
+          <div class="hint">Автосохранение • Подсказки:</div>
+          <div class="tags">
+            <div class="tag" onclick="ins(${i},'Вспоминаю, как мы...')">Вспоминаю…</div>
+            <div class="tag" onclick="ins(${i},'Особенно тронул момент, когда...')">Тронул момент…</div>
+            <div class="tag" onclick="ins(${i},'Я понял(а), что это любовь, когда...')">Это любовь…</div>
+          </div>
         </div>
-      </div>`;
+      </div>
+    `);
+    const ta=document.getElementById(`ta_${i}`);
+    ta.addEventListener("input",()=>debounce(`a${i}`,()=>{
+      LS(keyAns(i), ta.value);
+      updateProgress();
+    }, 450));
+    ta.addEventListener("keydown",e=>{
+      if(e.key==="Enter" && e.metaKey){ e.preventDefault(); toggleQ(i+1); }
+    });
   });
-
-  document.getElementById("ansCount").textContent=savedCount;
+  updateProgress();
 }
-function toggle(i){
-  const c=document.getElementById("c"+i);
-  const a=document.getElementById("arr"+i);
-  if(c.style.display==="block"){c.style.display="none";a.textContent="▶️";}
-  else{c.style.display="block";a.textContent="▼";}
+function debounceInit(){ const timers={}; return (id,fn,ms=400)=>{clearTimeout(timers[id]); timers[id]=setTimeout(fn,ms);} }
+const debounce=debounceInit();
+
+function toggleQ(i){
+  const el=document.getElementById(`qa_${i}`);
+  if(!el) return;
+  const is=el.style.display!=="none";
+  // один открытый за раз — премиум-поведение
+  document.querySelectorAll(".qa").forEach(x=>x.style.display="none");
+  el.style.display = is ? "none" : "block";
+  if(!is){ document.getElementById(`ta_${i}`).focus(); el.scrollIntoView({behavior:"smooth",block:"center"}); }
 }
-function save(i){
-  localStorage.setItem(`a${i}`,document.getElementById("t"+i).value);
-  renderQuestions();
+function ins(i,txt){
+  const ta=document.getElementById(`ta_${i}`);
+  ta.value = (ta.value?ta.value+"\n":"")+txt;
+  LS(keyAns(i), ta.value); updateProgress();
+}
+function updateProgress(){
+  let done=0; for(let i=0;i<total;i++){ if((LS(keyAns(i))||"").trim().length>=3) done++; }
+  document.getElementById("done").textContent=done;
+  const per=done/total; const C=2*Math.PI*18;
+  const fg=document.getElementById("pfg"); fg.style.strokeDasharray=C; fg.style.strokeDashoffset=C*(1-per);
 }
 
-/* COVER ROTATION */
-const covers=["assets/cover1.jpg","assets/cover2.jpg","assets/cover3.jpg"];
-let ci=0;
-setInterval(()=>{
-  ci=(ci+1)%covers.length;
-  document.getElementById("coverImg").style.opacity=0;
-  setTimeout(()=>{
-    document.getElementById("coverImg").src=covers[ci];
-    document.getElementById("coverImg").style.opacity=1;
-  },500);
-},5000);
-
-/* PHOTOS */
+/* ====== Photos ====== */
+const pick=document.getElementById("pick");
+const photoInput=document.getElementById("photoInput");
+const preview=document.getElementById("preview");
+const pcounter=document.getElementById("pcounter");
 let files=[];
-document.getElementById("photoInput").onchange=e=>{
-  for(const f of e.target.files) files.push(f);
-  renderPhotos();
-};
+pick.onclick=()=>photoInput.click();
+photoInput.onchange=e=>{ for(const f of e.target.files){ if(files.length<20) files.push(f); } renderPhotos(); };
 function renderPhotos(){
-  const box=document.getElementById("photoPreview");
-  box.innerHTML="";
-  files.forEach((f,i)=>{
+  preview.innerHTML=""; files.forEach((f,i)=>{
     const url=URL.createObjectURL(f);
-    box.innerHTML+=`
-      <div class="preview-item">
-        <span class="delete-x" onclick="rem(${i})">✖</span>
-        <img src="${url}">
-      </div>`;
+    const d=document.createElement("div"); d.className="pv";
+    d.innerHTML=`<span class="del" title="Удалить" onclick="delPhoto(${i})">✖</span><img src="${url}">`;
+    preview.appendChild(d);
   });
+  pcounter.textContent = `${files.length} фото`;
 }
-function rem(i){ files.splice(i,1); renderPhotos(); }
+function delPhoto(i){ files.splice(i,1); renderPhotos(); }
 
-/* SUPPORT */
-function sendSupport(){
-  const t=document.getElementById("supportMsg");
-  if(!t.value.trim())return;
-  const msg=`<div><b>Вы:</b> ${t.value}</div>`;
-  document.getElementById("chat").innerHTML+=msg;
-  t.value="";
+/* ====== Support chat ====== */
+const chatFab=document.getElementById("chatFab");
+const chatBox=document.getElementById("chatBox");
+const chatClose=document.getElementById("chatClose");
+const chatSend=document.getElementById("chatSend");
+const chatIn=document.getElementById("chatInput");
+const chatMsg=document.getElementById("chatMessages");
+function openChat(){ chatBox.style.display="flex"; }
+chatFab.onclick=openChat;
+chatClose.onclick=()=>chatBox.style.display="none";
+chatSend.onclick=sendMsg;
+chatIn.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();sendMsg();}});
+function pushMsg(who,text){
+  const d=document.createElement("div"); d.className="msg "+who; d.textContent=text;
+  chatMsg.appendChild(d); chatMsg.scrollTop=chatMsg.scrollHeight;
+}
+function sendMsg(){
+  const t=chatIn.value.trim(); if(!t) return;
+  pushMsg("you", t); chatIn.value="";
+  // TODO: подключим /api/support
 }
 
-/* FINISH */
-function finish(){
-  alert("✅ Заявка на создание книги отправлена!");
-}
+/* ====== Finish (stub) ====== */
+document.getElementById("finish").onclick=()=>{
+  alert("✅ Заявка на создание книги отправлена! (подключим отправку на сервер и в бота)");
+};
 
-/* INIT */
-renderQuestions();
-document.getElementById("tokenDisplay").textContent = localStorage.getItem("userToken") || "нет";
+/* ====== Init ====== */
+(function init(){
+  document.getElementById("utoken").textContent=token;
+  renderQuestions();
+})();
 </script>
-
 </body>
 </html>
