@@ -8,6 +8,53 @@
 <link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+.question-block {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  padding: 14px 4px;
+}
+
+.question-title {
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.question-title:hover {
+  color: var(--gold2);
+}
+
+.question-content {
+  display: none;
+  margin-top: 10px;
+}
+
+.question-content textarea {
+  width: 100%;
+  height: 120px;
+  border-radius: 12px;
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,.15);
+  background: rgba(255,255,255,.7);
+}
+
+.save-btn {
+  margin-top: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 10px;
+  background: linear-gradient(130deg,#c5a26f,#987147);
+  color: #fff;
+  border: none;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.save-btn:hover {
+  opacity:.85;
+}
 /* ================== THEME: Black & Gold ================== */
 :root{
   --bg:#0f0e0d;
@@ -208,6 +255,28 @@ textarea.answer{
 /* ================== TRANSITIONS ================== */
 .fade-enter{ opacity:0; transform: translateY(8px) scale(.99) }
 .fade-enter-active{ opacity:1; transform:none; transition: .35s ease }
+/* Progress */
+.progress-box{margin-top:20px;margin-bottom:20px;}
+.progress-text{font-size:15px;margin-bottom:6px;color:var(--ink);}
+.progress-bar{width:100%;height:8px;background:rgba(0,0,0,.08);border-radius:6px;overflow:hidden;}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#c5a26f,#8c6a43);border-radius:6px;transition:.4s;}
+
+/* Question Block */
+.question-block{border:1px solid rgba(0,0,0,.06);padding:14px;border-radius:12px;margin-bottom:10px;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);}
+.question-title{display:flex;justify-content:space-between;cursor:pointer;font-weight:600;color:var(--ink);}
+.question-content{display:none;margin-top:8px;}
+.question-content textarea{width:100%;min-height:90px;border:1px solid rgba(0,0,0,.12);border-radius:12px;padding:10px;font-size:15px;resize:none;}
+
+/* Toast */
+#toast{position:fixed;bottom:22px;right:22px;padding:10px 16px;background:#000;color:#fff;border-radius:12px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;}
+
+/* Button main */
+.account-actions{margin-top:20px;text-align:center;}
+.btn-zip{
+width:100%;padding:14px;font-size:18px;border:none;border-radius:999px;
+background:linear-gradient(120deg,#b49368,#8c6a43);color:white;cursor:pointer;
+box-shadow:0 8px 22px rgba(0,0,0,.15);}
+.btn-zip:hover{opacity:.9;}
 </style>
 </head>
 <body>
@@ -233,6 +302,20 @@ textarea.answer{
           <small id="utoken">token: —</small>
         </div>
       </div>
+      <div class="progress-box">
+  <div class="progress-text">Готово: <span id="pDone">0</span>/100</div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="pFill"></div>
+  </div>
+</div>
+
+<div id="questionsList"></div>
+
+<div class="account-actions">
+  <button class="btn-zip" onclick="finishAndSend()">📦 Завершить и отправить книгу</button>
+</div>
+
+<div id="toast"></div>
 
       <div class="progress" title="Прогресс ответов">
         <div class="bar" id="bar"></div>
@@ -241,9 +324,7 @@ textarea.answer{
 
       <div class="sep"></div>
 
-      <div class="list" id="qlist">
-        <!-- Список вопросов будет сгенерирован JS -->
-      </div>
+      <div id="questionsList"></div>
     </aside>
 
     <!-- MAIN -->
@@ -307,6 +388,129 @@ const initials = (()=> {
   return (t[0]||"U") + (t[1]||"S");
 })();
 document.getElementById("avatar").textContent = initials;
+const questions = [
+ "Где вы впервые встретились?",
+ "Что вы подумали при первой встрече?",
+ "Кто сделал первый шаг?",
+ "Какой момент стал решающим?",
+ "Что больше всего запомнилось?"
+ // ... и так далее до 100
+];
+
+function renderQuestions() {
+  const container = document.getElementById("questionsList");
+  container.innerHTML = "";
+
+  questions.forEach((q, index) => {
+    const saved = localStorage.getItem(`answer_${index}`) || "";
+
+    container.innerHTML += `
+      <div class="question-block">
+        <div class="question-title" onclick="toggleQ(${index})">
+          <span>${index+1}. ${q}</span>
+          <span id="arrow_${index}">▶️</span>
+        </div>
+        <div class="question-content" id="content_${index}">
+          <textarea id="input_${index}">${saved}</textarea>
+          <button class="save-btn" onclick="saveAnswer(${index})">Сохранить</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function toggleQ(i){
+  const block = document.getElementById(`content_${i}`);
+  const arrow = document.getElementById(`arrow_${i}`);
+
+  if(block.style.display === "block"){
+    block.style.display = "none";
+    arrow.textContent = "▶️";
+  } else {
+    block.style.display = "block";
+    arrow.textContent = "▼";
+  }
+}
+
+function saveAnswer(i){
+  const value = document.getElementById(`input_${i}`).value;
+  localStorage.setItem(`answer_${i}`, value);
+  alert("Ответ сохранён ✅");
+}
+
+renderQuestions();
+/* PRO Questions System */
+const total = 100;
+const questions = Array.from({length:total},(_,i)=>`${i+1}. Ваш вопрос #${i+1}`);
+
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.style.opacity=1;
+  setTimeout(()=>t.style.opacity=0,1200);
+}
+
+function saveAnswer(i){
+  const v=document.getElementById(`input_${i}`).value;
+  localStorage.setItem(`answer_${i}`,v);
+  updateProgress();
+  toast("Сохранено ✅");
+}
+
+function toggleQ(i){
+  const c=document.getElementById(`content_${i}`);
+  const a=document.getElementById(`arrow_${i}`);
+  if(c.style.display==="block"){c.style.display="none";a.textContent="▶️";}
+  else{c.style.display="block";a.textContent="▼";}
+}
+
+function renderQuestions(){
+  const c=document.getElementById("questionsList");
+  c.innerHTML="";
+  questions.forEach((q,i)=>{
+    const saved=localStorage.getItem(`answer_${i}`)||"";
+    c.innerHTML+=`
+      <div class="question-block">
+        <div class="question-title" onclick="toggleQ(${i})">
+          <span>${q}</span>
+          <span id="arrow_${i}">▶️</span>
+        </div>
+        <div class="question-content" id="content_${i}">
+          <textarea id="input_${i}" oninput="saveAnswer(${i})">${saved}</textarea>
+        </div>
+      </div>`;
+  });
+  updateProgress();
+}
+
+function updateProgress(){
+  let done=0;
+  for(let i=0;i<total;i++){
+    if((localStorage.getItem(`answer_${i}`)||"").trim()!=="") done++;
+  }
+  document.getElementById("pDone").textContent=done;
+  document.getElementById("pFill").style.width=`${(done/total)*100}%`;
+}
+
+renderQuestions();
+
+/* Final submit */
+async function finishAndSend(){
+  toast("Отправляем книгу...");
+
+  const answers=[];
+  for(let i=0;i<total;i++){
+    answers.push(`${i+1}) ${localStorage.getItem(`answer_${i}`)||""}`);
+  }
+
+  await fetch("/api/sendMessage",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({text:`📚 Готова книга!\nЮзер: ${token}\nОтветы:\n${answers.join("\n")}`})
+  });
+
+  toast("Передано! Мы скоро свяжемся 🤍");
+}
 
 /* ================== STATE ================== */
 let current = 0;
