@@ -40,8 +40,22 @@ body::after{
 @keyframes goldGlow{0%{opacity:.14;filter:brightness(1)}100%{opacity:.28;filter:brightness(1.22)}}
 
 /* -------- Header -------- */
-.header{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 10px 6px;position:sticky;top:0;z-index:5}
-.logo-book{font-size:40px; animation:breath 6s ease-in-out infinite; will-change:transform}
+.header{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  padding:14px 10px 6px;
+  position:relative; /* ← убираем sticky */
+  z-index:5;
+}
+
+.logo-book{
+  font-size:28px;     /* было 40px */
+  animation:breath 6s ease-in-out infinite;
+  will-change:transform;
+  margin-bottom:2px;
+}
 @keyframes breath{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.01)}}
 .header-title{
   font-family:"Spectral SC",serif; font-size:16px; letter-spacing:.06em;
@@ -171,6 +185,21 @@ body::after{
   .header{padding-top:18px}
   .logo-book{font-size:44px}
 }
+.nav-item svg {
+  width:20px;
+  height:20px;
+  stroke: #d6c39b;
+  fill: none;
+  stroke-width: 1.6;
+  filter: drop-shadow(0 0 3px rgba(214,195,155,.18));
+  transition: .25s;
+}
+
+.nav-item.active svg {
+  stroke: #f1e4c5;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 6px rgba(241,228,197,.36));
+}
 </style>
 </head>
 <body>
@@ -258,11 +287,40 @@ body::after{
 
 <!-- Bottom nav -->
 <nav class="navbar" aria-label="Навигация">
-  <div class="nav-item active" data-target="sec-profile"><span class="icon">👤</span>Профиль</div>
-  <div class="nav-item" data-target="sec-covers"><span class="icon">📚</span>Обложка</div>
-  <div class="nav-item" data-target="sec-questions"><span class="icon">📝</span>Вопросы</div>
-  <div class="nav-item" data-target="sec-photos"><span class="icon">📷</span>Фото</div>
-  <div class="nav-item" data-target="#support-open"><span class="icon">💬</span>Поддержка</div>
+  <div class="nav-item active" data-target="sec-profile">
+    <span class="icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+    </span>
+    Профиль
+  </div>
+
+  <div class="nav-item" data-target="sec-covers">
+    <span class="icon">
+      <svg viewBox="0 0 24 24"><rect x="4" y="4" width="8" height="16" rx="2"/><rect x="12" y="4" width="8" height="16" rx="2"/></svg>
+    </span>
+    Обложка
+  </div>
+
+  <div class="nav-item" data-target="sec-questions">
+    <span class="icon">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
+    </span>
+    Вопросы
+  </div>
+
+  <div class="nav-item" data-target="sec-photos">
+    <span class="icon">
+      <svg viewBox="0 0 24 24"><circle cx="8.5" cy="8.5" r="2.5"/><path d="M20 5h-3l-2-2H9L7 5H4v14h16z"/></svg>
+    </span>
+    Фото
+  </div>
+
+  <div class="nav-item" data-target="#support-open" onclick="openChat()">
+    <span class="icon">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16v12H5.17L4 17.17z"/><circle cx="8.5" cy="10.5" r=".75"/><circle cx="12" cy="10.5" r=".75"/><circle cx="15.5" cy="10.5" r=".75"/></svg>
+    </span>
+    Поддержка
+  </div>
 </nav>
 
 <script>
