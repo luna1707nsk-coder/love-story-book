@@ -7,37 +7,51 @@
 <link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0f0d0b; --ink:#e9dcc9;
-  --soft:#1a1612; --panel:#15110f; --muted:#b8a589;
-  --gold1:#e9d7b3; --gold2:#b99261; --gold3:#8a6947;
-  --ring:#6c533d;
+  --ink:#e9dcc9;
+  --panel:#15110f;
+  --panel2:#120f0d;
+  --muted:#b8a589;
+  --gold1:#e9d7b3; --gold2:#b99261; --gold3:#8a6948;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body {
+body{
   background:
     linear-gradient(rgba(12,10,8,.78), rgba(12,10,8,.78)),
     url("assets/background4.jpg") center/cover fixed no-repeat;
-  color: var(--ink);
-  min-height: 100svh;
-  padding: 18px 12px 80px;
-  font-family: "Playfair Display", serif;
-  position: relative;
-  overflow-x: hidden;
+  color:var(--ink);
+  min-height:100svh;
+  padding:18px 12px 88px;
+  font-family:"Playfair Display",serif;
+  position:relative; overflow-x:hidden;
 }
+/* gold grain + glow */
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none;
+  background-image:url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+  opacity:.12; mix-blend-mode:overlay; z-index:1;
+}
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:2;
+  background: radial-gradient(circle at 50% 0%, rgba(255,230,180,.25), transparent 65%);
+  animation:goldGlow 6s ease-in-out infinite alternate; opacity:.2;
+}
+@keyframes goldGlow{0%{opacity:.13;filter:brightness(1)}100%{opacity:.28;filter:brightness(1.25)}}
 
 /* header */
-.header{
-  display:flex; justify-content:center; align-items:center; gap:10px;
-  margin-bottom:14px; position:sticky; top:8px; z-index:5;
-}
+.header{display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:14px;position:sticky;top:8px;z-index:5}
 .logo{
-  width:34px;height:34px;border-radius:50%;
-  display:grid;place-items:center;
-  background:linear-gradient(145deg,#f3ead5,#c9a876);
-  color:#453325; box-shadow:0 6px 22px rgba(0,0,0,.25);
-  transform:translateZ(0);
-  animation:float 5s ease-in-out infinite;
+  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#f3ead5,#c9a876); color:#3f2f22;
+  box-shadow:0 10px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.6);
+  position:relative; transform:translateZ(0);
+  animation:float 6s ease-in-out infinite;
 }
+.logo::after{
+  content:""; position:absolute; inset:-2px; border-radius:12px;
+  background: conic-gradient(from 0deg, rgba(255,255,255,.0), rgba(255,255,255,.35), rgba(255,255,255,.0));
+  filter:blur(6px); opacity:.0; transition:.35s;
+}
+.logo:hover::after{opacity:.35}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 .title{
   font-family:"Spectral SC",serif; letter-spacing:.06em; font-size:18px;
@@ -46,12 +60,12 @@ body {
 }
 
 /* layout */
-.wrap{max-width:1050px;margin:0 auto;display:grid;grid-template-columns:340px 1fr;gap:18px}
+.wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:360px 1fr;gap:18px;position:relative;z-index:3}
 @media(max-width:900px){ .wrap{grid-template-columns:1fr} }
 
 /* cards */
 .card{
-  background:linear-gradient(180deg,var(--panel),#120f0d);
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
   border:1px solid rgba(255,255,255,.06);
   border-radius:18px; padding:18px; box-shadow:0 20px 55px rgba(0,0,0,.35);
 }
@@ -61,11 +75,11 @@ body {
 .header-sm{font-family:"Spectral SC",serif; color:#e7d6ba; margin-bottom:12px; opacity:.9}
 .profile-row{display:flex; gap:12px; align-items:center; margin-bottom:10px}
 .avatar{
-  width:54px;height:54px;border-radius:50%; display:grid; place-items:center;
+  width:56px;height:56px;border-radius:50%; display:grid; place-items:center;
   background:linear-gradient(145deg,#1c1714,#0e0c0a); color:#e9dcc9; font-weight:700;
   border:1px solid rgba(255,255,255,.08); box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
 }
-.tok{font-size:13px; color:var(--muted)}
+.small{font-size:12px;color:#a89678}
 .btn{
   border:none; cursor:pointer; color:#241b13; font-weight:700;
   border-radius:999px; padding:12px 16px; font-size:16px;
@@ -75,31 +89,46 @@ body {
 .btn:active{transform:translateY(1px)}
 .row{display:flex; gap:10px; align-items:center}
 .mt{margin-top:12px}
+.sep{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
 
 /* circular progress */
-.progress{
-  display:flex; align-items:center; gap:12px; margin:8px 0 14px;
-}
-svg.ring{width:56px;height:56px;rotate:-90deg}
+.progress{display:flex; align-items:center; gap:12px; margin:8px 0 14px;}
+svg.ring{width:60px;height:60px;rotate:-90deg}
 .ring circle.bg{stroke:#2a221a; stroke-width:7; fill:none}
 .ring circle.fg{stroke:url(#g); stroke-width:7; stroke-linecap:round; fill:none; transition:stroke-dashoffset .35s}
-.progress .txt{font-family:"Spectral SC",serif}
 
-/* covers */
-.covers{display:grid;grid-template-columns:repeat(3,1fr); gap:10px; margin-top:10px}
-.cover{
-  border-radius:12px; aspect-ratio:3/4; position:relative; cursor:pointer; overflow:hidden;
-  border:1px solid rgba(255,255,255,.06);
-  background:radial-gradient(250px 120px at 50% 30%, #3a2f25, #1a1511);
+/* covers – Netflix style row */
+.covers-wrap{margin-top:8px}
+.scroller{
+  display:flex; gap:12px; overflow:auto; scroll-snap-type:x mandatory; padding-bottom:6px;
 }
-.cover.gold{ background: radial-gradient(220px 110px at 50% 30%, #876b49,#3b2f24)}
-.cover.sand{ background: radial-gradient(220px 110px at 50% 30%, #746a59,#2a2520)}
-.badge{
+.scroller::-webkit-scrollbar{height:8px}
+.scroller::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15); border-radius:8px}
+.cover{
+  min-width:120px; aspect-ratio:3/4; border-radius:12px; position:relative; cursor:pointer; overflow:hidden;
+  border:1px solid rgba(255,255,255,.08); scroll-snap-align:start;
+  background:radial-gradient(260px 130px at 50% 30%, #3a2f25, #1a1511);
+  transition:transform .2s, box-shadow .2s, outline-color .2s;
+}
+.cover.gold{ background: radial-gradient(240px 120px at 50% 30%, #876b49,#3b2f24)}
+.cover.sand{ background: radial-gradient(240px 120px at 50% 30%, #746a59,#2a2520)}
+.cover .badge{
   position:absolute; inset:auto 8px 8px auto; font-size:12px; padding:6px 8px;
   border-radius:999px; background:rgba(0,0,0,.4); color:#efdcb8; border:1px solid rgba(255,255,255,.08)
 }
 .cover input{position:absolute; inset:0; opacity:0}
+.cover:hover{transform:translateY(-2px); box-shadow:0 18px 40px rgba(0,0,0,.35)}
 .cover.selected{outline:2px solid #d4b37c; box-shadow:0 0 0 4px rgba(212,179,124,.15)}
+
+/* photo uploader */
+.photos{margin-top:10px}
+.pu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.pbtn{border:none;border-radius:999px;padding:10px 14px;background:linear-gradient(130deg,var(--gold2),var(--gold1));color:#241b13;font-weight:700;cursor:pointer}
+#photoInput{display:none}
+.preview{display:flex;flex-wrap:wrap;gap:10px}
+.pv{position:relative;width:86px;height:86px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.pv img{width:100%;height:100%;object-fit:cover}
+.pv .del{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:13px}
 
 /* questions */
 .q{margin-bottom:12px; border:1px solid rgba(255,255,255,.06); border-radius:14px; overflow:hidden}
@@ -115,16 +144,14 @@ svg.ring{width:56px;height:56px;rotate:-90deg}
 }
 .hint{font-size:12px;color:#a89678; margin-top:8px}
 .tags{display:flex; gap:8px; flex-wrap:wrap}
-.tag{
-  background:#0f0c0a; border:1px dashed rgba(255,255,255,.1); color:#c9b89a; padding:6px 10px; border-radius:999px; font-size:12px; cursor:pointer
-}
+.tag{background:#0f0c0a; border:1px dashed rgba(255,255,255,.1); color:#c9b89a; padding:6px 10px; border-radius:999px; font-size:12px; cursor:pointer}
 
-/* pro mode */
+/* Pro-mode tweaks */
 .pro .qh{padding:10px 12px}
 .pro .qa textarea{min-height:90px}
 .pro .q{margin-bottom:10px}
 
-/* support chat */
+/* chat — Поддержка */
 .chatfab{
   position:fixed; right:14px; bottom:14px; z-index:10;
   width:52px;height:52px;border-radius:50%; display:grid;place-items:center;
@@ -148,54 +175,17 @@ svg.ring{width:56px;height:56px;rotate:-90deg}
 @media(max-width:900px){
   .profile{position:static}
 }
-
-/* small helpers */
-.sep{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
-.small{font-size:12px;color:#a89678}
-.switch{display:flex; align-items:center; gap:8px; font-size:14px}
-.switch input{width:38px;height:22px;appearance:none;background:#2a231d;border-radius:999px;position:relative;outline:none;cursor:pointer;border:1px solid rgba(255,255,255,.08)}
-.switch input:checked{background:linear-gradient(130deg,var(--gold2),var(--gold1))}
-.switch input::after{content:"";position:absolute;left:2px;top:2px;width:18px;height:18px;background:#0f0d0b;border-radius:50%;transition:.2s}
-.switch input:checked::after{left:18px}
-/* Золотой шум */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
-  opacity: .12;
-  mix-blend-mode: overlay;
-  z-index: 1;
-}
-
-/* Мягкое премиальное свечение */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at 50% 0%, rgba(255,230,180,.25), transparent 65%);
-  animation: goldGlow 6s ease-in-out infinite alternate;
-  opacity: .2;
-  z-index: 2;
-}
-
-@keyframes goldGlow {
-  0%   { opacity:.13; filter:brightness(1); }
-  100% { opacity:.28; filter:brightness(1.25); }
-}
 </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="logo">📖</div>
+  <div class="logo" title="A Book Written With Soul">📖</div>
   <div class="title">A Book Written With Soul</div>
 </header>
 
 <main class="wrap">
-  <!-- PROFILE / LEFT -->
+  <!-- LEFT: PROFILE -->
   <section class="card profile" id="profileCard">
     <div class="header-sm">Ваш кабинет</div>
 
@@ -218,34 +208,54 @@ body::after {
       </div>
     </div>
 
-    <button class="btn mt" id="finish">Завершить и отправить книгу</button>
-
     <div class="sep"></div>
 
-    <div class="switch">
-      <label>Pro-режим</label>
-      <input type="checkbox" id="proToggle">
+    <div class="row">
+      <label class="small" style="display:flex;align-items:center;gap:8px">
+        Pro-режим
+        <input type="checkbox" id="proToggle" style="width:38px;height:22px;appearance:none;background:#2a231d;border-radius:999px;position:relative;outline:none;cursor:pointer;border:1px solid rgba(255,255,255,.08)">
+      </label>
     </div>
 
     <div class="sep"></div>
+
     <div class="header-sm">Выбор обложки</div>
-    <div class="covers" id="covers">
-      <label class="cover gold"><span class="badge">Gold</span><input type="radio" name="cover" value="gold"></label>
-      <label class="cover"><span class="badge">Classic</span><input type="radio" name="cover" value="classic"></label>
-      <label class="cover sand"><span class="badge">Sand</span><input type="radio" name="cover" value="sand"></label>
+    <div class="covers-wrap">
+      <div class="scroller" id="covers">
+        <label class="cover gold"><span class="badge">Gold</span><input type="radio" name="cover" value="gold"></label>
+        <label class="cover"><span class="badge">Classic</span><input type="radio" name="cover" value="classic"></label>
+        <label class="cover sand"><span class="badge">Sand</span><input type="radio" name="cover" value="sand"></label>
+        <label class="cover"><span class="badge">Ivory</span><input type="radio" name="cover" value="ivory"></label>
+        <label class="cover"><span class="badge">Noir</span><input type="radio" name="cover" value="noir"></label>
+      </div>
+      <div class="small" style="margin-top:8px">Обложку можно поменять позже.</div>
     </div>
-    <div class="small" style="margin-top:8px">Обложку можно поменять позже.</div>
+
+    <div class="sep"></div>
+
+    <div class="header-sm">Фотографии</div>
+    <div class="photos">
+      <div class="pu-head">
+        <div class="small">Добавьте до 20 фото (по желанию)</div>
+        <button class="pbtn" id="pick">📎 Добавить</button>
+        <input id="photoInput" type="file" accept="image/*" multiple>
+      </div>
+      <div class="preview" id="preview"></div>
+      <div class="small" id="pcounter" style="margin-top:6px">0 фото</div>
+    </div>
+
+    <button class="btn mt" id="finish">Завершить и отправить книгу</button>
   </section>
 
-  <!-- QUESTIONS / RIGHT -->
+  <!-- RIGHT: QUESTIONS -->
   <section class="card" id="qCard">
     <div class="header-sm">Вопросы</div>
     <div id="qlist"></div>
   </section>
 </main>
 
-<!-- SUPPORT CHAT -->
-<div class="chatfab" id="chatFab">💬</div>
+<!-- Поддержка -->
+<div class="chatfab" id="chatFab" title="Поддержка">💬</div>
 <div class="chat" id="chatBox">
   <div class="chat-head"><b>Поддержка</b><span id="chatClose" style="cursor:pointer;opacity:.7">✖</span></div>
   <div class="chat-body" id="chatMessages"></div>
@@ -256,186 +266,197 @@ body::after {
 </div>
 
 <script>
-/* ========= данные / вопросы ========= */
-const QUESTIONS = [
- "Где вы впервые встретились?","Что вы подумали при первой встрече?",
- "Кто сделал первый шаг?","Какой момент стал решающим?","Что больше всего запомнилось?"
-];
-// добьём до 100 пустыми заглушками
-while(QUESTIONS.length<100) QUESTIONS.push(`Вопрос ${QUESTIONS.length+1}`);
+/* ===== utils / LS ===== */
+const LS=(k,v)=>v===undefined?localStorage.getItem(k):localStorage.setItem(k,v);
+function debounceWrap(){
+  const t={}; return (id,fn,ms=500)=>{ clearTimeout(t[id]); t[id]=setTimeout(fn,ms); };
+}
+const debounce = debounceWrap();
 
-/* ========= токен/инициалы ========= */
-const params = new URL(location.href).searchParams;
-const token  = params.get("token") || "DEMO-TOKEN";
+/* ===== token / initials ===== */
+const params=new URL(location.href).searchParams;
+const token = params.get("token") || "DEMO-TOKEN";
 document.getElementById("utoken").textContent = token;
-(function(){
+(function setInitials(){
   const t = token.replace(/[^a-zA-ZА-Яа-я0-9]/g,"").toUpperCase();
   const ini = (t[0]||"A")+(t[1]||"B");
   document.getElementById("avatar").textContent = ini;
 })();
 
-/* ========= helpers ========= */
-const LS = (k,v)=> v===undefined ? localStorage.getItem(k) : localStorage.setItem(k,v);
-const debouncers = {};
-function debounce(id, fn, ms=500){
-  clearTimeout(debouncers[id]);
-  debouncers[id] = setTimeout(fn, ms);
-}
+/* ===== questions ===== */
+const QUESTIONS = [
+ "Где вы впервые встретились?","Что вы подумали при первой встрече?","Кто сделал первый шаг?","Какой момент стал решающим?","Что больше всего запомнилось?"
+];
+// дополним до 100
+while(QUESTIONS.length<100) QUESTIONS.push(`Вопрос ${QUESTIONS.length+1}`);
 
-/* ========= генерация вопросов ========= */
-const qlist = document.getElementById("qlist");
 const total = QUESTIONS.length;
 document.getElementById("total").textContent = total;
+const qlist = document.getElementById("qlist");
+
+function keyAns(i){return `cab_${token}_a_${i}`}
 
 function renderQuestions(){
-  qlist.innerHTML = "";
-  QUESTIONS.forEach((q, i)=>{
-    const saved = LS(keyAns(i)) || "";
+  qlist.innerHTML="";
+  QUESTIONS.forEach((q,i)=>{
+    const saved=LS(keyAns(i))||"";
     const done = saved.trim().length>=3;
-    const open = (i===0); // первый открыт
-    qlist.insertAdjacentHTML("beforeend", `
+    qlist.insertAdjacentHTML("beforeend",`
       <div class="q" data-i="${i}">
         <div class="qh" onclick="toggleQ(${i})">
-          <div><span class="num">${i+1} / ${total}</span> — ${q}</div>
-          <div>${done? "✅":"▸"}</div>
+          <div><span class="num">${i+1}/${total}</span> — ${q}</div>
+          <div>${done?"✅":"▸"}</div>
         </div>
-        <div class="qa" id="qa_${i}" style="display:${open?'block':'none'}">
+        <div class="qa" id="qa_${i}" style="display:${i===0?'block':'none'}">
           <textarea id="ta_${i}" placeholder="Ваш развёрнутый ответ...">${saved}</textarea>
           <div class="hint">Автосохранение • Подсказки:</div>
           <div class="tags">
-            <div class="tag" onclick="ins(${i}, 'Вспоминаю, как мы...')">Вспоминаю…</div>
-            <div class="tag" onclick="ins(${i}, 'Особенно тронул момент, когда...')">Тронул момент…</div>
-            <div class="tag" onclick="ins(${i}, 'Я понял(а), что это любовь, когда...')">Это любовь…</div>
+            <div class="tag" onclick="ins(${i},'Вспоминаю, как мы...')">Вспоминаю…</div>
+            <div class="tag" onclick="ins(${i},'Особенно тронул момент, когда...')">Тронул момент…</div>
+            <div class="tag" onclick="ins(${i},'Я понял(а), что это любовь, когда...')">Это любовь…</div>
           </div>
         </div>
       </div>
     `);
-    const ta = document.getElementById(`ta_${i}`);
-    ta.addEventListener("input", ()=>{
-      debounce(`a${i}`, ()=>{
-        LS(keyAns(i), ta.value);
-        updateProgress();
-      });
-    });
-    ta.addEventListener("keydown",(e)=>{
+    const ta=document.getElementById(`ta_${i}`);
+    ta.addEventListener("input",()=>debounce(`a${i}`,()=>{LS(keyAns(i),ta.value);updateProgress();}));
+    ta.addEventListener("keydown",e=>{
       if(document.body.classList.contains("pro")){
-        if(e.key==="ArrowDown") {e.preventDefault(); openQ(i+1)}
-        if(e.key==="ArrowUp")   {e.preventDefault(); openQ(i-1)}
-        if(e.key==="Enter" && e.ctrlKey){e.preventDefault(); openQ(i+1)}
+        if(e.key==="ArrowDown"){e.preventDefault();openQ(i+1)}
+        if(e.key==="ArrowUp"){e.preventDefault();openQ(i-1)}
+        if(e.key==="Enter" && e.ctrlKey){e.preventDefault();openQ(i+1)}
       }
     });
   });
 }
-function keyAns(i){ return `cab_${token}_a_${i}` }
 function toggleQ(i){
-  const el = document.getElementById(`qa_${i}`);
-  const is = el.style.display!=="none";
-  if(is){ el.style.display="none"; }
+  const el=document.getElementById(`qa_${i}`);
+  const is=el.style.display!=="none";
+  if(is){el.style.display="none";}
   else{
-    if(document.body.classList.contains("pro")){
-      // закрыть все кроме текущего
-      document.querySelectorAll(".qa").forEach(x=>x.style.display="none");
-    }
-    el.style.display="block";
-    document.getElementById(`ta_${i}`).focus({preventScroll:false});
-    document.getElementById(`ta_${i}`).scrollIntoView({behavior:"smooth",block:"center"});
+    if(document.body.classList.contains("pro")) document.querySelectorAll(".qa").forEach(x=>x.style.display="none");
+    el.style.display="block"; const ta=document.getElementById(`ta_${i}`); ta.focus();
+    el.scrollIntoView({behavior:"smooth",block:"center"});
   }
 }
 function openQ(i){
   if(i<0||i>=total) return;
   document.querySelectorAll(".qa").forEach(x=>x.style.display="none");
-  const el = document.getElementById(`qa_${i}`);
-  if(el){ el.style.display="block"; document.getElementById(`ta_${i}`).focus(); el.scrollIntoView({behavior:"smooth",block:"center"}); }
+  const el=document.getElementById(`qa_${i}`); if(!el) return;
+  el.style.display="block"; document.getElementById(`ta_${i}`).focus();
+  el.scrollIntoView({behavior:"smooth",block:"center"});
 }
-function ins(i, txt){
-  const ta = document.getElementById(`ta_${i}`);
-  ta.value = (ta.value ? ta.value+"\n" : "") + txt;
-  LS(keyAns(i), ta.value);
-  updateProgress();
+function ins(i,txt){
+  const ta=document.getElementById(`ta_${i}`); ta.value=(ta.value?ta.value+"\n":"")+txt;
+  LS(keyAns(i),ta.value); updateProgress();
 }
 
-/* ========= прогресс ========= */
+/* ===== progress ring ===== */
 function updateProgress(){
-  let done = 0;
-  for(let i=0;i<total;i++){
-    if((LS(keyAns(i))||"").trim().length>=3) done++;
-  }
+  let done=0; for(let i=0;i<total;i++){ if((LS(keyAns(i))||"").trim().length>=3) done++; }
   document.getElementById("done").textContent = done;
-  const per = done/total;
-  const C = 2*Math.PI*18; // длина окружности r=18 (≈113.1)
-  document.getElementById("pfg").style.strokeDasharray = C;
-  document.getElementById("pfg").style.strokeDashoffset = C*(1-per);
+  const per = done/total; const C=2*Math.PI*18;
+  document.getElementById("pfg").style.strokeDasharray=C;
+  document.getElementById("pfg").style.strokeDashoffset=C*(1-per);
 }
-renderQuestions(); updateProgress();
 
-/* ========= covers ========= */
+/* ===== covers (Netflix row) ===== */
 const covers = document.getElementById("covers");
-const savedCover = LS(`cab_${token}_cover`) || "gold";
+const savedCover=LS(`cab_${token}_cover`)||"gold";
 [...covers.querySelectorAll("input")].forEach(i=>{
   i.checked = (i.value===savedCover);
   if(i.checked) i.closest(".cover").classList.add("selected");
-  i.addEventListener("change", ()=>{
+  i.addEventListener("change",()=>{
     [...covers.querySelectorAll(".cover")].forEach(c=>c.classList.remove("selected"));
     i.closest(".cover").classList.add("selected");
     LS(`cab_${token}_cover`, i.value);
   });
 });
 
-/* ========= Pro mode ========= */
-const proToggle = document.getElementById("proToggle");
+/* ===== photos ===== */
+const pick=document.getElementById("pick");
+const photoInput=document.getElementById("photoInput");
+const preview=document.getElementById("preview");
+const pcounter=document.getElementById("pcounter");
+let files=[];
+
+pick.onclick=()=>photoInput.click();
+photoInput.onchange=e=>{
+  for(const f of e.target.files){ if(files.length<20) files.push(f); }
+  renderPhotos();
+};
+function renderPhotos(){
+  preview.innerHTML=""; files.forEach((f,i)=>{
+    const url=URL.createObjectURL(f);
+    const item=document.createElement("div"); item.className="pv";
+    item.innerHTML=`<span class="del" title="Удалить" onclick="delPhoto(${i})">✖</span><img src="${url}">`;
+    preview.appendChild(item);
+  });
+  pcounter.textContent = `${files.length} фото`;
+}
+function delPhoto(i){ files.splice(i,1); renderPhotos(); }
+
+/* ===== Pro toggle ===== */
+const proToggle=document.getElementById("proToggle");
 (function initPro(){
   const on = LS(`cab_${token}_pro`) === "1";
-  proToggle.checked = on;
-  document.body.classList.toggle("pro", on);
+  proToggle.checked = on; document.body.classList.toggle("pro", on);
 })();
-proToggle.onchange = ()=>{
-  const on = proToggle.checked;
-  LS(`cab_${token}_pro`, on?"1":"0");
-  document.body.classList.toggle("pro", on);
+proToggle.onchange=()=>{
+  const on=proToggle.checked; LS(`cab_${token}_pro`, on?"1":"0"); document.body.classList.toggle("pro", on);
 };
 
-/* ========= finish & send ========= */
-// Отправляет JSON на /api/finish (на сервере упакуй в ZIP + фото, если нужно)
+/* ===== finish: send to /api/finish (server делает ZIP: lovebook_user_<token>.zip) ===== */
 document.getElementById("finish").onclick = async ()=>{
-  const answers = [];
-  for(let i=0;i<total;i++) answers.push({i, q:QUESTIONS[i], a:LS(keyAns(i))||""});
-  const payload = { token, cover: LS(`cab_${token}_cover`)||"gold", answers };
+  // собираем ответы
+  const answers=[]; for(let i=0;i<total;i++){ answers.push({i, q:QUESTIONS[i], a:LS(keyAns(i))||""}); }
+  const cover=LS(`cab_${token}_cover`)||"gold";
+
+  // шлём FormData, чтобы на сервере можно было собрать ZIP с фото
+  const fd=new FormData();
+  fd.append("token", token);
+  fd.append("cover", cover);
+  fd.append("answers", new Blob([JSON.stringify(answers,null,2)], {type:"application/json"}));
+  files.forEach((f,idx)=> fd.append("photos", f, `photo_${idx+1}.jpg`));
 
   try{
-    const r = await fetch("/api/finish",{
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify(payload)
-    });
+    const r=await fetch("/api/finish",{method:"POST", body:fd});
     if(!r.ok) throw new Error("finish failed");
-    alert("Готово! Мы получили ответы. Скоро свяжемся 💌");
+    alert("Готово! Мы получили материалы. Скоро свяжемся 💌");
   }catch(e){
     alert("Не удалось отправить. Проверьте интернет и попробуйте позже.");
   }
 };
 
-/* ========= support chat ========= */
-const chatFab  = document.getElementById("chatFab");
-const chatBox  = document.getElementById("chatBox");
-const chatSend = document.getElementById("chatSend");
-const chatClose= document.getElementById("chatClose");
-const chatIn   = document.getElementById("chatInput");
-const chatMsg  = document.getElementById("chatMessages");
+/* ===== chat 'Поддержка' ===== */
+const chatFab=document.getElementById("chatFab");
+const chatBox=document.getElementById("chatBox");
+const chatClose=document.getElementById("chatClose");
+const chatSend=document.getElementById("chatSend");
+const chatIn=document.getElementById("chatInput");
+const chatMsg=document.getElementById("chatMessages");
 
-chatFab.onclick = ()=> chatBox.style.display="flex";
-chatClose.onclick = ()=> chatBox.style.display="none";
-chatSend.onclick = sendMsg;
-chatIn.addEventListener("keydown",e=>{ if(e.key==="Enter"){e.preventDefault(); sendMsg();} });
+chatFab.onclick=()=>chatBox.style.display="flex";
+chatClose.onclick=()=>chatBox.style.display="none";
+chatSend.onclick=sendMsg;
+chatIn.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();sendMsg();}});
 
-function sendMsg(){
-  const t = chatIn.value.trim(); if(!t) return;
-  pushMsg("you",t); chatIn.value="";
-  fetch("/api/support",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,message:t})})
-    .catch(()=>{ pushMsg("sys","Не удалось отправить. Попробуйте позже."); });
-}
-function pushMsg(who, text){
+function pushMsg(who,text){
   const d=document.createElement("div"); d.className="msg "+who; d.textContent=text;
-  chatMsg.appendChild(d); chatMsg.scrollTop = chatMsg.scrollHeight;
+  chatMsg.appendChild(d); chatMsg.scrollTop=chatMsg.scrollHeight;
 }
+function sendMsg(){
+  const t=chatIn.value.trim(); if(!t) return;
+  pushMsg("you", t); chatIn.value="";
+  fetch("/api/support",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,message:t})})
+    .catch(()=>pushMsg("sys","Не удалось отправить. Попробуйте позже."));
+}
+
+/* init */
+renderQuestions(); updateProgress();
+
+/* mobile fix: профиль выше вопросов всегда (на малых экранах) */
+/* работает вместе с grid → 1 колонка */
 </script>
 </body>
 </html>
