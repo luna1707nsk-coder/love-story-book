@@ -1,663 +1,411 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Личный кабинет — A Book Written With Soul</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-
 <style>
-.question-block {
-  border-bottom: 1px solid rgba(0,0,0,.1);
-  padding: 14px 4px;
-}
-
-.question-title {
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
-}
-
-.question-title:hover {
-  color: var(--gold2);
-}
-
-.question-content {
-  display: none;
-  margin-top: 10px;
-}
-
-.question-content textarea {
-  width: 100%;
-  height: 120px;
-  border-radius: 12px;
-  padding: 10px;
-  border: 1px solid rgba(0,0,0,.15);
-  background: rgba(255,255,255,.7);
-}
-
-.save-btn {
-  margin-top: 8px;
-  padding: 8px 14px;
-  font-size: 14px;
-  border-radius: 10px;
-  background: linear-gradient(130deg,#c5a26f,#987147);
-  color: #fff;
-  border: none;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.save-btn:hover {
-  opacity:.85;
-}
-/* ================== THEME: Black & Gold ================== */
 :root{
-  --bg:#0f0e0d;
-  --bg2:#151310;
-  --ink:#e9e0d3;
-  --muted:#bfb2a0;
-  --gold1:#e8d7b2;
-  --gold2:#c6a36a;
-  --gold3:#8a6a3b;
-  --glass: rgba(25,22,19,.6);
-  --card: rgba(32,28,24,.65);
-  --line: rgba(255,255,255,.08);
-  --shadow: 0 20px 60px rgba(0,0,0,.45);
-  --radius: 22px;
+  --bg:#0f0d0b; --ink:#e9dcc9;
+  --soft:#1a1612; --panel:#15110f; --muted:#b8a589;
+  --gold1:#e9d7b3; --gold2:#b99261; --gold3:#8a6947;
+  --ring:#6c533d;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
 body{
   background:
-    radial-gradient(1000px 600px at 10% -10%, rgba(255,255,255,.06), transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, rgba(255,255,255,.05), transparent 55%),
-    var(--bg);
-  color:var(--ink);
-  font-family:"Playfair Display", serif;
-  overflow-x:hidden;
+    linear-gradient(rgba(12,10,8,.75), rgba(12,10,8,.75)),
+    url("assets/background4.jpg") center/cover fixed no-repeat;
+  color: var(--ink);
+  min-height:100svh;
+  padding:18px 12px 80px;
+  font-family:"Playfair Display",serif;
 }
 
-/* subtle grain */
-body::after{
-  content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
-  background-image:url('https://www.transparenttextures.com/patterns/black-linen.png');
-  opacity:.15;
-}
-
-/* ================== HEADER ================== */
+/* header */
 .header{
-  position:sticky; top:0; z-index:100;
-  backdrop-filter: blur(14px);
-  background: linear-gradient(0deg, transparent, rgba(0,0,0,.28));
-  border-bottom:1px solid var(--line);
-}
-.header-inner{
-  max-width:1200px; margin:0 auto; padding:14px 16px;
-  display:flex; align-items:center; justify-content:center; gap:12px;
+  display:flex; justify-content:center; align-items:center; gap:10px;
+  margin-bottom:14px; position:sticky; top:8px; z-index:5;
 }
 .logo{
-  display:flex; align-items:center; gap:10px;
-  filter: drop-shadow(0 6px 16px rgba(0,0,0,.4));
+  width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#f3ead5,#c9a876);
+  color:#453325; box-shadow:0 6px 22px rgba(0,0,0,.25);
+  transform:translateZ(0);
+  animation:float 5s ease-in-out infinite;
 }
-.logo .book{
-  font-size:22px; width:28px; height:28px; display:grid; place-items:center;
-  animation: float 4s ease-in-out infinite;
-}
-@keyframes float{
-  0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-5px) }
-}
-.brand{
-  font-family:"Spectral SC", serif; font-weight:600; letter-spacing:.04em;
-  background:linear-gradient(95deg, var(--gold1), var(--gold2), var(--gold3));
-  -webkit-background-clip:text; color:transparent;
-  text-shadow:0 0 24px rgba(198,163,106,.18);
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.title{
+  font-family:"Spectral SC",serif; letter-spacing:.06em; font-size:18px;
+  background:linear-gradient(90deg,#d9c29a,#b99363,#e9d6b5);
+  -webkit-background-clip:text; color:transparent; text-shadow:0 1px 0 rgba(0,0,0,.35);
 }
 
-/* ================== LAYOUT ================== */
-.wrap{ max-width:1200px; margin:28px auto; padding:0 16px; position:relative; z-index:1; }
-.grid{
-  display:grid; grid-template-columns: 280px 1fr; gap:18px;
-}
-@media (max-width:980px){
-  .grid{ grid-template-columns:1fr; }
-}
+/* layout */
+.wrap{max-width:1050px;margin:0 auto;display:grid;grid-template-columns:340px 1fr;gap:18px}
+@media(max-width:900px){ .wrap{grid-template-columns:1fr} }
 
-/* ================== ASIDE (LEFT) ================== */
-.aside{
-  background:var(--card); border:1px solid var(--line); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding:18px; position:sticky; top:76px; height:fit-content;
-}
-.profile{
-  display:flex; align-items:center; gap:12px; margin-bottom:14px;
-}
-.avatar{
-  width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,#2a251f,#1e1a16);
-  border:1px solid var(--line); display:grid; place-items:center; font-weight:700; color:var(--gold1);
-  text-shadow:0 0 14px rgba(198,163,106,.35);
-}
-.profile .info small{color:var(--muted)}
-.progress{
-  margin:12px 0 6px; height:8px; border-radius:999px; background:rgba(255,255,255,.06); overflow:hidden;
-  border:1px solid var(--line);
-}
-.bar{
-  height:100%; width:0%;
-  background:linear-gradient(90deg, var(--gold3), var(--gold2), var(--gold1));
-  transition: width .35s ease;
-}
-.progress-text{ font-size:13px; color:var(--muted) }
-
-/* Questions list */
-.list{
-  margin-top:14px; max-height:56vh; overflow:auto; padding-right:6px;
-  scrollbar-width:thin;
-}
-.item{
-  display:flex; align-items:center; gap:10px; padding:10px 12px;
-  border-radius:12px; cursor:pointer; transition:.2s;
-  border:1px solid transparent;
-}
-.item:hover{ background: rgba(255,255,255,.04); border-color:var(--line) }
-.item.active{ background: rgba(255,255,255,.06); border-color:rgba(198,163,106,.35) }
-.item .num{ width:30px; height:30px; display:grid; place-items:center; border-radius:8px;
-  background:rgba(255,255,255,.06); border:1px solid var(--line); font-weight:700; color:var(--gold1);
-  font-size:13px;
-}
-.item .txt{ flex:1; font-size:14px; color:var(--ink); opacity:.9 }
-
-/* ================== MAIN CARD ================== */
+/* cards */
 .card{
-  background:var(--card); border:1px solid var(--line); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding:22px;
+  background:linear-gradient(180deg,var(--panel),#120f0d);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px; padding:18px; box-shadow:0 20px 55px rgba(0,0,0,.35);
 }
-.card .title{
-  display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px;
+
+/* profile */
+.profile{position:sticky; top:64px}
+.header-sm{font-family:"Spectral SC",serif; color:#e7d6ba; margin-bottom:12px; opacity:.9}
+.profile-row{display:flex; gap:12px; align-items:center; margin-bottom:10px}
+.avatar{
+  width:54px;height:54px;border-radius:50%; display:grid; place-items:center;
+  background:linear-gradient(145deg,#1c1714,#0e0c0a); color:#e9dcc9; font-weight:700;
+  border:1px solid rgba(255,255,255,.08); box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
 }
-.hint{ color:var(--muted); font-size:14px }
-.qtext{
-  font-size:22px; line-height:1.35; margin:12px 0 14px; font-weight:600;
-}
-textarea.answer{
-  width:100%; min-height:180px; resize:vertical;
-  background:rgba(0,0,0,.22); color:var(--ink);
-  border:1px solid var(--line); border-radius:16px; padding:16px 14px;
-  font-size:18px; line-height:1.5; outline:none;
-  box-shadow: inset 0 2px 12px rgba(0,0,0,.25);
-}
-.actions{
-  display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;
-}
+.tok{font-size:13px; color:var(--muted)}
 .btn{
-  border:none; cursor:pointer; color:#0f0e0d; font-weight:800; letter-spacing:.02em;
-  background:linear-gradient(135deg, var(--gold1), var(--gold2));
-  padding:12px 18px; border-radius:999px; font-size:16px;
-  box-shadow:0 14px 28px rgba(198,163,106,.2);
-  transition:.2s; user-select:none;
+  border:none; cursor:pointer; color:#241b13; font-weight:700;
+  border-radius:999px; padding:12px 16px; font-size:16px;
+  background:linear-gradient(130deg,var(--gold2),var(--gold1));
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
-.btn:active{ transform: translateY(1px) scale(.995) }
-.btn.ghost{
-  background:transparent; color:var(--ink); border:1px solid var(--line);
-  box-shadow:none;
-}
-.sep{ height:1px; background:var(--line); margin:18px 0 }
+.btn:active{transform:translateY(1px)}
+.row{display:flex; gap:10px; align-items:center}
+.mt{margin-top:12px}
 
-/* Book preview */
-.preview{
-  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-  background:linear-gradient(180deg, rgba(255,255,255,.04), transparent);
-  border:1px solid var(--line); border-radius:16px; padding:14px;
+/* circular progress */
+.progress{
+  display:flex; align-items:center; gap:12px; margin:8px 0 14px;
 }
-.mock{
-  width:68px; height:92px; border-radius:8px; background:
-    linear-gradient(145deg, #24201b, #1b1814);
-  border:1px solid var(--line); position:relative; overflow:hidden;
-  box-shadow: 0 12px 28px rgba(0,0,0,.45);
-}
-.mock::after{
-  /* золотистый отблеск */
-  content:""; position:absolute; inset:-40% -60% auto auto;
-  width:160%; height:160%;
-  background: conic-gradient(from 180deg, rgba(255,255,255,.25), rgba(198,163,106,.18), transparent 40%);
-  filter: blur(12px); transform: rotate(8deg);
-  pointer-events:none;
-}
-.mock .spine{
-  position:absolute; left:6px; top:6px; bottom:6px; width:6px;
-  background: linear-gradient(180deg, rgba(198,163,106,.45), rgba(255,255,255,.1));
-  border-radius: 3px;
-}
-.preview .meta small{ color:var(--muted) }
+svg.ring{width:56px;height:56px;rotate:-90deg}
+.ring circle.bg{stroke:#2a221a; stroke-width:7; fill:none}
+.ring circle.fg{stroke:url(#g); stroke-width:7; stroke-linecap:round; fill:none; transition:stroke-dashoffset .35s}
+.progress .txt{font-family:"Spectral SC",serif}
 
-/* ================== MINI CHAT ================== */
+/* covers */
+.covers{display:grid;grid-template-columns:repeat(3,1fr); gap:10px; margin-top:10px}
+.cover{
+  border-radius:12px; aspect-ratio:3/4; position:relative; cursor:pointer; overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+  background:radial-gradient(250px 120px at 50% 30%, #3a2f25, #1a1511);
+}
+.cover.gold{ background: radial-gradient(220px 110px at 50% 30%, #876b49,#3b2f24)}
+.cover.sand{ background: radial-gradient(220px 110px at 50% 30%, #746a59,#2a2520)}
+.badge{
+  position:absolute; inset:auto 8px 8px auto; font-size:12px; padding:6px 8px;
+  border-radius:999px; background:rgba(0,0,0,.4); color:#efdcb8; border:1px solid rgba(255,255,255,.08)
+}
+.cover input{position:absolute; inset:0; opacity:0}
+.cover.selected{outline:2px solid #d4b37c; box-shadow:0 0 0 4px rgba(212,179,124,.15)}
+
+/* questions */
+.q{margin-bottom:12px; border:1px solid rgba(255,255,255,.06); border-radius:14px; overflow:hidden}
+.qh{
+  padding:14px 14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+  background:linear-gradient(180deg,#171311,#14110f);
+}
+.qh .num{color:#bda989; font-family:"Spectral SC",serif}
+.qa{display:none; padding:14px; background:linear-gradient(180deg,#14110f,#120f0d)}
+.qa textarea{
+  width:100%; min-height:120px; border-radius:12px; border:1px solid rgba(255,255,255,.06);
+  background:#100d0b; color:var(--ink); resize:vertical; padding:12px; font-size:16px;
+}
+.hint{font-size:12px;color:#a89678; margin-top:8px}
+.tags{display:flex; gap:8px; flex-wrap:wrap}
+.tag{
+  background:#0f0c0a; border:1px dashed rgba(255,255,255,.1); color:#c9b89a; padding:6px 10px; border-radius:999px; font-size:12px; cursor:pointer
+}
+
+/* pro mode */
+.pro .qh{padding:10px 12px}
+.pro .qa textarea{min-height:90px}
+.pro .q{margin-bottom:10px}
+
+/* support chat */
+.chatfab{
+  position:fixed; right:14px; bottom:14px; z-index:10;
+  width:52px;height:52px;border-radius:50%; display:grid;place-items:center;
+  background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13;
+  box-shadow:0 14px 40px rgba(0,0,0,.4); cursor:pointer;
+}
 .chat{
-  position:fixed; right:16px; bottom:16px; z-index:90;
+  position:fixed; right:14px; bottom:80px; width:320px; max-width:calc(100% - 28px);
+  background:var(--panel); border:1px solid rgba(255,255,255,.06); border-radius:14px; display:none; flex-direction:column; overflow:hidden;
+  box-shadow:0 20px 55px rgba(0,0,0,.45); z-index:10;
 }
-.chat .bubble{
-  background:var(--glass); border:1px solid var(--line); border-radius:16px;
-  padding:12px 14px; font-size:14px; box-shadow: var(--shadow);
-  display:none; width:min(86vw,360px);
+.chat-head{padding:10px 12px; display:flex; justify-content:space-between; align-items:center; background:#171311; border-bottom:1px solid rgba(255,255,255,.06)}
+.chat-body{max-height:45svh; overflow:auto; padding:12px; display:flex; flex-direction:column; gap:10px}
+.msg{font-size:14px; background:#100d0b; border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:10px; width:max-content; max-width:100%}
+.msg.you{align-self:flex-end; background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13; border:none}
+.chat-send{display:flex; gap:6px; padding:10px; background:#171311; border-top:1px solid rgba(255,255,255,.06)}
+.chat-send input{flex:1; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#0f0d0b; color:var(--ink)}
+.chat-send button{padding:10px 12px;border-radius:10px;border:none;background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13; font-weight:700}
+
+/* mobile stacking fix */
+@media(max-width:900px){
+  .profile{position:static}
 }
-.chat .toggle{
-  margin-top:8px;
-  width:52px; height:52px; border-radius:50%;
-  display:grid; place-items:center; cursor:pointer;
-  background: linear-gradient(135deg, var(--gold2), var(--gold1));
-  color:#0f0e0d; font-weight:900; border:none;
-  box-shadow: 0 16px 36px rgba(198,163,106,.28);
-}
-.chat.open .bubble{ display:block }
 
-/* ================== TRANSITIONS ================== */
-.fade-enter{ opacity:0; transform: translateY(8px) scale(.99) }
-.fade-enter-active{ opacity:1; transform:none; transition: .35s ease }
-/* Progress */
-.progress-box{margin-top:20px;margin-bottom:20px;}
-.progress-text{font-size:15px;margin-bottom:6px;color:var(--ink);}
-.progress-bar{width:100%;height:8px;background:rgba(0,0,0,.08);border-radius:6px;overflow:hidden;}
-.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#c5a26f,#8c6a43);border-radius:6px;transition:.4s;}
-
-/* Question Block */
-.question-block{border:1px solid rgba(0,0,0,.06);padding:14px;border-radius:12px;margin-bottom:10px;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);}
-.question-title{display:flex;justify-content:space-between;cursor:pointer;font-weight:600;color:var(--ink);}
-.question-content{display:none;margin-top:8px;}
-.question-content textarea{width:100%;min-height:90px;border:1px solid rgba(0,0,0,.12);border-radius:12px;padding:10px;font-size:15px;resize:none;}
-
-/* Toast */
-#toast{position:fixed;bottom:22px;right:22px;padding:10px 16px;background:#000;color:#fff;border-radius:12px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;}
-
-/* Button main */
-.account-actions{margin-top:20px;text-align:center;}
-.btn-zip{
-width:100%;padding:14px;font-size:18px;border:none;border-radius:999px;
-background:linear-gradient(120deg,#b49368,#8c6a43);color:white;cursor:pointer;
-box-shadow:0 8px 22px rgba(0,0,0,.15);}
-.btn-zip:hover{opacity:.9;}
-/* MOBILE FIX: кабинет сверху, вопросы ниже */
-@media (max-width: 768px) {
-
-  .account-wrap {
-    display: flex;
-    flex-direction: column !important; /* ⬅️ ключ! */
-    gap: 20px;
-  }
-
-  .account-left,
-  .account-right {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  .account-left {
-    order: 1;
-    margin-bottom: 12px;
-  }
-
-  .account-right {
-    order: 2;
-  }
-
-  /* карточки вопросов */
-  .question-block {
-    margin-bottom: 14px;
-    padding: 14px;
-    border-radius: 16px;
-  }
-
-  .question-title {
-    font-size: 17px;
-  }
-
-  textarea {
-    font-size: 16px;
-  }
-
-  .save-btn {
-    font-size: 15px;
-  }
-
-  /* убрать огромные отступы */
-  .progress-box,
-  .finish-box {
-    margin-bottom: 12px;
-  }
-}
+/* small helpers */
+.sep{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
+.small{font-size:12px;color:#a89678}
+.switch{display:flex; align-items:center; gap:8px; font-size:14px}
+.switch input{width:38px;height:22px;appearance:none;background:#2a231d;border-radius:999px;position:relative;outline:none;cursor:pointer;border:1px solid rgba(255,255,255,.08)}
+.switch input:checked{background:linear-gradient(130deg,var(--gold2),var(--gold1))}
+.switch input::after{content:"";position:absolute;left:2px;top:2px;width:18px;height:18px;background:#0f0d0b;border-radius:50%;transition:.2s}
+.switch input:checked::after{left:18px}
 </style>
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
-  <div class="header-inner">
-    <div class="logo" aria-label="A Book Written With Soul">
-      <div class="book">📖</div>
-      <div class="brand">A Book Written With Soul</div>
-    </div>
-  </div>
+  <div class="logo">📖</div>
+  <div class="title">A Book Written With Soul</div>
 </header>
 
-<div class="wrap">
-  <div class="grid">
-    <!-- ASIDE LEFT -->
-    <aside class="aside">
-      <div class="profile">
-        <div class="avatar" id="avatar">AB</div>
-        <div class="info">
-          <div id="uname" style="font-weight:700;">Ваш кабинет</div>
-          <small id="utoken">token: —</small>
+<main class="wrap">
+  <!-- PROFILE / LEFT -->
+  <section class="card profile" id="profileCard">
+    <div class="header-sm">Ваш кабинет</div>
+
+    <div class="profile-row">
+      <div class="avatar" id="avatar">AB</div>
+      <div>
+        <div class="small">token: <span id="utoken">—</span></div>
+        <div class="progress">
+          <svg class="ring" viewBox="0 0 44 44">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#e6d2aa"/><stop offset="100%" stop-color="#b99261"/>
+              </linearGradient>
+            </defs>
+            <circle class="bg" cx="22" cy="22" r="18"></circle>
+            <circle class="fg" id="pfg" cx="22" cy="22" r="18" stroke-dasharray="113.1" stroke-dashoffset="113.1"></circle>
+          </svg>
+          <div class="txt"><span id="done">0</span>/<span id="total">100</span></div>
         </div>
       </div>
-      <div class="progress-box">
-  <div class="progress-text">Готово: <span id="pDone">0</span>/100</div>
-  <div class="progress-bar">
-    <div class="progress-fill" id="pFill"></div>
+    </div>
+
+    <button class="btn mt" id="finish">Завершить и отправить книгу</button>
+
+    <div class="sep"></div>
+
+    <div class="switch">
+      <label>Pro-режим</label>
+      <input type="checkbox" id="proToggle">
+    </div>
+
+    <div class="sep"></div>
+    <div class="header-sm">Выбор обложки</div>
+    <div class="covers" id="covers">
+      <label class="cover gold"><span class="badge">Gold</span><input type="radio" name="cover" value="gold"></label>
+      <label class="cover"><span class="badge">Classic</span><input type="radio" name="cover" value="classic"></label>
+      <label class="cover sand"><span class="badge">Sand</span><input type="radio" name="cover" value="sand"></label>
+    </div>
+    <div class="small" style="margin-top:8px">Обложку можно поменять позже.</div>
+  </section>
+
+  <!-- QUESTIONS / RIGHT -->
+  <section class="card" id="qCard">
+    <div class="header-sm">Вопросы</div>
+    <div id="qlist"></div>
+  </section>
+</main>
+
+<!-- SUPPORT CHAT -->
+<div class="chatfab" id="chatFab">💬</div>
+<div class="chat" id="chatBox">
+  <div class="chat-head"><b>Поддержка</b><span id="chatClose" style="cursor:pointer;opacity:.7">✖</span></div>
+  <div class="chat-body" id="chatMessages"></div>
+  <div class="chat-send">
+    <input id="chatInput" placeholder="Ваш вопрос…">
+    <button id="chatSend">Отправить</button>
   </div>
-</div>
-
-<div id="questionsList"></div>
-
-<div class="account-actions">
-  <button class="btn-zip" onclick="finishAndSend()">📦 Завершить и отправить книгу</button>
-</div>
-
-<div id="toast"></div>
-
-      <div class="progress" title="Прогресс ответов">
-        <div class="bar" id="bar"></div>
-      </div>
-      <div class="progress-text"><span id="done">0</span>/100 вопросов</div>
-
-      <div class="sep"></div>
-
-      <div id="questionsList"></div>
-    </aside>
-
-    <!-- MAIN -->
-    <main>
-      <section class="card fade-enter fade-enter-active" id="card">
-        <div class="title">
-          <div>
-            <div class="hint">Глава 1 · Знакомство</div>
-            <div class="qtext" id="qtext">Где вы впервые встретились?</div>
-          </div>
-          <div class="hint" id="qpos">1 / 100</div>
-        </div>
-
-        <textarea class="answer" id="answer" placeholder="Ваш развернутый ответ..."></textarea>
-
-        <div class="actions">
-          <button class="btn" id="save">Сохранить</button>
-          <button class="btn ghost" id="prev">Назад</button>
-          <button class="btn" id="next">Далее</button>
-          <button class="btn ghost" id="finish">Завершить и отправить</button>
-        </div>
-
-        <div class="sep"></div>
-
-        <div class="preview">
-          <div class="mock">
-            <div class="spine"></div>
-          </div>
-          <div class="meta">
-            <div style="font-weight:700;">Превью вашей книги</div>
-            <small>Обложку и стиль можно будет выбрать позже</small>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
-</div>
-
-<!-- MINI CHAT -->
-<div class="chat" id="chat">
-  <div class="bubble">
-    <div style="font-weight:700; margin-bottom:6px;">Поддержка</div>
-    <div style="opacity:.85; font-size:14px;">Напишите вопрос — скоро прикрутим онлайн-чат. Пока можно писать в Telegram-бота после оплаты.</div>
-  </div>
-  <button class="toggle" title="Поддержка">💬</button>
 </div>
 
 <script>
-/* ================== DATA ================== */
-const QUESTIONS = Array.from({length:100}).map((_,i)=>`Вопрос №${i+1}. Опишите важный момент вашей истории.`);
-// можно подставить твои реальные вопросы по главам — структура готова
-
-/* ================== TOKEN / USERNAME ================== */
-const params = new URL(location.href).searchParams;
-const token = params.get("token") || "DEMO-TOKEN";
-document.getElementById("utoken").textContent = "token: " + token;
-
-/* Генерация аватарки из токена (инициалы) */
-const initials = (()=> {
-  const t = token.replace(/[^a-zA-Z0-9]/g,"").toUpperCase();
-  return (t[0]||"U") + (t[1]||"S");
-})();
-document.getElementById("avatar").textContent = initials;
-const questions = [
- "Где вы впервые встретились?",
- "Что вы подумали при первой встрече?",
- "Кто сделал первый шаг?",
- "Какой момент стал решающим?",
- "Что больше всего запомнилось?"
- // ... и так далее до 100
+/* ========= данные / вопросы ========= */
+const QUESTIONS = [
+ "Где вы впервые встретились?","Что вы подумали при первой встрече?",
+ "Кто сделал первый шаг?","Какой момент стал решающим?","Что больше всего запомнилось?"
 ];
+// добьём до 100 пустыми заглушками
+while(QUESTIONS.length<100) QUESTIONS.push(`Вопрос ${QUESTIONS.length+1}`);
 
-function renderQuestions() {
-  const container = document.getElementById("questionsList");
-  container.innerHTML = "";
+/* ========= токен/инициалы ========= */
+const params = new URL(location.href).searchParams;
+const token  = params.get("token") || "DEMO-TOKEN";
+document.getElementById("utoken").textContent = token;
+(function(){
+  const t = token.replace(/[^a-zA-ZА-Яа-я0-9]/g,"").toUpperCase();
+  const ini = (t[0]||"A")+(t[1]||"B");
+  document.getElementById("avatar").textContent = ini;
+})();
 
-  questions.forEach((q, index) => {
-    const saved = localStorage.getItem(`answer_${index}`) || "";
-
-    container.innerHTML += `
-      <div class="question-block">
-        <div class="question-title" onclick="toggleQ(${index})">
-          <span>${index+1}. ${q}</span>
-          <span id="arrow_${index}">▶️</span>
-        </div>
-        <div class="question-content" id="content_${index}">
-          <textarea id="input_${index}">${saved}</textarea>
-          <button class="save-btn" onclick="saveAnswer(${index})">Сохранить</button>
-        </div>
-      </div>
-    `;
-  });
+/* ========= helpers ========= */
+const LS = (k,v)=> v===undefined ? localStorage.getItem(k) : localStorage.setItem(k,v);
+const debouncers = {};
+function debounce(id, fn, ms=500){
+  clearTimeout(debouncers[id]);
+  debouncers[id] = setTimeout(fn, ms);
 }
 
-function toggleQ(i){
-  const block = document.getElementById(`content_${i}`);
-  const arrow = document.getElementById(`arrow_${i}`);
-
-  if(block.style.display === "block"){
-    block.style.display = "none";
-    arrow.textContent = "▶️";
-  } else {
-    block.style.display = "block";
-    arrow.textContent = "▼";
-  }
-}
-
-function saveAnswer(i){
-  const value = document.getElementById(`input_${i}`).value;
-  localStorage.setItem(`answer_${i}`, value);
-  alert("Ответ сохранён ✅");
-}
-
-renderQuestions();
-/* PRO Questions System */
-const total = 100;
-const questions = Array.from({length:total},(_,i)=>`${i+1}. Ваш вопрос #${i+1}`);
-
-function toast(msg){
-  const t=document.getElementById("toast");
-  t.textContent=msg;
-  t.style.opacity=1;
-  setTimeout(()=>t.style.opacity=0,1200);
-}
-
-function saveAnswer(i){
-  const v=document.getElementById(`input_${i}`).value;
-  localStorage.setItem(`answer_${i}`,v);
-  updateProgress();
-  toast("Сохранено ✅");
-}
-
-function toggleQ(i){
-  const c=document.getElementById(`content_${i}`);
-  const a=document.getElementById(`arrow_${i}`);
-  if(c.style.display==="block"){c.style.display="none";a.textContent="▶️";}
-  else{c.style.display="block";a.textContent="▼";}
-}
+/* ========= генерация вопросов ========= */
+const qlist = document.getElementById("qlist");
+const total = QUESTIONS.length;
+document.getElementById("total").textContent = total;
 
 function renderQuestions(){
-  const c=document.getElementById("questionsList");
-  c.innerHTML="";
-  questions.forEach((q,i)=>{
-    const saved=localStorage.getItem(`answer_${i}`)||"";
-    c.innerHTML+=`
-      <div class="question-block">
-        <div class="question-title" onclick="toggleQ(${i})">
-          <span>${q}</span>
-          <span id="arrow_${i}">▶️</span>
+  qlist.innerHTML = "";
+  QUESTIONS.forEach((q, i)=>{
+    const saved = LS(keyAns(i)) || "";
+    const done = saved.trim().length>=3;
+    const open = (i===0); // первый открыт
+    qlist.insertAdjacentHTML("beforeend", `
+      <div class="q" data-i="${i}">
+        <div class="qh" onclick="toggleQ(${i})">
+          <div><span class="num">${i+1} / ${total}</span> — ${q}</div>
+          <div>${done? "✅":"▸"}</div>
         </div>
-        <div class="question-content" id="content_${i}">
-          <textarea id="input_${i}" oninput="saveAnswer(${i})">${saved}</textarea>
+        <div class="qa" id="qa_${i}" style="display:${open?'block':'none'}">
+          <textarea id="ta_${i}" placeholder="Ваш развёрнутый ответ...">${saved}</textarea>
+          <div class="hint">Автосохранение • Подсказки:</div>
+          <div class="tags">
+            <div class="tag" onclick="ins(${i}, 'Вспоминаю, как мы...')">Вспоминаю…</div>
+            <div class="tag" onclick="ins(${i}, 'Особенно тронул момент, когда...')">Тронул момент…</div>
+            <div class="tag" onclick="ins(${i}, 'Я понял(а), что это любовь, когда...')">Это любовь…</div>
+          </div>
         </div>
-      </div>`;
+      </div>
+    `);
+    const ta = document.getElementById(`ta_${i}`);
+    ta.addEventListener("input", ()=>{
+      debounce(`a${i}`, ()=>{
+        LS(keyAns(i), ta.value);
+        updateProgress();
+      });
+    });
+    ta.addEventListener("keydown",(e)=>{
+      if(document.body.classList.contains("pro")){
+        if(e.key==="ArrowDown") {e.preventDefault(); openQ(i+1)}
+        if(e.key==="ArrowUp")   {e.preventDefault(); openQ(i-1)}
+        if(e.key==="Enter" && e.ctrlKey){e.preventDefault(); openQ(i+1)}
+      }
+    });
   });
+}
+function keyAns(i){ return `cab_${token}_a_${i}` }
+function toggleQ(i){
+  const el = document.getElementById(`qa_${i}`);
+  const is = el.style.display!=="none";
+  if(is){ el.style.display="none"; }
+  else{
+    if(document.body.classList.contains("pro")){
+      // закрыть все кроме текущего
+      document.querySelectorAll(".qa").forEach(x=>x.style.display="none");
+    }
+    el.style.display="block";
+    document.getElementById(`ta_${i}`).focus({preventScroll:false});
+    document.getElementById(`ta_${i}`).scrollIntoView({behavior:"smooth",block:"center"});
+  }
+}
+function openQ(i){
+  if(i<0||i>=total) return;
+  document.querySelectorAll(".qa").forEach(x=>x.style.display="none");
+  const el = document.getElementById(`qa_${i}`);
+  if(el){ el.style.display="block"; document.getElementById(`ta_${i}`).focus(); el.scrollIntoView({behavior:"smooth",block:"center"}); }
+}
+function ins(i, txt){
+  const ta = document.getElementById(`ta_${i}`);
+  ta.value = (ta.value ? ta.value+"\n" : "") + txt;
+  LS(keyAns(i), ta.value);
   updateProgress();
 }
 
+/* ========= прогресс ========= */
 function updateProgress(){
-  let done=0;
+  let done = 0;
   for(let i=0;i<total;i++){
-    if((localStorage.getItem(`answer_${i}`)||"").trim()!=="") done++;
+    if((LS(keyAns(i))||"").trim().length>=3) done++;
   }
-  document.getElementById("pDone").textContent=done;
-  document.getElementById("pFill").style.width=`${(done/total)*100}%`;
+  document.getElementById("done").textContent = done;
+  const per = done/total;
+  const C = 2*Math.PI*18; // длина окружности r=18 (≈113.1)
+  document.getElementById("pfg").style.strokeDasharray = C;
+  document.getElementById("pfg").style.strokeDashoffset = C*(1-per);
 }
+renderQuestions(); updateProgress();
 
-renderQuestions();
-
-/* Final submit */
-async function finishAndSend(){
-  toast("Отправляем книгу...");
-
-  const answers=[];
-  for(let i=0;i<total;i++){
-    answers.push(`${i+1}) ${localStorage.getItem(`answer_${i}`)||""}`);
-  }
-
-  await fetch("/api/sendMessage",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({text:`📚 Готова книга!\nЮзер: ${token}\nОтветы:\n${answers.join("\n")}`})
+/* ========= covers ========= */
+const covers = document.getElementById("covers");
+const savedCover = LS(`cab_${token}_cover`) || "gold";
+[...covers.querySelectorAll("input")].forEach(i=>{
+  i.checked = (i.value===savedCover);
+  if(i.checked) i.closest(".cover").classList.add("selected");
+  i.addEventListener("change", ()=>{
+    [...covers.querySelectorAll(".cover")].forEach(c=>c.classList.remove("selected"));
+    i.closest(".cover").classList.add("selected");
+    LS(`cab_${token}_cover`, i.value);
   });
-
-  toast("Передано! Мы скоро свяжемся 🤍");
-}
-
-/* ================== STATE ================== */
-let current = 0;
-let answers = {}; // {index: "text"}
-
-/* ================== UI HOOKS ================== */
-const qlist = document.getElementById("qlist");
-const qtext = document.getElementById("qtext");
-const qpos  = document.getElementById("qpos");
-const answer = document.getElementById("answer");
-const bar   = document.getElementById("bar");
-const done  = document.getElementById("done");
-
-/* Build list */
-function buildList(){
-  for(let i=0;i<100;i++){
-    const row = document.createElement("div");
-    row.className = "item";
-    row.dataset.index = i;
-
-    const num = document.createElement("div");
-    num.className = "num";
-    num.textContent = i+1;
-
-    const txt = document.createElement("div");
-    txt.className = "txt";
-    txt.textContent = QUESTIONS[i];
-
-    row.appendChild(num); row.appendChild(txt);
-    row.onclick = ()=> goto(i);
-    qlist.appendChild(row);
-  }
-}
-buildList();
-
-/* ================== RENDER ================== */
-function render(){
-  // left list active
-  [...qlist.children].forEach(el=>el.classList.toggle("active", +el.dataset.index === current));
-  // question & position
-  qtext.textContent = QUESTIONS[current];
-  qpos.textContent  = `${current+1} / 100`;
-  // textarea
-  answer.value = answers[current] || "";
-
-  // progress
-  const count = Object.keys(answers).filter(k=>answers[k]?.trim()?.length).length;
-  done.textContent = count;
-  bar.style.width = (count/100*100) + "%";
-}
-function goto(i){
-  current = (i+100)%100;
-  // небольшая анимация входа
-  const card = document.getElementById("card");
-  card.classList.remove("fade-enter-active");
-  card.classList.add("fade-enter");
-  requestAnimationFrame(()=>{
-    card.classList.remove("fade-enter");
-    card.classList.add("fade-enter-active");
-  });
-  render();
-}
-
-/* ================== ACTIONS ================== */
-document.getElementById("save").onclick = ()=>{
-  answers[current] = answer.value.trim();
-  // TODO: тут будет реальное сохранение в базу
-  render();
-};
-
-document.getElementById("next").onclick = ()=>{
-  answers[current] = answer.value.trim();
-  goto(current+1);
-};
-document.getElementById("prev").onclick = ()=>{
-  answers[current] = answer.value.trim();
-  goto(current-1);
-};
-
-answer.addEventListener("keydown", e=>{
-  if(e.key==="Tab"){
-    e.preventDefault();
-    document.getElementById("next").click();
-  }
 });
 
-/* Finish (пока заглушка UI) */
-document.getElementById("finish").onclick = ()=>{
-  // TODO: здесь соберём TXT + ZIP фото и отправим в Telegram
-  alert("Черновик сохранён. После подключения оплаты и бота — здесь появится отправка вашей книги в работу.");
+/* ========= Pro mode ========= */
+const proToggle = document.getElementById("proToggle");
+(function initPro(){
+  const on = LS(`cab_${token}_pro`) === "1";
+  proToggle.checked = on;
+  document.body.classList.toggle("pro", on);
+})();
+proToggle.onchange = ()=>{
+  const on = proToggle.checked;
+  LS(`cab_${token}_pro`, on?"1":"0");
+  document.body.classList.toggle("pro", on);
 };
 
-/* mini chat toggle */
-const chat = document.getElementById("chat");
-chat.querySelector(".toggle").onclick = ()=> chat.classList.toggle("open");
+/* ========= finish & send ========= */
+// Отправляет JSON на /api/finish (на сервере упакуй в ZIP + фото, если нужно)
+document.getElementById("finish").onclick = async ()=>{
+  const answers = [];
+  for(let i=0;i<total;i++) answers.push({i, q:QUESTIONS[i], a:LS(keyAns(i))||""});
+  const payload = { token, cover: LS(`cab_${token}_cover`)||"gold", answers };
 
-/* init */
-goto(0);
+  try{
+    const r = await fetch("/api/finish",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify(payload)
+    });
+    if(!r.ok) throw new Error("finish failed");
+    alert("Готово! Мы получили ответы. Скоро свяжемся 💌");
+  }catch(e){
+    alert("Не удалось отправить. Проверьте интернет и попробуйте позже.");
+  }
+};
+
+/* ========= support chat ========= */
+const chatFab  = document.getElementById("chatFab");
+const chatBox  = document.getElementById("chatBox");
+const chatSend = document.getElementById("chatSend");
+const chatClose= document.getElementById("chatClose");
+const chatIn   = document.getElementById("chatInput");
+const chatMsg  = document.getElementById("chatMessages");
+
+chatFab.onclick = ()=> chatBox.style.display="flex";
+chatClose.onclick = ()=> chatBox.style.display="none";
+chatSend.onclick = sendMsg;
+chatIn.addEventListener("keydown",e=>{ if(e.key==="Enter"){e.preventDefault(); sendMsg();} });
+
+function sendMsg(){
+  const t = chatIn.value.trim(); if(!t) return;
+  pushMsg("you",t); chatIn.value="";
+  fetch("/api/support",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,message:t})})
+    .catch(()=>{ pushMsg("sys","Не удалось отправить. Попробуйте позже."); });
+}
+function pushMsg(who, text){
+  const d=document.createElement("div"); d.className="msg "+who; d.textContent=text;
+  chatMsg.appendChild(d); chatMsg.scrollTop = chatMsg.scrollHeight;
+}
 </script>
 </body>
 </html>
