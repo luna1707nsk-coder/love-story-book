@@ -7,79 +7,66 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
+<!-- JSZip (для ZIP на клиенте) -->
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<!-- Supabase JS (клиент) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.1/dist/umd/supabase.js"></script>
+
 <style>
 :root{
-  --ink:#e9dcc9;
-  --muted:#b8a589;
+  --ink:#e9dcc9; --muted:#b8a589;
   --gold1:#e6d2aa; --gold2:#b99261; --gold3:#8a6948;
-  --panel:#171311; --panel2:#120f0d; --panel3:#0f0c0a;
-  --glass:rgba(23,19,17,.66);
+  --panel:#171311; --panel2:#120f0d;
 }
 
-/* -------- Base / Background -------- */
+/* base */
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:"Playfair Display",serif; color:var(--ink);
   background:
-    linear-gradient(rgba(10,8,6,.70), rgba(10,8,6,.70)),
+    linear-gradient(rgba(10,8,6,.72), rgba(10,8,6,.72)),
     url("assets/background4.jpg") center/cover fixed no-repeat;
-  min-height:100svh; overflow-x:hidden; padding-bottom:84px; /* под нижнюю навигацию */
+  min-height:100svh; overflow-x:hidden; padding-bottom:86px;
   position:relative;
 }
-/* золотой шум + мягкое свечение (luxury) */
 body::before{
   content:""; position:fixed; inset:0; pointer-events:none; z-index:1;
   background-image:url("https://www.transparenttextures.com/patterns/asfalt-light.png");
-  opacity:.12; mix-blend-mode:overlay;
+  opacity:.11; mix-blend-mode:overlay;
 }
-body::after{
-  content:""; position:fixed; inset:0; pointer-events:none; z-index:2;
-  background: radial-gradient(900px 420px at 50% -10%, rgba(255,230,180,.23), transparent 70%);
-  animation:goldGlow 7s ease-in-out infinite alternate; opacity:.22;
-}
-@keyframes goldGlow{0%{opacity:.14;filter:brightness(1)}100%{opacity:.28;filter:brightness(1.22)}}
 
-/* -------- Header -------- */
+/* header */
 .header{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:2px;
-  padding:14px 10px 6px;
-  position:relative; /* ← убираем sticky */
-  z-index:5;
+  display:flex; flex-direction:column; align-items:center; gap:2px;
+  padding:14px 10px 6px; position:relative; z-index:3;
 }
-
-.logo-book{
-  font-size:28px;     /* было 40px */
-  animation:breath 6s ease-in-out infinite;
-  will-change:transform;
-  margin-bottom:2px;
-}
+.logo-book{ font-size:28px; animation:breath 6s ease-in-out infinite; will-change:transform; }
 @keyframes breath{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.01)}}
 .header-title{
   font-family:"Spectral SC",serif; font-size:16px; letter-spacing:.06em;
-  background:linear-gradient(90deg,#d9c29a,#b99363,#e9d6b5); -webkit-background-clip:text; color:transparent;
-  text-shadow:0 1px 0 rgba(0,0,0,.35);
+  background:linear-gradient(90deg,#d9c29a,#b99363,#e9d6b5);
+  -webkit-background-clip:text; color:transparent; text-shadow:0 1px 0 rgba(0,0,0,.35);
 }
 
-/* -------- Sections Layout -------- */
-.section{padding:14px 12px; position:relative; z-index:3}
+/* sections */
+.section{padding:14px 12px; position:relative; z-index:2}
 .card{
   background:linear-gradient(180deg,var(--panel),var(--panel2));
   border:1px solid rgba(255,255,255,.06);
   border-radius:16px; padding:16px; box-shadow:0 22px 60px rgba(0,0,0,.38);
 }
 
-/* -------- Profile -------- */
+/* titles */
 .block-title{
   font-family:"Spectral SC",serif; color:#e7d6ba; margin-bottom:10px; opacity:.95
 }
+
+/* profile */
 .profile-row{display:flex; gap:12px; align-items:center}
 .avatar{
   width:56px;height:56px;border-radius:50%; display:grid;place-items:center;
   background:linear-gradient(145deg,#1b1613,#0e0b09); color:var(--ink); font-weight:700;
-  border:1px solid rgba(255,255,255,.08); box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
 }
 .small{font-size:12px;color:var(--muted)}
 .stat{margin-top:10px;display:flex;align-items:center;gap:10px}
@@ -95,7 +82,7 @@ body::after{
 .btn:active{transform:translateY(1px)}
 .sep{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
 
-/* -------- Covers (carousel) -------- */
+/* covers (carousel) */
 .covers.card{padding:18px}
 .scroller{
   display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory;
@@ -107,7 +94,7 @@ body::after{
   min-width:130px; aspect-ratio:3/4; border-radius:12px; position:relative; overflow:hidden;
   background:radial-gradient(240px 120px at 50% 30%, #3a2f25,#1a1511);
   border:1px solid rgba(255,255,255,.08); scroll-snap-align:center;
-  box-shadow:0 18px 40px rgba(0,0,0,.45); transform:translateZ(0);
+  box-shadow:0 18px 40px rgba(0,0,0,.45); transform:translateZ(0); cursor:pointer;
 }
 .cover.gold{ background: radial-gradient(240px 120px at 50% 30%, #876b49,#3b2f24) }
 .cover.sand{ background: radial-gradient(240px 120px at 50% 30%, #746a59,#2a2520) }
@@ -118,7 +105,7 @@ body::after{
 .cover.selected{outline:2px solid #d4b37c; box-shadow:0 0 0 4px rgba(212,179,124,.15)}
 .cover img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* -------- Questions (accordion) -------- */
+/* questions */
 .q{margin-top:12px; border:1px solid rgba(255,255,255,.06); border-radius:14px; overflow:hidden}
 .qh{
   padding:14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
@@ -134,7 +121,7 @@ body::after{
 .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
 .tag{background:#0f0c0a; border:1px dashed rgba(255,255,255,.1); color:#c9b89a; padding:6px 10px; border-radius:999px; font-size:12px; cursor:pointer}
 
-/* -------- Photos -------- */
+/* photos */
 .uploader .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .pbtn{border:none;border-radius:999px;padding:10px 14px;background:linear-gradient(130deg,var(--gold2),var(--gold1));color:#241b13;font-weight:700;cursor:pointer}
 #photoInput{display:none}
@@ -143,15 +130,15 @@ body::after{
 .pv img{width:100%;height:100%;object-fit:cover}
 .pv .del{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:13px}
 
-/* -------- Support chat (floating) -------- */
+/* chat support (floating) */
 .chatfab{
-  position:fixed; right:14px; bottom:86px; z-index:10;
+  position:fixed; right:14px; bottom:90px; z-index:10;
   width:54px;height:54px;border-radius:50%; display:grid;place-items:center;
   background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13;
   box-shadow:0 16px 44px rgba(0,0,0,.5); cursor:pointer;
 }
 .chat{
-  position:fixed; right:14px; bottom:150px; width:86vw; max-width:360px;
+  position:fixed; right:14px; bottom:154px; width:86vw; max-width:360px;
   background:linear-gradient(180deg,var(--panel),var(--panel2));
   border:1px solid rgba(255,255,255,.08); border-radius:14px; display:none; flex-direction:column; overflow:hidden;
   box-shadow:0 24px 60px rgba(0,0,0,.55); z-index:20;
@@ -164,7 +151,7 @@ body::after{
 .chat-send input{flex:1; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#0f0d0b; color:var(--ink)}
 .chat-send button{padding:10px 12px;border-radius:10px;border:none;background:linear-gradient(130deg,var(--gold2),var(--gold1)); color:#241b13; font-weight:700}
 
-/* -------- Bottom nav (thin contour + micro-gradient) -------- */
+/* bottom nav (контурные svg) */
 .navbar{
   position:fixed;bottom:0;left:0;right:0;z-index:15;
   background:linear-gradient(180deg, rgba(18,15,13,.85), rgba(16,13,11,.85));
@@ -177,32 +164,23 @@ body::after{
   background:linear-gradient(180deg, rgba(20,17,15,.7), rgba(17,14,12,.7));
   color:#d8c6a3; font-size:12px;
 }
-.nav-item .icon{display:block; font-size:18px; margin-bottom:4px; filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))}
+.nav-item .icon{display:block; margin:0 auto 4px; width:20px; height:20px}
+.nav-item svg{width:20px;height:20px;stroke:#d6c39b;fill:none;stroke-width:1.6;filter:drop-shadow(0 0 3px rgba(214,195,155,.18));transition:.25s}
 .nav-item.active{outline:1px solid #d4b37c; box-shadow:0 0 0 4px rgba(212,179,124,.12)}
+.nav-item.active svg{stroke:#f1e4c5;stroke-width:2;filter:drop-shadow(0 0 6px rgba(241,228,197,.36))}
 
-/* -------- Responsive tweaks -------- */
-@media(min-width:900px){
-  .header{padding-top:18px}
-  .logo-book{font-size:44px}
-}
-.nav-item svg {
-  width:20px;
-  height:20px;
-  stroke: #d6c39b;
-  fill: none;
-  stroke-width: 1.6;
-  filter: drop-shadow(0 0 3px rgba(214,195,155,.18));
-  transition: .25s;
-}
-
-.nav-item.active svg {
-  stroke: #f1e4c5;
-  stroke-width: 2;
-  filter: drop-shadow(0 0 6px rgba(241,228,197,.36));
-}
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease}
+.reveal.show{opacity:1;transform:none}
 </style>
 </head>
 <body>
+
+<!-- PUBLIC Supabase (вставь свои значения) -->
+<script>
+  window.PUBLIC_SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+  window.PUBLIC_SUPABASE_ANON = "YOUR-ANON-KEY";
+</script>
 
 <!-- Header -->
 <header class="header">
@@ -211,7 +189,7 @@ body::after{
 </header>
 
 <!-- PROFILE -->
-<section id="sec-profile" class="section">
+<section id="sec-profile" class="section reveal">
   <div class="card">
     <div class="block-title">Ваш кабинет</div>
     <div class="profile-row">
@@ -237,23 +215,24 @@ body::after{
   </div>
 </section>
 
-<!-- COVERS (carousel) -->
-<section id="sec-covers" class="section">
+<!-- COVERS (carousel + выбор) -->
+<section id="sec-covers" class="section reveal">
   <div class="card covers">
     <div class="block-title">Выбери обложку будущей книги</div>
     <div class="scroller" id="coversRow" aria-label="Карусель обложек">
-      <label class="cover gold selected"><span class="badge">Gold</span><img src="assets/cover1.jpg" alt="Gold"></label>
-      <label class="cover"><span class="badge">Classic</span><img src="assets/cover2.jpg" alt="Classic"></label>
-      <label class="cover sand"><span class="badge">Sand</span><img src="assets/cover3.jpg" alt="Sand"></label>
-      <label class="cover"><span class="badge">Ivory</span><img src="assets/cover4.jpg" alt="Ivory"></label>
-      <label class="cover"><span class="badge">Noir</span><img src="assets/cover5.jpg" alt="Noir"></label>
+      <!-- укажи свои картинки обложек -->
+      <div class="cover gold selected" data-key="gold"><span class="badge">Gold</span><img src="assets/cover1.jpg" alt="Gold"></div>
+      <div class="cover" data-key="classic"><span class="badge">Classic</span><img src="assets/cover2.jpg" alt="Classic"></div>
+      <div class="cover sand" data-key="sand"><span class="badge">Sand</span><img src="assets/cover3.jpg" alt="Sand"></div>
+      <div class="cover" data-key="ivory"><span class="badge">Ivory</span><img src="assets/cover4.jpg" alt="Ivory"></div>
+      <div class="cover" data-key="noir"><span class="badge">Noir</span><img src="assets/cover5.jpg" alt="Noir"></div>
     </div>
-    <div class="small" style="margin-top:8px">Листай свайпом — или просто наблюдай: мы плавно показываем варианты.</div>
+    <div class="small" style="margin-top:8px">Листай свайпом — или просто наблюдай: мы мягко показываем варианты. Нажми, чтобы выбрать.</div>
   </div>
 </section>
 
 <!-- QUESTIONS -->
-<section id="sec-questions" class="section">
+<section id="sec-questions" class="section reveal">
   <div class="card">
     <div class="block-title">Вопросы</div>
     <div id="qlist"></div>
@@ -261,7 +240,7 @@ body::after{
 </section>
 
 <!-- PHOTOS -->
-<section id="sec-photos" class="section">
+<section id="sec-photos" class="section reveal">
   <div class="card uploader">
     <div class="head">
       <div class="block-title" style="margin:0">Добавьте фото (по желанию)</div>
@@ -274,8 +253,21 @@ body::after{
   </div>
 </section>
 
+<!-- FINISH MODAL -->
+<section id="sec-finish" class="section reveal" style="display:none">
+  <div class="card" id="finishCard">
+    <div class="block-title">Ваша книга создаётся</div>
+    <p style="opacity:.9">
+      Мы с любовью работаем над вашей историей. Обычно это занимает <b>7–14 дней</b>.
+    </p>
+    <p class="small" style="margin-top:8px">Мы напишем вам в Telegram, когда книга будет готова к согласованию.</p>
+  </div>
+</section>
+
 <!-- Support floating -->
-<div class="chatfab" id="chatFab" title="Поддержка">💬</div>
+<div class="chatfab" id="chatFab" title="Поддержка">
+  <svg viewBox="0 0 24 24" style="width:22px;height:22px"><path d="M4 4h16v12H5.17L4 17.17z"/><circle cx="8.5" cy="10.5" r=".75"/><circle cx="12" cy="10.5" r=".75"/><circle cx="15.5" cy="10.5" r=".75"/></svg>
+</div>
 <div class="chat" id="chatBox" role="dialog" aria-label="Поддержка">
   <div class="chat-head"><b>Поддержка</b><span id="chatClose" style="cursor:pointer;opacity:.7">✖</span></div>
   <div class="chat-body" id="chatMessages"></div>
@@ -293,29 +285,25 @@ body::after{
     </span>
     Профиль
   </div>
-
   <div class="nav-item" data-target="sec-covers">
     <span class="icon">
       <svg viewBox="0 0 24 24"><rect x="4" y="4" width="8" height="16" rx="2"/><rect x="12" y="4" width="8" height="16" rx="2"/></svg>
     </span>
     Обложка
   </div>
-
   <div class="nav-item" data-target="sec-questions">
     <span class="icon">
       <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
     </span>
     Вопросы
   </div>
-
   <div class="nav-item" data-target="sec-photos">
     <span class="icon">
       <svg viewBox="0 0 24 24"><circle cx="8.5" cy="8.5" r="2.5"/><path d="M20 5h-3l-2-2H9L7 5H4v14h16z"/></svg>
     </span>
     Фото
   </div>
-
-  <div class="nav-item" data-target="#support-open" onclick="openChat()">
+  <div class="nav-item" data-target="#support-open">
     <span class="icon">
       <svg viewBox="0 0 24 24"><path d="M4 4h16v12H5.17L4 17.17z"/><circle cx="8.5" cy="10.5" r=".75"/><circle cx="12" cy="10.5" r=".75"/><circle cx="15.5" cy="10.5" r=".75"/></svg>
     </span>
@@ -324,6 +312,12 @@ body::after{
 </nav>
 
 <script>
+/* ====== PUBLIC Supabase client ====== */
+const supabase = window.supabase.createClient(
+  window.PUBLIC_SUPABASE_URL,
+  window.PUBLIC_SUPABASE_ANON
+);
+
 /* ====== Helpers ====== */
 const LS=(k,v)=>v===undefined?localStorage.getItem(k):localStorage.setItem(k,v);
 const params=new URL(location.href).searchParams;
@@ -336,6 +330,12 @@ document.getElementById("utoken").textContent=token;
   document.getElementById("avatar").textContent = ini;
 })();
 
+/* ====== Reveal on scroll ====== */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
 /* ====== Bottom nav scroll ====== */
 document.querySelectorAll(".nav-item").forEach(n=>{
   n.onclick=()=>{
@@ -347,51 +347,70 @@ document.querySelectorAll(".nav-item").forEach(n=>{
   };
 });
 
-/* ====== Covers: auto-slide carousel (каждые ~5 сек) ====== */
+/* ====== Covers: auto-slide carousel + select + sync ====== */
 const coversRow=document.getElementById("coversRow");
-let autoTimer=null;
+let chosenCover = LS(`cover_${token}`) || "gold";
+function markCover(){
+  document.querySelectorAll('.cover').forEach(c=>{
+    c.classList.toggle('selected', c.dataset.key===chosenCover);
+  });
+}
+markCover();
+
+document.querySelectorAll('.cover').forEach(c=>{
+  c.addEventListener('click', async ()=>{
+    chosenCover = c.dataset.key;
+    LS(`cover_${token}`, chosenCover);
+    markCover();
+    // sync to server
+    await fetch('/api/saveCover',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token, cover_key: chosenCover})
+    });
+  });
+});
+
+let autoTimer=setInterval(autoSlide, 5000);
 function autoSlide(){
   const step = coversRow.firstElementChild?.getBoundingClientRect().width || 140;
   coversRow.scrollBy({left: step+12, behavior:"smooth"});
-  // если прокрутили до конца — вернуться в начало
   if(coversRow.scrollLeft + coversRow.clientWidth >= coversRow.scrollWidth - 2){
     setTimeout(()=>coversRow.scrollTo({left:0,behavior:"smooth"}), 600);
   }
 }
-autoTimer=setInterval(autoSlide, 5000); // M = 5 сек
-// пользователь свайпнул — перезапускаем таймер
 ["touchstart","mousedown","wheel"].forEach(ev=>{
   coversRow.addEventListener(ev, ()=>{clearInterval(autoTimer); autoTimer=setInterval(autoSlide,5000);},{passive:true});
 });
 
-/* ====== Questions (accordion + autosave) ====== */
-const QUESTIONS=[
+/* ====== Questions (accordion + autosave + sync) ====== */
+const QUESTIONS_BASE=[
  "Где вы впервые встретились?",
  "Что вы подумали при первой встрече?",
  "Кто сделал первый шаг?",
  "Какой момент стал решающим?",
  "Что больше всего запомнилось?"
 ];
-while(QUESTIONS.length<100) QUESTIONS.push(`Вопрос ${QUESTIONS.length+1}`);
-const total=QUESTIONS.length;
+while(QUESTIONS_BASE.length<100) QUESTIONS_BASE.push(`Вопрос ${QUESTIONS_BASE.length+1}`);
+const total=QUESTIONS_BASE.length;
 const qlist=document.getElementById("qlist");
 
 function keyAns(i){return `cab_${token}_a_${i}`}
 
-function renderQuestions(){
+function renderQuestions(answersMap={}){
   qlist.innerHTML="";
   let done=0;
-  QUESTIONS.forEach((q,i)=>{
-    const saved=LS(keyAns(i))||"";
-    if(saved.trim().length>=3) done++;
+  QUESTIONS_BASE.forEach((q,i)=>{
+    const local=LS(keyAns(i)) ?? "";
+    const synced = answersMap[i] ?? "";
+    const initial = local || synced || "";
+    if(initial.trim().length>=3) done++;
     qlist.insertAdjacentHTML("beforeend",`
       <div class="q" data-i="${i}">
         <div class="qh" onclick="toggleQ(${i})">
           <div><span class="num">${i+1}/${total}</span> — ${q}</div>
-          <div>${saved.trim().length>=3?"✅":"▸"}</div>
+          <div>${initial.trim().length>=3?"✅":"▸"}</div>
         </div>
         <div class="qa" id="qa_${i}" style="${i<1?'display:block':''}">
-          <textarea id="ta_${i}" placeholder="Ваш развёрнутый ответ...">${saved}</textarea>
+          <textarea id="ta_${i}" placeholder="Ваш развёрнутый ответ...">${initial}</textarea>
           <div class="hint">Автосохранение • Подсказки:</div>
           <div class="tags">
             <div class="tag" onclick="ins(${i},'Вспоминаю, как мы...')">Вспоминаю…</div>
@@ -402,16 +421,14 @@ function renderQuestions(){
       </div>
     `);
     const ta=document.getElementById(`ta_${i}`);
-    ta.addEventListener("input",()=>debounce(`a${i}`,()=>{
-      LS(keyAns(i), ta.value);
-      updateProgress();
-    }, 450));
+    ta.addEventListener("input",()=>debounce(`a${i}`,()=>saveAnswer(i, ta.value), 450));
     ta.addEventListener("keydown",e=>{
       if(e.key==="Enter" && e.metaKey){ e.preventDefault(); toggleQ(i+1); }
     });
   });
   updateProgress();
 }
+
 function debounceInit(){ const timers={}; return (id,fn,ms=400)=>{clearTimeout(timers[id]); timers[id]=setTimeout(fn,ms);} }
 const debounce=debounceInit();
 
@@ -419,7 +436,6 @@ function toggleQ(i){
   const el=document.getElementById(`qa_${i}`);
   if(!el) return;
   const is=el.style.display!=="none";
-  // один открытый за раз — премиум-поведение
   document.querySelectorAll(".qa").forEach(x=>x.style.display="none");
   el.style.display = is ? "none" : "block";
   if(!is){ document.getElementById(`ta_${i}`).focus(); el.scrollIntoView({behavior:"smooth",block:"center"}); }
@@ -427,8 +443,20 @@ function toggleQ(i){
 function ins(i,txt){
   const ta=document.getElementById(`ta_${i}`);
   ta.value = (ta.value?ta.value+"\n":"")+txt;
-  LS(keyAns(i), ta.value); updateProgress();
+  saveAnswer(i, ta.value);
 }
+
+async function saveAnswer(i, val){
+  LS(keyAns(i), val);
+  updateProgress();
+  // sync to server
+  try{
+    await fetch('/api/saveAnswer',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token, q_index:i, answer:val})
+    });
+  }catch(e){}
+}
+
 function updateProgress(){
   let done=0; for(let i=0;i<total;i++){ if((LS(keyAns(i))||"").trim().length>=3) done++; }
   document.getElementById("done").textContent=done;
@@ -436,7 +464,18 @@ function updateProgress(){
   const fg=document.getElementById("pfg"); fg.style.strokeDasharray=C; fg.style.strokeDashoffset=C*(1-per);
 }
 
-/* ====== Photos ====== */
+/* загрузка сохранённых ответов с сервера на входе */
+(async function loadServerAnswers(){
+  try{
+    const res = await fetch('/api/getAnswers',{method:'POST',headers:{'Content-Type':'application/json'}, body:JSON.stringify({token})});
+    const data = await res.json(); // {answers:{ [q_index]: text }}
+    renderQuestions(data.answers||{});
+  }catch(e){
+    renderQuestions({});
+  }
+})();
+
+/* ====== Photos + ZIP ====== */
 const pick=document.getElementById("pick");
 const photoInput=document.getElementById("photoInput");
 const preview=document.getElementById("preview");
@@ -445,7 +484,8 @@ let files=[];
 pick.onclick=()=>photoInput.click();
 photoInput.onchange=e=>{ for(const f of e.target.files){ if(files.length<20) files.push(f); } renderPhotos(); };
 function renderPhotos(){
-  preview.innerHTML=""; files.forEach((f,i)=>{
+  preview.innerHTML="";
+  files.forEach((f,i)=>{
     const url=URL.createObjectURL(f);
     const d=document.createElement("div"); d.className="pv";
     d.innerHTML=`<span class="del" title="Удалить" onclick="delPhoto(${i})">✖</span><img src="${url}">`;
@@ -455,7 +495,7 @@ function renderPhotos(){
 }
 function delPhoto(i){ files.splice(i,1); renderPhotos(); }
 
-/* ====== Support chat ====== */
+/* ====== Support chat (client -> support bot) ====== */
 const chatFab=document.getElementById("chatFab");
 const chatBox=document.getElementById("chatBox");
 const chatClose=document.getElementById("chatClose");
@@ -471,22 +511,91 @@ function pushMsg(who,text){
   const d=document.createElement("div"); d.className="msg "+who; d.textContent=text;
   chatMsg.appendChild(d); chatMsg.scrollTop=chatMsg.scrollHeight;
 }
-function sendMsg(){
+async function sendMsg(){
   const t=chatIn.value.trim(); if(!t) return;
   pushMsg("you", t); chatIn.value="";
-  // TODO: подключим /api/support
+  try{
+    await fetch('/api/support',{method:'POST',headers:{'Content-Type':'application/json'}, body:JSON.stringify({token, text:t})});
+  }catch(e){}
 }
 
-/* ====== Finish (stub) ====== */
-document.getElementById("finish").onclick=()=>{
-  alert("✅ Заявка на создание книги отправлена! (подключим отправку на сервер и в бота)");
-};
+/* ====== Finish ====== */
+document.getElementById("finish").onclick = async ()=>{
+  // собираем ответы
+  const answers = [];
+  for(let i=0;i<total;i++){
+    const a = (LS(keyAns(i))||"").trim();
+    if(a) answers.push({ q_index:i, question:QUESTIONS_BASE[i], answer:a });
+  }
+  // ZIP фото на клиенте
+  const zip = new JSZip();
+  const folder = zip.folder("photos");
+  for(let i=0;i<files.length;i++){
+    const f = files[i];
+    const buf = await f.arrayBuffer();
+    folder.file(`photo_${String(i+1).padStart(2,'0')}.${(f.name.split('.').pop()||'jpg')}`, buf);
+  }
+  // файл с ответами (txt)
+  const username = (localStorage.getItem('username') || token).replace(/\s+/g,'_');
+  const now = new Date();
+  const dateStr = now.toISOString().slice(0,10);
+  const answersText = answers.map(a=>`[${a.q_index+1}] ${a.question}\n${a.answer}\n`).join('\n');
+  zip.file(`answers_${username}_${dateStr}.txt`, answersText);
 
-/* ====== Init ====== */
-(function init(){
-  document.getElementById("utoken").textContent=token;
-  renderQuestions();
+  const blob = await zip.generateAsync({type:"blob"});
+  const b64 = await blobToBase64(blob);
+
+  // отправка на сервер → в основной бот
+  const payload = {
+    token,
+    username,
+    cover_key: chosenCover,
+    zip_base64: b64,
+    zip_filename: `LoveBook_${username}_${dateStr}.zip`
+  };
+  const r = await fetch('/api/finish',{method:'POST',headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+  if(r.ok){
+    // показываем экран "книга создаётся"
+    document.getElementById('sec-finish').style.display='block';
+    document.getElementById('sec-finish').scrollIntoView({behavior:"smooth"});
+  }else{
+    alert("Не удалось отправить заказ. Попробуйте ещё раз.");
+  }
+};
+function blobToBase64(blob){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result.split(',')[1]);
+    r.onerror=rej;
+    r.readAsDataURL(blob);
+  });
+}
+
+/* ====== Init user in DB (ensure) ====== */
+(async function ensureUser(){
+  try{
+    await fetch('/api/getAnswers',{method:'POST',headers:{'Content-Type':'application/json'}, body:JSON.stringify({token})});
+  }catch(e){}
 })();
+
+/* ====== Activate first render ====== */
+renderQuestions();
+
+/* ====== Bottom nav active state on scroll ====== */
+const secIds=["sec-profile","sec-covers","sec-questions","sec-photos","sec-finish"];
+const navItems=document.querySelectorAll('.nav-item');
+const secIO=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.id;
+      navItems.forEach(n=>{
+        const t=n.getAttribute('data-target');
+        n.classList.toggle('active', t===id);
+      });
+    }
+  });
+},{threshold:.5});
+secIds.forEach(id=>{const el=document.getElementById(id); if(el) secIO.observe(el);});
 </script>
 </body>
 </html>
