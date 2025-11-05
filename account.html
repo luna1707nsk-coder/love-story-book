@@ -277,33 +277,35 @@ width:100%;padding:14px;font-size:18px;border:none;border-radius:999px;
 background:linear-gradient(120deg,#b49368,#8c6a43);color:white;cursor:pointer;
 box-shadow:0 8px 22px rgba(0,0,0,.15);}
 .btn-zip:hover{opacity:.9;}
-/* 📱 MOBILE FIX — одна колонка */
+/* MOBILE FIX: кабинет сверху, вопросы ниже */
 @media (max-width: 768px) {
 
   .account-wrap {
-    display: block;
-    padding: 0 10px;
+    display: flex;
+    flex-direction: column !important; /* ⬅️ ключ! */
+    gap: 20px;
   }
 
   .account-left,
   .account-right {
-    width: 100%;
-    max-width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .account-left {
-    margin-bottom: 18px;
-  }
-
-  .progress-box {
-    margin-top: 8px;
-  }
-
-  /* карточки вопросов — меньше отступов */
-  .question-block {
-    padding: 14px;
+    order: 1;
     margin-bottom: 12px;
-    border-radius: 18px;
+  }
+
+  .account-right {
+    order: 2;
+  }
+
+  /* карточки вопросов */
+  .question-block {
+    margin-bottom: 14px;
+    padding: 14px;
+    border-radius: 16px;
   }
 
   .question-title {
@@ -312,18 +314,16 @@ box-shadow:0 8px 22px rgba(0,0,0,.15);}
 
   textarea {
     font-size: 16px;
-    padding: 10px;
   }
 
   .save-btn {
     font-size: 15px;
-    padding: 10px;
   }
 
-  /* кнопка завершения — адаптация */
-  .btn-zip {
-    font-size: 16px;
-    padding: 14px;
+  /* убрать огромные отступы */
+  .progress-box,
+  .finish-box {
+    margin-bottom: 12px;
   }
 }
 </style>
