@@ -381,96 +381,94 @@ function autoSlide(){
   coversRow.addEventListener(ev, ()=>{clearInterval(autoTimer); autoTimer=setInterval(autoSlide,5000);},{passive:true});
 });
 
-/* ====== Questions (accordion + autosave + sync) ====== */
-const QUESTIONS_BASE=[
+/* ====== QUESTIONS ====== */
+
+const QUESTIONS_BASE = [
  "Где вы впервые встретились?",
  "Что вы подумали при первой встрече?",
  "Кто сделал первый шаг?",
  "Какой момент стал решающим?",
  "Что больше всего запомнилось?"
 ];
-while(QUESTIONS_BASE.length<100) QUESTIONS_BASE.push(`Вопрос ${QUESTIONS_BASE.length+1}`);
-const total=QUESTIONS_BASE.length;
-const qlist=document.getElementById("qlist");
+
+// заполняем до 100 временными
+while (QUESTIONS_BASE.length < 100) {
+  QUESTIONS_BASE.push(`Вопрос ${QUESTIONS_BASE.length+1}`);
+}
+
+const total = QUESTIONS_BASE.length;
+const qlist = document.getElementById("qlist");
 
 function keyAns(i){return `cab_${token}_a_${i}`}
 
-function renderQuestions(answersMap={}){
-  qlist.innerHTML="";
-  let done=0;
+function renderQuestions(map={}){
+  qlist.innerHTML = "";
   QUESTIONS_BASE.forEach((q,i)=>{
-    const local=LS(keyAns(i)) ?? "";
-    const synced = answersMap[i] ?? "";
-    const initial = local || synced || "";
-    if(initial.trim().length>=3) done++;
-    qlist.insertAdjacentHTML("beforeend",`
-      <div class="q" data-i="${i}">
+    const local = LS(keyAns(i)) || "";
+    const server = map[i] || "";
+    const val = local || server || "";
+
+    qlist.insertAdjacentHTML("beforeend", `
+      <div class="q">
         <div class="qh" onclick="toggleQ(${i})">
-          <div><span class="num">${i+1}/${total}</span> — ${q}</div>
-          <div>${initial.trim().length>=3?"✅":"▸"}</div>
+          <span class="num">${i+1}/${total}</span> — ${q}
+          <b>${val.trim() ? "✅" : "▸"}</b>
         </div>
-        <div class="qa" id="qa_${i}" style="${i<1?'display:block':''}">
-          <textarea id="ta_${i}" placeholder="Ваш развёрнутый ответ...">${initial}</textarea>
-          <div class="hint">Автосохранение • Подсказки:</div>
-          <div class="tags">
-            <div class="tag" onclick="ins(${i},'Вспоминаю, как мы...')">Вспоминаю…</div>
-            <div class="tag" onclick="ins(${i},'Особенно тронул момент, когда...')">Тронул момент…</div>
-            <div class="tag" onclick="ins(${i},'Я понял(а), что это любовь, когда...')">Это любовь…</div>
-          </div>
+        <div class="qa" id="qa_${i}" style="${i===0?"display:block":""}">
+          <textarea id="ta_${i}" placeholder="Ваш развёрнутый ответ...">${val}</textarea>
         </div>
       </div>
     `);
-    const ta=document.getElementById(`ta_${i}`);
-    ta.addEventListener("input",()=>debounce(`a${i}`,()=>saveAnswer(i, ta.value), 450));
-    ta.addEventListener("keydown",e=>{
-      if(e.key==="Enter" && e.metaKey){ e.preventDefault(); toggleQ(i+1); }
-    });
+
+    const ta = document.getElementById(`ta_${i}`);
+    ta.addEventListener("input",()=>debounce(`a${i}`,()=>saveAns(i, ta.value),500));
   });
+
   updateProgress();
 }
-
-function debounceInit(){ const timers={}; return (id,fn,ms=400)=>{clearTimeout(timers[id]); timers[id]=setTimeout(fn,ms);} }
-const debounce=debounceInit();
 
 function toggleQ(i){
-  const el=document.getElementById(`qa_${i}`);
-  if(!el) return;
-  const is=el.style.display!=="none";
-  document.querySelectorAll(".qa").forEach(x=>x.style.display="none");
-  el.style.display = is ? "none" : "block";
-  if(!is){ document.getElementById(`ta_${i}`).focus(); el.scrollIntoView({behavior:"smooth",block:"center"}); }
-}
-function ins(i,txt){
-  const ta=document.getElementById(`ta_${i}`);
-  ta.value = (ta.value?ta.value+"\n":"")+txt;
-  saveAnswer(i, ta.value);
+  document.querySelectorAll(".qa").forEach(q=>q.style.display="none");
+  const el = document.getElementById(`qa_${i}`);
+  if(el) el.style.display = "block";
 }
 
-async function saveAnswer(i, val){
+async function saveAns(i,val){
   LS(keyAns(i), val);
   updateProgress();
-  // sync to server
   try{
-    await fetch('/api/saveAnswer',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({token, q_index:i, answer:val})
+    await fetch('/api/saveAnswer',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({token,q_index:i,answer:val})
     });
   }catch(e){}
 }
 
 function updateProgress(){
-  let done=0; for(let i=0;i<total;i++){ if((LS(keyAns(i))||"").trim().length>=3) done++; }
-  document.getElementById("done").textContent=done;
-  const per=done/total; const C=2*Math.PI*18;
-  const fg=document.getElementById("pfg"); fg.style.strokeDasharray=C; fg.style.strokeDashoffset=C*(1-per);
+  let c = 0;
+  for(let i=0;i<total;i++){
+    if((LS(keyAns(i))||"").trim()) c++;
+  }
+  document.getElementById("done").textContent=c;
+
+  const C = 2*Math.PI*18;
+  const fg=document.getElementById("pfg");
+  fg.style.strokeDasharray=C;
+  fg.style.strokeDashoffset=C*(1-c/total);
 }
 
-/* загрузка сохранённых ответов с сервера на входе */
-(async function loadServerAnswers(){
+// загрузка с сервера
+(async()=>{
   try{
-    const res = await fetch('/api/getAnswers',{method:'POST',headers:{'Content-Type':'application/json'}, body:JSON.stringify({token})});
-    const data = await res.json(); // {answers:{ [q_index]: text }}
-    renderQuestions(data.answers||{});
-  }catch(e){
+    const r = await fetch('/api/getAnswers',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token})
+    });
+    const data = await r.json();
+    renderQuestions(data.answers || {});
+  }catch{
     renderQuestions({});
   }
 })();
