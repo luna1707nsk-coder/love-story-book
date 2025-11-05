@@ -2,137 +2,152 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ваш кабинет — A Book Written With Soul</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Личный кабинет — История</title>
 
 <style>
-body {
-  background: url("assets/background3.jpg") center/cover no-repeat fixed;
+body{
   font-family: "Playfair Display", serif;
-  margin: 0;
-  padding: 0;
-  color: #4A3A39;
+  background:url("assets/background3.jpg") center/cover fixed no-repeat;
+  margin:0; padding:0;
+  min-height:100vh;
+  color:#3b2f2f;
 }
 
-/* контейнер */
-.dashboard {
-  max-width: 900px;
-  margin: 40px auto;
-  background: rgba(255,255,255,.85);
-  backdrop-filter: blur(18px);
-  padding: 28px;
-  border-radius: 22px;
-  box-shadow: 0 16px 42px rgba(0,0,0,.12);
+.card {
+  max-width:800px;
+  margin:50px auto;
+  background:rgba(255,255,255,.85);
+  padding:30px;
+  border-radius:24px;
+  backdrop-filter: blur(14px);
+  box-shadow:0 14px 38px rgba(0,0,0,.14);
 }
 
-/* заголовок */
 h1 {
-  text-align: center;
-  margin-bottom: 8px;
-  font-family: "Spectral SC", serif;
-  background: linear-gradient(100deg,#7a5e49,#c9a876,#ecd8b8);
-  -webkit-background-clip: text;
-  color: transparent;
+  text-align:center;
+  margin-bottom:15px;
+  font-family:"Spectral SC", serif;
+  background:linear-gradient(100deg,#7a5e49,#c9a876,#ecd8b8);
+  -webkit-background-clip:text;
+  color:transparent;
 }
 
-/* подпись */
-.subtitle {
-  text-align: center;
-  opacity: .7;
-  margin-bottom: 22px;
-  font-size: 18px;
+.tabs {
+  display:flex; gap:12px; justify-content:center; margin-bottom:20px;
 }
 
-/* меню */
-.menu {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 22px;
+.tab {
+  padding:12px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  background:#e4d4c2;
+  font-weight:600;
+  transition:.2s;
+}
+.tab.active {
+  background:#b89b73;
+  color:#fff;
 }
 
-.menu button {
-  border: none;
-  padding: 12px 22px;
-  font-size: 16px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(130deg,#c7a875,#9c7b55);
-  box-shadow: 0 10px 26px rgba(0,0,0,.18);
+textarea {
+  width:100%; height:140px;
+  margin-top:10px;
+  padding:14px;
+  border:none;
+  border-radius:16px;
+  font-size:18px;
+  background:#fff;
 }
 
-.menu button.active {
-  background: linear-gradient(130deg,#a17a48,#7a5735);
-}
-
-/* рабочая область */
-.section { display: none; }
-.section.active { display: block; }
-
-/* футер */
-footer {
-  text-align: center;
-  margin-top: 30px;
-  font-size: 13px;
-  opacity: .7;
+.btn {
+  margin-top:15px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(130deg,#c5a26f,#987147);
+  font-size:18px;
+  color:white;
+  cursor:pointer;
 }
 </style>
+
 </head>
 <body>
 
-<div class="dashboard">
+<div class="card">
   <h1>Личный кабинет</h1>
-  <div class="subtitle">Создавайте книгу любви шаг за шагом 🤍</div>
 
-  <div class="menu">
-    <button class="tab active" data-tab="questions">Вопросы</button>
-    <button class="tab" data-tab="photos">Фото</button>
-    <button class="tab" data-tab="design">Дизайн книги</button>
-    <button class="tab" data-tab="support">Поддержка</button>
+  <div id="username" style="text-align:center; margin-bottom:15px; opacity:.8;"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="answers">Ответы</div>
+    <div class="tab" data-tab="photos">Фото</div>
+    <div class="tab" data-tab="design">Дизайн</div>
+    <div class="tab" data-tab="support">Поддержка</div>
   </div>
 
-  <div id="questions" class="section active">
-    <h2>Ваши ответы</h2>
-    <p>Скоро здесь появятся вопросы и ваши ответы ✨</p>
-  </div>
-
-  <div id="photos" class="section">
-    <h2>Ваши фото</h2>
-    <p>Загрузка фото будет здесь 📎</p>
-  </div>
-
-  <div id="design" class="section">
-    <h2>Выбор дизайна</h2>
-    <p>Выберите стиль будущей книги 💍</p>
-  </div>
-
-  <div id="support" class="section">
-    <h2>Поддержка</h2>
-    <p>Чат с нами будет здесь 💬</p>
-  </div>
-
-  <footer>Made with ❤️ for your story</footer>
+  <div id="content"></div>
 </div>
 
 <script>
+/* =======================
+   ✅ Проверяем токен
+======================= */
+const url = new URL(window.location.href);
+const token = url.searchParams.get("token");
+
+if (!token) {
+  document.body.innerHTML = "<h2 style='text-align:center;margin-top:40px;'>❌ Нет доступа</h2>";
+}
+
+/* =======================
+   ✅ Загружаем имя (мы позже свяжем с базой)
+======================= */
+document.getElementById("username").textContent = `Ваш токен: ${token}`;
+
+/* =======================
+   ✅ Вкладки
+======================= */
 const tabs = document.querySelectorAll(".tab");
-const sections = document.querySelectorAll(".section");
+const content = document.getElementById("content");
 
-tabs.forEach(btn => {
-  btn.addEventListener("click", () => {
-    tabs.forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
+function loadAnswers(){
+  content.innerHTML = `
+    <h3>Ваши ответы</h3>
+    <p>Скоро здесь будут 100 вопросов...</p>
+    <textarea placeholder="Ответ..."></textarea>
+    <button class="btn">Сохранить ответ</button>
+    <button class="btn" style="margin-top:8px;background:#4CAF50;">Завершить и отправить</button>
+  `;
+}
+function loadPhotos(){
+  content.innerHTML = `<h3>Фото</h3><p>Загрузка фото появится позже 📸</p>`;
+}
+function loadDesign(){
+  content.innerHTML = `<h3>Выбор дизайна</h3><p>Скоро будут макеты 💍✨</p>`;
+}
+function loadSupport(){
+  content.innerHTML = `<h3>Поддержка</h3><p>Будет чат с нами 💬</p>`;
+}
 
-    sections.forEach(s=>s.classList.remove("active"));
-    document.getElementById(btn.dataset.tab).classList.add("active");
-  });
+const pages = {
+  answers: loadAnswers,
+  photos: loadPhotos,
+  design: loadDesign,
+  support: loadSupport
+};
+
+tabs.forEach(tab=>{
+  tab.onclick = ()=>{
+    tabs.forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    pages[tab.dataset.tab]();
+  };
 });
-</script>
 
+loadAnswers();
+</script>
 </body>
 </html>
