@@ -13,14 +13,16 @@
   --ring:#6c533d;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{
+body {
   background:
-    linear-gradient(rgba(12,10,8,.75), rgba(12,10,8,.75)),
+    linear-gradient(rgba(12,10,8,.78), rgba(12,10,8,.78)),
     url("assets/background4.jpg") center/cover fixed no-repeat;
   color: var(--ink);
-  min-height:100svh;
-  padding:18px 12px 80px;
-  font-family:"Playfair Display",serif;
+  min-height: 100svh;
+  padding: 18px 12px 80px;
+  font-family: "Playfair Display", serif;
+  position: relative;
+  overflow-x: hidden;
 }
 
 /* header */
@@ -155,6 +157,34 @@ svg.ring{width:56px;height:56px;rotate:-90deg}
 .switch input:checked{background:linear-gradient(130deg,var(--gold2),var(--gold1))}
 .switch input::after{content:"";position:absolute;left:2px;top:2px;width:18px;height:18px;background:#0f0d0b;border-radius:50%;transition:.2s}
 .switch input:checked::after{left:18px}
+/* Золотой шум */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+  opacity: .12;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+/* Мягкое премиальное свечение */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 0%, rgba(255,230,180,.25), transparent 65%);
+  animation: goldGlow 6s ease-in-out infinite alternate;
+  opacity: .2;
+  z-index: 2;
+}
+
+@keyframes goldGlow {
+  0%   { opacity:.13; filter:brightness(1); }
+  100% { opacity:.28; filter:brightness(1.25); }
+}
 </style>
 </head>
 <body>
