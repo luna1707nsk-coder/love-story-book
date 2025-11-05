@@ -1,153 +1,410 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Личный кабинет — История</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Личный кабинет — A Book Written With Soul</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+/* ================== THEME: Black & Gold ================== */
+:root{
+  --bg:#0f0e0d;
+  --bg2:#151310;
+  --ink:#e9e0d3;
+  --muted:#bfb2a0;
+  --gold1:#e8d7b2;
+  --gold2:#c6a36a;
+  --gold3:#8a6a3b;
+  --glass: rgba(25,22,19,.6);
+  --card: rgba(32,28,24,.65);
+  --line: rgba(255,255,255,.08);
+  --shadow: 0 20px 60px rgba(0,0,0,.45);
+  --radius: 22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 body{
-  font-family: "Playfair Display", serif;
-  background:url("assets/background3.jpg") center/cover fixed no-repeat;
-  margin:0; padding:0;
-  min-height:100vh;
-  color:#3b2f2f;
+  background:
+    radial-gradient(1000px 600px at 10% -10%, rgba(255,255,255,.06), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(255,255,255,.05), transparent 55%),
+    var(--bg);
+  color:var(--ink);
+  font-family:"Playfair Display", serif;
+  overflow-x:hidden;
 }
 
-.card {
-  max-width:800px;
-  margin:50px auto;
-  background:rgba(255,255,255,.85);
-  padding:30px;
-  border-radius:24px;
+/* subtle grain */
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:url('https://www.transparenttextures.com/patterns/black-linen.png');
+  opacity:.15;
+}
+
+/* ================== HEADER ================== */
+.header{
+  position:sticky; top:0; z-index:100;
   backdrop-filter: blur(14px);
-  box-shadow:0 14px 38px rgba(0,0,0,.14);
+  background: linear-gradient(0deg, transparent, rgba(0,0,0,.28));
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:1200px; margin:0 auto; padding:14px 16px;
+  display:flex; align-items:center; justify-content:center; gap:12px;
+}
+.logo{
+  display:flex; align-items:center; gap:10px;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,.4));
+}
+.logo .book{
+  font-size:22px; width:28px; height:28px; display:grid; place-items:center;
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-5px) }
+}
+.brand{
+  font-family:"Spectral SC", serif; font-weight:600; letter-spacing:.04em;
+  background:linear-gradient(95deg, var(--gold1), var(--gold2), var(--gold3));
+  -webkit-background-clip:text; color:transparent;
+  text-shadow:0 0 24px rgba(198,163,106,.18);
 }
 
-h1 {
-  text-align:center;
-  margin-bottom:15px;
-  font-family:"Spectral SC", serif;
-  background:linear-gradient(100deg,#7a5e49,#c9a876,#ecd8b8);
-  -webkit-background-clip:text;
-  color:transparent;
+/* ================== LAYOUT ================== */
+.wrap{ max-width:1200px; margin:28px auto; padding:0 16px; position:relative; z-index:1; }
+.grid{
+  display:grid; grid-template-columns: 280px 1fr; gap:18px;
+}
+@media (max-width:980px){
+  .grid{ grid-template-columns:1fr; }
 }
 
-.tabs {
-  display:flex; gap:12px; justify-content:center; margin-bottom:20px;
+/* ================== ASIDE (LEFT) ================== */
+.aside{
+  background:var(--card); border:1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding:18px; position:sticky; top:76px; height:fit-content;
 }
+.profile{
+  display:flex; align-items:center; gap:12px; margin-bottom:14px;
+}
+.avatar{
+  width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,#2a251f,#1e1a16);
+  border:1px solid var(--line); display:grid; place-items:center; font-weight:700; color:var(--gold1);
+  text-shadow:0 0 14px rgba(198,163,106,.35);
+}
+.profile .info small{color:var(--muted)}
+.progress{
+  margin:12px 0 6px; height:8px; border-radius:999px; background:rgba(255,255,255,.06); overflow:hidden;
+  border:1px solid var(--line);
+}
+.bar{
+  height:100%; width:0%;
+  background:linear-gradient(90deg, var(--gold3), var(--gold2), var(--gold1));
+  transition: width .35s ease;
+}
+.progress-text{ font-size:13px; color:var(--muted) }
 
-.tab {
-  padding:12px 18px;
-  border-radius:12px;
-  cursor:pointer;
-  background:#e4d4c2;
-  font-weight:600;
-  transition:.2s;
+/* Questions list */
+.list{
+  margin-top:14px; max-height:56vh; overflow:auto; padding-right:6px;
+  scrollbar-width:thin;
 }
-.tab.active {
-  background:#b89b73;
-  color:#fff;
+.item{
+  display:flex; align-items:center; gap:10px; padding:10px 12px;
+  border-radius:12px; cursor:pointer; transition:.2s;
+  border:1px solid transparent;
 }
+.item:hover{ background: rgba(255,255,255,.04); border-color:var(--line) }
+.item.active{ background: rgba(255,255,255,.06); border-color:rgba(198,163,106,.35) }
+.item .num{ width:30px; height:30px; display:grid; place-items:center; border-radius:8px;
+  background:rgba(255,255,255,.06); border:1px solid var(--line); font-weight:700; color:var(--gold1);
+  font-size:13px;
+}
+.item .txt{ flex:1; font-size:14px; color:var(--ink); opacity:.9 }
 
-textarea {
-  width:100%; height:140px;
-  margin-top:10px;
-  padding:14px;
-  border:none;
-  border-radius:16px;
-  font-size:18px;
-  background:#fff;
+/* ================== MAIN CARD ================== */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding:22px;
 }
+.card .title{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px;
+}
+.hint{ color:var(--muted); font-size:14px }
+.qtext{
+  font-size:22px; line-height:1.35; margin:12px 0 14px; font-weight:600;
+}
+textarea.answer{
+  width:100%; min-height:180px; resize:vertical;
+  background:rgba(0,0,0,.22); color:var(--ink);
+  border:1px solid var(--line); border-radius:16px; padding:16px 14px;
+  font-size:18px; line-height:1.5; outline:none;
+  box-shadow: inset 0 2px 12px rgba(0,0,0,.25);
+}
+.actions{
+  display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;
+}
+.btn{
+  border:none; cursor:pointer; color:#0f0e0d; font-weight:800; letter-spacing:.02em;
+  background:linear-gradient(135deg, var(--gold1), var(--gold2));
+  padding:12px 18px; border-radius:999px; font-size:16px;
+  box-shadow:0 14px 28px rgba(198,163,106,.2);
+  transition:.2s; user-select:none;
+}
+.btn:active{ transform: translateY(1px) scale(.995) }
+.btn.ghost{
+  background:transparent; color:var(--ink); border:1px solid var(--line);
+  box-shadow:none;
+}
+.sep{ height:1px; background:var(--line); margin:18px 0 }
 
-.btn {
-  margin-top:15px;
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  background:linear-gradient(130deg,#c5a26f,#987147);
-  font-size:18px;
-  color:white;
-  cursor:pointer;
+/* Book preview */
+.preview{
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  background:linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+  border:1px solid var(--line); border-radius:16px; padding:14px;
 }
+.mock{
+  width:68px; height:92px; border-radius:8px; background:
+    linear-gradient(145deg, #24201b, #1b1814);
+  border:1px solid var(--line); position:relative; overflow:hidden;
+  box-shadow: 0 12px 28px rgba(0,0,0,.45);
+}
+.mock::after{
+  /* золотистый отблеск */
+  content:""; position:absolute; inset:-40% -60% auto auto;
+  width:160%; height:160%;
+  background: conic-gradient(from 180deg, rgba(255,255,255,.25), rgba(198,163,106,.18), transparent 40%);
+  filter: blur(12px); transform: rotate(8deg);
+  pointer-events:none;
+}
+.mock .spine{
+  position:absolute; left:6px; top:6px; bottom:6px; width:6px;
+  background: linear-gradient(180deg, rgba(198,163,106,.45), rgba(255,255,255,.1));
+  border-radius: 3px;
+}
+.preview .meta small{ color:var(--muted) }
+
+/* ================== MINI CHAT ================== */
+.chat{
+  position:fixed; right:16px; bottom:16px; z-index:90;
+}
+.chat .bubble{
+  background:var(--glass); border:1px solid var(--line); border-radius:16px;
+  padding:12px 14px; font-size:14px; box-shadow: var(--shadow);
+  display:none; width:min(86vw,360px);
+}
+.chat .toggle{
+  margin-top:8px;
+  width:52px; height:52px; border-radius:50%;
+  display:grid; place-items:center; cursor:pointer;
+  background: linear-gradient(135deg, var(--gold2), var(--gold1));
+  color:#0f0e0d; font-weight:900; border:none;
+  box-shadow: 0 16px 36px rgba(198,163,106,.28);
+}
+.chat.open .bubble{ display:block }
+
+/* ================== TRANSITIONS ================== */
+.fade-enter{ opacity:0; transform: translateY(8px) scale(.99) }
+.fade-enter-active{ opacity:1; transform:none; transition: .35s ease }
 </style>
-
 </head>
 <body>
 
-<div class="card">
-  <h1>Личный кабинет</h1>
-
-  <div id="username" style="text-align:center; margin-bottom:15px; opacity:.8;"></div>
-
-  <div class="tabs">
-    <div class="tab active" data-tab="answers">Ответы</div>
-    <div class="tab" data-tab="photos">Фото</div>
-    <div class="tab" data-tab="design">Дизайн</div>
-    <div class="tab" data-tab="support">Поддержка</div>
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo" aria-label="A Book Written With Soul">
+      <div class="book">📖</div>
+      <div class="brand">A Book Written With Soul</div>
+    </div>
   </div>
+</header>
 
-  <div id="content"></div>
+<div class="wrap">
+  <div class="grid">
+    <!-- ASIDE LEFT -->
+    <aside class="aside">
+      <div class="profile">
+        <div class="avatar" id="avatar">AB</div>
+        <div class="info">
+          <div id="uname" style="font-weight:700;">Ваш кабинет</div>
+          <small id="utoken">token: —</small>
+        </div>
+      </div>
+
+      <div class="progress" title="Прогресс ответов">
+        <div class="bar" id="bar"></div>
+      </div>
+      <div class="progress-text"><span id="done">0</span>/100 вопросов</div>
+
+      <div class="sep"></div>
+
+      <div class="list" id="qlist">
+        <!-- Список вопросов будет сгенерирован JS -->
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+      <section class="card fade-enter fade-enter-active" id="card">
+        <div class="title">
+          <div>
+            <div class="hint">Глава 1 · Знакомство</div>
+            <div class="qtext" id="qtext">Где вы впервые встретились?</div>
+          </div>
+          <div class="hint" id="qpos">1 / 100</div>
+        </div>
+
+        <textarea class="answer" id="answer" placeholder="Ваш развернутый ответ..."></textarea>
+
+        <div class="actions">
+          <button class="btn" id="save">Сохранить</button>
+          <button class="btn ghost" id="prev">Назад</button>
+          <button class="btn" id="next">Далее</button>
+          <button class="btn ghost" id="finish">Завершить и отправить</button>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="preview">
+          <div class="mock">
+            <div class="spine"></div>
+          </div>
+          <div class="meta">
+            <div style="font-weight:700;">Превью вашей книги</div>
+            <small>Обложку и стиль можно будет выбрать позже</small>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- MINI CHAT -->
+<div class="chat" id="chat">
+  <div class="bubble">
+    <div style="font-weight:700; margin-bottom:6px;">Поддержка</div>
+    <div style="opacity:.85; font-size:14px;">Напишите вопрос — скоро прикрутим онлайн-чат. Пока можно писать в Telegram-бота после оплаты.</div>
+  </div>
+  <button class="toggle" title="Поддержка">💬</button>
 </div>
 
 <script>
-/* =======================
-   ✅ Проверяем токен
-======================= */
-const url = new URL(window.location.href);
-const token = url.searchParams.get("token");
+/* ================== DATA ================== */
+const QUESTIONS = Array.from({length:100}).map((_,i)=>`Вопрос №${i+1}. Опишите важный момент вашей истории.`);
+// можно подставить твои реальные вопросы по главам — структура готова
 
-if (!token) {
-  document.body.innerHTML = "<h2 style='text-align:center;margin-top:40px;'>❌ Нет доступа</h2>";
+/* ================== TOKEN / USERNAME ================== */
+const params = new URL(location.href).searchParams;
+const token = params.get("token") || "DEMO-TOKEN";
+document.getElementById("utoken").textContent = "token: " + token;
+
+/* Генерация аватарки из токена (инициалы) */
+const initials = (()=> {
+  const t = token.replace(/[^a-zA-Z0-9]/g,"").toUpperCase();
+  return (t[0]||"U") + (t[1]||"S");
+})();
+document.getElementById("avatar").textContent = initials;
+
+/* ================== STATE ================== */
+let current = 0;
+let answers = {}; // {index: "text"}
+
+/* ================== UI HOOKS ================== */
+const qlist = document.getElementById("qlist");
+const qtext = document.getElementById("qtext");
+const qpos  = document.getElementById("qpos");
+const answer = document.getElementById("answer");
+const bar   = document.getElementById("bar");
+const done  = document.getElementById("done");
+
+/* Build list */
+function buildList(){
+  for(let i=0;i<100;i++){
+    const row = document.createElement("div");
+    row.className = "item";
+    row.dataset.index = i;
+
+    const num = document.createElement("div");
+    num.className = "num";
+    num.textContent = i+1;
+
+    const txt = document.createElement("div");
+    txt.className = "txt";
+    txt.textContent = QUESTIONS[i];
+
+    row.appendChild(num); row.appendChild(txt);
+    row.onclick = ()=> goto(i);
+    qlist.appendChild(row);
+  }
+}
+buildList();
+
+/* ================== RENDER ================== */
+function render(){
+  // left list active
+  [...qlist.children].forEach(el=>el.classList.toggle("active", +el.dataset.index === current));
+  // question & position
+  qtext.textContent = QUESTIONS[current];
+  qpos.textContent  = `${current+1} / 100`;
+  // textarea
+  answer.value = answers[current] || "";
+
+  // progress
+  const count = Object.keys(answers).filter(k=>answers[k]?.trim()?.length).length;
+  done.textContent = count;
+  bar.style.width = (count/100*100) + "%";
+}
+function goto(i){
+  current = (i+100)%100;
+  // небольшая анимация входа
+  const card = document.getElementById("card");
+  card.classList.remove("fade-enter-active");
+  card.classList.add("fade-enter");
+  requestAnimationFrame(()=>{
+    card.classList.remove("fade-enter");
+    card.classList.add("fade-enter-active");
+  });
+  render();
 }
 
-/* =======================
-   ✅ Загружаем имя (мы позже свяжем с базой)
-======================= */
-document.getElementById("username").textContent = `Ваш токен: ${token}`;
-
-/* =======================
-   ✅ Вкладки
-======================= */
-const tabs = document.querySelectorAll(".tab");
-const content = document.getElementById("content");
-
-function loadAnswers(){
-  content.innerHTML = `
-    <h3>Ваши ответы</h3>
-    <p>Скоро здесь будут 100 вопросов...</p>
-    <textarea placeholder="Ответ..."></textarea>
-    <button class="btn">Сохранить ответ</button>
-    <button class="btn" style="margin-top:8px;background:#4CAF50;">Завершить и отправить</button>
-  `;
-}
-function loadPhotos(){
-  content.innerHTML = `<h3>Фото</h3><p>Загрузка фото появится позже 📸</p>`;
-}
-function loadDesign(){
-  content.innerHTML = `<h3>Выбор дизайна</h3><p>Скоро будут макеты 💍✨</p>`;
-}
-function loadSupport(){
-  content.innerHTML = `<h3>Поддержка</h3><p>Будет чат с нами 💬</p>`;
-}
-
-const pages = {
-  answers: loadAnswers,
-  photos: loadPhotos,
-  design: loadDesign,
-  support: loadSupport
+/* ================== ACTIONS ================== */
+document.getElementById("save").onclick = ()=>{
+  answers[current] = answer.value.trim();
+  // TODO: тут будет реальное сохранение в базу
+  render();
 };
 
-tabs.forEach(tab=>{
-  tab.onclick = ()=>{
-    tabs.forEach(t=>t.classList.remove("active"));
-    tab.classList.add("active");
-    pages[tab.dataset.tab]();
-  };
+document.getElementById("next").onclick = ()=>{
+  answers[current] = answer.value.trim();
+  goto(current+1);
+};
+document.getElementById("prev").onclick = ()=>{
+  answers[current] = answer.value.trim();
+  goto(current-1);
+};
+
+answer.addEventListener("keydown", e=>{
+  if(e.key==="Tab"){
+    e.preventDefault();
+    document.getElementById("next").click();
+  }
 });
 
-loadAnswers();
+/* Finish (пока заглушка UI) */
+document.getElementById("finish").onclick = ()=>{
+  // TODO: здесь соберём TXT + ZIP фото и отправим в Telegram
+  alert("Черновик сохранён. После подключения оплаты и бота — здесь появится отправка вашей книги в работу.");
+};
+
+/* mini chat toggle */
+const chat = document.getElementById("chat");
+chat.querySelector(".toggle").onclick = ()=> chat.classList.toggle("open");
+
+/* init */
+goto(0);
 </script>
 </body>
 </html>
